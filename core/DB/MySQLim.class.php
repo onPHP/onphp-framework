@@ -168,7 +168,90 @@
 		
 		public function getTableInfo($table)
 		{
-			throw new UnimplementedFeatureException();
+			static $types = array(
+				'tinyint'		=> DataType::SMALLINT,
+				'smallint'		=> DataType::SMALLINT,
+				'int'			=> DataType::INTEGER,
+				'mediumint'		=> DataType::INTEGER,
+
+				'bigint'		=> DataType::BIGINT,
+				
+				'double'		=> DataType::DOUBLE,
+				'decimal'		=> DataType::NUMERIC,
+
+				'char'			=> DataType::CHAR,
+				'varchar'		=> DataType::VARCHAR,
+				'text'			=> DataType::TEXT,
+				'tinytext'		=> DataType::TEXT,
+				'mediumtext'	=> DataType::TEXT,
+				
+				'date'			=> DataType::DATE,
+				'time'			=> DataType::TIME,
+				'timestamp'		=> DataType::TIMESTAMP,
+				'datetime'		=> DataType::TIMESTAMP,
+
+				// unhandled types
+				'set'			=> null,
+				'enum'			=> null,
+				'year'			=> null
+			);
+			
+			try {
+				$result = $this->queryRaw('SHOW COLUMNS FROM '.$table);
+			} catch (BaseException $e) {
+				throw new ObjectNotFoundException(
+					"unknown table '{$table}'"
+				);
+			}
+			
+			$table = new DBTable($table);
+			
+			while ($row = mysqli_fetch_array($result)) {
+				$name = strtolower($row['Field']);
+				$matches = array();
+				$info = array('type' => null, 'extra' => null);
+				if (
+					preg_match(
+						'~(\w+)(\((\d+?)\)){0,1}\s*(\w*)~',
+						strtolower($row['Type']),
+						$matches
+					)
+				) {
+					$info['type'] = $matches[1];
+					$info['size'] = $matches[3];
+					$info['extra'] = $matches[4];
+				}
+				
+				Assert::isTrue(
+					array_key_exists($info['type'], $types),
+					
+					'unknown type "'
+					.$types[$info['type']]
+					.'" found in column "'.$name.'"'
+				);
+				
+				if (empty($types[$info['type']]))
+					continue;
+				
+				$column = DBColumn::create(
+					DataType::create($types[$info['type']])->
+						setUnsigned(
+							strtolower($info['extra']) == 'unsigned'
+						)->
+						setNull(strtolower($row['Null']) == 'yes'),
+					
+					$name
+				)->
+				setAutoincrement(strtolower($row['Extra']) == 'auto_increment')->
+				setPrimaryKey(strtolower($row['Key']) == 'pri');
+				
+				if ($row['Default'])
+					$column->setDefault($row['Default']);
+				
+				$table->addColumn($column);
+			}
+			
+			return $table;
 		}
 		
 		public function hasQueue()
