@@ -19,6 +19,8 @@
 	**/
 	final class MySQLim extends Sequenceless
 	{
+		private $needAutoCommit = false;
+
 		/**
 		 * @return MySQLim
 		**/
@@ -30,8 +32,21 @@
 		}
 
 		/**
+		 * @param $flag
 		 * @return MySQLim
 		**/
+		public function setNeedAutoCommit($flag)
+		{
+			$this->needAutoCommit = $flag == true;
+			$this->setupAutoCommit();
+			return $this;
+		}
+
+		/**
+		 * @return $this
+		 * @throws DatabaseException
+		 * @throws UnsupportedMethodException
+		 */
 		public function connect()
 		{
 			if ($this->persistent)
@@ -58,6 +73,8 @@
 			
 			if ($this->encoding)
 				$this->setDbEncoding();
+
+			$this->setupAutoCommit();
 			
 			return $this;
 		}
@@ -263,6 +280,13 @@
 				);
 			
 			return $result;
+		}
+
+		private function setupAutoCommit()
+		{
+			if ($this->isConnected()) {
+				mysqli_autocommit($this->link, $this->needAutoCommit);
+			}
 		}
 	}
 ?>
