@@ -178,7 +178,7 @@
 					$field instanceof SelectQuery
 					|| ($field instanceof DialectString	&& $field instanceof Aliased)
 				) {
-					return $field->getAlias();
+					return $field->getAlias() ?: $alias;
 				}
 			}
 			
