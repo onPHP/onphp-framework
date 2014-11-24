@@ -84,7 +84,7 @@
 				return null;
 			
 			if ($count == 1) {
-				$result = $this->string[$this->position];
+				$result = $this->string[(int)$this->position];
 			} else {
 				$result = substr($this->string, $this->position, $count);
 			}

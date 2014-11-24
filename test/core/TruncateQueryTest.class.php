@@ -8,7 +8,7 @@
 		public function testQuery()
 		{
 			$pgDialect = $this->getDbByType('\Onphp\PgSQL')->getDialect();
-			$myDialect = $this->getDbByType('\Onphp\MySQL')->getDialect();
+			$myDialect = $this->getDbByType('\Onphp\MySQLim')->getDialect();
 			$liteDialect = $this->getDbByType('\Onphp\SQLitePDO')->getDialect();
 			
 			$query = \Onphp\OSQL::truncate('single_table');

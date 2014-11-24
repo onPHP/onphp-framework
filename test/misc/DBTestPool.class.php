@@ -25,6 +25,9 @@
 					$credentials['host'],
 					$credentials['base']
 				);
+				if ($this->pool[$connector] instanceof \Onphp\MySQLim) {
+					$this->pool[$connector]->setDefaultEngine('INNODB');
+				}
 			}
 		}
 		
@@ -47,7 +50,7 @@
 		public function iterator()
 		{
 			if (empty($this->pool)) {
-				throw new \PHPUnit_Framework_AssertionFailedError("for tests requires");
+				throw new \PHPUnit_Framework_AssertionFailedError("db connections required for test");
 			}
 			return new DBTestIterator($this->pool);
 		}

@@ -29,18 +29,12 @@
 				return "''"; // instead of 'null', to be compatible with v. 4
 			
 			return
-				"'"
-				.mysqli_real_escape_string(
-					// can't find better way atm.
-					$this->getLink(),
-					$value
-				)
-				."'";
+				"'".mysqli_real_escape_string($this->getLink(), $value)."'";
 		}
 		
 		public function quoteBinary($data)
 		{
-			return mysqli_real_escape_string(DBPool::me()->getLink()->getLink(), $data);
+			return "'".mysqli_real_escape_string($this->getLink(), $data)."'";
 		}
 	}
 ?>

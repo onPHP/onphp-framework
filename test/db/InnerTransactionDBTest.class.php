@@ -3,6 +3,53 @@
 
 	class InnerTransactionDBTest extends TestCaseDAO
 	{
+		public function testSavepoint()
+		{
+			foreach (DBTestPool::me()->iterator() as $connector => $db) {
+				$this->getDBCreator()->fillDB();
+
+				/* @var $moscow TestCity */
+				$moscow = TestCity::dao()->getByLogic(\Onphp\Expression::eq('name', 'Moscow'));
+
+				$savePointName = 'svp';
+				$db->begin();
+				$db->savepointBegin($savePointName);
+
+				$moscow->dao()->save($moscow->setName($newName = 'New Moscow'));
+
+				$db->savepointRelease($savePointName);
+				$db->commit();
+
+				$this->assertNotNull(TestCity::dao()->getByLogic(\Onphp\Expression::eq('name', $newName)));
+			}
+		}
+
+		public function testSavepointRollback()
+		{
+			foreach (DBTestPool::me()->iterator() as $connector => $db) {
+				$this->getDBCreator()->fillDB();
+
+				/* @var $moscow TestCity */
+				$moscow = TestCity::dao()->getByLogic(\Onphp\Expression::eq('name', 'Moscow'));
+
+				$savePointName = 'svp';
+				$db->begin();
+				$db->savepointBegin($savePointName);
+
+				$moscow->dao()->save($moscow->setName($newName = 'New Moscow'));
+
+				$db->savepointRollback($savePointName);
+				$db->commit();
+
+				try {
+					TestCity::dao()->getByLogic(\Onphp\Expression::eq('name', $newName));
+					$this->fail('expects object not found exception');
+				} catch (\Onphp\ObjectNotFoundException $e) {
+					/* ok */
+				}
+			}
+		}
+
 		public function testInnerTransaction()
 		{
 			foreach (DBTestPool::me()->iterator() as $db) {

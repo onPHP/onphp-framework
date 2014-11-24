@@ -9,7 +9,7 @@
 		public function testMarried()
 		{
 			$currentTimeZone = new \DateTimeZone(date_default_timezone_get());
-			$now = new \DateTime('now', $currentTimeZone);
+			$now = new \DateTime('2012-02-01', $currentTimeZone);
 			$zone = $now->format('O');
 
 			$prm = \Onphp\Primitive::timestampTZ('test')->setComplex();

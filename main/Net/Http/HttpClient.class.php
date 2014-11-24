@@ -17,7 +17,7 @@
 	interface HttpClient
 	{
 		/**
-		 * @param $timeout in seconds
+		 * @param $timeout int in seconds
 		**/
 		public function setTimeout($timeout);
 		public function getTimeout();
@@ -35,8 +35,40 @@
 		public function getMaxRedirects();
 		
 		/**
+		 * @param $request HttpRequest
 		 * @return \Onphp\HttpResponse
 		**/
 		public function send(HttpRequest $request);
+
+		/**
+		 * @param $key string
+		 * @param $value string
+		 * @return HttpClient
+		**/
+		public function setOption($key, $value);
+
+		/**
+		 * @param $key string
+		 * @return HttpClient
+		**/
+		public function dropOption($key);
+
+		public function getOption($key);
+
+		/**
+		 * @param $really boolean
+		 * @return HttpClient
+		**/
+		public function setNoBody($really);
+
+		public function hasNoBody();
+
+		/**
+		 * @param $maxFileSize int
+		 * @return HttpClient
+		**/
+		public function setMaxFileSize($maxFileSize);
+
+		public function getMaxFileSize();
 	}
 ?>

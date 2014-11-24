@@ -22,6 +22,7 @@
 	final class MySQLim extends Sequenceless
 	{
 		private $needAutoCommit = false;
+		private $defaultEngine;
 
 		/**
 		 * @return \Onphp\MySQLim
@@ -41,6 +42,17 @@
 		{
 			$this->needAutoCommit = $flag == true;
 			$this->setupAutoCommit();
+			return $this;
+		}
+
+		/**
+		 * @param string $engine
+		 * @return MySQLim
+		 */
+		public function setDefaultEngine($engine)
+		{
+			$this->defaultEngine = $engine;
+			$this->setupDefaultEngine();
 			return $this;
 		}
 
@@ -77,6 +89,7 @@
 				$this->setDbEncoding();
 
 			$this->setupAutoCommit();
+			$this->setupDefaultEngine();
 			
 			return $this;
 		}
@@ -94,7 +107,8 @@
 		
 		public function isConnected()
 		{
-			return parent::isConnected() && mysqli_ping($this->link);
+			return (parent::isConnected() || $this->link instanceof \mysqli)
+				&& mysqli_ping($this->link);
 		}
 		
 		/**
@@ -205,6 +219,13 @@
 		{
 			if ($this->isConnected()) {
 				mysqli_autocommit($this->link, $this->needAutoCommit);
+			}
+		}
+
+		private function setupDefaultEngine()
+		{
+			if ($this->defaultEngine && $this->isConnected()) {
+				mysqli_query($this->link, 'SET storage_engine='.$this->defaultEngine);
 			}
 		}
 	}
