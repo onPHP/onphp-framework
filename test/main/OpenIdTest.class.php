@@ -273,5 +273,40 @@ EOT
 		{
 			return $this->response;
 		}
+
+		public function setOption($key, $value)
+		{
+			throw new UnsupportedMethodException();
+		}
+
+		public function dropOption($key)
+		{
+			throw new UnsupportedMethodException();
+		}
+
+		public function getOption($key)
+		{
+			throw new UnsupportedMethodException();
+		}
+
+		public function setNoBody($really)
+		{
+			throw new UnsupportedMethodException();
+		}
+
+		public function hasNoBody()
+		{
+			throw new UnsupportedMethodException();
+		}
+
+		public function setMaxFileSize($maxFileSize)
+		{
+			throw new UnsupportedMethodException();
+		}
+
+		public function getMaxFileSize()
+		{
+			throw new UnsupportedMethodException();
+		}
 	}
 ?>
