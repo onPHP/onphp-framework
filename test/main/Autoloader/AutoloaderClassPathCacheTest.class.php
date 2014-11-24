@@ -47,8 +47,7 @@
 			
 			//autoload without error, it's allow us to cache data
 			$service->autoload('Form');
-			
-			define('DEBUG', true);
+
 			//second autoload and here we throw error
 			$service->setNamespaceResolver($this->spawnResolver(array(
 				'getPathsCount' => 2,
