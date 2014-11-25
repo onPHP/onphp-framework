@@ -38,6 +38,28 @@
 			return new self;
 		}
 		
+		/**
+		 * @return Form
+		 */
+		public function checkRules()
+		{
+			parent::checkRules();
+			
+			foreach ($this->getPrimitiveList() as $name => $primitive) {
+				if ($primitive instanceof PrimitiveForm) {
+					$error = $this->getError($name);
+					$validated = $primitive->validate();
+					if (!$error && !$validated) {
+						$this->markWrong($name);
+					} elseif ($error == Form::WRONG && $validated) {
+						$this->markGood($name);
+					}
+				}
+			}
+			
+			return $this;
+		}
+		
 		public function getErrors()
 		{
 			return array_merge($this->errors, $this->violated);
