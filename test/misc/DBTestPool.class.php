@@ -41,7 +41,10 @@
 				$connector->setPersistent($persistent)->connect();
 			}
 		}
-		
+
+		/**
+		 * @return DB[]
+		 */
 		public function getPool()
 		{
 			return $this->pool;
