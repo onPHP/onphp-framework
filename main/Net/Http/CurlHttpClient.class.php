@@ -203,8 +203,10 @@
 			}
 			
 			$this->makeResponse($handle, $response);
-			
-			curl_close($handle);
+
+			if( !$keepHandler ) {
+				curl_close($handle);
+			}
 			
 			return $response;
 		}
