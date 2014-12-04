@@ -23,6 +23,8 @@
 		private $multiRequests = array();
 		private $multiResponses = array();
 		private $multiThreadOptions = array();
+
+		private $handler = null;
 		
 		/**
 		 * @return CurlHttpClient
@@ -184,12 +186,12 @@
 		/**
 		 * @return HttpResponse
 		**/
-		public function send(HttpRequest $request)
+		public function send(HttpRequest $request, $keepHandler = false)
 		{
 			$response = CurlHttpResponse::create()->
 				setMaxFileSize($this->maxFileSize);
 			
-			$handle = $this->makeHandle($request, $response);
+			$handle = $this->makeHandle($request, $response, $keepHandler);
 			
 			if (curl_exec($handle) === false) {
 				$code = curl_errno($handle);
@@ -251,9 +253,17 @@
 			return md5(serialize($request));
 		}
 		
-		protected function makeHandle(HttpRequest $request, CurlHttpResponse $response)
+		protected function makeHandle(HttpRequest $request, CurlHttpResponse $response, $keepHandler = false)
 		{
-			$handle = curl_init();
+			if( $keepHandler && !is_null($this->handler) ) {
+				$handle = $this->handler;
+			} else {
+				$handle = curl_init();
+				if( $keepHandler ) {
+					$this->handler = $handle;
+				}
+			}
+
 			Assert::isNotNull($request->getMethod());
 			
 			$options = array(
