@@ -26,7 +26,7 @@
 		 */
 		public static function create($subject, $logic)
 		{
-			return new self($subject, $logic);
+			return new self($logic, $subject);
 		}
 		
 		public function __construct($logic, $subject)
