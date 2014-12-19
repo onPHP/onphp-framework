@@ -9,30 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class ViewTest extends TestCase
+	final class PhpViewResolverTest extends ViewTest
 	{
-		protected static $resolver;
-
-		public static function setUpBeforeClass()
+		protected function getResolver()
 		{
-			self::$resolver = new PhpViewResolver(ONPHP_TEST_PATH.'main/data/views/', EXT_TPL);
-		}
-
-		public static function tearDownAfterClass()
-		{
-			self::$resolver = NULL;
-		}
-
-		public function testToString()
-		{
-			$renderView = self::$resolver->resolveViewName('testView');
-			$toStringView = self::$resolver->resolveViewName('testViewToString');
-
-			$model = Model::create();
-
-			$this->assertTrue(
-				$toStringView->toString($model) == $renderView->toString($model)
-			);
+			return new PhpViewResolver(ONPHP_TEST_PATH.'main/data/views/', EXT_TPL);
 		}
 	}
 ?>
