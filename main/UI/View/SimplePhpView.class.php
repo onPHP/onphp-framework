@@ -16,7 +16,16 @@
 	{
 		protected $templatePath		= null;
 		protected $partViewResolver	= null;
-		
+
+		/**
+		 * @return SimplePhpView
+		 */
+		public static function create()
+		{
+			$class = new ReflectionClass(__CLASS__);
+			return $class->newInstanceArgs(func_get_args());
+		}
+
 		public function __construct($templatePath, ViewResolver $partViewResolver)
 		{
 			$this->templatePath = $templatePath;
