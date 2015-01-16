@@ -841,6 +841,12 @@
 				'naming convention violation spotted'
 			);
 
+			$parameters = array();
+			if (strpos($type, ':')) {
+				list($type, $parameters) = explode(':', $type, 2);
+				$parameters = explode(',', $parameters);
+			}
+
 			if (!$name || !$type)
 				throw new WrongArgumentException(
 					'strange name or type given: "'.$name.'" - "'.$type.'"'
@@ -851,7 +857,7 @@
 			else
 				$typeClass = 'ObjectType';
 
-			$property = new MetaClassProperty($name, new $typeClass($type), $class);
+			$property = new MetaClassProperty($name, new $typeClass($type, $parameters), $class);
 
 			if ($size)
 				$property->setSize($size);
@@ -1199,6 +1205,8 @@
 						}
 
 						$property->setColumnName($property->getConvertedName().'_id');
+					} else if ($property->getType() instanceof ArrayOfEnumerationsType) {
+						$property->setColumnName($property->getConvertedName().'_ids');
 					} else {
 						$property->setColumnName($property->getConvertedName());
 					}
