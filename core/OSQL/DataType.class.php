@@ -45,7 +45,7 @@
 		const UUID				= 0x000005;
 		const HSTORE      		= 0x000020;
 
-		const SET_OF_STRINGS	= 0x010121;
+		const SET_OF_STRINGS	= 0x010021;
 		const SET_OF_INTEGERS	= 0x010022;
 
 		const HAVE_SIZE			= 0x000100;
