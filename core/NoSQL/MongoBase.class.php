@@ -246,8 +246,32 @@ class MongoBase extends NoSQL {
 		return $this->decodeId($row);
 	}
 
-	public function batchInsert($table, array $rows) {
-		throw new UnimplementedFeatureException('Unfortunately method "batchInsert" is not implemented yet :(');
+	public function batchInsert($table, array $rows, array $options = array()) {
+		$options = array_merge(
+			array('safe' => true),
+			$options
+		);
+		if ($options['safe']) {
+			if ($this->checkVersion('1.3.0')) {
+				$options['w'] = $this->writeConcern;
+				unset($options['safe']);
+			} else {
+				$options['safe'] = $this->writeConcern;
+			}
+		}
+
+		$isSafe = isset($options['safe']) || isset($options['w']);
+
+		$result =
+			$this->db
+				->selectCollection($table)
+				->batchInsert($rows, $options);
+
+		if ($isSafe && is_array($result)) {
+			$this->checkResult($result);
+		}
+
+		return $result;
 	}
 
 	public function update($table, array $row, $options = array()) {
