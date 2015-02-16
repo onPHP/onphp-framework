@@ -99,7 +99,7 @@
         <properties>
             <identifier />
         </properties>
-        <pattern name="InternalClass" />
+        <pattern name="SpookedEnumeration" />
     </class>
 
 </classes></metaconfiguration>
