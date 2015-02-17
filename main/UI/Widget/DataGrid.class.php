@@ -187,7 +187,8 @@ class DataGrid extends BaseWidget
             }
         } else if (is_array($data)) {
             $fieldIds = array_keys($data);
-            $row = $data;
+			$this->objects[$rowId] = $data;
+			$row = $data;
         } else if ($data instanceof NamedObject) {
 			$this->objects[$rowId] = $data;
 			$row = array('id' => $data->getId(), 'name' => $data->getName());
@@ -248,13 +249,14 @@ class DataGrid extends BaseWidget
                 if ($property == null) {
                     /** @var $object Prototyped */
                     $object = $this->objects[$rowId];
-                    if ( !($object instanceof Prototyped) ) {
-                        throw new WrongArgumentException;
+                    if ($object instanceof Prototyped) {
+						$property = $object->proto()->getPropertyByName($fieldId);
                     }
-                    $property = $object->proto()->getPropertyByName($fieldId);
                 }
 
-                $this->renderers[$fieldId] = $this->getEditRenderer($fieldId, $property);
+				if ($property instanceof LightMetaProperty) {
+					$this->renderers[$fieldId] = $this->getEditRenderer($fieldId, $property);
+				}
             } else {
 				if($property instanceof LightMetaProperty) {
 					$this->renderers[$fieldId] = $this->getLazyViewRenderer($fieldId, $property);
@@ -760,6 +762,11 @@ class DataGrid extends BaseWidget
 							}
 						}
 
+						if (is_array($object) && isset($object[$propertyName])) {
+							$object = $object[$propertyName];
+							continue;
+						}
+
 						$failed = true;
 						break;
 					}
@@ -939,18 +946,17 @@ class DataGrid extends BaseWidget
         foreach ($this->rows as $rowId => $row) {
             $object = isset($this->objects[$rowId]) ? $this->objects[$rowId] : $this->rows[$rowId];
             foreach ($this->fields as $fieldId => $fieldName) {
-				if( $object instanceof Prototyped ) {
-					try {
-						$field = PrototypeUtils::getValue($object, $fieldId);
-//						$property = $object->proto()->getPropertyByName($fieldId);
-//						$field = $object->{$property->getGetter()}();
-					} catch( Exception $e ) {
+				$fieldPath = explode('.', $fieldId);
+				$field = $object;
+				foreach ($fieldPath as $fieldPathPart) {
+					if ($field instanceof Prototyped && PrototypeUtils::hasProperty($field, $fieldPathPart)) {
+						$field = PrototypeUtils::getValue($field, $fieldPathPart);
+					} elseif (is_array($field) && isset($field[$fieldPathPart])) {
+						$field = $field[$fieldPathPart];
+					} else {
 						$field = null;
+						break;
 					}
-				} elseif( isset($row[$fieldId]) ) {
-					$field = $row[$fieldId];
-				} else {
-					$field = null;
 				}
 
 				if ($this->form instanceof Form	&& $this->form->exists($fieldId)) {
@@ -963,8 +969,6 @@ class DataGrid extends BaseWidget
 				}
 
 				// если есть рендерер, прогоним значение через него
-//				var_dump($this->renderers);
-//				die();
                 if (isset($this->renderers[$fieldId])) {
                     $callback = $this->renderers[$fieldId];
                     if ($this->renderers[$fieldId] instanceof Closure) {
