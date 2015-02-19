@@ -112,7 +112,8 @@ class StorageEngine
 			if ( $delta > 0 ) {
 				$key = str_pad($fileName, $this->folderShardingNameBucketSize, $this->folderShardingEmptyKey);
 				$fileName = '';
-			}else{
+			}
+			else{
 				$key = mb_substr($fileName, 0, $this->folderShardingNameBucketSize);
 				$fileName = mb_substr($fileName, $this->folderShardingNameBucketSize);
 			}
@@ -288,7 +289,8 @@ class StorageEngine
                     ->setRetries($this->retries);
 
                 $result = $reTryer->exec();
-            } else {
+            }
+			else {
                 $result = $action();
             }
 
