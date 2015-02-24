@@ -32,6 +32,8 @@ class StorageEngine
     protected $retries = 1;
     protected $timeout = 1000000; // 1 sec
 
+	protected $curlTimeout = 10; // 10 sec
+
 	// folder sharding
 	protected $folderShardingDepth = 0;
 	protected $folderShardingNameBucketSize = 2;
@@ -64,6 +66,10 @@ class StorageEngine
 
         if ( isset($config['timeout']) ) {
             $this->timeout = $config['timeout'];
+        }
+
+        if ( isset($config['curlTimeout']) ) {
+            $this->curlTimeout = $config['curlTimeout'];
         }
     }
 
@@ -128,15 +134,24 @@ class StorageEngine
     }
 
     public function storeRemote($link, $desiredName=null) {
-
         if (!$desiredName) {
             $desiredName = $this->generateName('');
         }
 
+		$context = stream_context_create( array(
+			'http'=>array(
+				'timeout' => floatval($this->curlTimeout)
+			)
+		));
+
 		try {
-			$source = fopen($link, 'r');
-		} catch(Exception $e) {
-			throw new FileNotFoundException($e->getMessage(), $e->getCode(), $e);
+			$source = fopen($link, 'r', false, $context);
+			if ( !$source ) {
+				throw new Exception('fopen failed' . $link);
+			}
+		}
+		catch(Exception $e) {
+			throw new FileNotFoundException($e->getMessage() . ' (timeout: ' . $this->curlTimeout . ' sec)', $e->getCode(), $e);
 		}
 
         $path   = $this->getTmpFile($desiredName);
