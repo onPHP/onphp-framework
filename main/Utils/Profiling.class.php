@@ -13,6 +13,7 @@ class Profiling {
 	protected $timeEnd = null;
 	protected $tags = array();
 	protected $info = null;
+	protected $trace = null;
 
 	public static function create($tags = array(), $info = null) {
 		$self = new static();
@@ -21,6 +22,9 @@ class Profiling {
 		}
 		$self->tags = $tags;
 		$self->info = $info;
+		$backtrace = debug_backtrace();
+		array_shift($backtrace);
+		$self->trace = $backtrace;
 		return $self;
 	}
 
@@ -122,6 +126,45 @@ class Profiling {
 
 	public function getInfo(){
 		return $this->info;
+	}
+
+	public function getTrace() {
+		return $this->trace;
+	}
+
+	public function getTraceAsString() {
+		return implode(PHP_EOL, array_map(
+			function ($bt) {
+				$string = '';
+				if (isset($bt['file'])) {
+					$string .= basename($bt['file']) . '(' . $bt['line'] . '): ';
+				}
+				if (isset($bt['class'])) {
+					$string .= $bt['class'] . $bt['type'];
+				}
+				$string .= $bt['function'];
+				$string .= '(';
+				if (isset($bt['args'])) {
+					$string .= implode(', ', array_map(function ($arg) {
+						if (is_null($arg)) return 'NULL';
+						else if (is_resource($arg)) return '{resource}';
+						else if (is_array($arg)) return '{array(' . count($arg) .')}';
+						else if (is_object($arg)) return '{' . get_class($arg) .'}';
+						else if (is_scalar($arg)) {
+							if (is_string($arg) && strlen($arg) > 64) {
+								$arg = substr($arg, 0, 64) . '...';
+							}
+							return var_export($arg, true);
+						}
+						else if (is_callable($arg)) return '{closure}';
+						else return '{unknown}';
+					}, $bt['args']));
+				}
+				$string .= ')';
+				return $string;
+			},
+			$this->getTrace()
+		));
 	}
 
     /**
