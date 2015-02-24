@@ -151,6 +151,9 @@
                         ->setInfo($e->getMessage())
                         ->end()
                     ;
+					if (strpos($e->getMessage(), 'No such file or directory') === false) {
+						throw $e;
+					}
 				}
 			}
 
