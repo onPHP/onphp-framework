@@ -150,7 +150,11 @@ class StorageEngine
 		}
 
 		try {
-			$source = fopen($link, 'r', false, $context);
+			if ($context) {
+				$source = fopen($link, 'r', false, $context);
+			} else {
+				$source = fopen($link, 'r');
+			}
 			if ( !$source ) {
 				throw new Exception('fopen failed' . $link);
 			}
