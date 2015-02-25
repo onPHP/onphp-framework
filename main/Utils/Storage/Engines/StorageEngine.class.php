@@ -32,7 +32,7 @@ class StorageEngine
     protected $retries = 1;
     protected $timeout = 1000000; // 1 sec
 
-	protected $curlTimeout = 10; // 10 sec
+	protected $httpTimeout = 0; // seconds
 
 	// folder sharding
 	protected $folderShardingDepth = 0;
@@ -68,8 +68,8 @@ class StorageEngine
             $this->timeout = $config['timeout'];
         }
 
-        if ( isset($config['curlTimeout']) ) {
-            $this->curlTimeout = $config['curlTimeout'];
+        if ( isset($config['httpTimeout']) ) {
+            $this->httpTimeout = $config['httpTimeout'];
         }
     }
 
@@ -138,11 +138,16 @@ class StorageEngine
             $desiredName = $this->generateName('');
         }
 
-		$context = stream_context_create( array(
-			'http'=>array(
-				'timeout' => floatval($this->curlTimeout)
-			)
-		));
+		$context = null;
+		$httpTimeout = '';
+		if ( $this->httpTimeout && strpos($link, 'http') === 0 ) {
+			$httpTimeout = floatval($this->httpTimeout);
+			$context = stream_context_create( array(
+				'http' => array (
+					'timeout' => $httpTimeout
+				)
+			));
+		}
 
 		try {
 			$source = fopen($link, 'r', false, $context);
@@ -151,7 +156,12 @@ class StorageEngine
 			}
 		}
 		catch(Exception $e) {
-			throw new FileNotFoundException($e->getMessage() . ' (timeout: ' . $this->curlTimeout . ' sec)', $e->getCode(), $e);
+			throw
+				new FileNotFoundException(
+					$e->getMessage() . ($httpTimeout ? ' (httpTimeout: ' . $httpTimeout . ' sec)' : ''),
+					$e->getCode(),
+					$e
+				);
 		}
 
         $path   = $this->getTmpFile($desiredName);
