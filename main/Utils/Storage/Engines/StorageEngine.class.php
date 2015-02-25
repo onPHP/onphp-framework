@@ -138,23 +138,22 @@ class StorageEngine
             $desiredName = $this->generateName('');
         }
 
-		$context = null;
 		$httpTimeout = '';
-		if ( $this->httpTimeout && strpos($link, 'http') === 0 ) {
-			$httpTimeout = floatval($this->httpTimeout);
-			$context = stream_context_create( array(
-				'http' => array (
-					'timeout' => $httpTimeout
-				)
-			));
-		}
-
 		try {
-			if ($context) {
+			if ( $this->httpTimeout && strpos($link, 'http') === 0 ) {
+				$httpTimeout = floatval($this->httpTimeout);
+				$context = stream_context_create( array(
+					'http' => array (
+						'timeout' => $httpTimeout
+					)
+				));
+
 				$source = fopen($link, 'r', false, $context);
-			} else {
+			}
+			else {
 				$source = fopen($link, 'r');
 			}
+
 			if ( !$source ) {
 				throw new Exception('fopen failed' . $link);
 			}
