@@ -367,8 +367,14 @@
 						break;
 					} catch (ObjectNotFoundException $e) {
 						$out->errorLine(
-							"table '{$class->getTableName()}' not found, skipping."
+							"table '{$class->getTableName()}' not found, check the suggested code below."
 						);
+						$out->remarkLine(
+							$target->toDialectString($db->getDialect()),
+							ConsoleMode::FG_MAGENTA,
+							true
+						);
+
 						continue;
 					}
 
