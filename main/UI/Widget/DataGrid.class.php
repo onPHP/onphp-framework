@@ -735,7 +735,7 @@ class DataGrid extends BaseWidget
                 $path = explode('.', $fieldId);
                 foreach ($this->rows as $rowId => $row) {
                     $object = $this->objects[$rowId];
-
+					$property = null;
                     $failed = false;
                     foreach ($path as $propertyName) {
 
