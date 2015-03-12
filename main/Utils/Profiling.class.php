@@ -7,7 +7,7 @@
 
 class Profiling {
 	protected static $history = array();
-	protected static $historyEnabled = true;
+	protected static $historyEnabled = false;
 
 	protected $timeStart = null;
 	protected $timeEnd = null;
