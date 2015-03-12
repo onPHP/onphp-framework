@@ -47,6 +47,7 @@
 
 		const SET_OF_STRINGS	= 0x010021;
 		const SET_OF_INTEGERS	= 0x010022;
+		const SET_OF_FLOATS		= 0x010023;
 
 		const HAVE_SIZE			= 0x000100;
 		const HAVE_PRECISION	= 0x000200;
@@ -95,6 +96,7 @@
 
 			self::SET_OF_STRINGS	=> 'CHARACTER VARYING',
 			self::SET_OF_INTEGERS	=> 'INTEGER',
+			self::SET_OF_FLOATS 	=> 'FLOAT',
 		);
 
 		/**

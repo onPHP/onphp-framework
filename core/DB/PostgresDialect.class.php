@@ -174,20 +174,22 @@
 
 		public function quoteArray($values, $type)
 		{
-			if( empty($values) ) {
+			if (empty($values)) {
 				return self::LITERAL_NULL;
 			}
 			// add qoutes
-			foreach($values as &$item) {
-				if( $type===DataType::INTEGER ) {
+			foreach ($values as &$item) {
+				if ($type === DataType::INTEGER) {
 					$item = intval($item);
-				} elseif( $type===DataType::VARCHAR ) {
+				} else if ($type === DataType::REAL) {
+					$item = doubleval($item);
+				} elseif ($type === DataType::VARCHAR) {
 					$item = $this->quoteValue($item);
 				} else {
 					throw new WrongArgumentException('unknown type of array!');
 				}
 			}
-			return 'ARRAY['.implode(', ',$values).']';
+			return 'ARRAY[' . implode(', ', $values) . ']';
 		}
 
 		protected function makeSequenceName(DBColumn $column)

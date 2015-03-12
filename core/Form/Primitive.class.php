@@ -236,6 +236,14 @@
 		}
 
 		/**
+		 * @return PrimitiveArray
+		**/
+		public static function arrayOfFloats($name)
+		{
+			return new PrimitiveArray($name);
+		}
+
+		/**
 		 * @return PrimitiveHstore
 		**/
 		public static function hstore($name)

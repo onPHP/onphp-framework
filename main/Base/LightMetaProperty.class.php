@@ -397,6 +397,8 @@
 					$query->set($this->columnName, new DBBinary($value));
 				} elseif($this->type == 'arrayOfIntegers') {
 					$query->set($this->columnName, DBArray::create($value)->integers());
+				} elseif($this->type == 'arrayOfFloats') {
+					$query->set($this->columnName, DBArray::create($value)->floats());
 				} elseif($this->type == 'arrayOfStrings') {
 					$query->set($this->columnName, DBArray::create($value)->strings());
 				} else {
@@ -421,32 +423,29 @@
 
 			if($this->type == 'set') {
 				// MongoDB driver compatibility
-
-				if( is_array($raw) ) {
-
+				if (is_array($raw)) {
                     return $raw;
 				} else {
 					throw new WrongArgumentException('raw data is not array!');
 				}
 			}
 
-			if( $this->type == 'arrayOfIntegers' ) {
+			if (strpos($this->type, 'arrayOf') !== false) {
 				// PgSQL driver compatibility
 				$matches = array();
-				if( preg_match('/^{(.*)}$/', $raw, $matches) ) {
-					return array_map('intval', str_getcsv($matches[1]));
+				if ($this->type == 'arrayOfIntegers') {
+					$mappingFunction = 'intval';
+				} else if ($this->type == 'arrayOfFloats') {
+					$mappingFunction = 'doubleval';
+				} else if ($this->type == 'arrayOfStrings') {
+					$mappingFunction = 'stripslashes';
 				} else {
-					throw new WrongArgumentException('raw data is not compatible with PgArray!');
+					throw new WrongArgumentException('unknown array type');
 				}
-			}
-
-			if ( $this->type == 'arrayOfStrings') {
-				// PgSQL driver compatibility
-				$matches = array();
-				if( preg_match('/^{(.*)}$/', $raw, $matches) ) {
-					return array_map('stripslashes', str_getcsv($matches[1]));
+				if (preg_match('/^{(.*)}$/', $raw, $matches)) {
+					return array_map($mappingFunction, str_getcsv($matches[1]));
 				} else {
-					throw new WrongArgumentException('raw data is not compatible with PgArray!');
+					throw new WrongArgumentException('raw data is not compatible with ' . $this->type);
 				}
 			}
 

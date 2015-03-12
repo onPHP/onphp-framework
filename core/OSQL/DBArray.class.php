@@ -29,6 +29,11 @@
 			return $this;
 		}
 
+		public function floats() {
+			$this->type = DataType::REAL;
+			return $this;
+		}
+
 		public function strings() {
 			$this->type = DataType::VARCHAR;
 			return $this;

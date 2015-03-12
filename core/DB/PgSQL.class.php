@@ -251,6 +251,7 @@
 				'_varchar'    	=> DataType::SET_OF_STRINGS,
 				'_int4'    		=> DataType::SET_OF_INTEGERS,
 				'_int8'    		=> DataType::SET_OF_INTEGERS,
+				'_float8'    	=> DataType::SET_OF_FLOATS,
 
 				// unhandled types, not ours anyway
 				'tsvector'		=> null,
