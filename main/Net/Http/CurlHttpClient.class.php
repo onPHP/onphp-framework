@@ -249,6 +249,14 @@
 			
 			return true;
 		}
+
+		public function close() {
+			if ($this->handler) {
+				curl_close($this->handler);
+				$this->handler = null;
+			}
+			return $this;
+		}
 		
 		protected function getRequestKey(HttpRequest $request)
 		{
