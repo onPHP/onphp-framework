@@ -100,7 +100,7 @@
 
 		/**
 		 * @static
-		 * @return array
+		 * @return static[]
 		 */
 		public static function makeObjectList() {
 			$enum = new static( static::getAnyId() );
