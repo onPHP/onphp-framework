@@ -24,6 +24,10 @@
 			$this->alias	= $alias;
 			$this->logic	= $logic;
 		}
+
+		public static function create($subject, LogicalObject $logic, $alias) {
+			return new static($subject, $logic, $alias);
+		}
 		
 		public function getAlias()
 		{

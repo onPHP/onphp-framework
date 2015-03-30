@@ -102,6 +102,26 @@
 		}
 
 		/**
+		 * @param SQLBaseJoin $join
+		 * @return $this
+		 */
+		public function customJoin(SQLBaseJoin $join) {
+			if ($join instanceof SQLLeftJoin) {
+				$this->joiner->leftJoin($join);
+			} else if ($join instanceof SQLRightJoin) {
+				$this->joiner->rightJoin($join);
+			} else if ($join instanceof SQLJoin){
+				$this->joiner->join($join);
+			} else {
+				throw new UnexpectedValueException(var_export($join, true));
+			}
+
+			$this->aliases[$join->getAlias()] = true;
+
+			return $this;
+		}
+
+		/**
 		 * @return SelectQuery
 		**/
 		public function join($table, LogicalObject $logic, $alias = null)
