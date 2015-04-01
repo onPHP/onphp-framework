@@ -427,6 +427,7 @@ class DataGrid extends BaseWidget
 					};
 				} elseif( is_subclass_of($property->getClassName(), 'Prototyped') ) {
 					return function($value, $object) use ($self) {
+						if ($value == null) { return '(NULL)'; }
 						if ($self->hasParent($object)) {
 							return get_class($value) . ' ID:' . $value->getId();
 						} else {
