@@ -215,10 +215,10 @@ class DataGrid extends BaseWidget
         $this->fields = array_merge($this->fields, $fields);
 
         // записываем данные
-        foreach($row as $fieldId => $value) {
+		foreach($row as $fieldId => $value) {
 			$property = ($data instanceof Prototyped) ? $data->proto()->getPropertyByName($fieldId) : null;
             $this->setField($rowId, $fieldId, $value, $property);
-        }
+		}
 
         return $this;
     }
@@ -427,6 +427,7 @@ class DataGrid extends BaseWidget
 					};
 				} elseif( is_subclass_of($property->getClassName(), 'Prototyped') ) {
 					return function($value, $object) use ($self) {
+						if ($value == null) { return '(NULL)'; }
 						if ($self->hasParent($object)) {
 							return get_class($value) . ' ID:' . $value->getId();
 						} else {
@@ -951,6 +952,10 @@ class DataGrid extends BaseWidget
 				foreach ($fieldPath as $fieldPathPart) {
 					if ($field instanceof Prototyped && PrototypeUtils::hasProperty($field, $fieldPathPart)) {
 						$field = PrototypeUtils::getValue($field, $fieldPathPart);
+					} elseif ($field instanceof NamedObject && $fieldPathPart == 'name') {
+						$field = $field->getName();
+					} elseif ($field instanceof Identifiable && $fieldPathPart == 'id') {
+						$field = $field->getId();
 					} elseif (is_array($field) && isset($field[$fieldPathPart])) {
 						$field = $field[$fieldPathPart];
 					} else {

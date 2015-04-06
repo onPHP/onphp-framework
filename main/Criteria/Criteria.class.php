@@ -36,6 +36,9 @@
 		// Кастомный запрос
 		private $selectQuery = null;
 
+		// additional joins for cases
+		private $customJoins = array();
+
 		/**
 		 * @return Criteria
 		**/
@@ -567,6 +570,12 @@
 				);
 			}
 
+			if ($this->customJoins) {
+				foreach ($this->customJoins as $join) {
+					$query->customJoin($join);
+				}
+			}
+
 			return $query;
 		}
 
@@ -716,5 +725,21 @@
 				);
 		}
 
+		/**
+		 * @param SQLBaseJoin $customJoin
+		 * @return $this
+		 */
+		public function addCustomJoin(SQLBaseJoin $customJoin) {
+			$this->customJoins []= $customJoin;
+			return $this;
+		}
+
+		/**
+		 * @return $this
+		 */
+		public function dropCustomJoins() {
+			$this->customJoins = array();
+			return $this;
+		}
 	}
 ?>
