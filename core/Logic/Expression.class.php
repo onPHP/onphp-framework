@@ -81,7 +81,7 @@
 		**/
 		public static function gtEq($field, $value)
 		{
-			return new BinaryExpression(
+            return new BinaryExpression(
 				$field, $value, BinaryExpression::GREATER_OR_EQUALS
 			);
 		}

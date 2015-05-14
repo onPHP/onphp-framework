@@ -252,6 +252,7 @@ class DataGrid extends BaseWidget
                     if ($object instanceof Prototyped) {
 						$property = $object->proto()->getPropertyByName($fieldId);
                     }
+                    
                 }
 
 				if ($property instanceof LightMetaProperty) {

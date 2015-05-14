@@ -71,7 +71,7 @@
 			
 			return $this;
 		}
-		
+
 		/**
 		 * @throws MissingElementException
 		 * @return DBPool

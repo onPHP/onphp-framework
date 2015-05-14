@@ -134,6 +134,7 @@ class StorageEngine
     }
 
     public function storeRemote($link, $desiredName=null) {
+
         if (!$desiredName) {
             $desiredName = $this->generateName('');
         }
@@ -317,8 +318,7 @@ class StorageEngine
                     ->setRetries($this->retries);
 
                 $result = $reTryer->exec();
-            }
-			else {
+            } else {
                 $result = $action();
             }
 

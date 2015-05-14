@@ -371,7 +371,7 @@
 		protected function fetchList()
 		{
 			$query = $this->worker->makeFetchQuery();
-			
+
 			if ($this->lazy) {
 				$list = $this->dao->getCustomRowList($query);
 				

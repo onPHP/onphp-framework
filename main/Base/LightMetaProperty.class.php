@@ -401,6 +401,10 @@
 					$query->set($this->columnName, DBArray::create($value)->floats());
 				} elseif($this->type == 'arrayOfStrings') {
 					$query->set($this->columnName, DBArray::create($value)->strings());
+				} elseif($this->type == 'json' ) {
+					$query->set($this->columnName, DBArray::create($value)->json());
+				} elseif($this->type == 'jsonb' ) {
+					$query->set($this->columnName, DBArray::create($value)->jsonb());
 				} else {
 					$query->lazySet($this->columnName, $value);
 				}
@@ -447,6 +451,10 @@
 				} else {
 					throw new WrongArgumentException('raw data is not compatible with ' . $this->type);
 				}
+			}
+
+			if ($this->type == 'json' || $this->type == 'jsonb') {
+				return json_decode($raw, true); //associative array insteaFd of object
 			}
 
 			if (
