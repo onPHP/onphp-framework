@@ -57,7 +57,7 @@
 	 * 
 	 * @ingroup Containers
 	**/
-	abstract class UnifiedContainer
+	abstract class UnifiedContainer implements DialectString
 	{
 		protected $worker	= null;
 		protected $parent	= null;
@@ -371,7 +371,7 @@
 		protected function fetchList()
 		{
 			$query = $this->worker->makeFetchQuery();
-			
+
 			if ($this->lazy) {
 				$list = $this->dao->getCustomRowList($query);
 				
@@ -425,6 +425,11 @@
 			}
 			
 			return $this;
+		}
+
+		public function toDialectString(Dialect $dialect) {
+			$query = $this->worker->makeFetchQuery();
+			return $query->toDialectString($dialect);
 		}
 	}
 ?>

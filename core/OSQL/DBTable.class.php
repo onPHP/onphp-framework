@@ -188,6 +188,8 @@
 										.')'
 									: null
 							)
+							.(	(in_array($targetColumn->getType()->getId(), array(DataType::JSON, DataType::JSONB )))
+									? ' USING NULL' : '')
 							.';';
 					}
 					

@@ -252,6 +252,22 @@
 		}
 
 		/**
+		 * @param $name
+		 * @return PrimitiveArray
+		 */
+		public static function json($name) {
+			return new PrimitiveJson($name);
+		}
+
+		/**
+		 * @param $name
+		 * @return PrimitiveArray
+		 */
+		public static function jsonb($name) {
+			return new PrimitiveJson($name);
+		}
+
+		/**
 		 * @return PrimitiveMultiList
 		**/
 		public static function multiChoice($name)

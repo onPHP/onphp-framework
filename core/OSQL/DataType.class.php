@@ -45,6 +45,10 @@
 		const UUID				= 0x000005;
 		const HSTORE      		= 0x000020;
 
+
+		const JSON      		= 0x000033;
+		const JSONB      		= 0x000034;
+
 		const SET_OF_STRINGS	= 0x010121;
 		const SET_OF_INTEGERS	= 0x010022;
 		const SET_OF_FLOATS		= 0x010023;

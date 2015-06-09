@@ -39,9 +39,23 @@
 			return $this;
 		}
 
+		public function json() {
+			$this->type = DataType::JSON;
+			return $this;
+		}
+
+		public function jsonb() {
+			$this->type = DataType::JSONB;
+			return $this;
+		}
+
 		public function toDialectString(Dialect $dialect)
 		{
-			return $dialect->quoteArray($this->getValue(), $this->type);
+			if ($this->type == DataType::JSON || $this->type == DataType::JSONB) {
+				return $dialect->quoteJson($this->getValue(), $this->type);
+			} else {
+				return $dialect->quoteArray($this->getValue(), $this->type);
+			}
 		}
 
 	}

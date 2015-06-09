@@ -29,6 +29,7 @@
 				($right instanceof Query)
 				|| ($right instanceof Criteria)
 				|| ($right instanceof MappableObject)
+				|| ($right instanceof DialectString)
 				|| is_array($right)
 			);
 			

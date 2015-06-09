@@ -189,7 +189,15 @@
 					throw new WrongArgumentException('unknown type of array!');
 				}
 			}
-			return 'ARRAY[' . implode(', ', $values) . ']';
+			return 'ARRAY['.implode(', ',$values).']';
+		}
+
+		
+		public function quoteJson($values, $type) {
+			if( empty($values) ) {
+				return self::LITERAL_NULL;
+			}
+			return $this->quoteValue(json_encode($values));
 		}
 
 		protected function makeSequenceName(DBColumn $column)

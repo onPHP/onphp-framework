@@ -1,0 +1,29 @@
+<?php
+/***************************************************************************
+ *   Copyright (C) 2015 Anton Gurov                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU Lesser General Public License as        *
+ *   published by the Free Software Foundation; either version 3 of the    *
+ *   License, or (at your option) any later version.                       *
+ *                                                                         *
+ ***************************************************************************/
+
+/**
+ * @ingroup Types
+ * @see http://www.postgresql.org/docs/9.4/static/datatype-json.html
+ **/
+class JsonType extends ArrayType
+{
+    public function getPrimitiveName()
+    {
+        return 'json';
+    }
+
+    public function toColumnType()
+    {
+        return 'DataType::create(DataType::JSON)';
+    }
+
+}
+?>
