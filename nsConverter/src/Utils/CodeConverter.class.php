@@ -13,6 +13,9 @@
 
 namespace Onphp\NsConverter\Utils;
 
+use Onphp\Assert;
+use Onphp\NsConverter\AddUtils\ConsoleReader;
+use Onphp\NsConverter\AddUtils\ConsoleValueSelector;
 use \Onphp\NsConverter\Buffers\CodeStorage;
 use \Onphp\NsConverter\Buffers\NamespaceBuffer;
 use \Onphp\NsConverter\Buffers\ClassNameDetectBuffer;
@@ -23,15 +26,7 @@ use \Onphp\WrongStateException;
 
 class CodeConverter
 {
-	private static $constants = [
-		'UPLOAD_ERR_NO_FILE',
-		'PREG_SPLIT_NO_EMPTY',
-		'PREG_SPLIT_DELIM_CAPTURE',
-		'PREG_SPLIT_OFFSET_CAPTURE',
-		'MYSQLI_CLIENT_FOUND_ROWS',
-		'SQLITE_NUM',
-	];
-
+	private $filePath = null;
 	/**
 	 * @var ClassStorage
 	 */
@@ -55,6 +50,16 @@ class CodeConverter
 	private $newNamespace = null;
 	private $skipUses = false;
 	private $currentClassName = null;
+
+	/**
+	 * @param $filePath
+	 * @return $this
+	 */
+	public function setFilePath($filePath)
+	{
+		$this->filePath = $filePath;
+		return $this;
+	}
 
 	/**
 	 * @param ClassStorage $classStorage
@@ -149,8 +154,8 @@ class CodeConverter
 		$aliasConverter->clearOldAliases($this->codeStorage);
 		//replacing classnames
 		foreach ($this->classNameDetectBuffer->getClassNameList() as $row) {
-			list($className, $from, $to) = $row;
-			$this->processClassName($className, $from, $to);
+			list($className, $from, $to, $lineNum) = $row;
+			$this->processClassName($className, $from, $to, $lineNum);
 		}
 
 		$this->replaceCommentsStrings();
@@ -160,7 +165,7 @@ class CodeConverter
 
 	}
 
-	private function processClassName($className, $from, $to)
+	private function processClassName($className, $from, $to, $lineNum)
 	{
 		if ($constant = $this->classStorage->findConstant($className)) {
 			/* ok, skip replacing for constants */
@@ -170,8 +175,54 @@ class CodeConverter
 				$this->codeStorage->addReplace($alias, $from, $to);
 			}
 		} else {
-			$msg = 'Could not find something about name "'.$className.'"';
-			throw new MissingElementException($msg);
+			$msg = sprintf('Could not find something about name "%s" in %s, line %s', $className, $this->filePath, $lineNum);
+			$classList = $this->classStorage->findListByClassName($className);
+			if (count($classList) == 1) {
+				$class = $classList[0];
+				$alias = $this->classStorage->getAliasClassName($class, $this->newNamespace);
+				$this->codeStorage->addReplace($alias, $from, $to);
+				return;
+			}
+			$classNameList = [];
+			foreach ($classList as $key => $class) {
+				/* @var $class NsClass */
+				$classNameList[$key] = $class->getFullNewName();
+			}
+
+			while (true) {
+				print $msg."\n";
+				$value = (new ConsoleValueSelector())
+					->setList(array_merge($classNameList, ['s' => 'Skip', 't' => 'Type full classnsame', 'a' => 'abort']))
+					->readKey();
+				if (isset($classNameList[$value])) {
+					$class = $classList[$value];
+					$alias = $this->classStorage->getAliasClassName($class, $this->newNamespace);
+					$this->codeStorage->addReplace($alias, $from, $to);
+					return;
+				} if ($value == 's') {
+					return;
+				} elseif ($value == 't') {
+					print "Type full class name (/Ns1/Ns2/MyClass) or 'exit' to exit\n";
+					while (true) {
+						$read = trim((new ConsoleReader())->readString());
+						if ($read == 'exit') {
+							break;
+						} else {
+							if ($class = $this->classStorage->findByRawClassName($read, '', false)) {
+								if ($class instanceof NsClass) {
+									$alias = $this->classStorage->getAliasClassName($class, $this->newNamespace);
+									$this->codeStorage->addReplace($alias, $from, $to);
+									return;
+								}
+							}
+							print "Class with name {$read} not found\n";
+						}
+					}
+				} elseif ($value == 'a') {
+					throw new MissingElementException($msg);
+				}
+			}
+			Assert::isUnreachable("not expects reach this: {$value}");
 		}
 	}
 
@@ -303,11 +354,25 @@ class CodeConverter
 	{
 		$pattern = '~^([\'"])([\\\\A-Z][\\\\A-Za-z0-9]+)([\'"])~';
 		if (preg_match($pattern, $string, $matches) && $matches[1] == $matches[3]) {
-			$class = $this->classStorage->findByRawClassName($matches[2], $this->namespaceBuffer->getNamespace(), false);
-			if ($class) {
+			if ($class = $this->classStorage->findByRawClassName($matches[2], $this->namespaceBuffer->getNamespace(), false)) {
 				return $matches[1]
 					. $class->getFullNewName()
-					.$matches[1];
+					.$matches[3];
+			} elseif ($classList = $this->classStorage->findListByClassName($matches[2])) {
+				if (count($classList) == 1) {
+					return $matches[1].$classList[0]->getFullNewName().$matches[3];
+				} elseif (count($classList) > 1) {
+					$classNameList = [];
+					foreach ($classList as $key => $class) {
+						$classNameList[$key] = $class->getFullNewName();
+					}
+					$classNameList['s'] = 'Skip';
+
+					$result = (new ConsoleValueSelector())->setList($classNameList)->readKey();
+					if ($result != ['s']) {
+						return $matches[1].$classList[$result].$matches[3];
+					}
+				}
 			}
 		}
 		return $string;

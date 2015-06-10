@@ -23,6 +23,9 @@ class ClassStorage
 {
 	private $constants = [];
 
+	/**
+	 * @var NsObject
+	 */
 	private $classStorage = [];
 	private $oldNamesMap = [];
 	/**
@@ -38,7 +41,7 @@ class ClassStorage
 	public function addConstant(NsConstant $constant)
 	{
 		if (isset($this->constants[$constant->getName()])) {
-			throw new WrongStateException('Constant "'.$constant->getName().'" already added');
+			throw new AlreadyAddedException('Constant "'.$constant->getName().'" already added');
 		}
 		$this->constants[$constant->getName()] = $constant;
 		return $this;
@@ -63,10 +66,10 @@ class ClassStorage
 			) {
 				return $this;
 			}
-			throw new WrongStateException('Class name "'.$fullNewName.'" already added');
+			throw new AlreadyAddedException('Class name "'.$fullNewName.'" already added');
 		}
 		if (isset($this->oldNamesMap[$fullName])) {
-			throw new WrongStateException('Old Class name "'.$fullName.'" already added');
+			throw new AlreadyAddedException('Old Class name "'.$fullName.'" already added');
 		}
 		$this->oldNamesMap[$fullName] = $fullNewName;
 		$this->classStorage[$fullNewName] = $class;
@@ -189,6 +192,23 @@ class ClassStorage
 		return $this->findByFullName($className);
 	}
 
+	/**
+	 * @param $className
+	 * @return NsClass[]
+	 */
+	public function findListByClassName($className)
+	{
+		$classList = [];
+		foreach ($this->classStorage as $class) {
+			if ($class instanceof NsClass) {
+				if ($className == $class->getName()) {
+					$classList[] = $class;
+				}
+			}
+		}
+		return $classList;
+	}
+
 	public function getAliasClassName(NsClass $className, $newNs = null)
 	{
 		Assert::isNotNull($this->aliasConverter, 'setAliasConverter first');
@@ -229,7 +249,11 @@ class ClassStorage
 			if (count($parts) == 2 && $parts[0] == 'CONST') {
 				$constant = NsConstant::create()
 					->setName($parts[1]);
-				$this->addConstant($constant);
+				try {
+					$this->addConstant($constant);
+				} catch (AlreadyAddedException $e) {
+					/* nuiladno */
+				}
 			} elseif (count($parts) == 4 && in_array($parts[0], ['C', 'F'])) {
 				list($type, $name, $oldNamespace, $newNamespace) = $parts;
 				$object = ($type == 'C' ? NsClass::create() : NsFunction::create());
@@ -238,7 +262,11 @@ class ClassStorage
 					->setName($name)
 					->setNamespace($oldNamespace)
 					->setNewNamespace($newNamespace);
-				$this->addClass($class);
+				try {
+					$this->addClass($class);
+				} catch (AlreadyAddedException $e) {
+					/* nuiladno */
+				}
 			} else {
 				throw new WrongStateException("Undefined row at line {$line}: {$row}");
 			}
