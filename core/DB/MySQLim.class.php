@@ -63,15 +63,17 @@
 		 */
 		public function connect()
 		{
-			if ($this->persistent)
-				throw new UnsupportedMethodException();
-			
 			$this->link = mysqli_init();
+
+			$hostname =
+				$this->checkPersistent()
+					? 'p:'.$this->hostname
+					: $this->hostname;
 			
 			try {
 				mysqli_real_connect(
 					$this->link,
-					$this->hostname,
+					$hostname,
 					$this->username,
 					$this->password,
 					$this->basename,
@@ -227,6 +229,21 @@
 			if ($this->defaultEngine && $this->isConnected()) {
 				mysqli_query($this->link, 'SET storage_engine='.$this->defaultEngine);
 			}
+		}
+
+		private function checkPersistent()
+		{
+			if ($this->persistent) {
+				if (version_compare(PHP_VERSION, '5.3.0') < 0) {
+					throw new UnsupportedMethodException(
+						'php version must be >= 5.3'
+					);
+				}
+
+				return true;
+			}
+
+			return false;
 		}
 	}
 ?>
