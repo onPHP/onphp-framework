@@ -76,122 +76,129 @@
 	if (!defined('ONPHP_CLASS_CACHE'))
 		define('ONPHP_CLASS_CACHE', ONPHP_TEMP_PATH);
 
-	// classes autoload magic
-	if (!defined('ONPHP_CLASS_CACHE_TYPE'))
-		define('ONPHP_CLASS_CACHE_TYPE', '\Onphp\AutoloaderClassPathCache');
+	if (!defined('USE_ONPHP_AUTOLOADER'))
+		define('USE_ONPHP_AUTOLOADER', true);
 
-	require ONPHP_MAIN_PATH.'Autoloader'.DIRECTORY_SEPARATOR.'require'.EXT_MOD;
+	if (USE_ONPHP_AUTOLOADER === true) {
 
-	$autoloader = ONPHP_CLASS_CACHE_TYPE;
-	AutoloaderPool::set('onPHP', $autoloader = new $autoloader());
-	/* @var $autoloader AutoloaderClassPathCache */
-	$autoloader->setNamespaceResolver(NamespaceResolverOnPHP::create())->register();
+		// classes autoload magic
+		if (!defined('ONPHP_CLASS_CACHE_TYPE'))
+			define('ONPHP_CLASS_CACHE_TYPE', '\Onphp\AutoloaderClassPathCache');
 
-	$autoloader->addPaths(array(
-		// core classes
-		ONPHP_CORE_PATH.'Base'			,
-		ONPHP_CORE_PATH.'Cache'		,
+		require ONPHP_MAIN_PATH.'Autoloader'.DIRECTORY_SEPARATOR.'require'.EXT_MOD;
 
-		ONPHP_CORE_PATH.'DB'			,
-		ONPHP_CORE_PATH.'DB'.DIRECTORY_SEPARATOR.'Transaction',
-		ONPHP_CORE_PATH.'DB'.DIRECTORY_SEPARATOR.'NoSQL',
+		$autoloader = ONPHP_CLASS_CACHE_TYPE;
+		AutoloaderPool::set('onPHP', $autoloader = new $autoloader());
+		/* @var $autoloader AutoloaderClassPathCache */
+		$autoloader->setNamespaceResolver(NamespaceResolverOnPHP::create())->register();
 
-		ONPHP_CORE_PATH.'Exceptions'	,
+		$autoloader->addPaths(array(
+			// core classes
+			ONPHP_CORE_PATH.'Base',
+			ONPHP_CORE_PATH.'Cache',
 
-		ONPHP_CORE_PATH.'Form'			,
-		ONPHP_CORE_PATH.'Form'.DIRECTORY_SEPARATOR.'Filters',
-		ONPHP_CORE_PATH.'Form'.DIRECTORY_SEPARATOR.'Primitives',
+			ONPHP_CORE_PATH.'DB',
+			ONPHP_CORE_PATH.'DB'.DIRECTORY_SEPARATOR.'Transaction',
+			ONPHP_CORE_PATH.'DB'.DIRECTORY_SEPARATOR.'NoSQL',
 
-		ONPHP_CORE_PATH.'Logic'		,
-		ONPHP_CORE_PATH.'OSQL'			,
+			ONPHP_CORE_PATH.'Exceptions',
 
-		// main framework
-		ONPHP_MAIN_PATH.'Base'			,
+			ONPHP_CORE_PATH.'Form',
+			ONPHP_CORE_PATH.'Form'.DIRECTORY_SEPARATOR.'Filters',
+			ONPHP_CORE_PATH.'Form'.DIRECTORY_SEPARATOR.'Primitives',
 
-		ONPHP_MAIN_PATH.'Criteria'		,
-		ONPHP_MAIN_PATH.'Criteria'.DIRECTORY_SEPARATOR.'Projections',
+			ONPHP_CORE_PATH.'Logic',
+			ONPHP_CORE_PATH.'OSQL',
 
-		ONPHP_MAIN_PATH.'Crypto'		,
+			// main framework
+			ONPHP_MAIN_PATH.'Base',
 
-		ONPHP_MAIN_PATH.'DAOs'			,
-		ONPHP_MAIN_PATH.'DAOs'.DIRECTORY_SEPARATOR.'Handlers',
-		ONPHP_MAIN_PATH.'DAOs'.DIRECTORY_SEPARATOR.'Workers',
-		ONPHP_MAIN_PATH.'DAOs'.DIRECTORY_SEPARATOR.'Uncachers',
+			ONPHP_MAIN_PATH.'Criteria',
+			ONPHP_MAIN_PATH.'Criteria'.DIRECTORY_SEPARATOR.'Projections',
 
-		ONPHP_MAIN_PATH.'Flow'			,
-		ONPHP_MAIN_PATH.'SPL'			,
+			ONPHP_MAIN_PATH.'Crypto',
 
-		ONPHP_MAIN_PATH.'Net'			,
-		ONPHP_MAIN_PATH.'Net'.DIRECTORY_SEPARATOR.'Http',
-		ONPHP_MAIN_PATH.'Net'.DIRECTORY_SEPARATOR.'Mail',
-		ONPHP_MAIN_PATH.'Net'.DIRECTORY_SEPARATOR.'Ip',
-		ONPHP_MAIN_PATH.'Net'.DIRECTORY_SEPARATOR.'Soap',
+			ONPHP_MAIN_PATH.'DAOs',
+			ONPHP_MAIN_PATH.'DAOs'.DIRECTORY_SEPARATOR.'Handlers',
+			ONPHP_MAIN_PATH.'DAOs'.DIRECTORY_SEPARATOR.'Workers',
+			ONPHP_MAIN_PATH.'DAOs'.DIRECTORY_SEPARATOR.'Uncachers',
 
-		ONPHP_MAIN_PATH.'Math'			,
+			ONPHP_MAIN_PATH.'Flow',
+			ONPHP_MAIN_PATH.'SPL',
 
-		ONPHP_MAIN_PATH.'Markup'		,
-		ONPHP_MAIN_PATH.'Markup'.DIRECTORY_SEPARATOR.'Feed',
-		ONPHP_MAIN_PATH.'Markup'.DIRECTORY_SEPARATOR.'Html',
+			ONPHP_MAIN_PATH.'Net',
+			ONPHP_MAIN_PATH.'Net'.DIRECTORY_SEPARATOR.'Http',
+			ONPHP_MAIN_PATH.'Net'.DIRECTORY_SEPARATOR.'Mail',
+			ONPHP_MAIN_PATH.'Net'.DIRECTORY_SEPARATOR.'Ip',
+			ONPHP_MAIN_PATH.'Net'.DIRECTORY_SEPARATOR.'Soap',
 
-		ONPHP_MAIN_PATH.'OQL'			,
-		ONPHP_MAIN_PATH.'OQL'.DIRECTORY_SEPARATOR.'Expressions',
-		ONPHP_MAIN_PATH.'OQL'.DIRECTORY_SEPARATOR.'Parsers',
-		ONPHP_MAIN_PATH.'OQL'.DIRECTORY_SEPARATOR.'Statements',
+			ONPHP_MAIN_PATH.'Math',
 
-		ONPHP_MAIN_PATH.'OpenId'		,
+			ONPHP_MAIN_PATH.'Markup',
+			ONPHP_MAIN_PATH.'Markup'.DIRECTORY_SEPARATOR.'Feed',
+			ONPHP_MAIN_PATH.'Markup'.DIRECTORY_SEPARATOR.'Html',
 
-		ONPHP_MAIN_PATH.'EntityProto',
-		ONPHP_MAIN_PATH.'EntityProto'.DIRECTORY_SEPARATOR.'Builders',
-		ONPHP_MAIN_PATH.'EntityProto'.DIRECTORY_SEPARATOR.'Accessors',
+			ONPHP_MAIN_PATH.'OQL',
+			ONPHP_MAIN_PATH.'OQL'.DIRECTORY_SEPARATOR.'Expressions',
+			ONPHP_MAIN_PATH.'OQL'.DIRECTORY_SEPARATOR.'Parsers',
+			ONPHP_MAIN_PATH.'OQL'.DIRECTORY_SEPARATOR.'Statements',
 
-		ONPHP_MAIN_PATH.'UnifiedContainer',
+			ONPHP_MAIN_PATH.'OpenId',
 
-		ONPHP_MAIN_PATH.'UI',
-		ONPHP_MAIN_PATH.'UI'.DIRECTORY_SEPARATOR.'View',
+			ONPHP_MAIN_PATH.'EntityProto',
+			ONPHP_MAIN_PATH.'EntityProto'.DIRECTORY_SEPARATOR.'Builders',
+			ONPHP_MAIN_PATH.'EntityProto'.DIRECTORY_SEPARATOR.'Accessors',
 
-		ONPHP_MAIN_PATH.'Utils'		,
-		ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'TuringTest',
-		ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'Archivers',
-		ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'IO',
-		ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'Logging',
-		ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'Mobile',
-		ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'CommandLine',
-		ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'Routers',
+			ONPHP_MAIN_PATH.'UnifiedContainer',
 
-		ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'AMQP',
-		ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'AMQP'
-		.DIRECTORY_SEPARATOR.'Pecl',
-		ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'AMQP'
-		.DIRECTORY_SEPARATOR.'Exceptions',
+			ONPHP_MAIN_PATH.'UI',
+			ONPHP_MAIN_PATH.'UI'.DIRECTORY_SEPARATOR.'View',
 
-		ONPHP_MAIN_PATH.'Messages'		,
-		ONPHP_MAIN_PATH.'Messages'.DIRECTORY_SEPARATOR.'Interface',
+			ONPHP_MAIN_PATH.'Utils',
+			ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'TuringTest',
+			ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'Archivers',
+			ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'IO',
+			ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'Logging',
+			ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'Mobile',
+			ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'CommandLine',
+			ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'Routers',
 
-		ONPHP_MAIN_PATH.'Application'	,
+			ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'AMQP',
+			ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'AMQP'
+			.DIRECTORY_SEPARATOR.'Pecl',
+			ONPHP_MAIN_PATH.'Utils'.DIRECTORY_SEPARATOR.'AMQP'
+			.DIRECTORY_SEPARATOR.'Exceptions',
 
-		ONPHP_MAIN_PATH.'Charts',
-		ONPHP_MAIN_PATH.'Charts'.DIRECTORY_SEPARATOR.'Google',
-		ONPHP_MAIN_PATH.'Monitoring',
+			ONPHP_MAIN_PATH.'Messages',
+			ONPHP_MAIN_PATH.'Messages'.DIRECTORY_SEPARATOR.'Interface',
 
-		ONPHP_META_CLASSES,
+			ONPHP_MAIN_PATH.'Application',
 
-	/*
-		ONPHP_INCUBATOR_PATH
-			.'classes'.DIRECTORY_SEPARATOR
-			.'Application'.DIRECTORY_SEPARATOR,
+			ONPHP_MAIN_PATH.'Charts',
+			ONPHP_MAIN_PATH.'Charts'.DIRECTORY_SEPARATOR.'Google',
+			ONPHP_MAIN_PATH.'Monitoring',
 
-		ONPHP_INCUBATOR_PATH
-			.'classes'.DIRECTORY_SEPARATOR
-			.'Application'.DIRECTORY_SEPARATOR
-			.'Markups'.DIRECTORY_SEPARATOR,
+			ONPHP_META_CLASSES,
 
-		ONPHP_INCUBATOR_PATH
-			.'classes'.DIRECTORY_SEPARATOR
-			.'Application'.DIRECTORY_SEPARATOR
-			.'Markups'.DIRECTORY_SEPARATOR
-			.'Documents'.DIRECTORY_SEPARATOR,
-	*/
-	), 'Onphp');
+		/*
+			ONPHP_INCUBATOR_PATH
+				.'classes'.DIRECTORY_SEPARATOR
+				.'Application'.DIRECTORY_SEPARATOR,
+
+			ONPHP_INCUBATOR_PATH
+				.'classes'.DIRECTORY_SEPARATOR
+				.'Application'.DIRECTORY_SEPARATOR
+				.'Markups'.DIRECTORY_SEPARATOR,
+
+			ONPHP_INCUBATOR_PATH
+				.'classes'.DIRECTORY_SEPARATOR
+				.'Application'.DIRECTORY_SEPARATOR
+				.'Markups'.DIRECTORY_SEPARATOR
+				.'Documents'.DIRECTORY_SEPARATOR,
+		*/
+		), 'Onphp');
+
+	}
 
 	//NOTE: disable by default
 	//see http://pgfoundry.org/docman/view.php/1000079/117/README.txt
