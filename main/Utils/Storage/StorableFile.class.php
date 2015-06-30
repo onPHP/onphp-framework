@@ -297,9 +297,13 @@ abstract class StorableFile extends IdentifiableObject implements onBeforeSave, 
         return $this->getFileName();
     }
 
-    public function getLink() {
-        return StorageEngine::create(StorageEngineType::create($this->getBaseStorageEngineTypeId()), $this->getBaseStorageEngineConfig())
+	public function getLink($stripScheme = false) {
+	    $link = StorageEngine::create(StorageEngineType::create($this->getBaseStorageEngineTypeId()), $this->getBaseStorageEngineConfig())
             ->getHttpLink( $this->getBaseFileName() );
+	    if( $stripScheme ) {
+		    $link = str_replace(['http:', 'https:'], '', $link);
+	    }
+	    return $link;
     }
 
     public function getFile() {
