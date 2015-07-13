@@ -216,4 +216,4 @@
 	//NOTE: disable by default
 	//see http://pgfoundry.org/docman/view.php/1000079/117/README.txt
 	//define('POSTGRES_IP4_ENABLED', true);
-?>
+
