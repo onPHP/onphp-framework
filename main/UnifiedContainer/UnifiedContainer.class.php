@@ -427,9 +427,81 @@
 			return $this;
 		}
 
+		/**
+		 * @param Dialect $dialect
+		 * @return string
+		 */
 		public function toDialectString(Dialect $dialect) {
 			$query = $this->worker->makeFetchQuery();
 			return $query->toDialectString($dialect);
+		}
+
+		/**
+		 * @param Identifiable|int $item
+		 * @return static
+		 */
+		public function addItem($item) {
+			if ($this->isLazy()) {
+				Assert::isScalar($item);
+			} else {
+				Assert::isInstance($item, $this->getDao()->getObjectName());
+			}
+
+			if ($this->getParentObject()->getId() && !$this->isFetched()) {
+				$this->fetch();
+			}
+
+			$this->mergeList([ $item ]);
+
+			return $this;
+		}
+
+		/**
+		 * @param Identifiable|int $item
+		 * @return static
+		 */
+		public function removeItem($item) {
+			$list = $this->getList();
+
+			if ($this->isLazy()) {
+				Assert::isScalar($item);
+				$filter = function ($i) use ($item) {
+					return $i != $item;
+				};
+			} else {
+				Assert::isInstance($item, $this->getDao()->getObjectName());
+				$filter = function (Identifiable $i) use ($item) {
+					return $i->getId() != $item->getId();
+				};
+			}
+
+			$this->setList( array_filter($list, $filter) );
+
+			return $this;
+		}
+
+		/**
+		 * @param Identifiable|int $item
+		 * @return bool
+		 */
+		public function hasItem($item) {
+			$list = $this->getList();
+
+			if ($this->isLazy()) {
+				Assert::isScalar($item);
+				$filter = function ($i) use ($item) {
+					return $i == $item;
+				};
+			} else {
+				Assert::isInstance($item, $this->getDao()->getObjectName());
+				$filter = function (Identifiable $i) use ($item) {
+					return $i->getId() == $item->getId();
+				};
+			}
+
+			$matches = array_filter($list, $filter);
+
+			return count($matches) > 0;
 		}
 	}
 ?>
