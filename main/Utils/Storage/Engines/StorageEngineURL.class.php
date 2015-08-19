@@ -15,12 +15,8 @@ class StorageEngineURL extends StorageEngine{
     protected $trusted = false;
 
     protected function checkUrl ($url) {
-
-        if (!preg_match(RegexFactory::makeHttpUrlWithAuth(), $url)) {
-            throw new InvalidArgumentException('Expected url but got: '.$url);
-        };
-
-        return $this;
+		Url::create()->parse($url);
+		return $this;
     }
 
     public function getHttpLink ($url) {
