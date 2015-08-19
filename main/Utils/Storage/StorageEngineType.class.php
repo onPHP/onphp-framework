@@ -74,6 +74,13 @@
 		/**
 		 * @return StorageEngineType
 		 */
+		public static function url() {
+			return new self(self::URL);
+		}
+
+		/**
+		 * @return StorageEngineType
+		 */
 		public static function webdav() {
 			return new self(self::WEBDAV);
 		}

@@ -68,15 +68,21 @@ abstract class StorableFile extends IdentifiableObject implements onBeforeSave, 
     }
 
     /**
-     * @param $file String
+     * @param $url string
      * @return static
      **/
     public static function createFromUrl($url) {
+		$httpUrl = Url::create()->parse($url);
+		if ($httpUrl->getScheme() == 'ftp') {
+			$storageEngineType = StorageEngineType::ftp();
+		} else {
+			$storageEngineType = StorageEngineType::url();
+		}
         return static::create()
             ->setOriginalFileName($url)
             ->setCreateDate(Timestamp::makeNow())
             ->setFileName($url)
-            ->setEngineTypeId(StorageEngineType::URL)
+            ->setEngineType($storageEngineType)
             ->setEngineType(self::getDefaultStorage());
     }
 
