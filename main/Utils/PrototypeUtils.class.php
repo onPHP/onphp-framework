@@ -286,7 +286,13 @@ class PrototypeUtils
 
 		// сравнение
 		foreach ($getters as $getter) {
-			if ($a->{$getter}() != $b->{$getter}()) {
+			$valueA = $a->{$getter}();
+			$valueB = $b->{$getter}();
+			if ($valueA instanceof Date && $valueB instanceof Date) {
+				$valueA = $valueA->toStamp();
+				$valueB = $valueB->toStamp();
+			}
+			if ($valueA != $valueB) {
 				return false;
 			}
 		}
