@@ -167,6 +167,9 @@
 		**/
 		public function render(/* Model */ $model = null)
 		{
+			if (!headers_sent()) {
+				header('Content-Type: ' . ($this->callback ? 'text/javascript' : 'application/json'));
+			}
 			if (is_null($this->callback)) {
 				echo $this->toString($model);
 			}
