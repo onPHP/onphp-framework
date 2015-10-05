@@ -138,10 +138,15 @@
 
 			$errors = array();
 			foreach (array(EXT_CLASS, '.php') as $ext) {
+				$filename = stream_resolve_include_path($classname . $ext);
+				if (!$filename) {
+					continue;
+				}
+
 				try {
-					include $classname.$ext;
+					include $filename;
                     $profiling
-                        ->setInfo($classname.$ext)
+                        ->setInfo($filename)
                         ->end()
                     ;
 					return /* void */;
@@ -151,9 +156,7 @@
                         ->setInfo($e->getMessage())
                         ->end()
                     ;
-					if (strpos($e->getMessage(), 'No such file or directory') === false) {
-						throw $e;
-					}
+					throw $e;
 				}
 			}
 
