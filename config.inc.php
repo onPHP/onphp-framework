@@ -13,6 +13,10 @@
 
 	function error2Exception($code, $string, $file, $line, $context)
 	{
+		if (error_reporting() == 0 && strpos($file, '/vendor/') !== false) {
+			// silented by "@", this is only allowed for external libs
+			return;
+		}
 		throw new BaseException($string, $code);
 	}
 
