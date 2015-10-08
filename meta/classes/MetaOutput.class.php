@@ -114,9 +114,9 @@
 		/**
 		 * @return MetaOutput
 		**/
-		public function remarkLine($text)
+		public function remarkLine($text, $color = ConsoleMode::FG_BLUE, $bold = true)
 		{
-			return $this->defaultTextLine($text, ConsoleMode::FG_BLUE, true);
+			return $this->defaultTextLine($text, $color, $bold);
 		}
 		
 		/**

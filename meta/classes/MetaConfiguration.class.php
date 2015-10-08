@@ -366,12 +366,9 @@
 
 						break;
 					} catch (ObjectNotFoundException $e) {
-						$out->errorLine(
-							"table '{$class->getTableName()}' not found, check the suggested code below."
-						);
 						$out->remarkLine(
 							$target->toDialectString($db->getDialect()),
-							ConsoleMode::FG_MAGENTA,
+							ConsoleMode::FG_BLUE,
 							true
 						);
 
@@ -389,6 +386,31 @@
 							$out->warningLine($line);
 
 						$out->newLine();
+					}
+
+					$className = $class->getName();
+					/** @var $property MetaClassProperty */
+					foreach ($class->getProperties() as $property) {
+						if ($property->getRelationId() == MetaRelation::MANY_TO_MANY) {
+							try {
+								$manyToManyClass = $property->toLightProperty($class)->getContainerName($className);
+
+								if (is_subclass_of($manyToManyClass, 'ManyToManyLinked')) {
+									$manyToManyObject = $manyToManyClass::create($className::create());
+
+									$target = $schema->getTableByName($manyToManyObject->getHelperTable());
+
+									// may throw ObjectNotFoundException
+									$db->getTableInfo($manyToManyObject->getHelperTable());
+								}
+							} catch (ObjectNotFoundException $e) {
+								$out->remarkLine(
+									$target->toDialectString($db->getDialect()),
+									ConsoleMode::FG_MAGENTA,
+									true
+								);
+							}
+						}
 					}
 				}
 
@@ -1312,7 +1334,7 @@
                         if (!in_array('Translatable', $class->getInterfaces())) {
                             $class->addInterface('Translatable');
                         }
-                    }
+					}
 				}
 
 				$class->setBuild($generate);
