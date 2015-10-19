@@ -14,23 +14,33 @@
 	**/
 	class MetaClass
 	{
+		/** @var string */
 		private $name		= null;
+		/** @var string */
 		private $tableName	= null;
+		/** @var MetaClassType */
 		private $type		= null;
-		
+		/** @var MetaClass */
 		private $parent		= null;
-		
+
+		/** @var MetaClassProperty[] */
 		private $properties	= array();
+		/** @var string[] */
 		private $interfaces	= array();
+		/** @var bool[] (string)className => (bool)isReferenced */
 		private $references	= array();
-		
+		/** @var GenerationPattern */
 		private $pattern	= null;
+		/** @var MetaClassProperty */
 		private $identifier	= null;
-		
+
+		/** @var string */
 		private $source		= null;
-		
+
+		/** @var FetchStrategy */
 		private $strategy	= null;
-		
+
+		/** @var bool */
 		private $build		= true;
 		
 		public function __construct($name)
@@ -372,6 +382,7 @@
 		}
 		
 		/**
+		 * @param bool $do
 		 * @return MetaClass
 		**/
 		public function setBuild($do)
@@ -382,6 +393,7 @@
 		}
 		
 		/**
+		 * @param string $name
 		 * @return MetaClassProperty
 		**/
 		public function isRedefinedProperty($name)

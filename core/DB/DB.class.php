@@ -66,7 +66,11 @@
 					$this->disconnect();
 			}
 		}
-		
+
+		/**
+		 * @return Dialect
+		 * @throws UnimplementedFeatureException
+		 */
 		public static function getDialect()
 		{
 			throw new UnimplementedFeatureException('implement me, please');

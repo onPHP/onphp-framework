@@ -19,12 +19,13 @@
 		private $name		= null;
 		private $columnName	= null;
 
+		/** @var BasePropertyType|ObjectType|null  */
 		private $type		= null;
 		private $size		= null;
 
 		private $required	= false;
 		private $identifier	= false;
-
+		/** @var MetaRelation */
 		private $relation	= null;
 
 		private $strategy	= null;
@@ -96,7 +97,7 @@
 		}
 
 		/**
-		 * @return MetaClassProperty
+		 * @return string
 		**/
 		public function getConvertedName()
 		{
@@ -106,7 +107,7 @@
 		}
 
 		/**
-		 * @return BasePropertyType
+		 * @return BasePropertyType|ObjectType
 		**/
 		public function getType()
 		{
