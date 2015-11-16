@@ -31,7 +31,7 @@
 		**/
 		public function getClass()
 		{
-			return MetaConfiguration::me()->getClassByName($this->className);
+			return MetaConfiguration::me()->getCorePlugin()->getClassByName($this->className);
 		}
 		
 		public function getClassName()

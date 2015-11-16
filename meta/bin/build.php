@@ -282,36 +282,36 @@ Possible options:
 			newLine();
 		
 		try {
-			$meta =
-				MetaConfiguration::me()->
-				setOutput($out)->
-				load(ONPHP_META_PATH.'internal.xml', false);
+			$meta = MetaConfiguration::me()
+                ->setOutput($out)
+                ->load(ONPHP_META_PATH.'internal.xml');
 			
 			$out->info('Known internal classes: ');
-			foreach ($meta->getClassList() as $class) {
+			foreach ($meta->getCorePlugin()->getClassList() as $class) {
 				$out->info($class->getName().', ', true);
 			}
 			$out->infoLine("that's all.")->newLine();
 			
-			$meta->
-				setDryRun($metaDryRun)->
-				load($pathMeta)->
-				setForcedGeneration($metaForce);
-			
-			if ($metaOnlyContainers) {
-				$meta->buildContainers();
-			} else {
-				$meta->
-					buildClasses()->
-					buildContainers();
-				
-				if (!$metaNoSchema)
-					$meta->buildSchema();
-				
-				if (!$metaNoSchemaCheck)
-					$meta->buildSchemaChanges();
-			}
-			
+			$meta
+                ->setDryRun($metaDryRun)
+                ->setForcedGeneration($metaForce)
+                ->load($pathMeta);
+
+
+            if ($metaOnlyContainers) {
+                $meta->getCorePlugin()
+                    ->setBuildClasses(false)
+                    ->setBuildSchema(false)
+                    ->setBuildSchemaChanges(false)
+                ;
+            } else {
+                $meta->getCorePlugin()
+                    ->setBuildSchema(!$metaNoSchema)
+                    ->setBuildSchemaChanges(!$metaNoSchemaCheck)
+                ;
+            }
+
+			$meta->buildFiles();
 			$meta->checkForStaleFiles($metaDropStaleFiles);
 			
 			$out->newLine()->info('Trying to compile all known classes... ');
@@ -319,20 +319,21 @@ Possible options:
 			ClassUtils::preloadAllClasses();
 			
 			$out->infoLine('done.');
-			
-			if ($metaCheckEnumerationRefIntegrity)
-				$meta->setWithEnumerationRefIntegrityCheck(true);
-			
-			if (!$metaNoIntegrityCheck)
-				$meta->checkIntegrity();
+
+			if (!$metaNoIntegrityCheck) {
+                if ($metaCheckEnumerationRefIntegrity) {
+                    $meta->getCorePlugin()->setWithEnumerationRefIntegrityCheck(true);
+                }
+
+                $meta->checkIntegrity();
+            }
+
 		} catch (Exception $e) {
-			$out->
-				newLine()->
-				errorLine($e->getMessage(), true)->
-				newLine()->
-				logLine(
-					$e->getTraceAsString()
-				);
+			$out
+                ->newLine()
+                ->errorLine($e->getMessage(), true)
+                ->newLine()
+                ->logLine($e->getTraceAsString());
 		}
 	} else {
 		$out->getOutput()->resetAll()->newLine();

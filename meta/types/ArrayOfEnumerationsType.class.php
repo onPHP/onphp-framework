@@ -14,7 +14,7 @@ class ArrayOfEnumerationsType extends ArrayOfIntegersType {
 		Assert::isNotEmptyArray($parameters, 'enumeration class name is not provided');
 		list($enumerationClassName) = $parameters;
 
-		$this->enumerationClass = MetaConfiguration::me()->getClassByName($enumerationClassName);
+		$this->enumerationClass = MetaConfiguration::me()->getCorePlugin()->getClassByName($enumerationClassName);
 
 		Assert::isTrue(
 			$this->enumerationClass->getPattern() instanceof EnumerationClassPattern,

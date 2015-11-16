@@ -1,6 +1,6 @@
 <!-- $Id$ -->
 
-<!ELEMENT metaconfiguration (include*, classes*, sources*)>
+<!ELEMENT metaconfiguration (plugin*, include*, classes*, sources*)>
 
 <!ELEMENT classes (class*)>
 
@@ -76,4 +76,10 @@
 <!ATTLIST include
 		file		CDATA #REQUIRED
 		generate	(true|false) "true"
+>
+
+<!ELEMENT plugin EMPTY>
+<!ATTLIST plugin
+		name	CDATA #REQUIRED
+		class	CDATA #REQUIRED
 >

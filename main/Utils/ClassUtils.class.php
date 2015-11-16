@@ -14,7 +14,7 @@
 	**/
 	final class ClassUtils extends StaticFactory
 	{
-		const CLASS_NAME_PATTERN = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*';
+		const CLASS_NAME_PATTERN = '(\\\\?[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)+';
 		
 		/* void */ public static function copyProperties($source, $destination)
 		{

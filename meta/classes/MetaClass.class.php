@@ -357,7 +357,7 @@
 		
 		public function hasChilds()
 		{
-			foreach (MetaConfiguration::me()->getClassList() as $class) {
+			foreach (MetaConfiguration::me()->getCorePlugin()->getClassList() as $class) {
 				if (
 					$class->getParent()
 					&& $class->getParent()->getName() == $this->getName()
