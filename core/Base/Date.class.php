@@ -331,7 +331,7 @@ class Date implements Stringable, DialectString
 				preg_match('/^(\d{1,2})[-\.](\d{1,2})[-\.](\d{1,4})/', $date, $matches)
 				) {
 					Assert::isTrue(
-						checkdate($matches[2], $matches[2], $matches[3])
+						checkdate($matches[2], $matches[1], $matches[3])
 					);
 				}
 
