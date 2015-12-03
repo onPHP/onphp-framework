@@ -55,5 +55,15 @@
 			
 			return $this;
 		}
+
+		public function exportValue()
+		{
+			if ($this->value instanceof Stringable) {
+				return $this->value->toString();
+			}
+
+			throw new UnimplementedFeatureException('dont know how to export ' . $this->className);
+		}
+
 	}
 ?>

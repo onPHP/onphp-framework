@@ -44,9 +44,10 @@
 		 */
 		protected function setInternalId($id)
 		{
-			if (isset(static::$names[$id])) {
+			$names = static::getNameList();
+			if (isset($names[$id])) {
 				$this->id = $id;
-				$this->name = static::$names[$id];
+				$this->name = $names[$id];
 			} else
 				throw new MissingElementException(
 					get_class($this) . ' knows nothing about such id == '.$id
@@ -79,7 +80,7 @@
 		public static function getList()
 		{
 			$list = array();
-			foreach (array_keys(static::$names) as $id)
+			foreach (array_keys(static::getNameList()) as $id)
 				$list[] = static::create($id);
 
 			return $list;

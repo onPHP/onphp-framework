@@ -190,7 +190,7 @@
 			return $this->customError;
 		}
 		
-		protected function import($scope)
+		public function import($scope)
 		{
 			if (
 				!empty($scope[$this->name])
@@ -207,6 +207,15 @@
 			$this->clean();
 			
 			return null;
+		}
+
+		public function arrayOf($minElements = null, $maxElements = null)
+		{
+			$arrayOfPrimitive = Primitive::arrayOf($this);
+			$arrayOfPrimitive
+				->setMin($minElements)
+				->setMax($maxElements);
+			return $arrayOfPrimitive;
 		}
 	}
 ?>

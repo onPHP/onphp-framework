@@ -313,7 +313,7 @@ class Date implements Stringable, DialectString
 	}
 
 
-	protected function import($date)
+	public function import($date)
 	{
 		try{
 			if (is_int($date) || is_numeric($date)) { // unix timestamp

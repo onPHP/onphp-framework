@@ -84,9 +84,13 @@ class PrimitiveJson extends PrimitiveArray {
                 return null;
         }
 
-        if (is_array($value))
-            return $this->import(array($this->getName() => $value));
-
-        return false;
+        return $this->import(array($this->getName() => $value));
     }
+
+    public function exportValue()
+    {
+        return json_encode(parent::exportValue());
+    }
+
+
 }

@@ -513,5 +513,13 @@
 		{
 			return new PrimitiveRegistryList($name);
 		}
+
+		public static function arrayOf(BasePrimitive $primitive)
+		{
+			$primitivePrimitives = new ArrayOfPrimitive($primitive->getName());
+			$primitivePrimitives
+				->setPrimitive($primitive);
+			return $primitivePrimitives;
+		}
 	}
 ?>
