@@ -9,29 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Lockers
-	**/
-	abstract class BaseLocker extends Singleton
-	{
-		protected $pool = array();
-		
-		/// acquire lock
-		abstract public function get($key);
-		
-		/// release lock
-		abstract public function free($key);
-		
-		/// completely remove lock
-		abstract public function drop($key);
-		
-		/// drop all acquired/released locks
-		public function clean()
-		{
-			foreach (array_keys($this->pool) as $key)
-				$this->drop($key);
-			
-			return true;
-		}
-	}
-?>
+/**
+ * @ingroup Lockers
+ **/
+abstract class BaseLocker extends Singleton
+{
+    protected $pool = array();
+
+    /// acquire lock
+    abstract public function get($key);
+
+    /// release lock
+    abstract public function free($key);
+
+    /// completely remove lock
+    abstract public function drop($key);
+
+    /// drop all acquired/released locks
+    public function clean()
+    {
+        foreach (array_keys($this->pool) as $key)
+            $this->drop($key);
+
+        return true;
+    }
+}

@@ -107,122 +107,123 @@
 		)
 */
 
-	/**
-	 * Abstract cache peer base class.
-	 * 
-	 * @ingroup Cache
-	**/
-	abstract class CachePeer
-	{
-		const TIME_SWITCH		= 2592000; // 60 * 60 * 24 * 30
+/**
+ * Abstract cache peer base class.
+ *
+ * @ingroup Cache
+ **/
+abstract class CachePeer
+{
+    const TIME_SWITCH = 2592000; // 60 * 60 * 24 * 30
 
-		protected $alive		= false;
-		protected $compress		= false;
+    protected $alive = false;
+    protected $compress = false;
 
-		abstract public function get($key);
-		abstract public function delete($key);
-		
-		abstract public function increment($key, $value);
-		abstract public function decrement($key, $value);
-		
-		abstract protected function store(
-			$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
-		);
-		
-		abstract public function append($key, $data);
-		
-		/**
-		 * @return CachePeer
-		**/
-		public function clean()
-		{
-			foreach (Singleton::getAllInstances() as $object)
-				if ($object instanceof GenericDAO)
-					$object->dropIdentityMap();
-			
-			return $this;
-		}
-		
-		public function getList($indexes)
-		{
-			// intentially not array
-			$out = null;
-			
-			foreach ($indexes as $key)
-				if (null !== ($value = $this->get($key)))
-					$out[$key] = $value;
-			
-			return $out;
-		}
-		
-		final public function set($key, $value, $expires = Cache::EXPIRES_MEDIUM)
-		{
-			return $this->store('set', $key, $value, $expires);
-		}
-		
-		final public function add($key, $value, $expires = Cache::EXPIRES_MEDIUM)
-		{
-			return $this->store('add', $key, $value, $expires);
-		}
-		
-		final public function replace($key, $value, $expires = Cache::EXPIRES_MEDIUM)
-		{
-			return $this->store('replace', $key, $value, $expires);
-		}
+    abstract public function get($key);
 
-		public function isAlive()
-		{
-			return $this->alive;
-		}
-		
-		/**
-		 * @return CachePeer
-		**/
-		public function mark($className)
-		{
-			return $this;
-		}
-		
-		/**
-		 * @return CachePeer
-		**/
-		public function enableCompression()
-		{
-			$this->compress = true;
-			return $this;
-		}
+    abstract public function delete($key);
 
-		/**
-		 * @return CachePeer
-		**/
-		public function disableCompression()
-		{
-			$this->compress = false;
-			return $this;
-		}
+    abstract public function increment($key, $value);
 
-		/**
-		 * @return CachePeer
-		 */
-		public function getRuntimeCopy()
-		{
-			return new RuntimeMemory();
-		}
+    abstract public function decrement($key, $value);
 
-		protected function prepareData($value)
-		{
-			if ($this->compress)
-				return gzcompress(serialize($value));
-			else
-				return serialize($value);
-		}
-		
-		protected function restoreData($value)
-		{
-			if ($this->compress)
-				return unserialize(gzuncompress($value));
-			else
-				return unserialize($value);
-		}
-	}
-?>
+    abstract protected function store(
+        $action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
+    );
+
+    abstract public function append($key, $data);
+
+    /**
+     * @return CachePeer
+     **/
+    public function clean()
+    {
+        foreach (Singleton::getAllInstances() as $object)
+            if ($object instanceof GenericDAO)
+                $object->dropIdentityMap();
+
+        return $this;
+    }
+
+    public function getList($indexes)
+    {
+        // intentially not array
+        $out = null;
+
+        foreach ($indexes as $key)
+            if (null !== ($value = $this->get($key)))
+                $out[$key] = $value;
+
+        return $out;
+    }
+
+    final public function set($key, $value, $expires = Cache::EXPIRES_MEDIUM)
+    {
+        return $this->store('set', $key, $value, $expires);
+    }
+
+    final public function add($key, $value, $expires = Cache::EXPIRES_MEDIUM)
+    {
+        return $this->store('add', $key, $value, $expires);
+    }
+
+    final public function replace($key, $value, $expires = Cache::EXPIRES_MEDIUM)
+    {
+        return $this->store('replace', $key, $value, $expires);
+    }
+
+    public function isAlive()
+    {
+        return $this->alive;
+    }
+
+    /**
+     * @return CachePeer
+     **/
+    public function mark($className)
+    {
+        return $this;
+    }
+
+    /**
+     * @return CachePeer
+     **/
+    public function enableCompression()
+    {
+        $this->compress = true;
+        return $this;
+    }
+
+    /**
+     * @return CachePeer
+     **/
+    public function disableCompression()
+    {
+        $this->compress = false;
+        return $this;
+    }
+
+    /**
+     * @return CachePeer
+     */
+    public function getRuntimeCopy()
+    {
+        return new RuntimeMemory();
+    }
+
+    protected function prepareData($value)
+    {
+        if ($this->compress)
+            return gzcompress(serialize($value));
+        else
+            return serialize($value);
+    }
+
+    protected function restoreData($value)
+    {
+        if ($this->compress)
+            return unserialize(gzuncompress($value));
+        else
+            return unserialize($value);
+    }
+}
