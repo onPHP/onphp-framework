@@ -9,17 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Essential interface for DAO-related operations.
-	 * 
-	 * @see IdentifiableObject
-	 * 
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	interface Identifiable
-	{
-		public function getId();
-		public function setId($id);
-	}
-?>
+/**
+ * Essential interface for DAO-related operations.
+ *
+ * @see IdentifiableObject
+ *
+ * @ingroup Base
+ * @ingroup Module
+ **/
+interface Identifiable
+{
+    public function getId();
+
+    public function setId($id);
+}

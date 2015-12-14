@@ -9,12 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	interface Stringable
-	{
-		public function toString();
-	}
-?>
+/**
+ * @ingroup Base
+ * @ingroup Module
+ **/
+interface Stringable
+{
+    public function toString();
+}

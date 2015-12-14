@@ -9,12 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	interface Aliased
-	{
-		public function getAlias();
-	}
-?>
+/**
+ * @ingroup Base
+ * @ingroup Module
+ **/
+interface Aliased
+{
+    public function getAlias();
+}

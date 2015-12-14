@@ -9,12 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	interface Instantiatable
-	{
-		public static function me();
-	}
-?>
+/**
+ * @ingroup Base
+ * @ingroup Module
+ **/
+interface Instantiatable
+{
+    public static function me();
+}

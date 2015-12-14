@@ -9,15 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @see NamedObject
-	 * 
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	interface Named extends Identifiable
-	{
-		public function getName();
-		public function setName($name);
-	}
-?>
+/**
+ * @see NamedObject
+ *
+ * @ingroup Base
+ * @ingroup Module
+ **/
+interface Named extends Identifiable
+{
+    public function getName();
+
+    public function setName($name);
+}

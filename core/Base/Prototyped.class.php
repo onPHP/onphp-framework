@@ -9,15 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	interface Prototyped
-	{
-		/**
-		 * @return AbstractProtoClass
-		**/
-		public static function proto();
-	}
-?>
+/**
+ * @ingroup Base
+ * @ingroup Module
+ **/
+interface Prototyped
+{
+    /**
+     * @return AbstractProtoClass
+     **/
+    public static function proto();
+}
