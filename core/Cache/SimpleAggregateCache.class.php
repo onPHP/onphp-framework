@@ -9,71 +9,72 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * A wrapper like AggregateCache, but it has very simple
-	 * (and fast) selective algorithm
-	 * 
-	 * @ingroup Cache
-	**/
-	final class SimpleAggregateCache extends AggregateCache
-	{
-		private $peerAmount	= null;
-		private $labels		= null;
-		
-		/**
-		 * @return SimpleAggregateCache
-		**/
-		public static function create()
-		{
-			return new self;
-		}
+/**
+ * A wrapper like AggregateCache, but it has very simple
+ * (and fast) selective algorithm
+ *
+ * @ingroup Cache
+ **/
+final class SimpleAggregateCache extends AggregateCache
+{
+    private $peerAmount = null;
+    private $labels = null;
 
-		public function addPeer(
-			$label, CachePeer $peer, $level = self::LEVEL_NORMAL
-		)
-		{
-			parent::addPeer($label, $peer, $level);
+    /**
+     * @return SimpleAggregateCache
+     **/
+    public static function create()
+    {
+        return new self;
+    }
 
-			return $this->dropHelpers();
-		}
+    public function addPeer(
+        $label, CachePeer $peer, $level = self::LEVEL_NORMAL
+    )
+    {
+        parent::addPeer($label, $peer, $level);
 
-		public function dropPeer($label)
-		{
-			parent::dropPeer($label);
+        return $this->dropHelpers();
+    }
 
-			return $this->dropHelpers();
-		}
+    public function dropPeer($label)
+    {
+        parent::dropPeer($label);
 
-		public function checkAlive()
-		{
-			parent::checkAlive();
+        return $this->dropHelpers();
+    }
 
-			return $this->dropHelpers();
-		}
-		
-		/**
-		 * brainless ;)
-		**/
-		protected function guessLabel($key)
-		{
-			if ($this->peerAmount === null)
-				$this->peerAmount = count($this->peers);
+    public function checkAlive()
+    {
+        parent::checkAlive();
 
-			if ($this->labels === null)
-				$this->labels = array_keys($this->peers);
+        return $this->dropHelpers();
+    }
 
-			Assert::isGreaterOrEqual($this->peerAmount, 1);
-			
-			return
-				$this->labels[ord(substr($key, -1)) % $this->peerAmount];
-		}
+    /**
+     * brainless ;)
+     **/
+    protected function guessLabel($key)
+    {
+        if ($this->peerAmount === null)
+            $this->peerAmount = count($this->peers);
 
-		private function dropHelpers()
-		{
-			$this->peerAmount	= null;
-			$this->labels		= null;
+        if ($this->labels === null)
+            $this->labels = array_keys($this->peers);
 
-			return $this;
-		}
-	}
+        Assert::isGreaterOrEqual($this->peerAmount, 1);
+
+        return
+            $this->labels[ord(substr($key, -1)) % $this->peerAmount];
+    }
+
+    private function dropHelpers()
+    {
+        $this->peerAmount = null;
+        $this->labels = null;
+
+        return $this;
+    }
+}
+
 ?>

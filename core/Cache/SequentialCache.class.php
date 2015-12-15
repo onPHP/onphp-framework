@@ -1,4 +1,5 @@
 <?php
+
 /****************************************************************************
  *   Copyright (C) 2012 by Artem Naumenko                                   *
  *                                                                          *
@@ -8,125 +9,124 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
+final class SequentialCache extends CachePeer
+{
+    /**
+     * List of all peers, including master
+     * @var array of CachePeer
+     */
+    private $list = array();
 
-	final class SequentialCache extends CachePeer
-	{
-		/**
-		 * List of all peers, including master
-		 * @var array of CachePeer
-		 */
-		private $list		= array();
-		
-		/**
-		 * List of slaves only
-		 * @var array of CachePeer
-		 */
-		private $slaves	= array();
-		
-		/**
-		 * @var CachePeer
-		 */
-		private $master	= null;
+    /**
+     * List of slaves only
+     * @var array of CachePeer
+     */
+    private $slaves = array();
 
-		/**
-		 * @param CachePeer $master
-		 * @param array $slaves or CachePeer
-		 * @return SequentialCache 
-		 */
-		public static function create(CachePeer $master, array $slaves = array())
-		{
-			return new self($master, $slaves);
-		}
-		
-		/**
-		 * @param CachePeer $master
-		 * @param array $slaves or CachePeer
-		 */
-		public function __construct(CachePeer $master, array $slaves = array())
-		{
-			$this->setMaster($master);
-			
-			foreach ($slaves as $cache) {
-				$this->addPeer($cache);
-			}
-		}
-		
-		/**
-		 * @param CachePeer $master
-		 * @return \SequentialCache 
-		 */
-		public function setMaster(CachePeer $master)
-		{
-			$this->master = $master;
-			$this->list = $this->slaves;
-			array_unshift($this->list, $this->master);
-			
-			return $this;
-		}
-		
-		/**
-		 * @param CachePeer $master
-		 * @return \SequentialCache 
-		 */
-		public function addPeer(CachePeer $peer)
-		{
-			$this->list[]	= $peer;
-			$this->slaves[]	= $peer;
+    /**
+     * @var CachePeer
+     */
+    private $master = null;
 
-			return $this;
-		}
+    /**
+     * @param CachePeer $master
+     * @param array $slaves or CachePeer
+     * @return SequentialCache
+     */
+    public static function create(CachePeer $master, array $slaves = array())
+    {
+        return new self($master, $slaves);
+    }
 
-		public function get($key)
-		{
-			foreach ($this->list as $val) {
-				/* @var $val CachePeer */
-				$result = $val->get($key);
-				
-				if (
-					!empty($result)
-					|| $val->isAlive()
-				) {
-					return $result;
-				}
-			}
-			
-			throw new RuntimeException('All peers are dead');
-		}
+    /**
+     * @param CachePeer $master
+     * @param array $slaves or CachePeer
+     */
+    public function __construct(CachePeer $master, array $slaves = array())
+    {
+        $this->setMaster($master);
 
-		public function append($key, $data)
-		{
-			return $this->foreachItem(__METHOD__, func_get_args());
-		}
+        foreach ($slaves as $cache) {
+            $this->addPeer($cache);
+        }
+    }
 
-		public function decrement($key, $value)
-		{
-			throw new UnsupportedMethodException('decrement is not supported');
-		}
+    /**
+     * @param CachePeer $master
+     * @return \SequentialCache
+     */
+    public function setMaster(CachePeer $master)
+    {
+        $this->master = $master;
+        $this->list = $this->slaves;
+        array_unshift($this->list, $this->master);
 
-		public function delete($key)
-		{
-			return $this->foreachItem(__METHOD__, func_get_args());
-		}
+        return $this;
+    }
 
-		public function increment($key, $value)
-		{
-			throw new UnsupportedMethodException('increment is not supported');
-		}
-		
-		protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
-		{
-			return $this->foreachItem(__METHOD__, func_get_args());
-		}
+    /**
+     * @param CachePeer $peer
+     * @return $this
+     */
+    public function addPeer(CachePeer $peer)
+    {
+        $this->list[] = $peer;
+        $this->slaves[] = $peer;
 
-		private function foreachItem($method, array $args)
-		{
-			$result = true;
-			
-			foreach ($this->list as $peer) {
-				/* @var $peer CachePeer */
-				$result = call_user_func_array(array($peer, $method), $args) && $result;
-			}
-			
-			return $result;
-		}
-	}
+        return $this;
+    }
+
+    public function get($key)
+    {
+        foreach ($this->list as $val) {
+            /* @var $val CachePeer */
+            $result = $val->get($key);
+
+            if (
+                !empty($result)
+                || $val->isAlive()
+            ) {
+                return $result;
+            }
+        }
+
+        throw new RuntimeException('All peers are dead');
+    }
+
+    public function append($key, $data)
+    {
+        return $this->foreachItem(__METHOD__, func_get_args());
+    }
+
+    public function decrement($key, $value)
+    {
+        throw new UnsupportedMethodException('decrement is not supported');
+    }
+
+    public function delete($key)
+    {
+        return $this->foreachItem(__METHOD__, func_get_args());
+    }
+
+    public function increment($key, $value)
+    {
+        throw new UnsupportedMethodException('increment is not supported');
+    }
+
+    protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
+    {
+        return $this->foreachItem(__METHOD__, func_get_args());
+    }
+
+    private function foreachItem($method, array $args)
+    {
+        $result = true;
+
+        foreach ($this->list as $peer) {
+            /* @var $peer CachePeer */
+            $result = call_user_func_array(array($peer, $method), $args) && $result;
+        }
+
+        return $result;
+    }
+}

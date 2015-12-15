@@ -9,47 +9,49 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Memcached based locking.
-	 * No synchronization between local pool and memcached daemons!
-	 *
-	 * @ingroup Lockers
-	**/
-	final class MemcachedLocker extends BaseLocker implements Instantiatable
-	{
-		const VALUE = 0x1;
-		
-		private $memcachedClient = null;
+/**
+ * Memcached based locking.
+ * No synchronization between local pool and memcached daemons!
+ *
+ * @ingroup Lockers
+ **/
+class MemcachedLocker extends BaseLocker implements Instantiatable
+{
+    const VALUE = 0x1;
 
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
+    /**
+     * @var CachePeer
+     */
+    private $memcachedClient = null;
 
-		public function setMemcachedClient(CachePeer $memcachedPeer)
-		{
-			$this->memcachedClient = $memcachedPeer;
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
 
-			return $this;
-		}
+    public function setMemcachedClient(CachePeer $memcachedPeer)
+    {
+        $this->memcachedClient = $memcachedPeer;
 
-		public function get($key)
-		{
-			return $this->memcachedClient->add(
-				$key,
-				self::VALUE,
-				2 * Cache::EXPIRES_MINIMUM
-			);
-		}
+        return $this;
+    }
 
-		public function free($key)
-		{
-			return $this->memcachedClient->delete($key);
-		}
+    public function get($key)
+    {
+        return $this->memcachedClient->add(
+            $key,
+            self::VALUE,
+            2 * Cache::EXPIRES_MINIMUM
+        );
+    }
 
-		public function drop($key)
-		{
-			return $this->free($key);
-		}
-	}
-?>
+    public function free($key)
+    {
+        return $this->memcachedClient->delete($key);
+    }
+
+    public function drop($key)
+    {
+        return $this->free($key);
+    }
+}
