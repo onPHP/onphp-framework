@@ -9,29 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Transaction-like wrapper around DB's queryNull.
-	 * 
-	 * @ingroup Transaction
-	**/
-	final class FakeTransaction extends BaseTransaction
-	{
-		/**
-		 * @return FakeTransaction
-		**/
-		public function add(Query $query)
-		{
-			$this->db->queryNull($query);
-			
-			return $this;
-		}
-		
-		/**
-		 * @return FakeTransaction
-		**/
-		public function flush()
-		{
-			return $this;
-		}
-	}
+/**
+ * Transaction-like wrapper around DB's queryNull.
+ *
+ * @ingroup Transaction
+ **/
+final class FakeTransaction extends BaseTransaction
+{
+    /**
+     * @return FakeTransaction
+     **/
+    public function add(Query $query)
+    {
+        $this->db->queryNull($query);
+
+        return $this;
+    }
+
+    /**
+     * @return FakeTransaction
+     **/
+    public function flush()
+    {
+        return $this;
+    }
+}
+
 ?>

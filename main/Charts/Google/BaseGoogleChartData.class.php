@@ -9,29 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup GoogleChart
-	**/
-	abstract class BaseGoogleChartData extends BaseGoogleChartParameter
-	{
-		protected $encoding = null;
-		
-		/**
-		 * @return BaseGoogleChartData
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return BaseGoogleChartData
-		**/
-		public function setEncoding(GoogleChartDataEncoding $encoding)
-		{
-			$this->encoding = $encoding;
-			
-			return $this;
-		}
-	}
-?>
+/**
+ * @ingroup GoogleChart
+ **/
+abstract class BaseGoogleChartData extends BaseGoogleChartParameter
+{
+    protected $encoding = null;
+
+    /**
+     * @return static
+     */
+    public static function create()
+    {
+        return new static();
+    }
+
+    /**
+     * @return BaseGoogleChartData
+     **/
+    public function setEncoding(GoogleChartDataEncoding $encoding)
+    {
+        $this->encoding = $encoding;
+
+        return $this;
+    }
+}
