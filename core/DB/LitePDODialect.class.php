@@ -54,5 +54,3 @@ class LitePDODialect extends LiteDialect
         return parent::getLink();
     }
 }
-
-?>

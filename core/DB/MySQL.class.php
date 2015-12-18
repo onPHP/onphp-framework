@@ -166,7 +166,7 @@ class MySQL extends Sequenceless
 
     public function getTableInfo($table)
     {
-        static $types = array(
+        static $types = [
             'tinyint' => DataType::SMALLINT,
             'smallint' => DataType::SMALLINT,
             'int' => DataType::INTEGER,
@@ -192,7 +192,7 @@ class MySQL extends Sequenceless
             'set' => null,
             'enum' => null,
             'year' => null
-        );
+        ];
 
         try {
             $result = $this->queryRaw('SHOW COLUMNS FROM ' . $table);
@@ -206,8 +206,8 @@ class MySQL extends Sequenceless
 
         while ($row = mysql_fetch_assoc($result)) {
             $name = strtolower($row['Field']);
-            $matches = array();
-            $info = array('type' => null, 'extra' => null);
+            $matches = [];
+            $info = ['type' => null, 'extra' => null];
             if (
             preg_match(
                 '~(\w+)(\((\d+?)\)){0,1}\s*(\w*)~',
