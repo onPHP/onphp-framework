@@ -63,10 +63,8 @@
 			'~(\s)\s*~u',						// n -> 2 whitespaces to process short strings (bar to a foo)
 			'~([\s\pP]|^)([\w\pL]{1,2})\s~Uu',	// bar a foo | bar to a foo
 			'~(&nbsp;|\s)\s+~u',				// compress whitespaces
-			'~\"(.*)\"~e',						// "qu"o"te"
 			'~\"([^\s]*)\"~',					// "quote"
 			'~\"([^\s]*)\s+([^\s\.]*)\"~',		// "quote quote"
-			'~([\w\pL\']+)~eu'					// rock'n'roll
 		);
 		
 		private static $to = array(
@@ -75,12 +73,12 @@
 			'$1$1',
 			'$1$2&nbsp;',
 			'$1',
-			'\'&laquo;\'.$this->innerQuotes(\'$1\').\'&raquo;\'',
 			'&laquo;$1&raquo;',
 			'&laquo;$1 $2&raquo;',
-			'str_replace("\'", \'&#146;\', \'$1\')'
 		);
-		
+
+		private $replaces = null;
+
 		/**
 		 * @return RussianTypograph
 		**/
@@ -138,20 +136,29 @@
 			
 			return CompressWhitespaceFilter::me()->apply($text);
 		}
+
+		/**
+		 * Remove using this method when php 5.3 will no more supported by onPHP
+		 * @param $text
+		 * @return mixed
+		 */
+		public function innerQuotes_php53($text)
+		{
+			return $this->innerQuotes($text);
+		}
 		
 		private function typographize($text)
 		{
 			if (mb_strlen($text) < 2)
 				return $text;
 			
-			return
-				preg_replace(
-					self::$from,
-					self::$to,
-					stripslashes($text)
-				);
+			$text = preg_replace(self::$from, self::$to, stripslashes($text));
+			foreach ($this->getCbReplaces() as $pattern => $callback) {
+				$text = preg_replace_callback($pattern, $callback, $text);
+			}
+			return $text;
 		}
-		
+
 		private function innerQuotes($text)
 		{
 			return
@@ -163,6 +170,27 @@
 					'&#132;$1&#147;',
 					stripslashes($text)
 				);
+		}
+
+		private function getCbReplaces()
+		{
+			if ($this->replaces === null) {
+				$self = $this;
+				$this->replaces = [
+					// "qu"o"te" => '\'&laquo;\'.$this->innerQuotes(\'$1\').\'&raquo;\''
+					'~&laquo;(.*)&raquo;~' => function ($matches) use ($self) {
+						return '&laquo;' . $self->innerQuotes_php53($matches[1]) . '&raquo;';
+					},
+					'~\"(.*)\"~' => function ($matches) use ($self) {
+						return '&laquo;' . $self->innerQuotes_php53($matches[1]) . '&raquo;';
+					},
+					// rock'n'roll => 'str_replace("\'", \'&#146;\', \'$1\')'
+					'~([\w\pL\']+)~u' => function ($matches) {
+						return str_replace("'", '&#146;', $matches[1]);
+					},
+				];
+			}
+			return $this->replaces;
 		}
 	}
 ?>

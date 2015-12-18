@@ -23,7 +23,7 @@
 				'wrong server empty response'
 			);
 		}
-		
+
 		public function testGetWithAdditionalGet()
 		{
 			$get = array(
@@ -42,7 +42,7 @@
 				$response->getBody()
 			);
 		}
-		
+
 		public function testPostAndFilesWithMultiCurl()
 		{
 			$get = array(
@@ -102,27 +102,56 @@
 				$client->getResponse($request3)->getBody()
 			);
 		}
-		
-		public function testSecurityExceptionWithSendingFileAndAtInPost()
+
+		public function testSecurityExceptionWithSendingFileAndAtInPostPhp5_4()
 		{
+			if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
+				$this->markTestSkipped('Test only for php versions lower 5.5');
+			}
+
 			$post = array(
 				'a' => array(
 					array('b' => '@foobar')
 				)
 			);
-			
+
 			$files = array('file' => $this->getFile1Path());
-			
+
 			$request = $this->spawnRequest(HttpMethod::post())->
 				setPost($post)->
 				setFiles($files);
-			
+
 			try {
 				$this->spawnClient()->send($request);
 				$this->fail('expected NetworkException about security');
 			} catch (NetworkException $e) {
 				$this->assertStringStartsWith('Security excepion:', $e->getMessage());
 			}
+		}
+
+		public function testSecurityExceptionWithSendingFileAndAtInPostPhp5_5()
+		{
+			if (!version_compare(PHP_VERSION, '5.5.0', '>=')) {
+				$this->markTestSkipped('Test only for php versions 5.5+');
+			}
+
+			$post = array(
+				'a' => array(
+					array('b' => '@foobar')
+				)
+			);
+
+			$files = array('file' => $this->getFile1Path());
+
+			$request = $this->spawnRequest(HttpMethod::post())->
+			setPost($post)->
+			setFiles($files);
+
+			$filesExpectation = array('file' => file_get_contents($this->getFile1Path()));
+			$this->assertEquals(
+				$this->generateString(array(), $post, $filesExpectation, ''),
+				$this->spawnClient()->send($request)->getBody()
+			);
 		}
 		
 		public function testSendingNotExistsFile()
@@ -166,9 +195,7 @@
 		
 		private function generateString($get, $post, $files, $inputString)
 		{
-			ob_start();
-			var_dump($get, $post, $files, $inputString);
-			return ob_get_clean();
+			return print_r(array($get, $post, $files, $inputString), 1);
 		}
 		
 		private function getFile1Path()

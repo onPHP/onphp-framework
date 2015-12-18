@@ -19,6 +19,11 @@
 	*  main/Flow/SimpleFrontController.class.php: added SimpleFrontController
 	this is one of the possible way to use FrontController in your application 
 
+2013-10-25 Vasily M. Stashko
+
+	* core/DB/MySQLim.class.php:
+		added getTableInfo() method implementation
+
 2013-10-21 Evgeny V. Kokovikhin
 	
 	* meta/bin/build.php meta/classes/MetaClassPUMLGenerator.class.php
