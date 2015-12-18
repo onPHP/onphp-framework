@@ -9,9 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class MissingElementException extends BaseException {/*_*/}
-?>
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+ **/
+class MissingElementException extends BaseException
+{
+    /*_*/
+}

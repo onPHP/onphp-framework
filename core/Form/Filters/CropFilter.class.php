@@ -9,54 +9,55 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @see RegulatedPrimitive::addImportFilter()
-	 * 
-	 * @ingroup Filters
-	**/
-	final class CropFilter implements Filtrator
-	{
-		private $start	= 0;
-		private $length	= 0;
-		
-		/**
-		 * @return CropFilter
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return CropFilter
-		**/
-		public function setStart($start)
-		{
-			Assert::isPositiveInteger($start);
-			
-			$this->start = $start;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return CropFilter
-		**/
-		public function setLength($length)
-		{
-			Assert::isPositiveInteger($length);
-			
-			$this->length = $length;
-			
-			return $this;
-		}
+/**
+ * @see RegulatedPrimitive::addImportFilter()
+ *
+ * @ingroup Filters
+ **/
+final class CropFilter implements Filtrator
+{
+    private $start = 0;
+    private $length = 0;
 
-		public function apply($value)
-		{
-			return
-				$this->length
-					? mb_strcut($value, $this->start, $this->length)
-					: mb_strcut($value, $this->start);
-		}
-	}
+    /**
+     * @return CropFilter
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return CropFilter
+     **/
+    public function setStart($start)
+    {
+        Assert::isPositiveInteger($start);
+
+        $this->start = $start;
+
+        return $this;
+    }
+
+    /**
+     * @return CropFilter
+     **/
+    public function setLength($length)
+    {
+        Assert::isPositiveInteger($length);
+
+        $this->length = $length;
+
+        return $this;
+    }
+
+    public function apply($value)
+    {
+        return
+            $this->length
+                ? mb_strcut($value, $this->start, $this->length)
+                : mb_strcut($value, $this->start);
+    }
+}
+
 ?>

@@ -9,9 +9,11 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class NetworkException extends IOException {/*_*/}
-?>
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+ **/
+class NetworkException extends IOException
+{
+    /*_*/
+}

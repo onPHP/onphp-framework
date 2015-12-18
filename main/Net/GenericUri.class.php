@@ -37,10 +37,13 @@
 		{
 			return new self;
 		}
-		
+
 		/**
-		 * @return GenericUri
-		**/
+		 * @param $uri
+		 * @param bool|false $guessClass
+		 * @return static
+		 * @throws WrongArgumentException
+		 */
 		final public static function parse($uri, $guessClass = false)
 		{
 			static $schemePattern = '([^:/?#]+):';

@@ -9,16 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Interface for primitive's filters.
-	 * 
-	 * @see FiltrablePrimitive::getDisplayValue()
-	 * 
-	 * @ingroup Filters
-	 * @ingroup Module
-	**/
-	interface Filtrator
-	{
-		public function apply($value);
-	}
-?>
+/**
+ * Interface for primitive's filters.
+ *
+ * @see FiltrablePrimitive::getDisplayValue()
+ *
+ * @ingroup Filters
+ * @ingroup Module
+ **/
+interface Filtrator
+{
+    public function apply($value);
+}

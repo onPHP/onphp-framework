@@ -9,24 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Replaces \n and \r by whitespace
-	 * 
-	 * @ingroup Filters
-	**/
-	final class RemoveNewlineFilter extends BaseFilter
-	{
-		/**
-		 * @return RemoveNewLineFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return preg_replace('/[\n\r]+/', ' ', $value);
-		}
-	}
-?>
+/**
+ * Replaces \n and \r by whitespace
+ *
+ * @ingroup Filters
+ **/
+class RemoveNewlineFilter extends BaseFilter
+{
+    /**
+     * @return RemoveNewLineFilter
+     **/
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    public function apply($value)
+    {
+        return preg_replace('/[\n\r]+/', ' ', $value);
+    }
+}

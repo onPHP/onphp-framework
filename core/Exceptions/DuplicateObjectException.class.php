@@ -8,13 +8,12 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-/*
-	$Id$
-*/
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class DuplicateObjectException extends DatabaseException {/*_*/}
-?>
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+ **/
+class DuplicateObjectException extends DatabaseException
+{
+    /*_*/
+}

@@ -9,9 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class FileNotFoundException extends IOException {/*_*/}
-?>
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+ **/
+class FileNotFoundException extends IOException
+{
+    /*_*/
+}

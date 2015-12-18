@@ -9,9 +9,11 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class TooManyRowsException extends DatabaseException {/*_*/}
-?>
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+ **/
+class TooManyRowsException extends DatabaseException
+{
+    /*_*/
+}

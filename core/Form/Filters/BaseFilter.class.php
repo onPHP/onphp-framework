@@ -9,13 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Filter's template.
-	 * 
-	 * @ingroup Filters
-	 * @ingroup Module
-	**/
-	abstract class BaseFilter
-		extends Singleton
-		implements Filtrator, Instantiatable {/*_*/}
-?>
+/**
+ * Filter's template.
+ *
+ * @ingroup Filters
+ * @ingroup Module
+ **/
+abstract class BaseFilter
+    extends Singleton
+    implements Filtrator, Instantiatable
+{
+    /*_*/
+}

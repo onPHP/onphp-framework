@@ -9,22 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	  * @ingroup Filters
-	**/
-	final class UpperCaseFilter extends BaseFilter
-	{
-		/**
-		 * @return LowerCaseFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return mb_strtoupper($value);
-		}
-	}
-?>
+/**
+ * @ingroup Filters
+ **/
+final class UpperCaseFilter extends BaseFilter
+{
+    /**
+     * @return LowerCaseFilter
+     **/
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    public function apply($value)
+    {
+        return mb_strtoupper($value);
+    }
+}

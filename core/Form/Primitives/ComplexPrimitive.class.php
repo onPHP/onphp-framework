@@ -9,96 +9,98 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Basis for primitives which can be scattered across import scope.
-	 * 
-	 * @ingroup Primitives
-	 * @ingroup Module
-	**/
-	abstract class ComplexPrimitive extends RangedPrimitive
-	{
-		private $single = null;	// single, not single or fsck it
+/**
+ * Basis for primitives which can be scattered across import scope.
+ *
+ * @ingroup Primitives
+ * @ingroup Module
+ **/
+abstract class ComplexPrimitive extends RangedPrimitive
+{
+    private $single = null;    // single, not single or fsck it
 
-		public function __construct($name)
-		{
-			$this->single = new Ternary(null);
-			parent::__construct($name);
-		}
+    public function __construct($name)
+    {
+        $this->single = new Ternary(null);
+        parent::__construct($name);
+    }
 
-		/**
-		 * @return Ternary
-		**/
-		public function getState()
-		{
-			return $this->single;
-		}
+    /**
+     * @return Ternary
+     **/
+    public function getState()
+    {
+        return $this->single;
+    }
 
-		/**
-		 * @return ComplexPrimitive
-		**/
-		public function setState(Ternary $ternary)
-		{
-			$this->single->setValue($ternary->getValue());
+    /**
+     * @return ComplexPrimitive
+     **/
+    public function setState(Ternary $ternary)
+    {
+        $this->single->setValue($ternary->getValue());
 
-			return $this;
-		}
+        return $this;
+    }
 
-		/**
-		 * @return ComplexPrimitive
-		**/
-		public function setSingle()
-		{
-			$this->single->setTrue();
+    /**
+     * @return ComplexPrimitive
+     **/
+    public function setSingle()
+    {
+        $this->single->setTrue();
 
-			return $this;
-		}
+        return $this;
+    }
 
-		/**
-		 * @return ComplexPrimitive
-		**/
-		public function setComplex()
-		{
-			$this->single->setFalse();
+    /**
+     * @return ComplexPrimitive
+     **/
+    public function setComplex()
+    {
+        $this->single->setFalse();
 
-			return $this;
-		}
+        return $this;
+    }
 
-		/**
-		 * @return ComplexPrimitive
-		**/
-		public function setAnyState()
-		{
-			$this->single->setNull();
+    /**
+     * @return ComplexPrimitive
+     **/
+    public function setAnyState()
+    {
+        $this->single->setNull();
 
-			return $this;
-		}
+        return $this;
+    }
 
-		// implement me, child :-)
-		abstract public function importSingle($scope);
-		abstract public function importMarried($scope);
+    // implement me, child :-)
+    abstract public function importSingle($scope);
 
-		public function import($scope)
-		{
-			if (!BasePrimitive::import($scope))
-				return null;
-			
-			if ($this->single->isTrue())
-				return $this->importSingle($scope);
-			elseif ($this->single->isFalse())
-				return $this->importMarried($scope);
-			else {
-				if (!$this->importMarried($scope))
-					return $this->importSingle($scope);
+    abstract public function importMarried($scope);
 
-				return true;
-			}
+    public function import($scope)
+    {
+        if (!BasePrimitive::import($scope))
+            return null;
 
-			Assert::isUnreachable();
-		}
-		
-		public function exportValue()
-		{
-			throw new UnimplementedFeatureException();
-		}
-	}
+        if ($this->single->isTrue())
+            return $this->importSingle($scope);
+        elseif ($this->single->isFalse())
+            return $this->importMarried($scope);
+        else {
+            if (!$this->importMarried($scope))
+                return $this->importSingle($scope);
+
+            return true;
+        }
+
+        Assert::isUnreachable();
+    }
+
+    public function exportValue()
+    {
+        throw new UnimplementedFeatureException();
+    }
+}
+
 ?>

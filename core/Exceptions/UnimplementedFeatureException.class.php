@@ -12,9 +12,11 @@
 	$Id$
 */
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class UnimplementedFeatureException extends Exception {/*_*/}
-?>
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+ **/
+class UnimplementedFeatureException extends Exception
+{
+    /*_*/
+}
