@@ -9,24 +9,24 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Turing
-	**/
-	abstract class BackgroundDrawer extends Drawer
-	{
-		abstract public function draw();
-		
-		/**
-		 * @return Color
-		**/
-		public function makeColor()
-		{
-			$color = $this->getTuringImage()->getTextColors()->getRandomTextColor();
-			
-			$invertColor = clone $color;
-			$invertColor->invertColor();
-			
-			return $invertColor;
-		}
-	}
+/**
+ * @ingroup Turing
+ **/
+abstract class BackgroundDrawer extends Drawer
+{
+    abstract public function draw();
+
+    /**
+     * @return Color
+     **/
+    public function makeColor()
+    {
+        $color = $this->getTuringImage()->getTextColors()->getRandomTextColor();
+
+        $invertColor = clone $color;
+        $invertColor->invertColor();
+
+        return $invertColor;
+    }
+}
 ?>

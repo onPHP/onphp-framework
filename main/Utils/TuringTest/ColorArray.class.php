@@ -9,56 +9,63 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Turing
-	**/
-	final class ColorArray
-	{
-		private $colors = array();
-		
-		/**
-		 * @return ColorArray
-		**/
-		public function add(Color $color)
-		{
-			$this->colors[] = $color;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return ColorArray
-		**/
-		public function clear()
-		{
-			unset($this->colors);
-			
-			return $this;
-		}
-		
-		/**
-		 * @throws MissingElementException
-		 * @return Color
-		**/
-		public function getRandomTextColor()
-		{
-			if ($this->isEmpty())
-				throw new MissingElementException();
-				
-			return $this->colors[array_rand($this->colors)];
-		}
-	
-		public function getColors()
-		{
-			return $this->colors;
-		}
-		
-		public function isEmpty()
-		{
-			if (count($this->colors) == 0)
-				return true;
-			else
-				return false;
-		}
-	}
-?>
+/**
+ * @ingroup Turing
+ **/
+class ColorArray
+{
+    private $colors = array();
+
+    /**
+     * @return ColorArray
+     */
+    public static function create()
+    {
+        return new self();
+    }
+
+    /**
+     * @return ColorArray
+     **/
+    public function add(Color $color)
+    {
+        $this->colors[] = $color;
+
+        return $this;
+    }
+
+    /**
+     * @return ColorArray
+     **/
+    public function clear()
+    {
+        unset($this->colors);
+
+        return $this;
+    }
+
+    /**
+     * @throws MissingElementException
+     * @return Color
+     **/
+    public function getRandomTextColor()
+    {
+        if ($this->isEmpty())
+            throw new MissingElementException('Not set colors in the object ');
+
+        return $this->colors[array_rand($this->colors)];
+    }
+
+    public function isEmpty()
+    {
+        if (count($this->colors) == 0)
+            return true;
+        else
+            return false;
+    }
+
+    public function getColors()
+    {
+        return $this->colors;
+    }
+}

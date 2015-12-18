@@ -9,29 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Turing
-	**/
-	abstract class Drawer
-	{
-		private	$turingImage	= null;
-		
-		/**
-		 * @return Drawer
-		**/
-		public function setTuringImage(TuringImage $turingImage)
-		{
-			$this->turingImage = $turingImage;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return TuringImage
-		**/
-		public function getTuringImage()
-		{
-			return $this->turingImage;
-		}
-	}
-?>
+/**
+ * @ingroup Turing
+ **/
+abstract class Drawer
+{
+    private $turingImage = null;
+
+    /**
+     * @return TuringImage
+     **/
+    public function getTuringImage()
+    {
+        return $this->turingImage;
+    }
+
+    /**
+     * @return Drawer
+     **/
+    public function setTuringImage(TuringImage $turingImage)
+    {
+        $this->turingImage = $turingImage;
+
+        return $this;
+    }
+}
