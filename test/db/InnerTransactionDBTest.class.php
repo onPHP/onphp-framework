@@ -1,6 +1,65 @@
 <?php
 	class InnerTransactionDBTest extends TestCaseDAO
 	{
+		public function setUp()
+		{
+			if (empty(DBTestPool::me()->getPool())) {
+				$this->fail('this test requires db in config');
+			}
+			parent::setUp();
+		}
+
+		public function testSavepoint()
+		{
+			foreach (DBTestPool::me()->getPool() as $connector => $db) {
+				/* @var $db DB */
+				DBPool::me()->setDefault($db);
+				$this->getDBCreator()->fillDB();
+
+				/* @var $moscow TestCity */
+				$moscow = TestCity::dao()->getByLogic(Expression::eq('name', 'Moscow'));
+
+				$savePointName = 'svp';
+				$db->begin();
+				$db->savepointBegin($savePointName);
+
+				$moscow->dao()->save($moscow->setName($newName = 'New Moscow'));
+
+				$db->savepointRelease($savePointName);
+				$db->commit();
+
+				$this->assertNotNull(TestCity::dao()->getByLogic(Expression::eq('name', $newName)));
+			}
+		}
+
+		public function testSavepointRollback()
+		{
+			foreach (DBTestPool::me()->getPool() as $connector => $db) {
+				/* @var $db DB */
+				DBPool::me()->setDefault($db);
+				$this->getDBCreator()->fillDB();
+
+				/* @var $moscow TestCity */
+				$moscow = TestCity::dao()->getByLogic(Expression::eq('name', 'Moscow'));
+
+				$savePointName = 'svp';
+				$db->begin();
+				$db->savepointBegin($savePointName);
+
+				$moscow->dao()->save($moscow->setName($newName = 'New Moscow'));
+
+				$db->savepointRollback($savePointName);
+				$db->commit();
+
+				try {
+					TestCity::dao()->getByLogic(Expression::eq('name', $newName));
+					$this->fail('expects object not found exception');
+				} catch (ObjectNotFoundException $e) {
+					/* ok */
+				}
+			}
+		}
+
 		public function testInnerTransaction()
 		{
 			foreach (DBTestPool::me()->getPool() as $connector => $db) {

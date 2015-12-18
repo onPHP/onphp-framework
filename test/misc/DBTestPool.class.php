@@ -23,6 +23,9 @@
 					$credentials['host'],
 					$credentials['base']
 				);
+				if ($this->pool[$connector] instanceof MySQLim) {
+					$this->pool[$connector]->setDefaultEngine('INNODB');
+				}
 			}
 		}
 		

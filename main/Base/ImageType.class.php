@@ -17,7 +17,8 @@
 	final class ImageType extends Enumeration
 	{
 		const IMAGETYPE_PJPEG	= 100;
-		
+		const IMAGETYPE_SWC = 101;
+
 		const GIF		= IMAGETYPE_GIF;
 		const JPEG		= IMAGETYPE_JPEG;
 		const PNG		= IMAGETYPE_PNG;
@@ -30,7 +31,7 @@
 		const JP2		= IMAGETYPE_JP2;
 		const JPX		= IMAGETYPE_JPX;
 		const JB2		= IMAGETYPE_JB2;
-		const SWC		= IMAGETYPE_SWC;
+		const SWC		= self::IMAGETYPE_SWC;
 		const IFF		= IMAGETYPE_IFF;
 		const WBMP		= IMAGETYPE_WBMP;
 		const JPEG2000	= IMAGETYPE_JPEG2000;
@@ -50,7 +51,7 @@
 			IMAGETYPE_JP2			=> 'jp2',
 			IMAGETYPE_JPX			=> 'jpx',
 			IMAGETYPE_JB2			=> 'jb2',
-			IMAGETYPE_SWC			=> 'swc',
+			self::IMAGETYPE_SWC		=> 'swc',
 			IMAGETYPE_IFF			=> 'iff',
 			IMAGETYPE_WBMP			=> 'bmp',
 			IMAGETYPE_JPEG2000		=> 'jpc',
@@ -73,7 +74,7 @@
 			'jp2'	=> IMAGETYPE_JP2,
 			'jpx'	=> IMAGETYPE_JPX,
 			'jb2'	=> IMAGETYPE_JB2,
-			'swc'	=> IMAGETYPE_SWC,
+			'swc'	=> self::IMAGETYPE_SWC,
 			'iff'	=> IMAGETYPE_IFF,
 			'wbmp'	=> IMAGETYPE_WBMP,
 			'jpc'	=> IMAGETYPE_JPEG2000,
@@ -93,7 +94,7 @@
 			IMAGETYPE_JP2			=> 'image/jp2',
 			IMAGETYPE_JPX			=> 'image/jpx',
 			IMAGETYPE_JB2			=> 'image/jb2',
-			IMAGETYPE_SWC			=> 'application/x-shockwave-flash',
+			self::IMAGETYPE_SWC			=> 'application/x-shockwave-flash',
 			IMAGETYPE_IFF			=> 'image/iff',
 			IMAGETYPE_WBMP			=> 'image/vnd.wap.wbmp',
 			IMAGETYPE_JPEG2000		=> 'image/jpeg',

@@ -57,6 +57,8 @@
 					$this->import(
 						array($this->getName() => $value->toString())
 					);
+			} elseif (is_scalar($value)) {
+				return parent::importValue($value);
 			}
 			
 			return parent::importValue(null);
