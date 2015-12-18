@@ -50,7 +50,7 @@
 			
 			return $this;
 		}
-		
+
 		public function apply($value)
 		{
 			return
