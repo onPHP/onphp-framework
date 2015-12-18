@@ -50,7 +50,13 @@
 		
 		public function quoteTable($table)
 		{
-			return '"'.$table.'"';
+			return implode(
+				'.',
+				array_map(
+					function($tablePart) { return '"'.$tablePart.'"'; },
+					explode('.', $table)
+				)
+			);
 		}
 
 		public static function toCasted($field, $type)
