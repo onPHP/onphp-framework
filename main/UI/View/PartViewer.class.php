@@ -82,5 +82,3 @@ class PartViewer
         return $this->model;
     }
 }
-
-?>
