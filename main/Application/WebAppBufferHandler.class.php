@@ -1,7 +1,7 @@
 <?php
 
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2009 by Solomatin Alexandr                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -9,9 +9,31 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-abstract class ScopeNavigationSchema extends Singleton
+class WebAppBufferHandler implements InterceptingChainHandler
 {
-    abstract public function extractPath(&$scope);
+    /**
+     * @return WebAppBufferHandler
+     */
+    public static function create()
+    {
+        return new self();
+    }
 
-    abstract public function getScope($path);
+    /**
+     * @return WebAppBufferHandler
+     */
+    public function run(InterceptingChain $chain)
+    {
+        ob_start();
+
+        $chain->next();
+
+        if (($pageContents = ob_get_contents()) !== '') {
+            ob_end_flush();
+        } else {
+            ob_end_clean();
+        }
+
+        return $this;
+    }
 }
