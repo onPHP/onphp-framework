@@ -9,14 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	interface EditorCommand
-	{
-		/**
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request);
-	}
-?>
+/**
+ * @ingroup Flow
+ **/
+interface EditorCommand
+{
+    /**
+     * @return ModelAndView
+     **/
+    public function run(Prototyped $subject, Form $form, HttpRequest $request);
+}

@@ -9,14 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	interface HandlerMapping
-	{
-		/**
-		 * @return Controller
-		**/
-		public function getController(HttpRequest $request);
-	}
-?>
+/**
+ * @ingroup Flow
+ **/
+interface HandlerMapping
+{
+    /**
+     * @return Controller
+     **/
+    public function getController(HttpRequest $request);
+}

@@ -9,14 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	interface Controller
-	{
-		/**
-		 * @return ModelAndView
-		**/
-		public function handleRequest(HttpRequest $request);
-	}
-?>
+/**
+ * @ingroup Flow
+ **/
+interface Controller
+{
+    /**
+     * @return ModelAndView
+     **/
+    public function handleRequest(HttpRequest $request);
+}

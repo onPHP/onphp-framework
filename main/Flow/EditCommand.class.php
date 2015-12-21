@@ -9,28 +9,27 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	class EditCommand implements EditorCommand
-	{
-		/**
-		 * @return EditCommand
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request)
-		{
-			if ($object = $form->getValue('id'))
-				FormUtils::object2form($object, $form);
-			
-			return ModelAndView::create();
-		}
-	}
-?>
+/**
+ * @ingroup Flow
+ **/
+class EditCommand implements EditorCommand
+{
+    /**
+     * @return EditCommand
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return ModelAndView
+     **/
+    public function run(Prototyped $subject, Form $form, HttpRequest $request)
+    {
+        if ($object = $form->getValue('id'))
+            FormUtils::object2form($object, $form);
+
+        return ModelAndView::create();
+    }
+}

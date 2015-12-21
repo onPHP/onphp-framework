@@ -9,12 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	interface CarefulCommand extends EditorCommand
-	{
-		public function commit();
-		public function rollback();
-	}
-?>
+/**
+ * @ingroup Flow
+ **/
+interface CarefulCommand extends EditorCommand
+{
+    public function commit();
+
+    public function rollback();
+}
