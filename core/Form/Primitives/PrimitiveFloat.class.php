@@ -9,19 +9,18 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveFloat extends PrimitiveNumber
-	{
-		protected function checkNumber($number)
-		{
-			Assert::isFloat($number);
-		}
-		
-		protected function castNumber($number)
-		{
-			return (float) $number;
-		}
-	}
-?>
+/**
+ * @ingroup Primitives
+ **/
+class PrimitiveFloat extends PrimitiveNumber
+{
+    protected function checkNumber($number)
+    {
+        Assert::isFloat($number);
+    }
+
+    protected function castNumber($number)
+    {
+        return (float)$number;
+    }
+}
