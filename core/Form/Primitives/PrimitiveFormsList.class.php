@@ -38,7 +38,7 @@ class PrimitiveFormsList extends PrimitiveForm
 
     public function getInnerErrors()
     {
-        $result = array();
+        $result = [];
 
         foreach ($this->getValue() as $id => $form) {
             if ($errors = $form->getInnerErrors())
@@ -63,12 +63,12 @@ class PrimitiveFormsList extends PrimitiveForm
 
         $error = false;
 
-        $this->value = array();
+        $this->value = [];
 
         foreach ($scope[$this->name] as $id => $value) {
-            $this->value[$id] =
-                $this->proto->makeForm()->
-                import($value);
+            $this->value[$id] = $this->proto
+                ->makeForm()
+                ->import($value);
 
             if ($this->value[$id]->getErrors())
                 $error = true;
@@ -86,7 +86,7 @@ class PrimitiveFormsList extends PrimitiveForm
 
         $result = true;
 
-        $resultValue = array();
+        $resultValue = [];
 
         foreach ($value as $id => $form) {
             Assert::isInstance($form, 'Form');
@@ -107,7 +107,7 @@ class PrimitiveFormsList extends PrimitiveForm
         if (!$this->isImported())
             return null;
 
-        $result = array();
+        $result = [];
 
         foreach ($this->value as $id => $form) {
             $result[$id] = $form->export();
@@ -116,5 +116,3 @@ class PrimitiveFormsList extends PrimitiveForm
         return $result;
     }
 }
-
-?>
