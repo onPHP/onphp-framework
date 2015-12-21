@@ -9,29 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	abstract class AggregateProjection extends BaseProjection
-	{
-		abstract public function getFunctionName();
-		
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query)
-		{
-			Assert::isNotNull($this->property);
-			
-			return
-				$query->
-				get(
-					SQLFunction::create(
-						$this->getFunctionName(),
-						$criteria->getDao()->guessAtom($this->property, $query)
-					)->
-					setAlias($this->alias)
-				);
-		}
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+abstract class AggregateProjection extends BaseProjection
+{
+    /**
+     * @return JoinCapableQuery
+     **/
+    public function process(Criteria $criteria, JoinCapableQuery $query)
+    {
+        Assert::isNotNull($this->property);
+
+        return
+            $query->
+            get(
+                SQLFunction::create(
+                    $this->getFunctionName(),
+                    $criteria->getDao()->guessAtom($this->property, $query)
+                )
+                    ->setAlias($this->alias)
+            );
+    }
+
+    abstract public function getFunctionName();
+}

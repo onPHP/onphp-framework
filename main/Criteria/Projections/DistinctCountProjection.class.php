@@ -9,22 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class DistinctCountProjection extends CountProjection
-	{
-		/**
-		 * @return SQLFunction
-		**/
-		protected function getFunction(
-			Criteria $criteria,
-			JoinCapableQuery $query
-		)
-		{
-			return
-				parent::getFunction($criteria, $query)->
-				setAggregateDistinct();
-		}
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+class DistinctCountProjection extends CountProjection
+{
+    /**
+     * @return SQLFunction
+     **/
+    protected function getFunction(
+        Criteria $criteria,
+        JoinCapableQuery $query
+    )
+    {
+        return
+            parent::getFunction($criteria, $query)
+                ->setAggregateDistinct();
+    }
+}

@@ -9,14 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class AverageNumberProjection extends AggregateProjection
-	{
-		public function getFunctionName()
-		{
-			return 'avg';
-		}
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+class AverageNumberProjection extends AggregateProjection
+{
+    public function getFunctionName()
+    {
+        return 'avg';
+    }
+}

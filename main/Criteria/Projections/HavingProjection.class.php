@@ -9,27 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class HavingProjection implements ObjectProjection
-	{
-		private $logic = null;
-		
-		public function __construct(LogicalObject $logic)
-		{
-			$this->logic = $logic;
-		}
-		
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query)
-		{
-			return
-				$query->having(
-					$this->logic->toMapped($criteria->getDao(), $query)
-				);
-		}
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+class HavingProjection implements ObjectProjection
+{
+    private $logic = null;
+
+    public function __construct(LogicalObject $logic)
+    {
+        $this->logic = $logic;
+    }
+
+    /**
+     * @return JoinCapableQuery
+     **/
+    public function process(Criteria $criteria, JoinCapableQuery $query)
+    {
+        return
+            $query->having(
+                $this->logic->toMapped($criteria->getDao(), $query)
+            );
+    }
+}

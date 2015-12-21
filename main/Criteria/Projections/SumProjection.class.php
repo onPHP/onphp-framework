@@ -9,14 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class SumProjection extends AggregateProjection
-	{
-		public function getFunctionName()
-		{
-			return 'sum';
-		}
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+class SumProjection extends AggregateProjection
+{
+    public function getFunctionName()
+    {
+        return 'sum';
+    }
+}

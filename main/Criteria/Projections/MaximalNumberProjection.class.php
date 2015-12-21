@@ -9,14 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class MaximalNumberProjection extends AggregateProjection
-	{
-		public function getFunctionName()
-		{
-			return 'max';
-		}
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+class MaximalNumberProjection extends AggregateProjection
+{
+    public function getFunctionName()
+    {
+        return 'max';
+    }
+}
