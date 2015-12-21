@@ -9,28 +9,27 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	class HttpErrorView implements View
-	{
-		protected $status	= null;
-		
-		protected $prefix	= null;
-		protected $postfix	= null;
-		
-		public function __construct(HttpStatus $status, $prefix, $postfix)
-		{
-			$this->status = $status;
-			
-			$this->prefix = $prefix;
-			$this->postfix = $postfix;
-		}
-		
-		/* void */ public function render($model = null)
-		{
-			header($this->status->toString());
-			include $this->prefix.$this->status->getId().$this->postfix;
-		}
-	}
-?>
+/**
+ * @ingroup Flow
+ **/
+class HttpErrorView implements View
+{
+    protected $status = null;
+
+    protected $prefix = null;
+    protected $postfix = null;
+
+    public function __construct(HttpStatus $status, $prefix, $postfix)
+    {
+        $this->status = $status;
+
+        $this->prefix = $prefix;
+        $this->postfix = $postfix;
+    }
+
+    public function render($model = null)
+    {
+        header($this->status->toString());
+        include $this->prefix . $this->status->getId() . $this->postfix;
+    }
+}

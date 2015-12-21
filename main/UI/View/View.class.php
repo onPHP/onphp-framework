@@ -9,16 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	interface View
-	{
-		const ERROR_VIEW = 'error';
-		
-		/**
-		 * @param $model null or Model
-		**/
-		public function render($model = null);
-	}
-?>
+/**
+ * @ingroup Flow
+ **/
+interface View
+{
+    const ERROR_VIEW = 'error';
+
+    /**
+     * @param $model null or Model
+     **/
+    public function render($model = null);
+}

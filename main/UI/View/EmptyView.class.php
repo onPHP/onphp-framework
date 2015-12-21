@@ -9,30 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	class EmptyView implements View, Stringable
-	{
-		/**
-		 * @return EmptyView
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return EmptyView
-		**/
-		public function render(/* Model */ $model = null)
-		{
-			return $this;
-		}
-		
-		public function toString()
-		{
-			return null;
-		}
-	}
-?>
+/**
+ * @ingroup Flow
+ **/
+class EmptyView implements View, Stringable
+{
+    /**
+     * @return EmptyView
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return EmptyView
+     **/
+    public function render(/* Model */
+        $model = null)
+    {
+        return $this;
+    }
+
+    public function toString()
+    {
+        return null;
+    }
+}
