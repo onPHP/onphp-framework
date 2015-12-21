@@ -9,19 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Crypto
-	**/
-	interface KeyPair
-	{
-		/**
-		 * @return BigInteger
-		**/
-		public function getPublic();
-		
-		/**
-		 * @return BigInteger
-		**/
-		public function getPrivate();
-	}
-?>
+/**
+ * @ingroup Crypto
+ **/
+interface KeyPair
+{
+    /**
+     * @return BigInteger
+     **/
+    public function getPublic();
+
+    /**
+     * @return BigInteger
+     **/
+    public function getPrivate();
+}
