@@ -55,7 +55,7 @@
 
             return
                 $this->import(
-                    array($this->getName() => $value->toString())
+                    [$this->getName() => $value->toString()]
                 );
         }
 
