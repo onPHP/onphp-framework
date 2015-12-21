@@ -9,36 +9,35 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Calendar week representation.
-	 * 
-	 * @ingroup Calendar
-	**/
-	final class CalendarWeek
-	{
-		private $days = array();
-		
-		/**
-		 * @return CalendarWeek
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function getDays()
-		{
-			return $this->days;
-		}
-		
-		/**
-		 * @return CalendarWeek
-		**/
-		public function addDay(CalendarDay $day)
-		{
-			$this->days[$day->toDate()] = $day;
-			
-			return $this;
-		}
-	}
-?>
+/**
+ * Calendar week representation.
+ *
+ * @ingroup Calendar
+ **/
+class CalendarWeek
+{
+    private $days = array();
+
+    /**
+     * @return CalendarWeek
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    public function getDays()
+    {
+        return $this->days;
+    }
+
+    /**
+     * @return CalendarWeek
+     **/
+    public function addDay(CalendarDay $day)
+    {
+        $this->days[$day->toDate()] = $day;
+
+        return $this;
+    }
+}

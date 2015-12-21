@@ -9,15 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Support interface for use with FullTextUtils.
-	 * 
-	 * @ingroup DAOs
-	 * @ingroup Module
-	**/
-	interface FullTextDAO extends BaseDAO
-	{
-		// index' field name
-		public function getIndexField();
-	}
+/**
+ * Support interface for use with FullTextUtils.
+ *
+ * @ingroup DAOs
+ * @ingroup Module
+ **/
+interface FullTextDAO extends BaseDAO
+{
+    // index' field name
+    public function getIndexField();
+}
+
 ?>

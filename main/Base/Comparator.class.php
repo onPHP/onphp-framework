@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2009 by Denis M. Gabaidulin                             *
  *                                                                         *
@@ -8,9 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-
-	interface Comparator
-	{
-		public function compare($one, $two);
-	}
-?>
+interface Comparator
+{
+    public function compare($one, $two);
+}

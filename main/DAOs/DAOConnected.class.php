@@ -9,14 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Helper for identifying object's DAO.
-	 * 
-	 * @ingroup DAOs
-	 * @ingroup Module
-	**/
-	interface DAOConnected extends Identifiable
-	{
-		public static function dao();
-	}
+/**
+ * Helper for identifying object's DAO.
+ *
+ * @ingroup DAOs
+ * @ingroup Module
+ **/
+interface DAOConnected extends Identifiable
+{
+    public static function dao();
+}
+
 ?>

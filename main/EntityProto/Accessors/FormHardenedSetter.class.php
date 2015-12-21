@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2008 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,26 +9,24 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+class FormHardenedSetter extends FormMutator
+{
+    public function set($name, $value)
+    {
+        if (!isset($this->mapping[$name]))
+            throw new WrongArgumentException(
+                "knows nothing about property '{$name}'"
+            );
 
-	final class FormHardenedSetter extends FormMutator
-	{
-		public function set($name, $value)
-		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			$primitive = $this->mapping[$name];
-			
-			$method = ($value === null)
-				? 'dropValue'
-				: 'setValue';
-			
-			$this->object->get($primitive->getName())->
-				$method($value);
-			
-			return $this;
-		}
-	}
-?>
+        $primitive = $this->mapping[$name];
+
+        $method = ($value === null)
+            ? 'dropValue'
+            : 'setValue';
+
+        $this->object->get($primitive->getName())->
+        $method($value);
+
+        return $this;
+    }
+}

@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,14 +9,12 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+final class ObjectGetter extends PrototypedGetter
+{
+    public function get($name)
+    {
+        $method = 'get' . ucfirst($name);
 
-	final class ObjectGetter extends PrototypedGetter
-	{
-		public function get($name)
-		{
-			$method = 'get'.ucfirst($name);
-			
-			return $this->object->$method();
-		}
-	}
-?>
+        return $this->object->$method();
+    }
+}

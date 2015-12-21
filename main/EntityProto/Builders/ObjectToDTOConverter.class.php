@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,31 +9,29 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+class ObjectToDTOConverter extends DTOBuilder
+{
+    /**
+     * @return ObjectToDTOConverter
+     **/
+    public static function create(EntityProto $proto)
+    {
+        return new self($proto);
+    }
 
-	final class ObjectToDTOConverter extends DTOBuilder
-	{
-		/**
-		 * @return ObjectToDTOConverter
-		**/
-		public static function create(EntityProto $proto)
-		{
-			return new self($proto);
-		}
-		
-		/**
-		 * @return ObjectGetter
-		**/
-		protected function getGetter($object)
-		{
-			return new ObjectGetter($this->proto, $object);
-		}
-		
-		/**
-		 * @return DTOSetter
-		**/
-		protected function getSetter(&$object)
-		{
-			return new DTOSetter($this->proto, $object);
-		}
-	}
-?>
+    /**
+     * @return ObjectGetter
+     **/
+    protected function getGetter($object)
+    {
+        return new ObjectGetter($this->proto, $object);
+    }
+
+    /**
+     * @return DTOSetter
+     **/
+    protected function getSetter(&$object)
+    {
+        return new DTOSetter($this->proto, $object);
+    }
+}

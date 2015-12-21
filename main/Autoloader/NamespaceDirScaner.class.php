@@ -8,40 +8,42 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-	
-	/**
-	 * Abstract class to scan directories,
-	 *    see NamespaceDirScanerPSR0 and NamespaceDirScanerOnPHP
-	 */
-	abstract class NamespaceDirScaner
-	{
-		protected $classExtension = EXT_CLASS;
-		protected $list = array();
-		protected $dirCount = 0;
-		
-		public function __construct() {
-			;
-		}
-		
-		abstract public function scan($directory, $namespace = '');
-		
-		/**
-		 * @param string $classExtension
-		 * @return NamespaceDirScaner
-		 */
-		public function setClassExtension($classExtension)
-		{
-			$this->classExtension = $classExtension;
-			return $this;
-		}
-		
-		public function clear() {
-			$this->list = array();
-			$this->dirCount = 0;
-		}
-		
-		public function getList() {
-			return $this->list;
-		}
-	}
-?>
+
+/**
+ * Abstract class to scan directories,
+ *    see NamespaceDirScanerPSR0 and NamespaceDirScanerOnPHP
+ */
+abstract class NamespaceDirScaner
+{
+    protected $classExtension = EXT_CLASS;
+    protected $list = array();
+    protected $dirCount = 0;
+
+    public function __construct()
+    {
+        ;
+    }
+
+    abstract public function scan($directory, $namespace = '');
+
+    /**
+     * @param string $classExtension
+     * @return NamespaceDirScaner
+     */
+    public function setClassExtension($classExtension)
+    {
+        $this->classExtension = $classExtension;
+        return $this;
+    }
+
+    public function clear()
+    {
+        $this->list = array();
+        $this->dirCount = 0;
+    }
+
+    public function getList()
+    {
+        return $this->list;
+    }
+}

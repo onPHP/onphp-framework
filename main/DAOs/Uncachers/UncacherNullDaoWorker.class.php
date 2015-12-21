@@ -9,28 +9,29 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Uncachers
-	**/
-	class UncacherNullDaoWorker implements UncacherBase
-	{
-		public static function create()
-		{
-			return new self;
-		}
-		/**
-		 * @param $uncacher UncacherNullDaoWorker same as self class
-		 * @return BaseUncacher (this)
-		 */
-		public function merge(UncacherBase $uncacher)
-		{
-			Assert::isInstance($uncacher, 'UncacherNullDaoWorker');
-			return $this;
-		}
-		
-		public function uncache()
-		{
-			/* do nothing */
-		}
-	}
-?>
+/**
+ * @ingroup Uncachers
+ **/
+class UncacherNullDaoWorker implements UncacherBase
+{
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @param UncacherBase $uncacher
+     * @return $this
+     * @throws WrongArgumentException
+     */
+    public function merge(UncacherBase $uncacher)
+    {
+        Assert::isInstance($uncacher, 'UncacherNullDaoWorker');
+        return $this;
+    }
+
+    public function uncache()
+    {
+        /* do nothing */
+    }
+}

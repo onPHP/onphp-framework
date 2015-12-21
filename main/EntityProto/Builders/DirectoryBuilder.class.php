@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2009 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,139 +9,137 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+abstract class DirectoryBuilder extends PrototypedBuilder
+{
+    protected $directory = null;
+    protected $permissions = 0700;
+    protected $identityMap = null;
 
-	abstract class DirectoryBuilder extends PrototypedBuilder
-	{
-		protected $directory	= null;
-		protected $permissions	= 0700;
-		protected $identityMap	= null;
+    public function __construct(EntityProto $proto)
+    {
+        parent::__construct($proto);
 
-		public function __construct(EntityProto $proto)
-		{
-			parent::__construct($proto);
+        $this->identityMap = new DirectoryContext;
+    }
 
-			$this->identityMap = new DirectoryContext;
-		}
+    public function getDirectory()
+    {
+        return $this->directory;
+    }
 
-		public function setDirectory($directory)
-		{
-			$this->directory = $directory;
-			
-			return $this;
-		}
-		
-		public function getDirectory()
-		{
-			return $this->directory;
-		}
+    public function setDirectory($directory)
+    {
+        $this->directory = $directory;
 
-		public function setPermissions($permissions)
-		{
-			$this->permissions = $permissions;
+        return $this;
+    }
 
-			return $this;
-		}
+    public function getPermissions()
+    {
+        return $this->permissions;
+    }
 
-		public function getPermissions()
-		{
-			return $this->permissions;
-		}
+    public function setPermissions($permissions)
+    {
+        $this->permissions = $permissions;
 
-		public function setIdentityMap(DirectoryContext $identityMap)
-		{
-			$this->identityMap = $identityMap;
+        return $this;
+    }
 
-			return $this;
-		}
+    public function getIdentityMap()
+    {
+        return $this->identityMap;
+    }
 
-		public function getIdentityMap()
-		{
-			return $this->identityMap;
-		}
+    public function setIdentityMap(DirectoryContext $identityMap)
+    {
+        $this->identityMap = $identityMap;
 
-		/**
-		 * @return PrototypedBuilder
-		**/
-		public function cloneBuilder(EntityProto $proto)
-		{
-			$result = parent::cloneBuilder($proto);
+        return $this;
+    }
 
-			$result->
-				setDirectory($this->directory)->
-				setPermissions($this->permissions)->
-				setIdentityMap($this->identityMap);
+    public function cloneInnerBuilder($property)
+    {
+        $this->checkDirectory();
 
-			return $result;
-		}
+        $result = parent::cloneInnerBuilder($property);
 
-		public function cloneInnerBuilder($property)
-		{
-			$this->checkDirectory();
+        $result->
+        setDirectory($this->directory . '/' . $property)->
+        setPermissions($this->permissions)->
+        setIdentityMap($this->identityMap);
 
-			$result = parent::cloneInnerBuilder($property);
+        return $result;
+    }
 
-			$result->
-				setDirectory($this->directory.'/'.$property)->
-				setPermissions($this->permissions)->
-				setIdentityMap($this->identityMap);
+    protected function checkDirectory()
+    {
+        if (!$this->directory)
+            throw new WrongStateException(
+                'you must specify the context for this builder'
+            );
 
-			return $result;
-		}
+        return $this;
+    }
 
-		public function makeListItemBuilder($object)
-		{
-			$this->checkDirectory();
+    public function makeListItemBuilder($object)
+    {
+        $this->checkDirectory();
 
-			if (!$object instanceof Identifiable)
-				throw new WrongArgumentException(
-					'cannot build list of items without identity'
-				);
+        if (!$object instanceof Identifiable)
+            throw new WrongArgumentException(
+                'cannot build list of items without identity'
+            );
 
-			return $this->cloneBuilder($this->proto)->
-				setPermissions($this->permissions)->
-				setDirectory($this->directory.'/'.$object->getId());
-		}
+        return $this->cloneBuilder($this->proto)->
+        setPermissions($this->permissions)->
+        setDirectory($this->directory . '/' . $object->getId());
+    }
 
-		protected function createEmpty()
-		{
-			$result = $this->directory;
+    /**
+     * @return PrototypedBuilder
+     **/
+    public function cloneBuilder(EntityProto $proto)
+    {
+        $result = parent::cloneBuilder($proto);
 
-			if (!file_exists($result))
-				mkdir($result, $this->permissions, true);
-			elseif (is_link($result)) {
-				throw new WrongStateException(
-					'cannot make object by reference: '.$this->directory
-				);
-			}
+        $result->
+        setDirectory($this->directory)->
+        setPermissions($this->permissions)->
+        setIdentityMap($this->identityMap);
 
-			return $result;
-		}
+        return $result;
+    }
 
-		protected function safeClean()
-		{
-			if (file_exists($this->directory) || is_link($this->directory)) {
-				if (!is_link($this->directory)) {
-					throw new WrongStateException(
-						'you should remove the storage '
-						.$this->directory
-						.' by your hands'
-					);
-				}
+    protected function createEmpty()
+    {
+        $result = $this->directory;
 
-				unlink($this->directory);
-			}
+        if (!file_exists($result))
+            mkdir($result, $this->permissions, true);
+        elseif (is_link($result)) {
+            throw new WrongStateException(
+                'cannot make object by reference: ' . $this->directory
+            );
+        }
 
-			return $this;
-		}
+        return $result;
+    }
 
-		protected function checkDirectory()
-		{
-			if (!$this->directory)
-				throw new WrongStateException(
-					'you must specify the context for this builder'
-				);
+    protected function safeClean()
+    {
+        if (file_exists($this->directory) || is_link($this->directory)) {
+            if (!is_link($this->directory)) {
+                throw new WrongStateException(
+                    'you should remove the storage '
+                    . $this->directory
+                    . ' by your hands'
+                );
+            }
 
-			return $this;
-		}
-	}
-?>
+            unlink($this->directory);
+        }
+
+        return $this;
+    }
+}

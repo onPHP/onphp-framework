@@ -9,73 +9,72 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @see IdentifiableTree
-	 * 
-	 * @ingroup Helpers
-	**/
-	abstract class NamedTree extends NamedObject
-	{
-		private $parent	= null;
-		
-		/**
-		 * @return NamedTree
-		**/
-		public function getParent()
-		{
-			return $this->parent;
-		}
-		
-		/**
-		 * @return NamedTree
-		**/
-		public function setParent(NamedTree $parent)
-		{
-			Assert::brothers($this, $parent);
-			
-			$this->parent = $parent;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return NamedTree
-		**/
-		public function dropParent()
-		{
-			$this->parent = null;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return NamedTree
-		**/
-		public function getRoot()
-		{
-			$current = $this;
-			$next = $this;
-			
-			while ($next) {
-				$current = $next;
-				$next = $next->getParent();
-			}
-			
-			return $current;
-		}
-		
-		public function toString($delimiter = ' :: ')
-		{
-			$name = array($this->getName());
-			
-			$parent = $this;
-			
-			while ($parent = $parent->getParent())
-				$name[] = $parent->getName();
-			
-			$name = array_reverse($name);
-			
-			return implode($delimiter, $name);
-		}
-	}
-?>
+/**
+ * @see IdentifiableTree
+ *
+ * @ingroup Helpers
+ **/
+abstract class NamedTree extends NamedObject
+{
+    private $parent = null;
+
+    /**
+     * @return NamedTree
+     **/
+    public function dropParent()
+    {
+        $this->parent = null;
+
+        return $this;
+    }
+
+    /**
+     * @return NamedTree
+     **/
+    public function getRoot()
+    {
+        $current = $this;
+        $next = $this;
+
+        while ($next) {
+            $current = $next;
+            $next = $next->getParent();
+        }
+
+        return $current;
+    }
+
+    /**
+     * @return NamedTree
+     **/
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @return NamedTree
+     **/
+    public function setParent(NamedTree $parent)
+    {
+        Assert::brothers($this, $parent);
+
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function toString($delimiter = ' :: ')
+    {
+        $name = array($this->getName());
+
+        $parent = $this;
+
+        while ($parent = $parent->getParent())
+            $name[] = $parent->getName();
+
+        $name = array_reverse($name);
+
+        return implode($delimiter, $name);
+    }
+}

@@ -9,17 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Uncachers
-	**/
-	interface UncacherBase
-	{
-		/**
-		 * @param $uncacher BaseUncacher same as self class
-		 * @return BaseUncacher (this)
-		 */
-		public function merge(UncacherBase $uncacher);
-		
-		public function uncache();
-	}
+/**
+ * @ingroup Uncachers
+ **/
+interface UncacherBase
+{
+    /**
+     * @param $uncacher BaseUncacher same as self class
+     * @return BaseUncacher (this)
+     */
+    public function merge(UncacherBase $uncacher);
+
+    public function uncache();
+}
+
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,24 +9,22 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+final class FormSetter extends FormMutator
+{
+    public function set($name, $value)
+    {
+        if (!isset($this->mapping[$name]))
+            throw new WrongArgumentException(
+                "knows nothing about property '{$name}'"
+            );
 
-	final class FormSetter extends FormMutator
-	{
-		public function set($name, $value)
-		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			$primitive = $this->mapping[$name];
-			
-			$this->object->importValue(
-				$primitive->getName(),
-				$value
-			);
-			
-			return $this;
-		}
-	}
-?>
+        $primitive = $this->mapping[$name];
+
+        $this->object->importValue(
+            $primitive->getName(),
+            $value
+        );
+
+        return $this;
+    }
+}

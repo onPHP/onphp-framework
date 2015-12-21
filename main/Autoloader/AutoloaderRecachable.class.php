@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2012 by Aleksey S. Denisov                              *
  *                                                                         *
@@ -8,9 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-	
-	interface AutoloaderRecachable extends Autoloader
-	{
-		public function autoloadWithRecache($className);
-	}
-?>
+interface AutoloaderRecachable extends Autoloader
+{
+    public function autoloadWithRecache($className);
+}

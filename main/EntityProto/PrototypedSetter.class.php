@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,16 +9,14 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+abstract class PrototypedSetter extends PrototypedMethodCaller
+{
+    abstract public function set($name, $value);
 
-	abstract class PrototypedSetter extends PrototypedMethodCaller
-	{
-		abstract public function set($name, $value);
-		
-		public function getGetter()
-		{
-			throw new UnimplementedFeatureException(
-				'inverse operation is not defined yet'
-			);
-		}
-	}
-?>
+    public function getGetter()
+    {
+        throw new UnimplementedFeatureException(
+            'inverse operation is not defined yet'
+        );
+    }
+}

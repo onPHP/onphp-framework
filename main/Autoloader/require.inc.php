@@ -26,5 +26,3 @@ require 'NamespaceDirScanerPSR0.class.php';
 require 'NamespaceResolver.class.php';
 require 'NamespaceResolverOnPHP.class.php';
 require 'NamespaceResolverPSR0.class.php';
-
-?>
