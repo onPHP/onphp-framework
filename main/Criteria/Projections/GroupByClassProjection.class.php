@@ -9,24 +9,25 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class GroupByClassProjection extends ClassProjection
-	{
-		/**
-		 * @return GroupByClassProjection
-		**/
-		public static function create($class)
-		{
-			return new self($class);
-		}
-		
-		/* void */ protected function subProcess(
-			JoinCapableQuery $query, DBField $field
-		)
-		{
-			$query->groupBy($field);
-		}
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+final class GroupByClassProjection extends ClassProjection
+{
+    /**
+     * @return GroupByClassProjection
+     **/
+    public static function create($class)
+    {
+        return new self($class);
+    }
+
+    /* void */
+    protected function subProcess(
+        JoinCapableQuery $query, DBField $field
+    )
+    {
+        $query
+            ->groupBy($field);
+    }
+}

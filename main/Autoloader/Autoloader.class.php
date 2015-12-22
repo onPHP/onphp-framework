@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2012 by Aleksey S. Denisov                              *
  *                                                                         *
@@ -8,13 +9,11 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-	
-	interface Autoloader
-	{
-		public function autoload($className);
-		
-		public function register();
-		
-		public function unregister();
-	}
-?>
+interface Autoloader
+{
+    public function autoload($className);
+
+    public function register();
+
+    public function unregister();
+}

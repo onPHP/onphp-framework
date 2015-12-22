@@ -9,14 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Helpers
-	**/
-	interface SingleRange
-	{
-		public function getStart();
-		public function getEnd();
-		
-		public function contains($probe);
-	}
-?>
+/**
+ * @ingroup Helpers
+ **/
+interface SingleRange
+{
+    public function getStart();
+
+    public function getEnd();
+
+    public function contains($probe);
+}

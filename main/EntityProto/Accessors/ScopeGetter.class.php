@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,24 +9,22 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+final class ScopeGetter extends PrototypedGetter
+{
+    public function get($name)
+    {
+        if (!isset($this->mapping[$name]))
+            throw new WrongArgumentException(
+                "knows nothing about property '{$name}'"
+            );
 
-	final class ScopeGetter extends PrototypedGetter
-	{
-		public function get($name)
-		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			$primitive = $this->mapping[$name];
-			
-			$key = $primitive->getName();
-			
-			return
-				isset($this->object[$key])
-				? $this->object[$key]
-				: null;
-		}
-	}
-?>
+        $primitive = $this->mapping[$name];
+
+        $key = $primitive->getName();
+
+        return
+            isset($this->object[$key])
+                ? $this->object[$key]
+                : null;
+    }
+}

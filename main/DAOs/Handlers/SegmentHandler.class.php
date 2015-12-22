@@ -9,24 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup DAOs
-	 * @ingroup Module
-	**/
-	interface SegmentHandler
-	{
-		public function __construct($segmentId);
-		
-		/// checks for a key existence in segment
-		public function ping($key);
-		
-		/// creates key in segment
-		public function touch($key);
-		
-		/// deletes key from segment
-		public function unlink($key);
-		
-		/// destroys segment
-		public function drop();
-	}
-?>
+/**
+ * @ingroup DAOs
+ * @ingroup Module
+ **/
+interface SegmentHandler
+{
+    public function __construct($segmentId);
+
+    /// checks for a key existence in segment
+    public function ping($key);
+
+    /// creates key in segment
+    public function touch($key);
+
+    /// deletes key from segment
+    public function unlink($key);
+
+    /// destroys segment
+    public function drop();
+}

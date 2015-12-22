@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,31 +9,29 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+class DTOToFormImporter extends FormBuilder
+{
+    /**
+     * @return DTOToFormImporter
+     **/
+    public static function create(EntityProto $proto)
+    {
+        return new self($proto);
+    }
 
-	final class DTOToFormImporter extends FormBuilder
-	{
-		/**
-		 * @return DTOToFormImporter
-		**/
-		public static function create(EntityProto $proto)
-		{
-			return new self($proto);
-		}
-		
-		/**
-		 * @return FormImporter
-		**/
-		protected function getGetter($object)
-		{
-			return new DTOGetter($this->proto, $object);
-		}
-		
-		/**
-		 * @return FormImporter
-		**/
-		protected function getSetter(&$object)
-		{
-			return new FormImporter($this->proto, $object);
-		}
-	}
-?>
+    /**
+     * @return FormImporter
+     **/
+    protected function getGetter($object)
+    {
+        return new DTOGetter($this->proto, $object);
+    }
+
+    /**
+     * @return FormImporter
+     **/
+    protected function getSetter(&$object)
+    {
+        return new FormImporter($this->proto, $object);
+    }
+}

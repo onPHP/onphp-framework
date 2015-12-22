@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,30 +9,28 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+final class TempFile
+{
+    private $path = null;
 
-	final class TempFile
-	{
-		private $path = null;
-		
-		public function __construct(
-			$directory = 'temp-garbage/', $prefix = 'TmpFile'
-		)
-		{
-			$this->path = FileUtils::makeTempFile($directory, $prefix);
-		}
-		
-		public function __destruct()
-		{
-			try {
-				unlink($this->path);
-			} catch (BaseException $e) {
-				// boo! deal with garbage yourself.
-			}
-		}
-		
-		public function getPath()
-		{
-			return $this->path;
-		}
-	}
-?>
+    public function __construct(
+        $directory = 'temp-garbage/', $prefix = 'TmpFile'
+    )
+    {
+        $this->path = FileUtils::makeTempFile($directory, $prefix);
+    }
+
+    public function __destruct()
+    {
+        try {
+            unlink($this->path);
+        } catch (BaseException $e) {
+            // boo! deal with garbage yourself.
+        }
+    }
+
+    public function getPath()
+    {
+        return $this->path;
+    }
+}

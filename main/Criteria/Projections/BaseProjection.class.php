@@ -9,23 +9,22 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	abstract class BaseProjection implements ObjectProjection, Aliased
-	{
-		protected $property	= null;
-		protected $alias	= null;
-		
-		public function __construct($propertyName = null, $alias = null)
-		{
-			$this->property = $propertyName;
-			$this->alias = $alias;
-		}
-		
-		public function getAlias()
-		{
-			return $this->alias;
-		}
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+abstract class BaseProjection implements ObjectProjection, Aliased
+{
+    protected $property = null;
+    protected $alias = null;
+
+    public function __construct($propertyName = null, $alias = null)
+    {
+        $this->property = $propertyName;
+        $this->alias = $alias;
+    }
+
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+}

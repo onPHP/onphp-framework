@@ -9,8 +9,10 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class RowCountProjection extends CountProjection {/*_*/}
-?>
+/**
+ * @ingroup Projections
+ **/
+class RowCountProjection extends CountProjection
+{
+    /*_*/
+}

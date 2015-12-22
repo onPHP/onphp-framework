@@ -9,14 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	interface ObjectProjection
-	{
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query);
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+interface ObjectProjection
+{
+    /**
+     * @return JoinCapableQuery
+     **/
+    public function process(Criteria $criteria, JoinCapableQuery $query);
+}

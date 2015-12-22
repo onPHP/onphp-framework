@@ -9,63 +9,69 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Uncachers
-	**/
-	class UncachersPool implements UncacherBase
-	{
-		private $uncachers = array();
-		
-		/**
-		 * @param UncacherBase $uncacher
-		 * @return UncachersPool
-		 */
-		public static function create(UncacherBase $uncacher = null) {
-			return new self($uncacher);
-		}
-		
-		public function __construct(UncacherBase $uncacher = null) {
-			if ($uncacher)
-				$this->merge($uncacher);
-		}
-		
-		public function getUncachers() {
-			return $this->uncachers;
-		}
-		
-		/**
-		 * @param $uncacher BaseUncacher same as self class
-		 * @return BaseUncacher (this)
-		 */
-		public function merge(UncacherBase $uncacher) {
-			if ($uncacher instanceof UncachersPool) {
-				return $this->mergeSelf($uncacher);
-			}
-			return $this->mergeInstance($uncacher);
-		}
-		
-		public function uncache() {
-			foreach ($this->uncachers as $uncacher) {
-				/* @var $uncacher UncacherBase */
-				$uncacher->uncache();
-			}
-		}
-		
-		private function mergeInstance(UncacherBase $uncacher) {
-			$class = get_class($uncacher);
-			if (isset($this->uncachers[$class])) {
-				$this->uncachers[$class]->merge($uncacher);
-			} else {
-				$this->uncachers[$class] = $uncacher;
-			}
-			return $this;
-		}
-		
-		private function mergeSelf(UncachersPool $uncacher) {
-			foreach ($uncacher->getUncachers() as $subUncacher) {
-				$this->merge($subUncacher);
-			}
-			return $this;
-		}
-	}
-?>
+/**
+ * @ingroup Uncachers
+ **/
+class UncachersPool implements UncacherBase
+{
+    private $uncachers = array();
+
+    public function __construct(UncacherBase $uncacher = null)
+    {
+        if ($uncacher)
+            $this->merge($uncacher);
+    }
+
+    /**
+     * @param UncacherBase $uncacher
+     * @return UncachersPool
+     */
+    public function merge(UncacherBase $uncacher)
+    {
+        if ($uncacher instanceof UncachersPool) {
+            return $this->mergeSelf($uncacher);
+        }
+        return $this->mergeInstance($uncacher);
+    }
+
+    private function mergeSelf(UncachersPool $uncacher)
+    {
+        foreach ($uncacher->getUncachers() as $subUncacher) {
+            $this->merge($subUncacher);
+        }
+        return $this;
+    }
+
+    public function getUncachers()
+    {
+        return $this->uncachers;
+    }
+
+    private function mergeInstance(UncacherBase $uncacher)
+    {
+        $class = get_class($uncacher);
+        if (isset($this->uncachers[$class])) {
+            $this->uncachers[$class]->merge($uncacher);
+        } else {
+            $this->uncachers[$class] = $uncacher;
+        }
+        return $this;
+    }
+
+    /**
+     * @param UncacherBase $uncacher
+     * @return UncachersPool
+     */
+    public static function create(UncacherBase $uncacher = null)
+    {
+        return new self($uncacher);
+    }
+
+    public function uncache()
+    {
+        foreach ($this->uncachers as $uncacher) {
+            /* @var $uncacher UncacherBase */
+            $uncacher->uncache();
+        }
+    }
+}

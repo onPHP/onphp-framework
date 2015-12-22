@@ -9,25 +9,24 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	abstract class MakeCommand extends TakeCommand
-	{
-		/**
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request)
-		{
-			$form->markGood('id');
-			
-			if (!$form->getErrors()) {
-				FormUtils::form2object($form, $subject);
-				
-				return parent::run($subject, $form, $request);
-			}
-			
-			return new ModelAndView();
-		}
-	}
-?>
+/**
+ * @ingroup Flow
+ **/
+abstract class MakeCommand extends TakeCommand
+{
+    /**
+     * @return ModelAndView
+     **/
+    public function run(Prototyped $subject, Form $form, HttpRequest $request)
+    {
+        $form->markGood('id');
+
+        if (!$form->getErrors()) {
+            FormUtils::form2object($form, $subject);
+
+            return parent::run($subject, $form, $request);
+        }
+
+        return new ModelAndView();
+    }
+}

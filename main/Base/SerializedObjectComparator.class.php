@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2009 by Denis M. Gabaidulin                             *
  *                                                                         *
@@ -8,24 +9,22 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+class SerializedObjectComparator extends Singleton
+    implements Comparator, Instantiatable
+{
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
 
-	final class SerializedObjectComparator extends Singleton
-		implements Comparator, Instantiatable
-	{
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function compare($one, $two)
-		{
-			$serializedOne = serialize($one);
-			$serializedTwo = serialize($two);
-			
-			if ($serializedOne == $serializedTwo)
-				return 0;
-			
-			return ($serializedOne < $serializedTwo) ? -1 : 1;
-		}
-	}
-?>
+    public function compare($one, $two)
+    {
+        $serializedOne = serialize($one);
+        $serializedTwo = serialize($two);
+
+        if ($serializedOne == $serializedTwo)
+            return 0;
+
+        return ($serializedOne < $serializedTwo) ? -1 : 1;
+    }
+}

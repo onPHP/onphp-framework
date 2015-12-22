@@ -9,14 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class MinimalNumberProjection extends AggregateProjection
-	{
-		public function getFunctionName()
-		{
-			return 'min';
-		}
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+final class MinimalNumberProjection extends AggregateProjection
+{
+    public function getFunctionName()
+    {
+        return 'min';
+    }
+}

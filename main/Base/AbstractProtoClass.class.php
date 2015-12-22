@@ -216,251 +216,247 @@ abstract class AbstractProtoClass extends Singleton
             if ($object instanceof Identifiable) {
                 Assert::isNotNull($object->getId());
 
-                Assert::isTypelessEqual(
-                    $object->getId(), $old->getId(),
-                    'cannot merge different objects'
-                );
-            }
-        }
+					Assert::isTypelessEqual(
+						$object->getId(), $old->getId(),
+						'cannot merge different objects'
+					);
+				}
+			}
+			
+			foreach ($this->getPropertyList() as $property) {
+				$property->fillQuery($query, $object, $old);
+			}
+			
+			return $query;
+		}
+		
+		public function getMapping()
+		{
+			static $mappings = array();
+			
+			$className = get_class($this);
+			
+			if (!isset($mappings[$className])) {
+				$mapping = array();
+				foreach ($this->getPropertyList() as $property) {
+					$mapping = $property->fillMapping($mapping);
+				}
+				$mappings[$className] = $mapping;
+			}
+			
+			return $mappings[$className];
+		}
+		
+		public function importPrimitive(
+			$path,
+			Form $form,
+			BasePrimitive $prm,
+			/* Prototyped */ $object,
+			$ignoreNull = true
+		)
+		{
+			if (strpos($path, ':') !== false) {
+				return $this->forwardPrimitive(
+					$path, $form, $prm, $object, $ignoreNull
+				);
+			} else {
+				$property = $this->getPropertyByName($path);
+				$getter = $property->getGetter();
+				
+				if ($path == 'id' && $prm instanceof PrimitiveIdentifier) {
+					$form->importValue($prm->getName(), $object);
+					return $object;
+				}
 
-        foreach ($this->getPropertyList() as $property) {
-            $property->fillQuery($query, $object, $old);
-        }
-
-        return $query;
-    }
-
-    public function getMapping()
-    {
-        static $mappings = [];
-
-        $className = get_class($this);
-
-        if (!isset($mappings[$className])) {
-            $mapping = [];
-            foreach ($this->getPropertyList() as $property) {
-                $mapping = $property->fillMapping($mapping);
-            }
-            $mappings[$className] = $mapping;
-        }
-
-        return $mappings[$className];
-    }
-
-    public function importPrimitive(
-        $path,
-        Form $form,
-        BasePrimitive $prm,
-        /* Prototyped */
-        $object,
-        $ignoreNull = true
-    )
-    {
-        if (strpos($path, ':') !== false) {
-            return $this->forwardPrimitive(
-                $path, $form, $prm, $object, $ignoreNull
-            );
-        } else {
-            $property = $this->getPropertyByName($path);
-            $getter = $property->getGetter();
-
-            if ($path == 'id' && $prm instanceof PrimitiveIdentifier) {
-                $form->importValue($prm->getName(), $object);
-                return $object;
-            }
-
-            if (
-                !$property->isFormless()
-                && ($property->getFetchStrategyId() == FetchStrategy::LAZY)
-                && !$object->{$getter . 'Id'}()
-            ) {
-                return $object;
-            }
-
-            $value = $object->$getter();
-
-            if (!$ignoreNull || ($value !== null)) {
-                $form->importValue($prm->getName(), $value);
-            }
-        }
-
-        return $object;
-    }
-
-    public function exportPrimitive(
-        $path,
-        BasePrimitive $prm,
-        /* Prototyped */
-        $object,
-        $ignoreNull = true
-    )
-    {
-        if (strpos($path, ':') !== false) {
-            return $this->forwardPrimitive(
-                $path, null, $prm, $object, $ignoreNull
-            );
-        } else {
-            $property = $this->getPropertyByName($path);
-            $setter = $property->getSetter();
-            $value = $prm->getValue();
-
-            if (
-                !$ignoreNull || ($value !== null)
-            ) {
-                if ($property->isIdentifier()) {
-                    $value = $value->getId();
-                }
-
-                $dropper = $property->getDropper();
-
-                if (
-                    ($value === null)
-                    && method_exists($object, $dropper)
-                    && (
-                        !$property->getRelationId()
-                        || (
-                            $property->getRelationId()
-                            == MetaRelation::ONE_TO_ONE
-                        )
-                    )
-                ) {
-                    $object->$dropper();
-
-                    return $object;
-                } elseif (
-                    (
-                        $property->getRelationId()
-                        == MetaRelation::ONE_TO_MANY
-                    ) || (
-                        $property->getRelationId()
-                        == MetaRelation::MANY_TO_MANY
-                    )
-                ) {
-                    if ($value === null)
-                        $value = array();
-
-                    $getter = $property->getGetter();
-                    $object->$getter()->setList($value);
-
-                    return $object;
-                }
-
-                $object->$setter($value);
-            }
-        }
-
-        return $object;
-    }
-
-    private static function fetchEncapsulants(Prototyped $object)
-    {
-        $proto = $object->proto();
-
-        foreach ($proto->getPropertyList() as $property) {
-            if (
-                $property->getRelationId() == MetaRelation::ONE_TO_ONE
-                && ($property->getFetchStrategyId() != FetchStrategy::LAZY)
-            ) {
-                $getter = $property->getGetter();
-                $setter = $property->getSetter();
-
-                if (($inner = $object->$getter()) instanceof DAOConnected) {
-                    if ($proto->depth)
-                        $proto->storage[$proto->depth][$setter][] = $inner;
-                    else
-                        $object->$setter(
-                            $inner->dao()->getById(
-                                $inner->getId()
-                            )
-                        );
-                } elseif (
-                    $proto->depth
-                    // emulating 'instanceof DAOConnected'
-                    && method_exists($property->getClassName(), 'dao')
-                )
-                    $proto->storage[$proto->depth][$setter][] = null;
-            }
-        }
-
-        return $object;
-    }
-
-    private static function assemblyObject(
-        Prototyped $object, $array, $prefix = null, ProtoDAO $parentDao = null
-    )
-    {
-        if ($object instanceof DAOConnected)
-            $dao = $object->dao();
-        else
-            $dao = $parentDao ?: null;
-
-        $proto = $object->proto();
-
-        foreach ($proto->getPropertyList() as $property) {
-            $setter = $property->getSetter();
-
-            if ($property instanceof InnerMetaProperty) {
-                $object->$setter(
-                    $property->toValue($dao, $array, $prefix)
-                );
-            } elseif ($property->isBuildable($array, $prefix)) {
-                if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
-                    if (
-                        $property->getFetchStrategyId()
-                        == FetchStrategy::LAZY
-                    ) {
-                        $columnName = $prefix . $property->getColumnName();
-
-                        $object->
-                        {$setter . 'Id'}($array[$columnName]);
-
-                        continue;
-                    }
-                }
-
-                $object->$setter($property->toValue($dao, $array, $prefix));
-            }
-        }
-
-        return $object;
-    }
-
-    private function forwardPrimitive(
-        $path,
-        Form $form = null,
-        BasePrimitive $prm,
-        /* Prototyped */
-        $object,
-        $ignoreNull = true
-    )
-    {
-        list($propertyName, $path) = explode(':', $path, 2);
-
-        $property = $this->getPropertyByName($propertyName);
-
-        Assert::isTrue($property instanceof InnerMetaProperty);
-
-        $getter = $property->getGetter();
-
-        if ($form)
-            return $property->getProto()->importPrimitive(
-                $path, $form, $prm, $object->$getter(), $ignoreNull
-            );
-        else
-            return $property->getProto()->exportPrimitive(
-                $path, $prm, $object->$getter(), $ignoreNull
-            );
-    }
-
-    private function safePropertyGet($name)
-    {
-        $list = $this->getPropertyList();
-
-        if (isset($list[$name]))
-            return $list[$name];
-
-        return null;
-    }
-}
-
+				if (
+					!$property->isFormless()
+					&& ($property->getFetchStrategyId() == FetchStrategy::LAZY)
+					&& !$object->{$getter.'Id'}()
+				) {
+					return $object;
+				}
+				
+				$value = $object->$getter();
+				
+				if (!$ignoreNull || ($value !== null)) {
+					$form->importValue($prm->getName(), $value);
+				}
+			}
+			
+			return $object;
+		}
+		
+		public function exportPrimitive(
+			$path,
+			BasePrimitive $prm,
+			/* Prototyped */ $object,
+			$ignoreNull = true
+		)
+		{
+			if (strpos($path, ':') !== false) {
+				return $this->forwardPrimitive(
+					$path, null, $prm, $object, $ignoreNull
+				);
+			} else {
+				$property = $this->getPropertyByName($path);
+				$setter = $property->getSetter();
+				$value = $prm->getValue();
+				
+				if (
+					!$ignoreNull || ($value !== null)
+				) {
+					if ($property->isIdentifier()) {
+						$value = $value->getId();
+					}
+					
+					$dropper = $property->getDropper();
+					
+					if (
+						($value === null)
+							&& method_exists($object, $dropper)
+							&& (
+								!$property->getRelationId()
+								|| (
+									$property->getRelationId()
+									== MetaRelation::ONE_TO_ONE
+								)
+							)
+					) {
+						$object->$dropper();
+						
+						return $object;
+					} elseif (
+						(
+							$property->getRelationId()
+							== MetaRelation::ONE_TO_MANY
+						) || (
+							$property->getRelationId()
+							== MetaRelation::MANY_TO_MANY
+						)
+					) {
+						if ($value === null)
+							$value = array();
+						
+						$getter = $property->getGetter();
+						$object->$getter()->setList($value);
+						
+						return $object;
+					}
+					
+					$object->$setter($value);
+				}
+			}
+			
+			return $object;
+		}
+		
+		private static function fetchEncapsulants(Prototyped $object)
+		{
+			$proto = $object->proto();
+			
+			foreach ($proto->getPropertyList() as $property) {
+				if (
+					$property->getRelationId() == MetaRelation::ONE_TO_ONE
+					&& ($property->getFetchStrategyId() != FetchStrategy::LAZY)
+				) {
+					$getter = $property->getGetter();
+					$setter = $property->getSetter();
+					
+					if (($inner = $object->$getter()) instanceof DAOConnected) {
+						if ($proto->depth)
+							$proto->storage[$proto->depth][$setter][] = $inner;
+						else
+							$object->$setter(
+								$inner->dao()->getById(
+									$inner->getId()
+								)
+							);
+					} elseif (
+						$proto->depth
+						// emulating 'instanceof DAOConnected'
+						&& method_exists($property->getClassName(), 'dao')
+					)
+						$proto->storage[$proto->depth][$setter][] = null;
+				}
+			}
+			
+			return $object;
+		}
+		
+		private static function assemblyObject(
+			Prototyped $object, $array, $prefix = null, ProtoDAO $parentDao = null
+		)
+		{
+			if ($object instanceof DAOConnected)
+				$dao = $object->dao();
+			else
+				$dao = $parentDao ?: null;
+			
+			$proto = $object->proto();
+			
+			foreach ($proto->getPropertyList() as $property) {
+				$setter = $property->getSetter();
+				
+				if ($property instanceof InnerMetaProperty) {
+					$object->$setter(
+						$property->toValue($dao, $array, $prefix)
+					);
+				} elseif ($property->isBuildable($array, $prefix)) {
+					if ($property->getRelationId() == MetaRelation::ONE_TO_ONE) {
+						if (
+							$property->getFetchStrategyId()
+							== FetchStrategy::LAZY
+						) {
+							$columnName = $prefix.$property->getColumnName();
+							
+							$object->
+								{$setter.'Id'}($array[$columnName]);
+							
+							continue;
+						}
+					}
+					
+					$object->$setter($property->toValue($dao, $array, $prefix));
+				}
+			}
+			
+			return $object;
+		}
+		
+		private function forwardPrimitive(
+			$path,
+			Form $form = null,
+			BasePrimitive $prm,
+			/* Prototyped */ $object,
+			$ignoreNull = true
+		)
+		{
+			list($propertyName, $path) = explode(':', $path, 2);
+			
+			$property = $this->getPropertyByName($propertyName);
+			
+			Assert::isTrue($property instanceof InnerMetaProperty);
+			
+			$getter = $property->getGetter();
+			
+			if ($form)
+				return $property->getProto()->importPrimitive(
+					$path, $form, $prm, $object->$getter(), $ignoreNull
+				);
+			else
+				return $property->getProto()->exportPrimitive(
+					$path, $prm, $object->$getter(), $ignoreNull
+				);
+		}
+		
+		private function safePropertyGet($name)
+		{
+			$list = $this->getPropertyList();
+			
+			if (isset($list[$name]))
+				return $list[$name];
+			
+			return null;
+		}
+	}
 ?>

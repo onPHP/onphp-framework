@@ -9,22 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	class AddCommand extends MakeCommand
-	{
-		/**
-		 * @return AddCommand
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		protected function daoMethod()
-		{
-			return 'add';
-		}
-	}
-?>
+/**
+ * @ingroup Flow
+ **/
+class AddCommand extends MakeCommand
+{
+    /**
+     * @return AddCommand
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    protected function daoMethod()
+    {
+        return 'add';
+    }
+}

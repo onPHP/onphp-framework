@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2008 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,36 +9,34 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+class FormToScopeExporter extends ObjectBuilder
+{
+    /**
+     * @return FormToObjectConverter
+     **/
+    public static function create(EntityProto $proto)
+    {
+        return new self($proto);
+    }
 
-	final class FormToScopeExporter extends ObjectBuilder
-	{
-		/**
-		 * @return FormToObjectConverter
-		**/
-		public static function create(EntityProto $proto)
-		{
-			return new self($proto);
-		}
-		
-		protected function createEmpty()
-		{
-			return array();
-		}
-		
-		/**
-		 * @return FormGetter
-		**/
-		protected function getGetter($object)
-		{
-			return new FormExporter($this->proto, $object);
-		}
-		
-		/**
-		 * @return ObjectSetter
-		**/
-		protected function getSetter(&$object)
-		{
-			return new ScopeSetter($this->proto, $object);
-		}
-	}
-?>
+    protected function createEmpty()
+    {
+        return array();
+    }
+
+    /**
+     * @return FormGetter
+     **/
+    protected function getGetter($object)
+    {
+        return new FormExporter($this->proto, $object);
+    }
+
+    /**
+     * @return ObjectSetter
+     **/
+    protected function getSetter(&$object)
+    {
+        return new ScopeSetter($this->proto, $object);
+    }
+}

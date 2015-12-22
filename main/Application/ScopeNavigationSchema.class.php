@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,10 +9,9 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+abstract class ScopeNavigationSchema extends Singleton
+{
+    abstract public function extractPath(&$scope);
 
-	abstract class ScopeNavigationSchema extends Singleton
-	{
-		abstract public function extractPath(&$scope);
-		abstract public function getScope($path);
-	}
-?>
+    abstract public function getScope($path);
+}

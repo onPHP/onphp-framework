@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,12 +9,10 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-
-	abstract class ObjectBuilder extends PrototypedBuilder
-	{
-		protected function createEmpty()
-		{
-			return $this->proto->createObject();
-		}
-	}
-?>
+abstract class ObjectBuilder extends PrototypedBuilder
+{
+    protected function createEmpty()
+    {
+        return $this->proto->createObject();
+    }
+}

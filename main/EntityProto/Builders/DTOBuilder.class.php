@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,14 +9,12 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+abstract class DTOBuilder extends PrototypedBuilder
+{
+    protected function createEmpty()
+    {
+        $className = $this->proto->className() . 'DTO';
 
-	abstract class DTOBuilder extends PrototypedBuilder
-	{
-		protected function createEmpty()
-		{
-			$className = $this->proto->className().'DTO';
-			
-			return new $className;
-		}
-	}
-?>
+        return new $className;
+    }
+}

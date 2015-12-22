@@ -9,11 +9,10 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Main
-	**/
-	interface PrototypedEntity
-	{
-		public static function entityProto();
-	}
-?>
+/**
+ * @ingroup Main
+ **/
+interface PrototypedEntity
+{
+    public static function entityProto();
+}

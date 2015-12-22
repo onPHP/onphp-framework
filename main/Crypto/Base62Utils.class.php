@@ -9,76 +9,75 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Crypto
-	**/
-	class Base62Utils extends StaticFactory
-	{
-		protected static $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+/**
+ * @ingroup Crypto
+ **/
+class Base62Utils extends StaticFactory
+{
+    protected static $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-		public static function setChars($chars)
-		{
-			self::check($chars);
-			Assert::isEqual(mb_strlen($chars), 62, 'Wrong length');
+    public static function getChars()
+    {
+        return self::$chars;
+    }
 
-			self::$chars = $chars;
-		}
+    public static function setChars($chars)
+    {
+        self::check($chars);
+        Assert::isEqual(mb_strlen($chars), 62, 'Wrong length');
 
-		public static function getChars()
-		{
-			return self::$chars;
-		}
+        self::$chars = $chars;
+    }
 
-		public static function encode($integer)
-		{
-			Assert::isPositiveInteger($integer, 'Out of range');
-			$magicInt = strlen(self::$chars);
+    protected static function check($string)
+    {
+        Assert::isString($string);
 
-			$string = '';
-			do {
-				$i = $integer % $magicInt;
-				$string = self::$chars[$i] . $string;
-				$integer = ($integer - $i) / $magicInt;
-			} while ($integer > 0);
+        Assert::isTrue(
+            preg_match('/^[a-z0-9]+$/iu', $string) !== 0,
+            'Wrong pattern matching'
+        );
+    }
 
-			return $string;
-		}
+    public static function encode($integer)
+    {
+        Assert::isPositiveInteger($integer, 'Out of range');
+        $magicInt = strlen(self::$chars);
 
-		/**
-		 * @throws WrongArgumentException
-		 * @param string $string
-		 * @return int
-		**/
-		public static function decode($string)
-		{
-			self::check($string);
+        $string = '';
+        do {
+            $i = $integer % $magicInt;
+            $string = self::$chars[$i] . $string;
+            $integer = ($integer - $i) / $magicInt;
+        } while ($integer > 0);
 
-			$len = strlen($string);
-			Assert::isTrue(
-				(PHP_INT_SIZE === 4 && $len > 0 && $len <= 6)
-				|| (PHP_INT_SIZE === 8 && $len > 0 && $len <= 11),
-				'Wrong code'
-			);
+        return $string;
+    }
 
-			$magicInt = strlen(self::$chars);
+    /**
+     * @throws WrongArgumentException
+     * @param string $string
+     * @return int
+     **/
+    public static function decode($string)
+    {
+        self::check($string);
 
-			$val = 0;
-			$arr = array_flip(str_split(self::$chars));
-			for($i = 0; $i < $len; ++$i) {
-				$val += $arr[$string[$i]] * pow($magicInt, $len - $i - 1);
-			}
+        $len = strlen($string);
+        Assert::isTrue(
+            (PHP_INT_SIZE === 4 && $len > 0 && $len <= 6)
+            || (PHP_INT_SIZE === 8 && $len > 0 && $len <= 11),
+            'Wrong code'
+        );
 
-			return $val;
-		}
+        $magicInt = strlen(self::$chars);
 
-		protected static function check($string)
-		{
-			Assert::isString($string);
+        $val = 0;
+        $arr = array_flip(str_split(self::$chars));
+        for ($i = 0; $i < $len; ++$i) {
+            $val += $arr[$string[$i]] * pow($magicInt, $len - $i - 1);
+        }
 
-			Assert::isTrue(
-				preg_match('/^[a-z0-9]+$/iu', $string) !== 0,
-				'Wrong pattern matching'
-			);
-		}
-	}
-?>
+        return $val;
+    }
+}

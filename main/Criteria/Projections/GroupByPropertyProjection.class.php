@@ -9,22 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class GroupByPropertyProjection extends BaseProjection
-	{
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query)
-		{
-			Assert::isNotNull($this->property);
-			
-			return
-				$query->groupBy(
-					$criteria->getDao()->guessAtom($this->property, $query)
-				);
-		}
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+class GroupByPropertyProjection extends BaseProjection
+{
+    /**
+     * @return JoinCapableQuery
+     **/
+    public function process(Criteria $criteria, JoinCapableQuery $query)
+    {
+        Assert::isNotNull($this->property);
+
+        return
+            $query->groupBy(
+                $criteria->getDao()->guessAtom($this->property, $query)
+            );
+    }
+}

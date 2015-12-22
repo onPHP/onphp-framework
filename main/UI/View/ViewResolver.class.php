@@ -9,16 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	 * @ingroup Module
-	**/
-	interface ViewResolver
-	{
-		/**
-		 * @param	$viewName	string
-		 * @return	View
-		**/
-		public function resolveViewName($viewName);
-	}
-?>
+/**
+ * @ingroup Flow
+ * @ingroup Module
+ **/
+interface ViewResolver
+{
+    /**
+     * @param    $viewName    string
+     * @return    View
+     **/
+    public function resolveViewName($viewName);
+}

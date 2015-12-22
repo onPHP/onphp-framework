@@ -9,91 +9,90 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	class Model implements SimplifiedArrayAccess
-	{
-		private $vars = array();
-		
-		/**
-		 * @return Model
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return Model
-		**/
-		public function clean()
-		{
-			$this->vars = array();
-			
-			return $this;
-		}
-		
-		public function isEmpty()
-		{
-			return ($this->vars === array());
-		}
-		
-		public function getList()
-		{
-			return $this->vars;
-		}
-		
-		/**
-		 * @return Model
-		**/
-		public function set($name, $var)
-		{
-			$this->vars[$name] = $var;
-			
-			return $this;
-		}
-		
-		public function get($name)
-		{
-			if (!$this->has($name))
-				throw new MissingElementException('Unknown var "'.$name.'"');
+/**
+ * @ingroup Flow
+ **/
+class Model implements SimplifiedArrayAccess
+{
+    private $vars = array();
 
-			return $this->vars[$name];
-		}
-		
-		public function has($name)
-		{
-			return isset($this->vars[$name]);
-		}
-		
-		/**
-		 * @return Model
-		**/
-		public function drop($name)
-		{
-			unset($this->vars[$name]);
-			
-			return $this;
-		}
-		
-		/**
-		 * @return Model
-		**/
-		public function merge(Model $model, $overwrite = false)
-		{
-			if (!$model->isEmpty()) {
-			
-				$vars = $model->getList();
-				foreach ($vars as $name => $value) {
-					if (!$overwrite && $this->has($name))
-						continue;
-					$this->set($name, $value);
-				}
-				
-			}
-			
-			return $this;
-		}
-	}
-?>
+    /**
+     * @return Model
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return Model
+     **/
+    public function clean()
+    {
+        $this->vars = array();
+
+        return $this;
+    }
+
+    public function get($name)
+    {
+        if (!$this->has($name))
+            throw new MissingElementException('Unknown var "' . $name . '"');
+
+        return $this->vars[$name];
+    }
+
+    public function has($name)
+    {
+        return isset($this->vars[$name]);
+    }
+
+    /**
+     * @return Model
+     **/
+    public function drop($name)
+    {
+        unset($this->vars[$name]);
+
+        return $this;
+    }
+
+    /**
+     * @return Model
+     **/
+    public function merge(Model $model, $overwrite = false)
+    {
+        if (!$model->isEmpty()) {
+
+            $vars = $model->getList();
+            foreach ($vars as $name => $value) {
+                if (!$overwrite && $this->has($name))
+                    continue;
+                $this->set($name, $value);
+            }
+
+        }
+
+        return $this;
+    }
+
+    public function isEmpty()
+    {
+        return ($this->vars === array());
+    }
+
+    public function getList()
+    {
+        return $this->vars;
+    }
+
+    /**
+     * @return Model
+     **/
+    public function set($name, $var)
+    {
+        $this->vars[$name] = $var;
+
+        return $this;
+    }
+}

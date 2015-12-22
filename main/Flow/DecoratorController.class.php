@@ -9,24 +9,23 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	abstract class DecoratorController implements Controller
-	{
-		protected $inner = null;
-		
-		public function __construct(Controller $inner)
-		{
-			$this->inner = $inner;
-		}
-		
-		/**
-		 * @return ModelAndView
-		**/
-		public function handleRequest(HttpRequest $request)
-		{
-			return $this->inner->handleRequest($request);
-		}
-	}
-?>
+/**
+ * @ingroup Flow
+ **/
+abstract class DecoratorController implements Controller
+{
+    protected $inner = null;
+
+    public function __construct(Controller $inner)
+    {
+        $this->inner = $inner;
+    }
+
+    /**
+     * @return ModelAndView
+     **/
+    public function handleRequest(HttpRequest $request)
+    {
+        return $this->inner->handleRequest($request);
+    }
+}

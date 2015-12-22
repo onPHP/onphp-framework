@@ -4,115 +4,115 @@ Coding Style Convention
 PHP:
 
 /*
-	copyright, license, blah-blah
+    copyright, license, blah-blah
 */
 
-	class SomeClassName
-	{
-		const CORRECT_ANSWER = 42; // must differ from zero
-		
-		private $privateVariable	= null;
-		private $yetAnotherVariable	= null;
-		
-		final public static anotherOddMethod()
-		{
-			try {
-				self::someOddMethodName(new FooImplementation());
-			} catch (FooException $e) {
-				// do something
-				throw $e; // try to not "eat" exceptions
-			}
-		}
-		
-		public function someOddMethodName(FooInterface $someObject)
-		{
-			if (!$someObject) {
-				TrashClass::staticMethod();
-				throw new FooException("help me!");
-			} else {
-				$someObject->shortMethod(
-					$firstLongParameter,
-					$secondLongParameter->anotherMethod(
-						$foo,
-						$bah
-					)
-				);
-				
-				// do something useful
-			}
-			
-			$variable =
-				$firstLongParameter
-					? $secondLongParameter
-					: $thirdLongParameter;
-			
-			if (
-				$condition
-				|| $incindent
-				|| $whatEverElse
-				|| (
-					$one + $more * $complex / $condition
-				)
-			) {
-				// bah!
-			}
-			
-			$longString =
-				'foo'
-				.'bar'
-				.'blah';
-			
-			// try to avoid casts
-			$castedValue = (int) $rawVariable;
-			
-			return $this;
-		}
-		
-		public function methodWithWayTooLongArguments(
-			Class $object, AnotherClass $anotherObject
-		)
-		{
-			// body
-		}
-	}
+    class SomeClassName
+    {
+        const CORRECT_ANSWER = 42; // must differ from zero
+        
+        private $privateVariable    = null;
+        private $yetAnotherVariable    = null;
+        
+        final public static anotherOddMethod()
+        {
+            try {
+                self::someOddMethodName(new FooImplementation());
+            } catch (FooException $e) {
+                // do something
+                throw $e; // try to not "eat" exceptions
+            }
+        }
+        
+        public function someOddMethodName(FooInterface $someObject)
+        {
+            if (!$someObject) {
+                TrashClass::staticMethod();
+                throw new FooException("help me!");
+            } else {
+                $someObject->shortMethod(
+                    $firstLongParameter,
+                    $secondLongParameter->anotherMethod(
+                        $foo,
+                        $bah
+                    )
+                );
+                
+                // do something useful
+            }
+            
+            $variable =
+                $firstLongParameter
+                    ? $secondLongParameter
+                    : $thirdLongParameter;
+            
+            if (
+                $condition
+                || $incindent
+                || $whatEverElse
+                || (
+                    $one + $more * $complex / $condition
+                )
+            ) {
+                // bah!
+            }
+            
+            $longString =
+                'foo'
+                .'bar'
+                .'blah';
+            
+            // try to avoid casts
+            $castedValue = (int) $rawVariable;
+            
+            return $this;
+        }
+        
+        public function methodWithWayTooLongArguments(
+            Class $object, AnotherClass $anotherObject
+        )
+        {
+            // body
+        }
+    }
 
 --
 
 switch ($foo) {
-	case $boo:
-		
-		$this->fooBar();
-		
-		$that->fooBlah();
-		
-		break;
-	
-	case $zoo:
-		
-		$that->phew($this);
-		
-		break;
-	
-	default:
-		
-		die();
-		
-		break;
+    case $boo:
+        
+        $this->fooBar();
+        
+        $that->fooBlah();
+        
+        break;
+    
+    case $zoo:
+        
+        $that->phew($this);
+        
+        break;
+    
+    default:
+        
+        die();
+        
+        break;
 }
 
 Class Method Sorting:
-	* public static function create() (if any)
-	* public function __construct (if any)
-	* public function __destruct (if any)
-	* public function __sleep (if any)
-	* public function __wakeup (if any)
-	* abstract public
-	* abstract protected
-	* final public
-	* final public static
-	* public
-	* public static
-	* protected
-	* protected static
-	* private
+    * public static function create() (if any)
+    * public function __construct (if any)
+    * public function __destruct (if any)
+    * public function __sleep (if any)
+    * public function __wakeup (if any)
+    * abstract public
+    * abstract protected
+    * final public
+    * final public static
+    * public
+    * public static
+    * protected
+    * protected static
+    * private
 

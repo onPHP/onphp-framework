@@ -9,21 +9,22 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Uncachers
-	**/
-	class UncacherCommonDaoWorker extends UncacherBaseDaoWorker
-	{
-		/**
-		 * @return UncacherCommonDaoWorker
-		 */
-		public static function create($className, $idKey) {
-			return new self($className, $idKey);
-		}
-		
-		protected function uncacheClassName($className, $idKeys) {
-			ClassUtils::callStaticMethod("$className::dao")->uncacheLists();
-			parent::uncacheClassName($className, $idKeys);
-		}
-	}
-?>
+/**
+ * @ingroup Uncachers
+ **/
+class UncacherCommonDaoWorker extends UncacherBaseDaoWorker
+{
+    /**
+     * @return UncacherCommonDaoWorker
+     */
+    public static function create($className, $idKey)
+    {
+        return new self($className, $idKey);
+    }
+
+    protected function uncacheClassName($className, $idKeys)
+    {
+        ClassUtils::callStaticMethod("$className::dao")->uncacheLists();
+        parent::uncacheClassName($className, $idKeys);
+    }
+}

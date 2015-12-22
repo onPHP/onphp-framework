@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,31 +9,29 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+class FormToObjectConverter extends ObjectBuilder
+{
+    /**
+     * @return FormToObjectConverter
+     **/
+    public static function create(EntityProto $proto)
+    {
+        return new self($proto);
+    }
 
-	final class FormToObjectConverter extends ObjectBuilder
-	{
-		/**
-		 * @return FormToObjectConverter
-		**/
-		public static function create(EntityProto $proto)
-		{
-			return new self($proto);
-		}
-		
-		/**
-		 * @return FormGetter
-		**/
-		protected function getGetter($object)
-		{
-			return new FormGetter($this->proto, $object);
-		}
-		
-		/**
-		 * @return ObjectSetter
-		**/
-		protected function getSetter(&$object)
-		{
-			return new ObjectSetter($this->proto, $object);
-		}
-	}
-?>
+    /**
+     * @return FormGetter
+     **/
+    protected function getGetter($object)
+    {
+        return new FormGetter($this->proto, $object);
+    }
+
+    /**
+     * @return ObjectSetter
+     **/
+    protected function getSetter(&$object)
+    {
+        return new ObjectSetter($this->proto, $object);
+    }
+}

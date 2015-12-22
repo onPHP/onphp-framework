@@ -9,40 +9,39 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	abstract class CountProjection extends BaseProjection
-	{
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query)
-		{
-			return
-				$query->get(
-					$this->getFunction($criteria, $query),
-					$this->alias
-				);
-		}
-		
-		/**
-		 * @return SQLFunction
-		**/
-		protected function getFunction(
-			Criteria $criteria,
-			JoinCapableQuery $query
-		)
-		{
-			Assert::isNotNull($this->property);
-			
-			return
-				SQLFunction::create(
-					'count',
-					$this->property
-						? $criteria->getDao()->guessAtom($this->property, $query)
-						: $criteria->getDao()->getIdName()
-				);
-		}
-	}
-?>
+/**
+ * @ingroup Projections
+ **/
+abstract class CountProjection extends BaseProjection
+{
+    /**
+     * @return JoinCapableQuery
+     **/
+    public function process(Criteria $criteria, JoinCapableQuery $query)
+    {
+        return
+            $query->get(
+                $this->getFunction($criteria, $query),
+                $this->alias
+            );
+    }
+
+    /**
+     * @return SQLFunction
+     **/
+    protected function getFunction(
+        Criteria $criteria,
+        JoinCapableQuery $query
+    )
+    {
+        Assert::isNotNull($this->property);
+
+        return
+            SQLFunction::create(
+                'count',
+                $this->property
+                    ? $criteria->getDao()->guessAtom($this->property, $query)
+                    : $criteria->getDao()->getIdName()
+            );
+    }
+}
