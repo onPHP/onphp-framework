@@ -14,8 +14,13 @@
  *
  * @ingroup Base
  **/
-final class Assert extends StaticFactory
+class Assert extends StaticFactory
 {
+    /**
+     * @param $boolean
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isTrue($boolean, $message = null)
     {
         if ($boolean !== true)
@@ -24,6 +29,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $boolean
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isFalse($boolean, $message = null)
     {
         if ($boolean !== false)
@@ -32,6 +42,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $boolean
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isNotFalse($boolean, $message = null)
     {
         if ($boolean === false)
@@ -40,6 +55,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isNull($variable, $message = null)
     {
         if ($variable !== null)
@@ -48,6 +68,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isEmpty($variable, $message = null)
     {
         if (!empty($variable))
@@ -56,6 +81,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isNotEmpty($variable, $message = null)
     {
         if (empty($variable))
@@ -64,6 +94,12 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $array
+     * @param $key
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isIndexExists($array, $key, $message = null)
     {
         Assert::isArray($array);
@@ -74,12 +110,22 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isNotNull($variable, $message = null)
     {
         if ($variable === null)
             throw new WrongArgumentException($message);
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isScalar($variable, $message = null)
     {
         if (!is_scalar($variable))
@@ -88,6 +134,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isArray($variable, $message = null)
     {
         if (!is_array($variable))
@@ -96,6 +147,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isNotEmptyArray(&$variable, $message = null)
     {
         self::isArray($variable, $message);
@@ -106,6 +162,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isInteger($variable, $message = null)
     {
         if (
@@ -119,6 +180,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isPositiveInteger($variable, $message = null)
     {
         if (
@@ -130,6 +196,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isFloat($variable, $message = null)
     {
         if (!self::checkFloat($variable))
@@ -138,6 +209,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isString($variable, $message = null)
     {
         if (!is_string($variable))
@@ -146,6 +222,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isBoolean($variable, $message = null)
     {
         if (!($variable === true || $variable === false))
@@ -154,6 +235,11 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isTernaryBase($variable, $message = null)
     {
         if (
@@ -168,6 +254,12 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $first
+     * @param $second
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function brothers($first, $second, $message = null)
     {
         if (get_class($first) !== get_class($second))
@@ -176,6 +268,12 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $first
+     * @param $second
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isEqual($first, $second, $message = null)
     {
         if ($first != $second)
@@ -184,6 +282,12 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $first
+     * @param $second
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isNotEqual($first, $second, $message = null)
     {
         if ($first == $second)
@@ -192,6 +296,12 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $first
+     * @param $second
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isSame($first, $second, $message = null)
     {
         if ($first !== $second)
@@ -200,6 +310,12 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $first
+     * @param $second
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isNotSame($first, $second, $message = null)
     {
         if ($first === $second)
@@ -208,6 +324,12 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $first
+     * @param $second
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isTypelessEqual($first, $second, $message = null)
     {
         if ($first != $second)
@@ -216,6 +338,12 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $first
+     * @param $second
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isLesser($first, $second, $message = null)
     {
         if (!($first < $second))
@@ -224,6 +352,12 @@ final class Assert extends StaticFactory
             );
     }
 
+    /**
+     * @param $first
+     * @param $second
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isGreater($first, $second, $message = null)
     {
         if (!($first > $second))
@@ -231,6 +365,7 @@ final class Assert extends StaticFactory
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
     }
+
 
     public static function isLesserOrEqual($first, $second, $message = null)
     {
