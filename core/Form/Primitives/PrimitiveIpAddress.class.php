@@ -9,11 +9,10 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveIpAddress extends BaseObjectPrimitive
-	{
-		protected $className = 'IpAddress';
-	}
-?>
+/**
+ * @ingroup Primitives
+ **/
+class PrimitiveIpAddress extends BaseObjectPrimitive
+{
+    protected $className = 'IpAddress';
+}

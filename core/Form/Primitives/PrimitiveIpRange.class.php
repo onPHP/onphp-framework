@@ -9,11 +9,10 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveIpRange extends BaseObjectPrimitive
-	{
-		protected $className = 'IpRange';
-	}
-?>
+/**
+ * @ingroup Primitives
+ **/
+final class PrimitiveIpRange extends BaseObjectPrimitive
+{
+    protected $className = 'IpRange';
+}
