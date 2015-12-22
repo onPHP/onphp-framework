@@ -70,5 +70,3 @@
         return $this->value->toString();
     }
 }
-
-?>
