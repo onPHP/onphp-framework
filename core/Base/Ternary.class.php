@@ -15,8 +15,11 @@
  * @ingroup Base
  * @ingroup Module
  **/
-final class Ternary implements Stringable
+class Ternary implements Stringable
 {
+    /**
+     * @var null|boolean
+     */
     private $trinity = null;    // ;-)
 
     /**
@@ -31,8 +34,22 @@ final class Ternary implements Stringable
     /**
      * @param null $boolean
      * @return Ternary
+     * @throws WrongArgumentException
      */
-    public static function create($boolean = null)
+    public function setValue($boolean = null) : Ternary
+    {
+        Assert::isTernaryBase($boolean);
+
+        $this->trinity = $boolean;
+
+        return $this;
+    }
+
+    /**
+     * @param null $boolean
+     * @return Ternary
+     */
+    public static function create($boolean = null) : Ternary
     {
         return new self($boolean);
     }
@@ -47,47 +64,48 @@ final class Ternary implements Stringable
      */
     public static function spawn($value, $true, $false, $null = null)
     {
-        if ($value === $true)
+        if ($value === $true) {
             return new Ternary(true);
-        elseif ($value === $false)
+        } elseif ($value === $false) {
             return new Ternary(false);
-        elseif (($value === $null) || ($null === null))
+        } elseif (($value === $null) || ($null === null)) {
             return new Ternary(null);
-        else /* if ($value !== $null && $null !== null) or anything else */
+        } else /* if ($value !== $null && $null !== null) or anything else */ {
             throw new WrongArgumentException(
                 "failed to spawn Ternary from '{$value}' switching on " .
                 "'{$true}', '{$false}' and '{$null}'"
             );
+        }
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
-    public function isNull()
+    public function isNull() : bool
     {
         return (null === $this->trinity);
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
-    public function isTrue()
+    public function isTrue() : bool
     {
         return (true === $this->trinity);
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
-    public function isFalse()
+    public function isFalse() : bool
     {
         return (false === $this->trinity);
     }
 
     /**
      * @return Ternary
-     **/
-    public function setNull()
+     */
+    public function setNull() : Ternary
     {
         $this->trinity = null;
 
@@ -97,7 +115,7 @@ final class Ternary implements Stringable
     /**
      * @return Ternary
      **/
-    public function setTrue()
+    public function setTrue() : Ternary
     {
         $this->trinity = true;
 
@@ -107,7 +125,7 @@ final class Ternary implements Stringable
     /**
      * @return Ternary
      **/
-    public function setFalse()
+    public function setFalse() : Ternary
     {
         $this->trinity = false;
 
@@ -115,7 +133,7 @@ final class Ternary implements Stringable
     }
 
     /**
-     * @return null
+     * @return boolean|null
      */
     public function getValue()
     {
@@ -123,33 +141,35 @@ final class Ternary implements Stringable
     }
 
     /**
-     * @return Ternary
-     **/
-    public function setValue($boolean = null)
+     * to string
+     *
+     * @return string
+     * @throws WrongStateException
+     */
+    public function toString() : string
     {
-        Assert::isTernaryBase($boolean);
-
-        $this->trinity = $boolean;
-
-        return $this;
+        return $this->decide('true', 'false', 'null');
     }
 
+    /**
+     * @param $true
+     * @param $false
+     * @param null $null
+     * @return null
+     * @throws WrongStateException
+     */
     public function decide($true, $false, $null = null)
     {
-        if ($this->trinity === true)
+        if ($this->trinity === true) {
             return $true;
-        elseif ($this->trinity === false)
+        } elseif ($this->trinity === false) {
             return $false;
-        elseif ($this->trinity === null)
+        } elseif ($this->trinity === null) {
             return $null;
+        }
 
         throw new WrongStateException(
             'mama, weer all crazee now!' // (c) Slade
         );
-    }
-
-    public function toString()
-    {
-        return $this->decide('true', 'false', 'null');
     }
 }

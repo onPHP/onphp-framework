@@ -21,17 +21,13 @@ abstract class Enum extends NamedObject
     implements
     Serializable
 {
-    protected static $names = array(/* override me */);
+    /** @var array  */
+    protected static $names = [/* override me */];
 
     /**
-     * @param integer $id
-     * @return Enum
+     * Enum constructor.
+     * @param $id
      */
-    public static function create($id)
-    {
-        return new static($id);
-    }
-
     public function __construct($id)
     {
         $this->setInternalId($id);
@@ -47,42 +43,13 @@ abstract class Enum extends NamedObject
         if (isset(static::$names[$id])) {
             $this->id = $id;
             $this->name = static::$names[$id];
-        } else
+        } else {
             throw new MissingElementException(
                 get_class($this) . ' knows nothing about such id == ' . $id
             );
+        }
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function serialize()
-    {
-        return (string)$this->id;
-    }
-
-    /**
-     * @param $serialized
-     */
-    public function unserialize($serialized)
-    {
-        $this->setInternalId($serialized);
-    }
-
-    /**
-     * Array of object
-     * @static
-     * @return array
-     */
-    public static function getList()
-    {
-        $list = array();
-        foreach (array_keys(static::$names) as $id)
-            $list[] = static::create($id);
-
-        return $list;
     }
 
     /**
@@ -96,15 +63,6 @@ abstract class Enum extends NamedObject
     }
 
     /**
-     * @return null|integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-
-    /**
      * Alias for getList()
      * @static
      * @deprecated
@@ -116,6 +74,65 @@ abstract class Enum extends NamedObject
     }
 
     /**
+     * Array of object
+     * @static
+     * @return array
+     */
+    public static function getList() : array
+    {
+        $list = [];
+        foreach (array_keys(static::$names) as $id) {
+            $list[] = static::create($id);
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param integer $id
+     * @return Enum
+     */
+    public static function create($id) : Enum
+    {
+        return new static($id);
+    }
+
+    /**
+     * Plain list
+     * @static
+     * @return array
+     */
+    public static function getNameList() : array
+    {
+        return static::$names;
+    }
+
+    /**
+     * @return string
+     */
+    public function serialize() : string
+    {
+        return (string) $this->id;
+    }
+
+    /**
+     * @param string $serialized
+     * @throws MissingElementException
+     */
+    public function unserialize($serialized)
+    {
+        $this->setInternalId($serialized);
+    }
+
+    /**
+     * @return null|integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
     public function toString()
@@ -124,18 +141,10 @@ abstract class Enum extends NamedObject
     }
 
     /**
-     * Plain list
-     * @static
-     * @return array
+     * @param $id
+     * @return IdentifiableObject|void
+     * @throws UnsupportedMethodException
      */
-    public static function getNameList()
-    {
-        return static::$names;
-    }
-
-    /**
-     * @return Enum
-     **/
     public function setId($id)
     {
         throw new UnsupportedMethodException('You can not change id here, because it is politics for Enum!');

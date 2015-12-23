@@ -17,7 +17,7 @@
  **/
 abstract class Singleton
 {
-    private static $instances = array();
+    private static $instances = [];
 
     protected function __construct()
     {/* you can't create me */
@@ -25,7 +25,8 @@ abstract class Singleton
 
     /// @example singleton.php
     final public static function getInstance(
-        $class, $args = null /* , ... */
+        $class,
+        $args = null /* , ... */
     )
     {
         if (!isset(self::$instances[$class])) {
@@ -41,7 +42,7 @@ abstract class Singleton
                     );
 
                 call_user_func_array(
-                    array($object, '__construct'),
+                    [$object, '__construct'],
                     $args
                 );
             } else {
@@ -70,8 +71,9 @@ abstract class Singleton
     /* void */
     final public static function dropInstance($class)
     {
-        if (!isset(self::$instances[$class]))
+        if (!isset(self::$instances[$class])) {
             throw new MissingElementException('knows nothing about ' . $class);
+        }
 
         unset(self::$instances[$class]);
     }

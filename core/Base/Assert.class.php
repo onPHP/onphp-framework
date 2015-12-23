@@ -17,16 +17,28 @@
 class Assert extends StaticFactory
 {
     /**
+     * is true
+     *
      * @param $boolean
      * @param null $message
      * @throws WrongArgumentException
      */
     public static function isTrue($boolean, $message = null)
     {
-        if ($boolean !== true)
+        if ($boolean !== true) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($boolean)
             );
+        }
+    }
+
+    /**
+     * @param $argument
+     * @return string
+     */
+    public static function dumpArgument($argument) : string
+    {
+        return 'argument: [' . print_r($argument, true) . ']';
     }
 
     /**
@@ -36,10 +48,11 @@ class Assert extends StaticFactory
      */
     public static function isFalse($boolean, $message = null)
     {
-        if ($boolean !== false)
+        if ($boolean !== false) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($boolean)
             );
+        }
     }
 
     /**
@@ -49,10 +62,11 @@ class Assert extends StaticFactory
      */
     public static function isNotFalse($boolean, $message = null)
     {
-        if ($boolean === false)
+        if ($boolean === false) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($boolean)
             );
+        }
     }
 
     /**
@@ -62,10 +76,11 @@ class Assert extends StaticFactory
      */
     public static function isNull($variable, $message = null)
     {
-        if ($variable !== null)
+        if ($variable !== null) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($variable)
             );
+        }
     }
 
     /**
@@ -75,10 +90,11 @@ class Assert extends StaticFactory
      */
     public static function isEmpty($variable, $message = null)
     {
-        if (!empty($variable))
+        if (!empty($variable)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($variable)
             );
+        }
     }
 
     /**
@@ -88,10 +104,11 @@ class Assert extends StaticFactory
      */
     public static function isNotEmpty($variable, $message = null)
     {
-        if (empty($variable))
+        if (empty($variable)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($variable)
             );
+        }
     }
 
     /**
@@ -104,34 +121,11 @@ class Assert extends StaticFactory
     {
         Assert::isArray($array);
 
-        if (!array_key_exists($key, $array))
+        if (!array_key_exists($key, $array)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($key)
             );
-    }
-
-    /**
-     * @param $variable
-     * @param null $message
-     * @throws WrongArgumentException
-     */
-    public static function isNotNull($variable, $message = null)
-    {
-        if ($variable === null)
-            throw new WrongArgumentException($message);
-    }
-
-    /**
-     * @param $variable
-     * @param null $message
-     * @throws WrongArgumentException
-     */
-    public static function isScalar($variable, $message = null)
-    {
-        if (!is_scalar($variable))
-            throw new WrongArgumentException(
-                $message . ', ' . self::dumpArgument($variable)
-            );
+        }
     }
 
     /**
@@ -141,10 +135,37 @@ class Assert extends StaticFactory
      */
     public static function isArray($variable, $message = null)
     {
-        if (!is_array($variable))
+        if (!is_array($variable)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($variable)
             );
+        }
+    }
+
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
+    public static function isNotNull($variable, $message = null)
+    {
+        if ($variable === null) {
+            throw new WrongArgumentException($message);
+        }
+    }
+
+    /**
+     * @param $variable
+     * @param null $message
+     * @throws WrongArgumentException
+     */
+    public static function isScalar($variable, $message = null)
+    {
+        if (!is_scalar($variable)) {
+            throw new WrongArgumentException(
+                $message . ', ' . self::dumpArgument($variable)
+            );
+        }
     }
 
     /**
@@ -156,10 +177,11 @@ class Assert extends StaticFactory
     {
         self::isArray($variable, $message);
 
-        if (!$variable)
+        if (!$variable) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($variable)
             );
+        }
     }
 
     /**
@@ -172,12 +194,13 @@ class Assert extends StaticFactory
         if (
         !(
             is_numeric($variable)
-            && $variable == (int)$variable
+            && $variable == (int) $variable
         )
-        )
+        ) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($variable)
             );
+        }
     }
 
     /**
@@ -190,10 +213,24 @@ class Assert extends StaticFactory
         if (
             !self::checkInteger($variable)
             || $variable < 0
-        )
+        ) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($variable)
             );
+        }
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    public static function checkInteger($value) : bool
+    {
+        return (
+            is_numeric($value)
+            && ($value == (int) $value)
+            && (strlen($value) == strlen((int) $value))
+        );
     }
 
     /**
@@ -203,10 +240,23 @@ class Assert extends StaticFactory
      */
     public static function isFloat($variable, $message = null)
     {
-        if (!self::checkFloat($variable))
+        if (!self::checkFloat($variable)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($variable)
             );
+        }
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    public static function checkFloat($value) : bool
+    {
+        return (
+            is_numeric($value)
+            && ($value == (float) $value)
+        );
     }
 
     /**
@@ -216,10 +266,11 @@ class Assert extends StaticFactory
      */
     public static function isString($variable, $message = null)
     {
-        if (!is_string($variable))
+        if (!is_string($variable)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($variable)
             );
+        }
     }
 
     /**
@@ -229,10 +280,11 @@ class Assert extends StaticFactory
      */
     public static function isBoolean($variable, $message = null)
     {
-        if (!($variable === true || $variable === false))
+        if (!($variable === true || $variable === false)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($variable)
             );
+        }
     }
 
     /**
@@ -248,10 +300,11 @@ class Assert extends StaticFactory
             || ($variable === false)
             || ($variable === null)
         )
-        )
+        ) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpArgument($variable)
             );
+        }
     }
 
     /**
@@ -262,10 +315,23 @@ class Assert extends StaticFactory
      */
     public static function brothers($first, $second, $message = null)
     {
-        if (get_class($first) !== get_class($second))
+        if (get_class($first) !== get_class($second)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
+        }
+    }
+
+    /**
+     * @param $first
+     * @param $second
+     * @return string
+     */
+    public static function dumpOppositeArguments($first, $second) : string
+    {
+        return
+            'arguments: [' . print_r($first, true) . '] '
+            . 'vs. [' . print_r($second, true) . '] ';
     }
 
     /**
@@ -276,10 +342,11 @@ class Assert extends StaticFactory
      */
     public static function isEqual($first, $second, $message = null)
     {
-        if ($first != $second)
+        if ($first != $second) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
+        }
     }
 
     /**
@@ -290,10 +357,11 @@ class Assert extends StaticFactory
      */
     public static function isNotEqual($first, $second, $message = null)
     {
-        if ($first == $second)
+        if ($first == $second) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
+        }
     }
 
     /**
@@ -304,10 +372,11 @@ class Assert extends StaticFactory
      */
     public static function isSame($first, $second, $message = null)
     {
-        if ($first !== $second)
+        if ($first !== $second) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
+        }
     }
 
     /**
@@ -318,10 +387,11 @@ class Assert extends StaticFactory
      */
     public static function isNotSame($first, $second, $message = null)
     {
-        if ($first === $second)
+        if ($first === $second) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
+        }
     }
 
     /**
@@ -332,10 +402,11 @@ class Assert extends StaticFactory
      */
     public static function isTypelessEqual($first, $second, $message = null)
     {
-        if ($first != $second)
+        if ($first != $second) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
+        }
     }
 
     /**
@@ -346,10 +417,11 @@ class Assert extends StaticFactory
      */
     public static function isLesser($first, $second, $message = null)
     {
-        if (!($first < $second))
+        if (!($first < $second)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
+        }
     }
 
     /**
@@ -360,100 +432,118 @@ class Assert extends StaticFactory
      */
     public static function isGreater($first, $second, $message = null)
     {
-        if (!($first > $second))
+        if (!($first > $second)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
+        }
     }
 
-
+    /**
+     * @param $first
+     * @param $second
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isLesserOrEqual($first, $second, $message = null)
     {
-        if (!($first <= $second))
+        if (!($first <= $second)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
+        }
     }
 
+    /**
+     * @param $first
+     * @param $second
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isGreaterOrEqual($first, $second, $message = null)
     {
-        if (!($first >= $second))
+        if (!($first >= $second)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
+        }
     }
 
+    /**
+     * @param $first
+     * @param $second
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isInstance($first, $second, $message = null)
     {
-        if (!ClassUtils::isInstanceOf($first, $second))
+        if (!ClassUtils::isInstanceOf($first, $second)) {
             throw new WrongArgumentException(
                 $message . ', ' . self::dumpOppositeArguments($first, $second)
             );
+        }
     }
 
+    /// exceptionless methods
+    //@{
+    /**
+     * @param $className
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function classExists($className, $message = null)
     {
-        if (!class_exists($className, true))
+        if (!class_exists($className, true)) {
             throw new WrongArgumentException(
                 $message . ', class "' . $className . '" does not exists'
             );
+        }
     }
 
+    /**
+     * @param $object
+     * @param $method
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function methodExists($object, $method, $message = null)
     {
-        if (!method_exists($object, $method))
+        if (!method_exists($object, $method)) {
             throw new WrongArgumentException(
                 $message . ', method "' . get_class($object) . '::' . $method . '()" does not exists'
             );
+        }
     }
 
+    /**
+     * @param string $message
+     * @throws WrongArgumentException
+     */
     public static function isUnreachable($message = 'unreachable code reached')
     {
         throw new WrongArgumentException($message);
     }
 
+    /**
+     * @param $object
+     * @param null $message
+     * @throws WrongArgumentException
+     */
     public static function isObject($object, $message = null)
     {
-        if (!is_object($object))
+        if (!is_object($object)) {
             throw new WrongArgumentException(
                 $message . ' not object given'
             );
+        }
     }
 
-    /// exceptionless methods
-    //@{
-    public static function checkInteger($value)
-    {
-        return (
-            is_numeric($value)
-            && ($value == (int)$value)
-            && (strlen($value) == strlen((int)$value))
-        );
-    }
-
-    public static function checkFloat($value)
-    {
-        return (
-            is_numeric($value)
-            && ($value == (float)$value)
-        );
-    }
-
-    public static function checkScalar($value)
+    /**
+     * @param $value
+     * @return bool
+     */
+    public static function checkScalar($value) : bool
     {
         return is_scalar($value);
     }
-
-    public static function dumpArgument($argument)
-    {
-        return 'argument: [' . print_r($argument, true) . ']';
-    }
-
-    public static function dumpOppositeArguments($first, $second)
-    {
-        return
-            'arguments: [' . print_r($first, true) . '] '
-            . 'vs. [' . print_r($second, true) . '] ';
-    }
-    //@}
 }

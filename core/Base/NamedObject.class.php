@@ -15,19 +15,26 @@
  * @ingroup Base
  * @ingroup Module
  **/
-abstract class NamedObject
-    extends IdentifiableObject
-    implements Named, Stringable
+abstract class NamedObject extends IdentifiableObject implements Named, Stringable
 {
+    /**
+     * @var null
+     */
     protected $name = null;
 
-    public static function compareNames(
-        Named $left, Named $right
-    )
+    /**
+     * @param Named $left
+     * @param Named $right
+     * @return integer
+     */
+    public static function compareNames(Named $left, Named $right) : int
     {
         return strcasecmp($left->getName(), $right->getName());
     }
 
+    /**
+     * @return null
+     */
     public function getName()
     {
         return $this->name;
@@ -43,7 +50,10 @@ abstract class NamedObject
         return $this;
     }
 
-    public function toString()
+    /**
+     * @return string
+     */
+    public function toString() : string
     {
         return "[{$this->id}] {$this->name}";
     }

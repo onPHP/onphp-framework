@@ -22,20 +22,24 @@ class Identifier implements Identifiable
 
     /**
      * @return Identifier
-     **/
-    public static function create()
+     */
+    public static function create() : Identifier
     {
         return new self;
     }
 
     /**
+     * @param $id
      * @return Identifier
-     **/
-    public static function wrap($id)
+     */
+    public static function wrap($id) : Identifier
     {
         return self::create()->setId($id);
     }
 
+    /**
+     * @return null
+     */
     public function getId()
     {
         return $this->id;
@@ -44,7 +48,7 @@ class Identifier implements Identifiable
     /**
      * @return Identifier
      **/
-    public function setId($id)
+    public function setId($id) : Identifier
     {
         $this->id = $id;
 
@@ -54,13 +58,16 @@ class Identifier implements Identifiable
     /**
      * @return Identifier
      **/
-    public function finalize()
+    public function finalize() : Identifier
     {
         $this->final = true;
 
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isFinalized()
     {
         return $this->final;

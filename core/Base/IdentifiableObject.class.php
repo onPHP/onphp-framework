@@ -20,11 +20,15 @@
 class /* spirit of */
 IdentifiableObject implements Identifiable, DialectString
 {
+    /**
+     * @var null
+     */
     protected $id = null;
 
     /**
+     * @param $id
      * @return IdentifiableObject
-     **/
+     */
     public static function wrap($id)
     {
         $io = new self;
@@ -32,15 +36,28 @@ IdentifiableObject implements Identifiable, DialectString
         return $io->setId($id);
     }
 
+    /**
+     * @param Dialect $dialect
+     * @return mixed
+     */
+    public function toDialectString(Dialect $dialect)
+    {
+        return $dialect->quoteValue($this->getId());
+    }
+
+    /**
+     * @return Identifier|null
+     */
     public function getId()
     {
         if (
             $this->id instanceof Identifier
             && $this->id->isFinalized()
-        )
+        ) {
             return $this->id->getId();
-        else
+        } else {
             return $this->id;
+        }
     }
 
     /**
@@ -51,11 +68,6 @@ IdentifiableObject implements Identifiable, DialectString
         $this->id = $id;
 
         return $this;
-    }
-
-    public function toDialectString(Dialect $dialect)
-    {
-        return $dialect->quoteValue($this->getId());
     }
 }
 

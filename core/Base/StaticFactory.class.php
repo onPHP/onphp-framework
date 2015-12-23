@@ -18,6 +18,7 @@
 abstract class StaticFactory
 {
     final private function __construct()
-    {/*_*/
+    {
+        /*_*/
     }
 }

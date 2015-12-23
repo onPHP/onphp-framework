@@ -14,23 +14,26 @@
  *
  * @ingroup Base
  **/
-final class Time implements Stringable
+class Time implements Stringable
 {
+    /** @var int */
     private $hour = 0;
+
+    /** @var int */
     private $minute = 0;
+
+    /** @var int */
     private $second = 0;
 
+    /** @var null|string */
     private $string = null;
 
     /**
-     * @return Time
-     **/
-    public static function create($input)
-    {
-        return new self($input);
-    }
-
-    // currently supports '01:23:45', '012345', '1234', '12'
+     * Time constructor.
+     *
+     * @param $input
+     * @throws WrongArgumentException
+     */
     public function __construct($input)
     {
         if (Assert::checkInteger($input)) {
@@ -63,14 +66,15 @@ final class Time implements Stringable
 
                     $assumedHour = substr($input, 0, 2);
 
-                    if ($assumedHour > 23)
+                    if ($assumedHour > 23) {
                         $this
                             ->setHour(substr($input, 0, 1))
                             ->setMinute(substr($input, 1, 2));
-                    else
+                    } else {
                         $this
                             ->setHour($assumedHour)
                             ->setMinute(substr($input, 2, 1) . '0');
+                    }
 
                     break;
 
@@ -91,17 +95,32 @@ final class Time implements Stringable
         }
     }
 
-    public function getHour()
+    // currently supports '01:23:45', '012345', '1234', '12'
+
+    /**
+     * @param $input
+     * @return Time
+     */
+    public static function create($input) : Time
+    {
+        return new self($input);
+    }
+
+    /**
+     * @return int
+     */
+    public function getHour() : int
     {
         return $this->hour;
     }
 
     /**
+     * @param int $hour
      * @return Time
-     **/
-    public function setHour($hour)
+     * @throws WrongArgumentException
+     */
+    public function setHour(int $hour) : Time
     {
-        $hour = (int)$hour;
 
         Assert::isTrue(
             $hour >= 0 &&
@@ -115,18 +134,21 @@ final class Time implements Stringable
         return $this;
     }
 
-    public function getMinute()
+    /**
+     * @return int
+     */
+    public function getMinute() : int
     {
         return $this->minute;
     }
 
     /**
+     * @param int $minute
      * @return Time
-     **/
-    public function setMinute($minute)
+     * @throws WrongArgumentException
+     */
+    public function setMinute(int $minute) : Time
     {
-        $minute = (int)$minute;
-
         Assert::isTrue(
             $minute >= 0
             && $minute <= 60,
@@ -140,17 +162,22 @@ final class Time implements Stringable
         return $this;
     }
 
-    public function getSecond()
+    /**
+     * @return int
+     */
+    public function getSecond() : int
     {
         return $this->second;
     }
 
     /**
+     * @param int $second
      * @return Time
-     **/
-    public function setSecond($second)
+     * @throws WrongArgumentException
+     */
+    public function setSecond(int $second) : Time
     {
-        $second = (int)$second;
+        $second = (int) $second;
 
         Assert::isTrue(
             $second >= 0
@@ -166,19 +193,11 @@ final class Time implements Stringable
     }
 
     /// HH:MM
-    public function toString($delimiter = ':')
-    {
-        if ($this->string === null)
-            $this->string =
-                $this->doublize($this->hour)
-                . $delimiter
-                . $this->doublize($this->minute);
-
-        return $this->string;
-    }
-
-    /// HH:MM:SS
-    public function toFullString($delimiter = ':')
+    /**
+     * @param string $delimiter
+     * @return string
+     */
+    public function toFullString(string  $delimiter = ':') : string
     {
         return
             $this->toString($delimiter)
@@ -189,7 +208,35 @@ final class Time implements Stringable
             );
     }
 
-    public function toMinutes()
+    /**
+     * @param string $delimiter
+     * @return null|string
+     */
+    public function toString($delimiter = ':') : string
+    {
+        if ($this->string === null) {
+            $this->string =
+                $this->doublize($this->hour)
+                . $delimiter
+                . $this->doublize($this->minute);
+        }
+
+        return (string)$this->string;
+    }
+
+    /**
+     * @param $int
+     * @return string
+     */
+    private function doublize(int $int) : string
+    {
+        return sprintf('%02d', $int);
+    }
+
+    /**
+     * @return int
+     */
+    public function toMinutes() : int
     {
         return
             ($this->hour * 60)
@@ -197,16 +244,14 @@ final class Time implements Stringable
             + round($this->second / 100, 0);
     }
 
-    public function toSeconds()
+    /**
+     * @return int
+     */
+    public function toSeconds() : int
     {
         return
             ($this->hour * 3600)
             + ($this->minute * 60)
             + $this->second;
-    }
-
-    private function doublize($int)
-    {
-        return sprintf('%02d', $int);
     }
 }

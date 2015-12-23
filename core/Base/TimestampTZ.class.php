@@ -17,14 +17,15 @@ class TimestampTZ extends Timestamp
      * @static
      * @return string
      */
-    protected static function getFormat()
+    protected static function getFormat() : string
     {
         return 'Y-m-d H:i:sO';
     }
 
     /**
-     * @return Timestamp
-     **/
+     * @param null $zone
+     * @return Timestamp|static
+     */
     public function toTimestamp($zone = null)
     {
         if ($zone) {
@@ -42,7 +43,13 @@ class TimestampTZ extends Timestamp
         return parent::toTimestamp();
     }
 
-    public static function compare(Date $left, Date $right)
+    /**
+     * @param Date $left
+     * @param Date $right
+     * @return int
+     * @throws WrongArgumentException
+     */
+    public static function compare(Date $left, Date $right) : int
     {
         Assert::isTrue(
             (

@@ -32,10 +32,11 @@ class SessionNotStartedException extends BaseException
  **/
 class Session extends StaticFactory
 {
+    /** @var boolean */
     private static $isStarted = false;
 
     /**
-     * Открытие сессии
+     * create session
      */
     public static function start()
     {
@@ -44,14 +45,15 @@ class Session extends StaticFactory
     }
 
     /**
-     * Удаление сессии
+     * destroy session
      *
      * @throws SessionNotStartedException
      */
     public static function destroy()
     {
-        if (!self::$isStarted)
+        if (!self::$isStarted) {
             throw new SessionNotStartedException();
+        }
 
         self::$isStarted = false;
 
@@ -65,7 +67,7 @@ class Session extends StaticFactory
     }
 
     /**
-     * Добавить в сессию
+     * assign var
      *
      * @param $var
      * @param $val
@@ -73,35 +75,47 @@ class Session extends StaticFactory
      */
     public static function assign($var, $val)
     {
-        if (!self::isStarted())
+        if (!self::isStarted()) {
             throw new SessionNotStartedException();
+        }
 
         $_SESSION[$var] = $val;
     }
 
     /**
      * @return bool
+     */
+    public static function isStarted()
+    {
+        return self::$isStarted;
+    }
+
+    /**
+     * @param array ...$args
+     * @return boolean
      * @throws SessionNotStartedException
      * @throws WrongArgumentException
      */
-    public static function exist(/* ... */)
+    public static function exist(...$args)
     {
-        if (!self::isStarted())
+        if (!self::isStarted()) {
             throw new SessionNotStartedException();
+        }
 
-        if (!func_num_args())
-            throw new WrongArgumentException('missing argument(s)');
 
-        foreach (func_get_args() as $arg) {
-            if (!isset($_SESSION[$arg]))
+        Assert::isNotEmptyArray($args, 'missing argument(s)');
+
+        foreach ($args as $arg) {
+            if (!isset($_SESSION[$arg])) {
                 return false;
+            }
         }
 
         return true;
     }
 
     /**
-     * Получить значение из сессии по ключу
+     * get the value for the key
      *
      * @param $var
      * @return null
@@ -109,13 +123,16 @@ class Session extends StaticFactory
      */
     public static function get($var)
     {
-        if (!self::isStarted())
+        if (!self::isStarted()) {
             throw new SessionNotStartedException();
+        }
 
         return isset($_SESSION[$var]) ? $_SESSION[$var] : null;
     }
 
     /**
+     * get all session
+     *
      * @return mixed
      */
     public static function &getAll()
@@ -124,50 +141,50 @@ class Session extends StaticFactory
     }
 
     /**
-     * Удаление из сессии или удаление значения по ключу
-     *
-     * @throws SessionNotStartedException
-     * @throws WrongArgumentException
-     */
-    public static function drop(/* ... */)
-    {
-        if (!self::isStarted())
-            throw new SessionNotStartedException();
-
-        if (!func_num_args())
-            throw new WrongArgumentException('missing argument(s)');
-
-        foreach (func_get_args() as $arg)
-            unset($_SESSION[$arg]);
-    }
-
-    /**
-     * Удаление всех значений сессии
+     * removal of all values
      *
      * @throws SessionNotStartedException
      * @throws WrongArgumentException
      */
     public static function dropAll()
     {
-        if (!self::isStarted())
+        if (!self::isStarted()) {
             throw new SessionNotStartedException();
+        }
 
         if ($_SESSION) {
-            foreach (array_keys($_SESSION) as $key) {
-                self::drop($key);
-            }
+            self::drop(array_keys($_SESSION));
         }
-    }
 
-
-    public static function isStarted()
-    {
-        return self::$isStarted;
     }
 
     /**
-     * assigns to $_SESSION scope variables defined in given array
-     **/
+     * Removal of values by index or indices
+     *
+     * @param array ...$args
+     * @throws SessionNotStartedException
+     * @throws WrongArgumentException
+     */
+    public static function drop(...$args)
+    {
+        if (!self::isStarted()) {
+            throw new SessionNotStartedException();
+        }
+
+        Assert::isNotEmptyArray($args, 'missing argument(s)');
+
+        foreach ($args as $arg) {
+            unset($_SESSION[$arg]);
+        }
+    }
+
+    /**
+     * array assign
+     *
+     * @param $scope
+     * @param $array
+     * @throws WrongArgumentException
+     */
     public static function arrayAssign($scope, $array)
     {
         Assert::isArray($array);
@@ -180,9 +197,12 @@ class Session extends StaticFactory
     }
 
     /**
+     * get session name
+     *
+     * @return string
      * @throws SessionNotStartedException
-     **/
-    public static function getName()
+     */
+    public static function getName() : string
     {
         if (!self::isStarted())
             throw new SessionNotStartedException();
@@ -191,9 +211,12 @@ class Session extends StaticFactory
     }
 
     /**
+     * get session index
+     *
+     * @return string
      * @throws SessionNotStartedException
-     **/
-    public static function getId()
+     */
+    public static function getId() : string
     {
         if (!self::isStarted())
             throw new SessionNotStartedException();

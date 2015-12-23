@@ -20,22 +20,52 @@
  **/
 class Timestamp extends Date
 {
+
     /**
+     * Timestamp constructor.
+     *
+     * @param $dateTime
+     * @param DateTimeZone|null $zone
+     */
+    public function __construct($dateTime, DateTimeZone $zone = null)
+    {
+        parent::__construct($dateTime);
+
+        if ($zone) {
+            $this->dateTime->setTimezone($zone);
+        }
+
+    }
+
+    /**
+     * @param $timestamp
+     * @param DateTimeZone|null $zone
      * @return Timestamp
-     **/
+     */
     public static function create($timestamp, DateTimeZone $zone = null)
     {
         return new static($timestamp, $zone);
     }
 
+    /**
+     * @return bool|string
+     */
     public static function now()
     {
         return date(static::getFormat());
     }
 
     /**
+     * @return string
+     */
+    protected static function getFormat() : string
+    {
+        return 'Y-m-d H:i:s';
+    }
+
+    /**
      * @return Timestamp
-     **/
+     */
     public static function makeNow()
     {
         return new static(time());
@@ -49,30 +79,34 @@ class Timestamp extends Date
         return new static(static::today());
     }
 
-    public function __construct($dateTime, DateTimeZone $zone = null)
+    /**
+     * @param Timestamp $timestamp
+     * @return bool
+     */
+    public function equals(Timestamp $timestamp) : bool
     {
-        parent::__construct($dateTime);
-
-        if ($zone) {
-            $this->dateTime->setTimezone($zone);
-        }
-
+        return ($this->toDateTime() === $timestamp->toDateTime());
     }
 
-    private function getDefaultTimeZone()
+    /**
+     * @param string $dateDelimiter
+     * @param string $timeDelimiter
+     * @param string $secondDelimiter
+     * @return string
+     */
+    public function toDateTime($dateDelimiter = '-', $timeDelimiter = ':', $secondDelimiter = '.') : string
     {
-        try {
-            $defaultTimeZoneName = date_default_timezone_get();
-            return new DateTimeZone($defaultTimeZoneName);
-        } catch (Exception $e) {
-            throw new WrongStateException(
-                "strange default time zone given - '{$defaultTimeZoneName}'!" .
-                'Use date_default_timezone_set() for set valid default time zone.'
-            );
-        }
+        return
+            $this->toDate($dateDelimiter) . ' '
+            . $this->toTime($timeDelimiter, $secondDelimiter);
     }
 
-    public function toTime($timeDelimiter = ':', $secondDelimiter = '.')
+    /**
+     * @param string $timeDelimiter
+     * @param string $secondDelimiter
+     * @return string
+     */
+    public function toTime($timeDelimiter = ':', $secondDelimiter = '.') : string
     {
         return
             $this->getHour()
@@ -82,49 +116,50 @@ class Timestamp extends Date
             . $this->getSecond();
     }
 
-    public function toDateTime(
-        $dateDelimiter = '-',
-        $timeDelimiter = ':',
-        $secondDelimiter = '.'
-    )
-    {
-        return
-            $this->toDate($dateDelimiter) . ' '
-            . $this->toTime($timeDelimiter, $secondDelimiter);
-    }
-
-    public function getHour()
+    /**
+     * @return string
+     */
+    public function getHour() : string
     {
         return $this->dateTime->format('H');
     }
 
-    public function getMinute()
+    /**
+     * @return string
+     */
+    public function getMinute() : string
     {
         return $this->dateTime->format('i');
     }
 
-    public function getSecond()
+    /**
+     * @return string
+     */
+    public function getSecond() : string
     {
         return $this->dateTime->format('s');
     }
 
-    public function equals(Timestamp $timestamp)
+    /**
+     * @return int
+     */
+    public function getDayStartStamp() : int
     {
-        return ($this->toDateTime() === $timestamp->toDateTime());
-    }
-
-    public function getDayStartStamp()
-    {
-        if (!$this->getHour() && !$this->getMinute() && !$this->getSecond())
+        if (!$this->getHour() && !$this->getMinute() && !$this->getSecond()) {
             return $this->dateTime->getTimestamp();
-        else
+        } else {
             return parent::getDayStartStamp();
+        }
     }
 
-    public function getHourStartStamp()
+    /**
+     * @return int
+     */
+    public function getHourStartStamp() : int
     {
-        if (!$this->getMinute() && !$this->getSecond())
+        if (!$this->getMinute() && !$this->getSecond()) {
             return $this->dateTime->getTimestamp();
+        }
 
         return
             mktime(
@@ -139,25 +174,41 @@ class Timestamp extends Date
 
     /**
      * ISO 8601 time string
-     **/
+     *
+     * @param bool $convertToUtc
+     * @return bool|string
+     */
     public function toIsoString($convertToUtc = true)
     {
-        if ($convertToUtc)
+        if ($convertToUtc) {
             return date('Y-m-d\TH:i:s\Z', $this->dateTime->getTimestamp() - date('Z', $this->dateTime->getTimestamp()));
-        else
+        } else {
             return date('Y-m-d\TH:i:sO', $this->dateTime->getTimestamp());
+        }
     }
 
     /**
      * @return Timestamp
-     **/
+     */
     public function toTimestamp()
     {
         return $this->spawn();
     }
 
-    protected static function getFormat()
+    /**
+     * @return DateTimeZone
+     * @throws WrongStateException
+     */
+    private function getDefaultTimeZone()
     {
-        return 'Y-m-d H:i:s';
+        $defaultTimeZoneName = date_default_timezone_get();
+        try {
+            return new DateTimeZone($defaultTimeZoneName);
+        } catch (Exception $e) {
+            throw new WrongStateException(
+                "strange default time zone given - '{$defaultTimeZoneName}'!" .
+                'Use date_default_timezone_set() for set valid default time zone.'
+            );
+        }
     }
 }

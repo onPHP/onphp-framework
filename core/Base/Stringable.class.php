@@ -15,5 +15,10 @@
  **/
 interface Stringable
 {
-    public function toString();
+    /**
+     * toString
+     *
+     * @return string
+     */
+    public function toString() : string ;
 }

@@ -11,26 +11,20 @@
  ***************************************************************************/
 final class PriorityQueue
 {
-    private $heap = array(0);
+    /** @var array  */
+    private $heap = [0];
+
+    /** @var integer */
     private $heapSize = 0;
+
+    /** @var null|callable */
     private $cmpFunction = null;
 
-    public function getLength()
-    {
-        return $this->heapSize;
-    }
-
-    public function first()
-    {
-        return $this->heap[1];
-    }
-
-    public static function create($unsortedData = array())
-    {
-        return new self($unsortedData);
-    }
-
-    public function __construct($unsortedData = array())
+    /**
+     * PriorityQueue constructor.
+     * @param array $unsortedData
+     */
+    public function __construct(array $unsortedData)
     {
         $this->heap = array_merge($this->heap, $unsortedData);
 
@@ -39,37 +33,19 @@ final class PriorityQueue
         $this->buildMaxHeap();
     }
 
-    /*
-    function cmp($one, $two)
+    /**
+     * @see buildMaxHeap
+     */
+    public function buildMaxHeap()
     {
-        if ($one['d'] == $two['d'])
-            return 0;
-
-        return ($one['d'] < $two['d']) ? -1 : 1;
-    }
-    */
-    public function setCmpFunction($function)
-    {
-        $this->cmpFunction = $function;
-
-        return $this;
+        for ($i = $this->heapSize / 2; $i > 0; $i--) {
+            $this->maxHeapify($i);
+        }
     }
 
-    public function parent($index)
-    {
-        return $index >> 1;
-    }
-
-    public function left($index)
-    {
-        return $index << 1;
-    }
-
-    public function right($index)
-    {
-        return 1 + ($index << 1);
-    }
-
+    /**
+     * @param $index
+     */
     public function maxHeapify($index)
     {
         $left = $this->left($index);
@@ -79,13 +55,15 @@ final class PriorityQueue
 
         $cmp = $this->cmpFunction;
 
-        if ($left <= $this->heapSize && $cmp($this->heap[$left], $this->heap[$index]) == 1)
+        if ($left <= $this->heapSize && $cmp($this->heap[$left], $this->heap[$index]) == 1) {
             $largest = $left;
-        else
+        } else {
             $largest = $index;
+        }
 
-        if ($right <= $this->heapSize && $cmp($this->heap[$right], $this->heap[$largest]) == 1)
+        if ($right <= $this->heapSize && $cmp($this->heap[$right], $this->heap[$largest]) == 1) {
             $largest = $right;
+        }
 
         if ($largest != $index) {
             $this->swapElts($index, $largest);
@@ -94,17 +72,79 @@ final class PriorityQueue
         }
     }
 
-    public function buildMaxHeap()
+    /**
+     * @param $index
+     * @return integer
+     */
+    public function left($index) : int
     {
-        for ($i = $this->heapSize / 2; $i > 0; $i--) {
-            $this->maxHeapify($i);
-        }
+        return $index << 1;
     }
 
+    /**
+     * @param $index
+     * @return integer
+     */
+    public function right($index) : int
+    {
+        return 1 + ($index << 1);
+    }
+
+    /**
+     * @param $index1
+     * @param $index2
+     */
+    private function swapElts($index1, $index2)
+    {
+        $tmp = $this->heap[$index2];
+        $this->heap[$index2] = $this->heap[$index1];
+        $this->heap[$index1] = $tmp;
+    }
+
+    /**
+     * @param array $unsortedData
+     * @return PriorityQueue
+     */
+    public static function create($unsortedData = []) : PriorityQueue
+    {
+        return new self($unsortedData);
+    }
+
+    /**
+     * @return integer
+     */
+    public function getLength() : int
+    {
+        return $this->heapSize;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function first()
+    {
+        return $this->heap[1];
+    }
+
+    /**
+     * @param $function
+     * @return PriorityQueue
+     */
+    public function setCmpFunction($function) : PriorityQueue
+    {
+        $this->cmpFunction = $function;
+
+        return $this;
+    }
+
+    /**
+     * @return null
+     */
     public function pop()
     {
-        if ($this->heapSize == 0)
+        if ($this->heapSize == 0) {
             return null;
+        }
 
         $max = $this->heap[1];
 
@@ -115,6 +155,9 @@ final class PriorityQueue
         return $max;
     }
 
+    /**
+     * @param $elt
+     */
     public function push($elt)
     {
         ++$this->heapSize;
@@ -141,6 +184,20 @@ final class PriorityQueue
         }
     }
 
+    /**
+     * @param $index
+     * @return integer
+     */
+    public function parent($index) : int
+    {
+        return $index >> 1;
+    }
+
+    /**
+     * delete by index
+     *
+     * @param $index
+     */
     public function delete($index)
     {
         $this->heap[$index] = $this->heap[$this->heapSize];
@@ -150,12 +207,5 @@ final class PriorityQueue
         $this->heapSize--;
 
         $this->maxHeapify($index);
-    }
-
-    private function swapElts($index1, $index2)
-    {
-        $tmp = $this->heap[$index2];
-        $this->heap[$index2] = $this->heap[$index1];
-        $this->heap[$index1] = $tmp;
     }
 }
