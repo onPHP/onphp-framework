@@ -19,7 +19,7 @@ class Transaction extends StaticFactory
     /**
      * @return DBTransaction
      **/
-    public static function immediate(DB $db)
+    public static function immediate(DB $db) : DBTransaction
     {
         return new DBTransaction($db);
     }
@@ -27,7 +27,7 @@ class Transaction extends StaticFactory
     /**
      * @return TransactionQueue
      **/
-    public static function deferred(DB $db)
+    public static function deferred(DB $db) : TransactionQueue
     {
         return new TransactionQueue($db);
     }
@@ -35,7 +35,7 @@ class Transaction extends StaticFactory
     /**
      * @return FakeTransaction
      **/
-    public static function fake(DB $db)
+    public static function fake(DB $db) : FakeTransaction
     {
         return new FakeTransaction($db);
     }

@@ -38,7 +38,7 @@ class InnerTransactionWrapper
     /**
      * @return InnerTransactionWrapper
      */
-    public static function create()
+    public static function create() : InnerTransactionWrapper
     {
         return new self;
     }
@@ -47,7 +47,7 @@ class InnerTransactionWrapper
      * @param DB $db
      * @return InnerTransactionWrapper
      */
-    public function setDB(DB $db)
+    public function setDB(DB $db) : InnerTransactionWrapper
     {
         $this->db = $db;
         return $this;
@@ -57,18 +57,18 @@ class InnerTransactionWrapper
      * @param StorableDAO $dao
      * @return InnerTransactionWrapper
      */
-    public function setDao(StorableDAO $dao)
+    public function setDao(StorableDAO $dao) : InnerTransactionWrapper
     {
         $this->dao = $dao;
         return $this;
     }
 
     /**
-     * @param collable $function
-     * @return $this
+     * @param callable $function
+     * @return InnerTransactionWrapper
      * @throws WrongArgumentException
      */
-    public function setFunction($function)
+    public function setFunction($function) : InnerTransactionWrapper
     {
         Assert::isTrue(is_callable($function, false), '$function must be callable');
         $this->function = $function;
@@ -76,10 +76,10 @@ class InnerTransactionWrapper
     }
 
     /**
-     * @param collable $function
+     * @param callable $function
      * @return InnerTransactionWrapper
      */
-    public function setExceptionFunction($function)
+    public function setExceptionFunction($function) : InnerTransactionWrapper
     {
         Assert::isTrue(is_callable($function, false), '$function must be callable');
         $this->exceptionFunction = $function;
@@ -90,7 +90,7 @@ class InnerTransactionWrapper
      * @param IsolationLevel $level
      * @return InnerTransactionWrapper
      */
-    public function setLevel(IsolationLevel $level)
+    public function setLevel(IsolationLevel $level) : InnerTransactionWrapper
     {
         $this->level = $level;
         return $this;
@@ -106,6 +106,11 @@ class InnerTransactionWrapper
         return $this;
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     * @throws WrongArgumentException
+     */
     public function run()
     {
         Assert::isTrue(!is_null($this->dao) || !is_null($this->db), 'set first dao or db');
@@ -132,5 +137,3 @@ class InnerTransactionWrapper
         }
     }
 }
-
-?>

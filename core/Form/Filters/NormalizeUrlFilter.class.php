@@ -28,10 +28,10 @@
 		public function apply($value)
 		{
 			$url =
-				HttpUrl::create()->
-				parse($value)->
-				ensureAbsolute()->
-				normalize();
+				(new HttpUrl)
+					->parse($value)
+					->ensureAbsolute()
+					->normalize();
 			
 			return $url->toString();
 		}

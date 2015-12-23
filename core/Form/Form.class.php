@@ -31,6 +31,7 @@
 		private $importFiltering	= true;
 		
 		/**
+		 * @deprecated
 		 * @return Form
 		**/
 		public static function create()

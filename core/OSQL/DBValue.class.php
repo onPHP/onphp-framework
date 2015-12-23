@@ -20,6 +20,7 @@
 		private $value = null;
 		
 		/**
+		 * @deprecated
 		 * @return DBValue
 		**/
 		public static function create($value)

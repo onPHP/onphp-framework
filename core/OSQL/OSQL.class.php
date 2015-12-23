@@ -19,6 +19,8 @@
 	final class OSQL extends StaticFactory
 	{
 		/**
+		 * @deprecated
+		 *
 		 * @return SelectQuery
 		**/
 		public static function select()

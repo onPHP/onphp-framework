@@ -18,6 +18,8 @@
 class TimestampRange extends DateRange
 {
     /**
+     * @deprecated
+     *
      * @return TimestampRange
      **/
     public static function create($start = null, $end = null)

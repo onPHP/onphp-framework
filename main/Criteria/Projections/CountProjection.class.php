@@ -37,7 +37,7 @@ abstract class CountProjection extends BaseProjection
         Assert::isNotNull($this->property);
 
         return
-            SQLFunction::create(
+            new SQLFunction(
                 'count',
                 $this->property
                     ? $criteria->getDao()->guessAtom($this->property, $query)

@@ -19,6 +19,8 @@
 		private $exclude = null;
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return StripTagsFilter
 		**/
 		public static function create()

@@ -22,7 +22,7 @@
 		public static function textImport()
 		{
 			return
-				FilterChain::create()->
+				(new FilterChain())->
 					add(Filter::stripTags())->
 					add(Filter::trim());
 		}
@@ -40,7 +40,7 @@
 		**/
 		public static function hash($binary = false)
 		{
-			return HashFilter::create($binary);
+			return  new HashFilter($binary);
 		}
 		
 		/**
@@ -48,7 +48,7 @@
 		**/
 		public static function pcre()
 		{
-			return PCREFilter::create();
+			return new PCREFilter();
 		}
 		
 		/**
@@ -56,7 +56,7 @@
 		**/
 		public static function trim()
 		{
-			return TrimFilter::create();
+			return new TrimFilter();
 		}
 		
 		/**
@@ -64,7 +64,7 @@
 		**/
 		public static function crop()
 		{
-			return CropFilter::create();
+			return new CropFilter();
 		}
 		
 		/**
@@ -72,7 +72,7 @@
 		**/
 		public static function stripTags()
 		{
-			return StripTagsFilter::create();
+			return new StripTagsFilter();
 		}
 		
 		/**
@@ -144,7 +144,7 @@
 		**/
 		public static function replaceSymbols($search = null, $replace = null)
 		{
-			return StringReplaceFilter::create($search, $replace);
+			return new StringReplaceFilter($search, $replace);
 		}
 		
 		/**

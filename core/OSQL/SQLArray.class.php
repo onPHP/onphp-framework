@@ -19,6 +19,8 @@
 		private $array = array();
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return SQLArray
 		**/
 		public static function create($array)

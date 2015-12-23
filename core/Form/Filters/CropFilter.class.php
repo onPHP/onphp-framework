@@ -20,6 +20,7 @@
 		private $length	= 0;
 		
 		/**
+		 * @deprecated
 		 * @return CropFilter
 		**/
 		public static function create()

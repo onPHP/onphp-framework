@@ -48,6 +48,7 @@
 		}
 		
 		/**
+		 * @deprecated
 		 * @return FileOutputStream
 		**/
 		public static function create($nameOrFd, $append = false)

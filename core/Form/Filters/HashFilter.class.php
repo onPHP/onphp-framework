@@ -24,6 +24,7 @@
 		}
 		
 		/**
+		 * @deprecated
 		 * @return HashFilter
 		**/
 		public static function create($binary = false)

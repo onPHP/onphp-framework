@@ -14,12 +14,15 @@
  *
  * @ingroup Transaction
  **/
-final class FakeTransaction extends BaseTransaction
+class FakeTransaction extends BaseTransaction
 {
+
     /**
+     * @param Query $query
      * @return FakeTransaction
-     **/
-    public function add(Query $query)
+     * @throws WrongArgumentException
+     */
+    public function add(Query $query) : FakeTransaction
     {
         $this->db->queryNull($query);
 
@@ -29,10 +32,8 @@ final class FakeTransaction extends BaseTransaction
     /**
      * @return FakeTransaction
      **/
-    public function flush()
+    public function flush() : FakeTransaction
     {
         return $this;
     }
 }
-
-?>

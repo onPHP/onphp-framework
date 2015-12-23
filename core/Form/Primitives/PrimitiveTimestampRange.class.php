@@ -34,7 +34,7 @@
 			if (strpos($string, ' - ') !== false) {
 				list($first, $second) = explode(' - ', $string);
 				
-				return TimestampRange::create(
+				return new TimestampRange(
 					new Timestamp(trim($first)),
 					new Timestamp(trim($second))
 				);

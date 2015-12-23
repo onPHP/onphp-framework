@@ -44,7 +44,7 @@ abstract class BaseTransaction
     /**
      * @return DB
      **/
-    public function getDB()
+    public function getDB() : DB
     {
         return $this->db;
     }
@@ -69,7 +69,10 @@ abstract class BaseTransaction
         return $this;
     }
 
-    protected function getBeginString()
+    /**
+     * @return string
+     */
+    protected function getBeginString() : string
     {
         $begin = 'start transaction';
 

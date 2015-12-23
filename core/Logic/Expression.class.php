@@ -49,7 +49,7 @@
 		**/
 		public static function eqId($field, Identifiable $object)
 		{
-			return self::eq($field, DBValue::create($object->getId()));
+			return self::eq($field, new DBValue($object->getId()));
 		}
 		
 		/**

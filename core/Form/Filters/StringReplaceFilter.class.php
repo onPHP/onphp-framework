@@ -20,6 +20,8 @@
 		private $count		= null;
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return StringReplaceFilter
 		**/
 		public static function create($search = null, $replace = null)

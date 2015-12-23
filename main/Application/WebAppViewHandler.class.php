@@ -66,7 +66,7 @@ class WebAppViewHandler implements InterceptingChainHandler
      */
     protected function getViewResolver(InterceptingChain $chain, Model $model)
     {
-        return PhpViewResolver::create($chain->getPathTemplateDefault(), EXT_TPL);
+        return new PhpViewResolver($chain->getPathTemplateDefault(), EXT_TPL);
     }
 
     /**

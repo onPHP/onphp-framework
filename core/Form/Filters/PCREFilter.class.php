@@ -19,6 +19,7 @@
 		private $limit		= -1;
 		
 		/**
+		 * @deprecated
 		 * @return PCREFilter
 		**/
 		public static function create()

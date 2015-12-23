@@ -46,7 +46,7 @@ class ClassProjection implements ObjectProjection
         foreach ($dao->getFields() as $field)
             $this->subProcess(
                 $query,
-                DBField::create($field, $dao->getTable())
+                new DBField($field, $dao->getTable())
             );
 
         return $query;

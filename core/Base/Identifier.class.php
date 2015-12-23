@@ -34,7 +34,7 @@ class Identifier implements Identifiable
      */
     public static function wrap($id) : Identifier
     {
-        return self::create()->setId($id);
+        return (new Identifier())->setId($id);
     }
 
     /**

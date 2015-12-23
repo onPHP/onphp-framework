@@ -154,14 +154,14 @@ class IntervalUnit
 
         } elseif ($this->days) {
 
-            $epochStartTruncated = Date::create('1970-01-05');
+            $epochStartTruncated = new Date('1970-01-05');
 
             $startDifference = Date::dayDifference(
-                $epochStartTruncated, Date::create($start->toDate())
+                $epochStartTruncated, new Date($start->toDate())
             );
 
             $endDifference = Date::dayDifference(
-                $epochStartTruncated, Date::create($end->toDate())
+                $epochStartTruncated, new Date($end->toDate())
             );
 
             $result = ($endDifference - $startDifference) / $this->days;
@@ -210,13 +210,13 @@ class IntervalUnit
                 $function($time->toStamp() / $this->seconds) * $this->seconds
             );
 
-            return Timestamp::create($truncated);
+            return new Timestamp($truncated);
 
         } elseif ($this->days) {
 
-            $epochStartTruncated = Date::create('1970-01-05');
+            $epochStartTruncated = new Date('1970-01-05');
 
-            $truncatedDate = Date::create($time->toDate());
+            $truncatedDate = new Date($time->toDate());
 
             if ($ceil && $truncatedDate->toStamp() < $time->toStamp()) {
                 $truncatedDate->modify('+1 day');
@@ -230,7 +230,7 @@ class IntervalUnit
                 $function($difference / $this->days) * $this->days
             );
 
-            return Timestamp::create(
+            return new Timestamp(
                 $epochStartTruncated->spawn($truncated . ' days')->toStamp()
             );
 
@@ -263,7 +263,7 @@ class IntervalUnit
 
             $months = $months + 1;
 
-            return Timestamp::create("{$years}-{$months}-01 00:00:00");
+            return new Timestamp("{$years}-{$months}-01 00:00:00");
         }
 
         Assert::isUnreachable();

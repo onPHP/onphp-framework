@@ -19,6 +19,7 @@
 		private $chain = array();
 
 		/**
+		 * @deprecated
 		 * @return FilterChain
 		**/
 		public static function create()

@@ -91,6 +91,8 @@ class HttpRequest
     }
 
     /**
+     * @deprecated
+     *
      * @return HttpRequest
      **/
     public static function create()

@@ -411,7 +411,7 @@ class LightMetaProperty implements Stringable
         }
 
         if ($this->className == 'HttpUrl') {
-            return HttpUrl::create()->parse($raw);
+            return (new HttpUrl())->parse($raw);
         }
 
         if (

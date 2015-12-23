@@ -116,7 +116,7 @@
 		**/
 		protected function makeForm()
 		{
-			$form = Form::create();
+			$form = new Form();
 			
 			foreach ($this->getFormMapping() as $primitive)
 				$form->add($primitive);

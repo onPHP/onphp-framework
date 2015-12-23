@@ -24,6 +24,8 @@ class PhpViewResolver implements ViewResolver
     }
 
     /**
+     * @deprecated
+     *
      * @return PhpViewResolver
      **/
     public static function create($prefix = null, $postfix = null)

@@ -141,8 +141,7 @@ class ApplicationUrl
                 'base url must be set first'
             );
 
-        $currentUrl = GenericUri::create()->
-        parse($requestUri);
+        $currentUrl = (new GenericUri)->parse($requestUri);
 
         if (!$currentUrl->isValid())
             throw new WrongArgumentException(
@@ -261,7 +260,7 @@ class ApplicationUrl
     {
         Assert::isNotNull($this->base, 'set base url first');
 
-        $parsedUrl = HttpUrl::create()->parse($url);
+        $parsedUrl = (new HttpUrl())->parse($url);
 
         return $this->base->transform($parsedUrl);
     }

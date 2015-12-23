@@ -33,7 +33,7 @@ class InnerTransaction
         $database,
         IsolationLevel $level = null,
         AccessMode $mode = null
-    )
+    ) : InnerTransaction
     {
         return new self($database, $level, $mode);
     }
@@ -125,7 +125,7 @@ class InnerTransaction
     /**
      * @return string
      */
-    private static function createSavepointName()
+    private static function createSavepointName() : string
     {
         static $i = 1;
         return 'innerSavepoint' . ($i++);

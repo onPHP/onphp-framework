@@ -84,7 +84,7 @@ class SimplePhpViewParametrized extends CustomPhpView
     protected function template($templateName, array $params = array())
     {
         if (!empty($params)) {
-            $model = Model::create()->merge($this->model);
+            $model = (new Model())->merge($this->model);
             foreach ($params as $paramName => $paramValue) {
                 $model->set($paramName, $paramValue);
             }
@@ -116,7 +116,7 @@ class SimplePhpViewParametrized extends CustomPhpView
      */
     private function array2Model(array $array)
     {
-        $model = Model::create();
+        $model = new Model();
         foreach ($array as $key => $value) {
             $model->set($key, $value);
         }

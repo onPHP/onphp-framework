@@ -24,12 +24,12 @@ class WebApplication extends InterceptingChain implements IServiceLocatorSupport
 
     public function __construct()
     {
-        $request = HttpRequest::create()->
-        setGet($_GET)->
-        setPost($_POST)->
-        setCookie($_COOKIE)->
-        setServer($_SERVER)->
-        setFiles($_FILES);
+        $request = (new HttpRequest())
+            ->setGet($_GET)
+            ->setPost($_POST)
+            ->setCookie($_COOKIE)
+            ->setServer($_SERVER)
+            ->setFiles($_FILES);
 
         if (!empty($_SESSION)) {
             $request->setSession($_SESSION);

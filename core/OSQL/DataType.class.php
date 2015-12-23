@@ -84,6 +84,7 @@
 		);
 		
 		/**
+		 * @deprecated
 		 * @return DataType
 		**/
 		public static function create($id)

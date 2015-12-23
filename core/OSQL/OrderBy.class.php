@@ -19,6 +19,8 @@
 		private $nulls		= null;
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return OrderBy
 		**/
 		public static function create($field)
@@ -120,7 +122,7 @@
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
-			$order = self::create($dao->guessAtom($this->field, $query));
+			$order = new self($dao->guessAtom($this->field, $query));
 			
 			if (!$this->nulls->isNull())
 				$order->setNullsFirst($this->nulls->getValue());

@@ -484,7 +484,7 @@ abstract class DB
      */
     private function getUncacher()
     {
-        return $this->uncacher = $this->uncacher ?: UncachersPool::create();
+        return $this->uncacher = $this->uncacher ?: new UncachersPool();
     }
 
     private function triggerUncacher()

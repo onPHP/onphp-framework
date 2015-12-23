@@ -81,7 +81,7 @@ class ApplicationToken
     {
         Assert::isTrue($this->session->isStarted(), 'Session must be started to work with token');
 
-        $form = Form::create()
+        $form = (new Form())
             ->add(
                 Primitive::string($this->tokenParam)
                     ->setAllowedPattern('~^[\da-f]{32}$~iu')

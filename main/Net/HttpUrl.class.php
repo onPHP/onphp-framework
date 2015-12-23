@@ -19,6 +19,8 @@
 		private $checkPrivilegedPorts = false;
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return HttpUrl
 		**/
 		public static function create()
@@ -43,6 +45,13 @@
 				$this->setPort($parts[1]);
 			
 			return $this;
+		}
+
+		public function parse($value)
+		{
+			parent::parse($value);
+			return $this;
+
 		}
 		
 		public function ensureAbsolute()

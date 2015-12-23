@@ -20,6 +20,8 @@ class CalendarDay extends Date
     private $outside = null;
 
     /**
+     * @deprecated
+     *
      * @return CalendarDay
      **/
     public static function create($timestamp)

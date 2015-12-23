@@ -509,7 +509,7 @@ class DateRange implements Stringable, SingleRange
      **/
     public function lightCopyOnClip(DateRange $range)
     {
-        $copy = DateRange::create();
+        $copy = new DateRange();
 
         if (
             $range->start
@@ -539,6 +539,8 @@ class DateRange implements Stringable, SingleRange
     }
 
     /**
+     * @deprecated
+     *
      * @return DateRange
      **/
     public static function create($start = null, $end = null)
@@ -558,9 +560,6 @@ class DateRange implements Stringable, SingleRange
     public function toTimestampRange()
     {
         return
-            TimestampRange::create(
-                $this->getStart()->toTimestamp(),
-                $this->getEnd()->toTimestamp()
-            );
+            new TimestampRange($this->getStart()->toTimestamp(), $this->getEnd()->toTimestamp());
     }
 }

@@ -17,7 +17,7 @@
 abstract class GenericDAO extends Singleton implements BaseDAO
 {
     protected $linkName = null;
-    private $identityMap = array();
+    private $identityMap = [];
 
     public function makeObject($array, $prefix = null)
     {
@@ -49,10 +49,11 @@ abstract class GenericDAO extends Singleton implements BaseDAO
      **/
     public function getProtoClass()
     {
-        static $protos = array();
+        static $protos = [];
 
-        if (!isset($protos[$className = $this->getObjectName()]))
-            $protos[$className] = call_user_func(array($className, 'proto'));
+        if (!isset($protos[$className = $this->getObjectName()])) {
+            $protos[$className] = call_user_func([$className, 'proto']);
+        }
 
         return $protos[$className];
     }
@@ -107,17 +108,18 @@ abstract class GenericDAO extends Singleton implements BaseDAO
      **/
     public function makeSelectHead()
     {
-        static $selectHead = array();
+        static $selectHead = [];
 
         if (!isset($selectHead[$className = $this->getObjectName()])) {
             $table = $this->getTable();
-            
+
             $object =
                 OSQL::select()->
                 from($table);
 
-            foreach ($this->getFields() as $field)
+            foreach ($this->getFields() as $field) {
                 $object->get(new DBField($field, $table));
+            }
 
             $selectHead[$className] = $object;
         }
@@ -127,7 +129,7 @@ abstract class GenericDAO extends Singleton implements BaseDAO
 
     public function getFields()
     {
-        static $fields = array();
+        static $fields = [];
 
         $className = $this->getObjectName();
 
@@ -152,11 +154,11 @@ abstract class GenericDAO extends Singleton implements BaseDAO
     public function makeTotalCountQuery()
     {
         return
-            OSQL::select()->
-            get(
-                SQLFunction::create('count', DBValue::create('*'))
-            )->
-            from($this->getTable());
+            (new SelectQuery())
+                ->get(
+                    new SQLFunction('count', new DBValue('*'))
+                )
+                ->from($this->getTable());
     }
 
     public function getById($id, $expires = Cache::EXPIRES_MEDIUM)
@@ -164,8 +166,9 @@ abstract class GenericDAO extends Singleton implements BaseDAO
         Assert::isScalar($id);
         Assert::isNotEmpty($id);
 
-        if (isset($this->identityMap[$id]))
+        if (isset($this->identityMap[$id])) {
             return $this->identityMap[$id];
+        }
 
         return $this->addObjectToMap(
             Cache::worker($this)->getById($id, $expires)
@@ -173,35 +176,35 @@ abstract class GenericDAO extends Singleton implements BaseDAO
     }
 
     public function getByLogic(
-        LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        LogicalObject $logic,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         return $this->addObjectToMap(
             Cache::worker($this)->getByLogic($logic, $expires)
         );
     }
 
     public function getByQuery(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         return $this->addObjectToMap(
             Cache::worker($this)->getByQuery($query, $expires)
         );
     }
 
     public function getCustom(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         return Cache::worker($this)->getCustom($query, $expires);
     }
 
     public function getListByIds(
-        array $ids, $expires = Cache::EXPIRES_MEDIUM
-    )
-    {
-        $mapped = $remain = array();
+        array $ids,
+        $expires = Cache::EXPIRES_MEDIUM
+    ) {
+        $mapped = $remain = [];
 
         foreach ($ids as $id) {
             if (isset($this->identityMap[$id])) {
@@ -224,25 +227,26 @@ abstract class GenericDAO extends Singleton implements BaseDAO
 
     private function addObjectListToMap($list)
     {
-        foreach ($list as $object)
+        foreach ($list as $object) {
             $this->identityMap[$object->getId()] = $object;
+        }
 
         return $list;
     }
 
     public function getListByQuery(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         return $this->addObjectListToMap(
             Cache::worker($this)->getListByQuery($query, $expires)
         );
     }
 
     public function getListByLogic(
-        LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        LogicalObject $logic,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         return $this->addObjectListToMap(
             Cache::worker($this)->getListByLogic($logic, $expires)
         );
@@ -261,23 +265,23 @@ abstract class GenericDAO extends Singleton implements BaseDAO
     }
 
     public function getCustomList(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         return Cache::worker($this)->getCustomList($query, $expires);
     }
 
     public function getCustomRowList(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         return Cache::worker($this)->getCustomRowList($query, $expires);
     }
 
     public function getQueryResult(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         return Cache::worker($this)->getQueryResult($query, $expires);
     }
 
@@ -303,21 +307,24 @@ abstract class GenericDAO extends Singleton implements BaseDAO
 
         $count = Cache::worker($this)->dropById($id);
 
-        if (1 != $count)
+        if (1 != $count) {
             throw new WrongStateException('no object were dropped');
+        }
 
         return $count;
     }
 
     public function dropByIds(array $ids)
     {
-        foreach ($ids as $id)
+        foreach ($ids as $id) {
             unset($this->identityMap[$id]);
+        }
 
         $count = Cache::worker($this)->dropByIds($ids);
 
-        if ($count != count($ids))
+        if ($count != count($ids)) {
             throw new WrongStateException('not all objects were dropped');
+        }
 
         return $count;
     }
@@ -333,22 +340,20 @@ abstract class GenericDAO extends Singleton implements BaseDAO
      */
     public function getUncacherById($id)
     {
-        return UncacherGenericDAO::create(
-            $this,
-            $id,
-            Cache::worker($this)->getUncacherById($id)
-        );
+        return  new UncacherGenericDAO($this, $id, Cache::worker($this)->getUncacherById($id));
     }
 
     public function uncacheByIds($ids)
     {
-        if (empty($ids))
+        if (empty($ids)) {
             return;
+        }
 
         $uncacher = $this->getUncacherById(array_shift($ids));
 
-        foreach ($ids as $id)
+        foreach ($ids as $id) {
             $uncacher->merge($this->getUncacherById($id));
+        }
 
         return $uncacher->uncache();
     }
@@ -365,7 +370,7 @@ abstract class GenericDAO extends Singleton implements BaseDAO
      **/
     public function dropIdentityMap()
     {
-        $this->identityMap = array();
+        $this->identityMap = [];
 
         return $this;
     }
@@ -387,8 +392,7 @@ abstract class GenericDAO extends Singleton implements BaseDAO
     protected function inject(
         InsertOrUpdateQuery $query,
         Identifiable $object
-    )
-    {
+    ) {
         $this->checkObjectType($object);
 
         return $this->doInject(
@@ -402,8 +406,7 @@ abstract class GenericDAO extends Singleton implements BaseDAO
     protected function doInject(
         InsertOrUpdateQuery $query,
         Identifiable $object
-    )
-    {
+    ) {
         $db = DBPool::getByDao($this);
 
         if (!$db->isQueueActive()) {
@@ -419,11 +422,12 @@ abstract class GenericDAO extends Singleton implements BaseDAO
             }
             $uncacher->uncache();
 
-            if ($count !== 1)
+            if ($count !== 1) {
                 throw new WrongStateException(
                     $count . ' rows affected: racy or insane inject happened: '
                     . $query->toDialectString($db->getDialect())
                 );
+            }
         } else {
             $preUncacher = is_scalar($object->getId())
                 ? $this->getUncacherById($object->getId())

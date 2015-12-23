@@ -32,7 +32,7 @@ abstract class ProtoDAO extends GenericDAO
 
         $ids = ArrayUtils::getIdsArray($list);
 
-        $mainId = DBField::create(
+        $mainId = new DBField(
             $this->getIdName(),
             $this->getTable()
         );
@@ -109,7 +109,7 @@ abstract class ProtoDAO extends GenericDAO
 
                 foreach ($dao->getFields() as $field) {
                     $query->get(
-                        DBField::create($field, $table),
+                        new DBField($field, $table),
                         $prefix . $field
                     );
                 }
@@ -117,7 +117,7 @@ abstract class ProtoDAO extends GenericDAO
                 if (!$property->isRequired()) {
                     $query->andWhere(
                         Expression::notNull(
-                            DBField::create($dao->getIdName(), $table)
+                            new DBField($dao->getIdName(), $table)
                         )
                     );
                 }

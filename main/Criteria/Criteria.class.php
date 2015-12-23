@@ -455,15 +455,8 @@ class Criteria extends QueryIdentification
                 if (!$query->hasJoinedTable($tableAlias)) {
                     $logic =
                         Expression::eq(
-                            DBField::create(
-                                $property->getColumnName(),
-                                $parentTable
-                            ),
-
-                            DBField::create(
-                                $propertyDao->getIdName(),
-                                $tableAlias
-                            )
+                            new DBField( $property->getColumnName(), $parentTable),
+                            new DBField($propertyDao->getIdName(), $tableAlias)
                         );
 
                     if ($property->isRequired() && $parentRequired)

@@ -38,6 +38,7 @@ class Timestamp extends Date
     }
 
     /**
+     * @deprecated
      * @param $timestamp
      * @param DateTimeZone|null $zone
      * @return Timestamp

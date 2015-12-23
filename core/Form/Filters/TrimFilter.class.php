@@ -22,6 +22,7 @@
 		private $direction	= self::BOTH;
 		
 		/**
+		 * @deprecated
 		 * @return TrimFilter
 		**/
 		public static function create()

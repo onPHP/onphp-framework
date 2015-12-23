@@ -35,7 +35,7 @@
 		**/
 		final public function obtainSequence($sequence)
 		{
-			$id = Identifier::create();
+			$id = new Identifier;
 			
 			$this->sequencePool[$sequence][] = $id;
 			

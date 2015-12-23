@@ -16,6 +16,12 @@ class RedisNoSQLList implements Listable
     private $position = null;
     private $timeout = null;
 
+    /**
+     * RedisNoSQLList constructor.
+     * @param Redis $redis
+     * @param $key
+     * @param null $timeout
+     */
     public function __construct(Redis $redis, $key, $timeout = null)
     {
         $this->redis = $redis;
@@ -24,10 +30,10 @@ class RedisNoSQLList implements Listable
     }
 
     /**
-     * @param mixed $value
-     * @return RedisList
+     * @param $value
+     * @return RedisNoSQLList
      */
-    public function append($value)
+    public function append($value) : RedisNoSQLList
     {
         $this->redis->rpush($this->key, $value);
 
@@ -38,10 +44,10 @@ class RedisNoSQLList implements Listable
     }
 
     /**
-     * @param mixed $value
-     * @return RedisList
+     * @param $value
+     * @return RedisNoSQLList
      */
-    public function prepend($value)
+    public function prepend($value) : RedisNoSQLList
     {
         $this->redis->lpush($this->key, $value);
 
@@ -52,9 +58,9 @@ class RedisNoSQLList implements Listable
     }
 
     /**
-     * @return $this
+     * @return RedisNoSQLList
      */
-    public function clear()
+    public function clear() : RedisNoSQLList
     {
         $this->redis->LTrim($this->key, -1, 0);
 
@@ -62,16 +68,27 @@ class RedisNoSQLList implements Listable
     }
 
 
+    /**
+     * @return int
+     */
     public function count()
     {
-        return $this->redis->lsize($this->key);
+        return $this->redis->lLen($this->key);
     }
 
+    /**
+     * @return string
+     */
     public function pop()
     {
         return $this->redis->lpop($this->key);
     }
 
+    /**
+     * @param $start
+     * @param null $length
+     * @return array
+     */
     public function range($start, $length = null)
     {
         $end = is_null($length)
@@ -81,11 +98,20 @@ class RedisNoSQLList implements Listable
         return $this->redis->lrange($this->key, $start, $end);
     }
 
+    /**
+     * @param $index
+     * @return String
+     */
     public function get($index)
     {
-        return $this->redis->lget($this->key, $index);
+        return $this->redis->lIndex($this->key, $index);
     }
 
+    /**
+     * @param $index
+     * @param $value
+     * @return $this
+     */
     public function set($index, $value)
     {
         $this->redis->lset($this->key, $index, $value);
@@ -96,6 +122,11 @@ class RedisNoSQLList implements Listable
         return $this;
     }
 
+    /**
+     * @param $start
+     * @param null $length
+     * @return Listable|void
+     */
     public function trim($start, $length = null)
     {
         $end = is_null($length)
@@ -105,58 +136,88 @@ class RedisNoSQLList implements Listable
         $this->redis->ltrim($this->key, $start, $end);
     }
 
-    //region Iterator
+    /**
+     * @return String
+     */
     public function current()
     {
         return $this->get($this->position);
     }
 
+    /**
+     * @return null
+     */
     public function key()
     {
         return $this->position;
     }
 
+    /**
+     * position +
+     */
     public function next()
     {
         $this->position++;
     }
 
+    /**
+     * position 0
+     */
     public function rewind()
     {
         $this->position = 0;
     }
 
-    public function valid()
+    /**
+     * @return bool
+     */
+    public function valid() : bool
     {
         return $this->offsetExists($this->position);
     }
-    //endregion
 
-    //region ArrayAccess
-
-    public function offsetExists($offset)
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset) : bool
     {
         return false !== $this->get($offset);
     }
 
+    /**
+     * @param mixed $offset
+     * @return String
+     */
     public function offsetGet($offset)
     {
         return $this->get($offset);
     }
 
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @return RedisNoSQLList
+     */
     public function offsetSet($offset, $value)
     {
         return $this->set($offset, $value);
     }
 
+    /**
+     * @param mixed $offset
+     * @throws UnimplementedFeatureException
+     */
     public function offsetUnset($offset)
     {
         throw new UnimplementedFeatureException();
     }
 
+    /**
+     * @param int $position
+     */
     public function seek($position)
     {
         $this->position = $position;
     }
-    //endregion
 }

@@ -22,14 +22,11 @@ abstract class AggregateProjection extends BaseProjection
         Assert::isNotNull($this->property);
 
         return
-            $query->
-            get(
-                SQLFunction::create(
-                    $this->getFunctionName(),
-                    $criteria->getDao()->guessAtom($this->property, $query)
-                )
-                    ->setAlias($this->alias)
-            );
+            $query
+                ->get(
+                    (new SQLFunction($this->getFunctionName(), $criteria->getDao()->guessAtom($this->property, $query)))
+                        ->setAlias($this->alias)
+                );
     }
 
     abstract public function getFunctionName();

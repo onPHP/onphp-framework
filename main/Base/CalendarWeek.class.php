@@ -19,6 +19,8 @@ class CalendarWeek
     private $days = array();
 
     /**
+     * @deprecated
+     *
      * @return CalendarWeek
      **/
     public static function create()

@@ -24,33 +24,26 @@
 		private $aggregate	= null;
 		
 		private $args	= array();
-		
+
 		/**
-		 * @return SQLFunction
-		**/
-		public static function create($name /* , ... */)
+		 * @deprecated
+		 *
+		 * @param $name
+		 * @param array ...$args
+		 */
+		public static function create($name , ...$args)
 		{
-			if (func_num_args() > 1) {
-				$args = func_get_args();
-				array_shift($args);
-				return new SQLFunction($name, $args);
-			} else
-				return new SQLFunction($name);
+			new SQLFunction($name, $args);
 		}
 		
-		public function __construct($name /* , ... */)
+		public function __construct($name , ...$args)
 		{
 			$this->name = $name;
-			
-			if (func_num_args() > 1) {
-				$args = func_get_args();
-				
-				if (is_array($args[1]))
-					$this->args = $args[1];
-				else {
-					array_shift($args);
-					$this->args = $args;
-				}
+			try {
+				Assert::isNotEmptyArray($args);
+				$this->args = $args;
+			}catch (WrongArgumentException $e){
+				/**  */
 			}
 		}
 		

@@ -23,12 +23,10 @@ class IsolationLevel extends Enumeration
     const REPEATABLE_READ = 0x03;
     const SERIALIZABLE = 0x04;
 
-    protected $names = array(
+    protected $names = [
         self::READ_COMMITTED => 'read commited',
         self::READ_UNCOMMITTED => 'read uncommitted',
         self::REPEATABLE_READ => 'repeatable read',
         self::SERIALIZABLE => 'serializable'
-    );
+    ];
 }
-
-?>

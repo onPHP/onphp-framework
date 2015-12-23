@@ -87,7 +87,7 @@
 				$time = mb_ereg_replace('[^0-9:]', ':', $times[$i]);
 				
 				try {
-					$list[] = Time::create($time);
+					$list[] = new Time($time);
 				} catch (WrongArgumentException $e) {/* ignore */}
 			}
 			

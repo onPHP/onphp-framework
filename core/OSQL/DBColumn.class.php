@@ -29,6 +29,7 @@
 		private $sequenced	= null;
 		
 		/**
+		 * @deprecated
 		 * @return DBColumn
 		**/
 		public static function create(DataType $type, $name)

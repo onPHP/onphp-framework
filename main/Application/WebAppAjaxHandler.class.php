@@ -14,7 +14,7 @@ class WebAppAjaxHandler implements InterceptingChainHandler
 {
 
     private static $ajaxRequestVar = 'HTTP_X_REQUESTED_WITH';
-    private static $ajaxRequestValueList = array('XMLHttpRequest');
+    private static $ajaxRequestValueList = ['XMLHttpRequest'];
     private static $pjaxRequestVar = 'HTTP_X_PJAX';
 
     /**
@@ -50,15 +50,15 @@ class WebAppAjaxHandler implements InterceptingChainHandler
      */
     private function isPjaxRequest(HttpRequest $request)
     {
-        $form = Form::create()->
-        add(
-            Primitive::boolean(self::$pjaxRequestVar)
-        )->
-        add(
-            Primitive::boolean('_isPjax')
-        )->
-        import($request->getServer())->
-        importOneMore('_isPjax', $request->getGet());
+        $form = (new Form())
+            ->add(
+                Primitive::boolean(self::$pjaxRequestVar)
+            )
+            ->add(
+                Primitive::boolean('_isPjax')
+            )
+            ->import($request->getServer())
+            ->importOneMore('_isPjax', $request->getGet());
 
         if ($form->getErrors()) {
             return false;
@@ -71,16 +71,16 @@ class WebAppAjaxHandler implements InterceptingChainHandler
      */
     private function isAjaxRequest(HttpRequest $request)
     {
-        $form = Form::create()->
-        add(
-            Primitive::plainChoice(self::$ajaxRequestVar)->
-            setList(self::$ajaxRequestValueList)
-        )->
-        add(
-            Primitive::boolean('_isAjax')
-        )->
-        import($request->getServer())->
-        importOneMore('_isAjax', $request->getGet());
+        $form = (new Form())
+            ->add(
+                Primitive::plainChoice(self::$ajaxRequestVar)
+                    ->setList(self::$ajaxRequestValueList)
+            )
+            ->add(
+                Primitive::boolean('_isAjax')
+            )
+            ->import($request->getServer())
+            ->importOneMore('_isAjax', $request->getGet());
 
         if ($form->getErrors()) {
             return false;

@@ -237,9 +237,8 @@
 				
 				$column =
 					new DBColumn(
-						DataType::create($types[$info['type']])->
-						setNull(!$info['not null']),
-						
+						(new DataType($types[$info['type']]))
+							->setNull(!$info['not null']),
 						$name
 					);
 				

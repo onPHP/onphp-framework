@@ -18,8 +18,9 @@
  **/
 class AccessMode extends Enumeration
 {
-    const READ_ONLY = 0x01;
-    const READ_WRITE = 0x02;
+    const
+        READ_ONLY = 0x01,
+        READ_WRITE = 0x02;
 
     protected $names = array(
         self::READ_ONLY => 'read only',

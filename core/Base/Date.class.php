@@ -414,6 +414,6 @@ class Date implements Stringable, DialectString
      **/
     public function toTimestamp()
     {
-        return Timestamp::create($this->toStamp());
+        return new Timestamp($this->toStamp());
     }
 }

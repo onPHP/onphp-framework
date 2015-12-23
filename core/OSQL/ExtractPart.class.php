@@ -51,7 +51,7 @@
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
-			return self::create(
+			return new self(
 				$this->what,
 				$dao->guessAtom($this->from, $query)
 			);

@@ -17,6 +17,7 @@ class Model implements SimplifiedArrayAccess
     private $vars = array();
 
     /**
+     * @deprecated
      * @return Model
      **/
     public static function create()

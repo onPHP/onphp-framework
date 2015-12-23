@@ -59,6 +59,7 @@ class UncachersPool implements UncacherBase
     }
 
     /**
+     * @deprecated
      * @param UncacherBase $uncacher
      * @return UncachersPool
      */

@@ -123,7 +123,7 @@
 		 */
 		public static function removePrefix(Form $form, $prefix)
 		{
-			$newForm = Form::create();
+			$newForm = Form::create(;
 
 			foreach ($form->getPrimitiveList() as $primitive) {
 				$primitive->setName(

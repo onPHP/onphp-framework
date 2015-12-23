@@ -26,6 +26,7 @@
 		}
 		
 		/**
+		 * @deprecated
 		 * @return StreamLogger
 		**/
 		public static function create()

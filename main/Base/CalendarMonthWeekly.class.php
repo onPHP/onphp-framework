@@ -27,11 +27,11 @@ class CalendarMonthWeekly
         Date $base, $weekStart = Timestamp::WEEKDAY_MONDAY
     )
     {
-        $firstDayOfMonth = Date::create(
+        $firstDayOfMonth = new Date(
             $base->getYear() . '-' . $base->getMonth() . '-01'
         );
 
-        $lastDayOfMonth = Date::create(
+        $lastDayOfMonth = new Date(
             $base->getYear() . '-' . $base->getMonth() . '-'
             . date('t', $base->toStamp()));
 
@@ -39,11 +39,11 @@ class CalendarMonthWeekly
 
         $end = $lastDayOfMonth->getLastDayOfWeek($weekStart);
 
-        $this->monthRange = DateRange::create()->lazySet(
+        $this->monthRange = (new DateRange())->lazySet(
             $firstDayOfMonth, $lastDayOfMonth
         );
 
-        $this->fullRange = DateRange::create()->lazySet(
+        $this->fullRange = (new DateRange())->lazySet(
             $start, $end
         );
 
@@ -51,7 +51,7 @@ class CalendarMonthWeekly
         $this->fullLength = 0;
 
         foreach ($rawDays as $rawDay) {
-            $day = CalendarDay::create($rawDay->toStamp());
+            $day = new CalendarDay($rawDay->toStamp());
 
             if ($this->monthRange->contains($day))
                 $day->setOutside(false);
@@ -63,7 +63,7 @@ class CalendarMonthWeekly
             $weekNumber = floor($this->fullLength / 7);
 
             if (!isset($this->weeks[$weekNumber]))
-                $this->weeks[$weekNumber] = CalendarWeek::create();
+                $this->weeks[$weekNumber] = new CalendarWeek();
 
             $this->weeks[$weekNumber]->addDay($day);
             ++$this->fullLength;

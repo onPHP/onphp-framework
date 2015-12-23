@@ -16,8 +16,12 @@
  **/
 class DBTransaction extends BaseTransaction
 {
+    /** @var bool  */
     private $started = false;
 
+    /**
+     * @see destruct
+     */
     public function __destruct()
     {
         if ($this->isStarted())
@@ -39,15 +43,20 @@ class DBTransaction extends BaseTransaction
         return parent::setDB($db);
     }
 
-    public function isStarted()
+    /**
+     * @return bool
+     */
+    public function isStarted() : bool
     {
         return $this->started;
     }
 
     /**
+     * @param Query $query
      * @return DBTransaction
-     **/
-    public function add(Query $query)
+     * @throws WrongArgumentException
+     */
+    public function add(Query $query) : DBTransaction
     {
         if (!$this->isStarted()) {
             $this->db->queryRaw($this->getBeginString());
@@ -60,10 +69,10 @@ class DBTransaction extends BaseTransaction
     }
 
     /**
-     * @return $this
+     * @return DBTransaction
      * @throws DatabaseException
      */
-    public function flush()
+    public function flush() : DBTransaction
     {
         $this->started = false;
 

@@ -30,9 +30,9 @@
 			
 			try {
 				$this->value =
-					HttpUrl::create()->
-						parse($this->value)->
-						setCheckPrivilegedPorts($this->checkPrivilegedPorts);
+					(new HttpUrl())
+						->parse($this->value)
+						->setCheckPrivilegedPorts($this->checkPrivilegedPorts);
 			} catch (WrongArgumentException $e) {
 				$this->value = null;
 				

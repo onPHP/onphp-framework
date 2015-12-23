@@ -21,6 +21,13 @@ class UncacherGenericDAO implements UncacherBase
         $this->daoMap[get_class($dao)] = array(array($id), $workerUncacher);
     }
 
+    /**
+     * @deprecated
+     * @param GenericDAO $dao
+     * @param $id
+     * @param UncacherBase $workerUncacher
+     * @return UncacherGenericDAO
+     */
     public static function create(GenericDAO $dao, $id, UncacherBase $workerUncacher)
     {
         return new self($dao, $id, $workerUncacher);

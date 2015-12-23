@@ -114,22 +114,12 @@
 				$finish = self::toDate(trim($finish));
 				
 				if ($start || $finish) {
-					
-					$range = new DateRange();
-					
-					$range =
-						DateRange::create()->
-						lazySet($start, $finish);
-					
-					return $range;
-					
+					return (new DateRange)->lazySet($start, $finish);
 				} elseif (trim($string) == '-')
-					return DateRange::create();
+					return new DateRange();
 			} elseif ($single = self::toDate(trim($string)))
 				return
-					DateRange::create()->
-					setStart($single)->
-					setEnd($single);
+					(new DateRange())->setStart($single)->setEnd($single);
 			
 			throw new WrongArgumentException(
 				"unknown string format '{$string}'"

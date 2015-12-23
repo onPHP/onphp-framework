@@ -29,6 +29,8 @@
 		}
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return DBField
 		**/
 		public static function create($field, $table = null)

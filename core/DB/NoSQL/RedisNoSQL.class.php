@@ -11,16 +11,34 @@
  ***************************************************************************/
 class RedisNoSQL extends CachePeer implements ListGenerator
 {
-    const DEFAULT_HOST = 'localhost';
-    const DEFAULT_PORT = '6379';
-    const DEFAULT_TIMEOUT = 1.0;
+    const
+        DEFAULT_HOST = 'localhost',
+        DEFAULT_PORT = '6379',
+        DEFAULT_TIMEOUT = 1.0;
 
     private $host = null;
     private $port = null;
     private $timeout = null;
     private $triedConnect = false;
+
     /** @var Redis */
     private $redis = null;
+
+    /**
+     * RedisNoSQL constructor.
+     * @param string $host
+     * @param string $port
+     * @param float $timeout
+     */
+    public function __construct(
+        $host = self::DEFAULT_HOST,
+        $port = self::DEFAULT_PORT,
+        $timeout = self::DEFAULT_TIMEOUT
+    ) {
+        $this->host = $host;
+        $this->port = $port;
+        $this->timeout = $timeout;
+    }
 
     /**
      * @param string $host
@@ -32,22 +50,13 @@ class RedisNoSQL extends CachePeer implements ListGenerator
         $host = self::DEFAULT_HOST,
         $port = self::DEFAULT_PORT,
         $timeout = self::DEFAULT_TIMEOUT
-    )
-    {
+    ) {
         return new self($host, $port, $timeout);
     }
 
-    public function __construct(
-        $host = self::DEFAULT_HOST,
-        $port = self::DEFAULT_PORT,
-        $timeout = self::DEFAULT_TIMEOUT
-    )
-    {
-        $this->host = $host;
-        $this->port = $port;
-        $this->timeout = $timeout;
-    }
-
+    /**
+     * @see __destruct
+     */
     public function __destruct()
     {
         if ($this->alive) {
@@ -59,6 +68,9 @@ class RedisNoSQL extends CachePeer implements ListGenerator
         }
     }
 
+    /**
+     * @return RedisNoSQL
+     */
     public function clean()
     {
         $this->ensureTriedToConnect();
@@ -72,6 +84,33 @@ class RedisNoSQL extends CachePeer implements ListGenerator
         return parent::clean();
     }
 
+    /**
+     * @return RedisNoSQL
+     */
+    protected function ensureTriedToConnect()
+    {
+        if ($this->triedConnect) {
+            return $this;
+        }
+
+        $this->triedConnect = true;
+
+        /** @var Redis redis */
+        $this->redis = new Redis();
+
+        try {
+            $this->redis->pconnect($this->host, $this->port, $this->timeout);
+            $this->isAlive();
+        } catch (RedisException $e) {
+            $this->alive = false;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
     public function isAlive()
     {
         $this->ensureTriedToConnect();
@@ -85,6 +124,11 @@ class RedisNoSQL extends CachePeer implements ListGenerator
         return parent::isAlive();
     }
 
+    /**
+     * @param $key
+     * @param $data
+     * @return bool|int
+     */
     public function append($key, $data)
     {
         $this->ensureTriedToConnect();
@@ -96,6 +140,11 @@ class RedisNoSQL extends CachePeer implements ListGenerator
         }
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return int|null
+     */
     public function decrement($key, $value)
     {
         $this->ensureTriedToConnect();
@@ -107,6 +156,10 @@ class RedisNoSQL extends CachePeer implements ListGenerator
         }
     }
 
+    /**
+     * @param $key
+     * @return bool|void
+     */
     public function delete($key)
     {
         $this->ensureTriedToConnect();
@@ -118,6 +171,10 @@ class RedisNoSQL extends CachePeer implements ListGenerator
         }
     }
 
+    /**
+     * @param $key
+     * @return bool|null|string
+     */
     public function get($key)
     {
         $this->ensureTriedToConnect();
@@ -131,6 +188,11 @@ class RedisNoSQL extends CachePeer implements ListGenerator
         }
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return int|null
+     */
     public function increment($key, $value)
     {
         $this->ensureTriedToConnect();
@@ -172,6 +234,14 @@ class RedisNoSQL extends CachePeer implements ListGenerator
         throw new UnimplementedFeatureException();
     }
 
+    /**
+     * @param $action
+     * @param $key
+     * @param $value
+     * @param int $expires
+     * @return bool
+     * @throws UnimplementedFeatureException
+     */
     protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
     {
         $this->ensureTriedToConnect();
@@ -191,25 +261,6 @@ class RedisNoSQL extends CachePeer implements ListGenerator
             default:
                 throw new UnimplementedFeatureException();
         }
-    }
-
-    protected function ensureTriedToConnect()
-    {
-        if ($this->triedConnect)
-            return $this;
-
-        $this->triedConnect = true;
-
-        $this->redis = new Redis();
-
-        try {
-            $this->redis->pconnect($this->host, $this->port, $this->timeout);
-            $this->isAlive();
-        } catch (RedisException $e) {
-            $this->alive = false;
-        }
-
-        return $this;
     }
 }
 

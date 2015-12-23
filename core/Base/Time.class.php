@@ -98,6 +98,8 @@ class Time implements Stringable
     // currently supports '01:23:45', '012345', '1234', '12'
 
     /**
+     * @deprecated
+     *
      * @param $input
      * @return Time
      */

@@ -80,8 +80,8 @@
 				
 			} elseif (is_array($right)) {
 				
-				$string .= SQLArray::create($right)->
-					toDialectString($dialect);
+				$string .= (new SQLArray($right))
+					->toDialectString($dialect);
 					
 			} else
 				throw new WrongArgumentException(

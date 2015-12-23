@@ -16,6 +16,8 @@
 	final class GroupBy extends FieldTable implements MappableObject
 	{
 		/**
+		 * @deprecated
+		 *
 		 * @return GroupBy
 		**/
 		public static function create($field)
@@ -28,7 +30,7 @@
 		**/
 		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
 		{
-			return self::create($dao->guessAtom($this->field, $query));
+			return new self($dao->guessAtom($this->field, $query));
 		}
 		
 		public function toDialectString(Dialect $dialect)

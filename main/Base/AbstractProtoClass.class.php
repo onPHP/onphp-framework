@@ -263,7 +263,7 @@ abstract class AbstractProtoClass extends Singleton
      **/
     public function makeForm($prefix = null)
     {
-        $form = Form::create();
+        $form = new Form();
 
         foreach ($this->getPropertyList() as $property) {
             $property->fillForm($form, $prefix);

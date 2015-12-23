@@ -31,6 +31,7 @@ class GenericUri implements Stringable
     protected $fragment = null;
 
     /**
+     * @deprecated
      * @return GenericUri
      **/
     public static function create()
@@ -41,7 +42,7 @@ class GenericUri implements Stringable
     /**
      * @return GenericUri
      **/
-    final public static function parse($uri, $guessClass = false)
+    public static function parse($uri, $guessClass = false)
     {
         static $schemePattern = '([^:/?#]+):';
         static $authorityPattern = '(//([^/?#]*))';
