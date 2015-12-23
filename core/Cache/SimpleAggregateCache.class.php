@@ -15,7 +15,7 @@
  *
  * @ingroup Cache
  **/
-final class SimpleAggregateCache extends AggregateCache
+class SimpleAggregateCache extends AggregateCache
 {
     private $peerAmount = null;
     private $labels = null;
@@ -28,15 +28,35 @@ final class SimpleAggregateCache extends AggregateCache
         return new self;
     }
 
-    public function addPeer(
-        $label, CachePeer $peer, $level = self::LEVEL_NORMAL
-    )
+    /**
+     * @param $label
+     * @param CachePeer $peer
+     * @param int $level
+     * @return $this|SimpleAggregateCache
+     */
+    public function addPeer($label, CachePeer $peer, $level = self::LEVEL_NORMAL)
     {
         parent::addPeer($label, $peer, $level);
 
         return $this->dropHelpers();
     }
 
+    /**
+     * @return $this
+     */
+    private function dropHelpers()
+    {
+        $this->peerAmount = null;
+        $this->labels = null;
+
+        return $this;
+    }
+
+    /**
+     * @param $label
+     * @return SimpleAggregateCache
+     * @throws MissingElementException
+     */
     public function dropPeer($label)
     {
         parent::dropPeer($label);
@@ -44,6 +64,9 @@ final class SimpleAggregateCache extends AggregateCache
         return $this->dropHelpers();
     }
 
+    /**
+     * @return SimpleAggregateCache
+     */
     public function checkAlive()
     {
         parent::checkAlive();
@@ -56,25 +79,17 @@ final class SimpleAggregateCache extends AggregateCache
      **/
     protected function guessLabel($key)
     {
-        if ($this->peerAmount === null)
+        if ($this->peerAmount === null) {
             $this->peerAmount = count($this->peers);
+        }
 
-        if ($this->labels === null)
+        if ($this->labels === null) {
             $this->labels = array_keys($this->peers);
+        }
 
         Assert::isGreaterOrEqual($this->peerAmount, 1);
 
         return
             $this->labels[ord(substr($key, -1)) % $this->peerAmount];
     }
-
-    private function dropHelpers()
-    {
-        $this->peerAmount = null;
-        $this->labels = null;
-
-        return $this;
-    }
 }
-
-?>

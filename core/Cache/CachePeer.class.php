@@ -119,17 +119,11 @@ abstract class CachePeer
     protected $alive = false;
     protected $compress = false;
 
-    abstract public function get($key);
-
     abstract public function delete($key);
 
     abstract public function increment($key, $value);
 
     abstract public function decrement($key, $value);
-
-    abstract protected function store(
-        $action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
-    );
 
     abstract public function append($key, $data);
 
@@ -138,35 +132,65 @@ abstract class CachePeer
      **/
     public function clean()
     {
-        foreach (Singleton::getAllInstances() as $object)
-            if ($object instanceof GenericDAO)
+        foreach (Singleton::getAllInstances() as $object) {
+            if ($object instanceof GenericDAO) {
                 $object->dropIdentityMap();
+            }
+        }
 
         return $this;
     }
 
+    /**
+     * @param $indexes
+     * @return null
+     */
     public function getList($indexes)
     {
         // intentially not array
         $out = null;
 
-        foreach ($indexes as $key)
-            if (null !== ($value = $this->get($key)))
+        foreach ($indexes as $key) {
+            if (null !== ($value = $this->get($key))) {
                 $out[$key] = $value;
+            }
+        }
 
         return $out;
     }
 
+    abstract public function get($key);
+
+    /**
+     * @param $key
+     * @param $value
+     * @param int $expires
+     * @return mixed
+     */
     final public function set($key, $value, $expires = Cache::EXPIRES_MEDIUM)
     {
         return $this->store('set', $key, $value, $expires);
     }
 
+    abstract protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM);
+
+    /**
+     * @param $key
+     * @param $value
+     * @param int $expires
+     * @return mixed
+     */
     final public function add($key, $value, $expires = Cache::EXPIRES_MEDIUM)
     {
         return $this->store('add', $key, $value, $expires);
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @param int $expires
+     * @return mixed
+     */
     final public function replace($key, $value, $expires = Cache::EXPIRES_MEDIUM)
     {
         return $this->store('replace', $key, $value, $expires);
@@ -211,19 +235,29 @@ abstract class CachePeer
         return new RuntimeMemory();
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
     protected function prepareData($value)
     {
-        if ($this->compress)
+        if ($this->compress) {
             return gzcompress(serialize($value));
-        else
+        } else {
             return serialize($value);
+        }
     }
 
+    /**
+     * @param $value
+     * @return mixed
+     */
     protected function restoreData($value)
     {
-        if ($this->compress)
+        if ($this->compress) {
             return unserialize(gzuncompress($value));
-        else
+        } else {
             return unserialize($value);
+        }
     }
 }

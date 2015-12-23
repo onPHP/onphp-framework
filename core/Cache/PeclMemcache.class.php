@@ -19,26 +19,18 @@
  **/
 class PeclMemcache extends CachePeer
 {
-    const DEFAULT_PORT = 11211;
-    const DEFAULT_HOST = '127.0.0.1';
+    const
+        DEFAULT_PORT = 11211,
+        DEFAULT_HOST = '127.0.0.1';
 
     private $instance = null;
 
     /**
-     * @return PeclMemcache
-     **/
-    public static function create(
-        $host = self::DEFAULT_HOST,
-        $port = self::DEFAULT_PORT
-    )
-    {
-        return new self($host, $port);
-    }
-
-    public function __construct(
-        $host = self::DEFAULT_HOST,
-        $port = self::DEFAULT_PORT
-    )
+     * PeclMemcache constructor.
+     * @param string $host
+     * @param int $port
+     */
+    public function __construct($host = self::DEFAULT_HOST, $port = self::DEFAULT_PORT)
     {
         $this->instance = new Memcache();
 
@@ -55,6 +47,19 @@ class PeclMemcache extends CachePeer
         }
     }
 
+    /**
+     * @param string $host
+     * @param int $port
+     * @return PeclMemcache
+     */
+    public static function create($host = self::DEFAULT_HOST, $port = self::DEFAULT_PORT) : PeclMemcache
+    {
+        return new self($host, $port);
+    }
+
+    /**
+     * @see __destruct
+     */
     public function __destruct()
     {
         if ($this->alive) {
@@ -80,6 +85,11 @@ class PeclMemcache extends CachePeer
         return parent::clean();
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return bool|null
+     */
     public function increment($key, $value)
     {
         try {
@@ -89,6 +99,11 @@ class PeclMemcache extends CachePeer
         }
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return int|null
+     */
     public function decrement($key, $value)
     {
         try {
@@ -98,21 +113,31 @@ class PeclMemcache extends CachePeer
         }
     }
 
+    /**
+     * @param $indexes
+     * @return array|null|string
+     */
     public function getList($indexes)
     {
         return
             ($return = $this->get($indexes))
                 ? $return
-                : array();
+                : [];
     }
 
+    /**
+     * @param $index
+     * @return array|null|string
+     * @throws WrongArgumentException
+     */
     public function get($index)
     {
         try {
             return $this->instance->get($index);
         } catch (BaseException $e) {
-            if (strpos($e->getMessage(), 'Invalid key') !== false)
+            if (strpos($e->getMessage(), 'Invalid key') !== false) {
                 return null;
+            }
 
             $this->alive = false;
 
@@ -122,6 +147,11 @@ class PeclMemcache extends CachePeer
         Assert::isUnreachable();
     }
 
+    /**
+     * @param $index
+     * @return bool
+     * @throws WrongArgumentException
+     */
     public function delete($index)
     {
         try {
@@ -136,6 +166,12 @@ class PeclMemcache extends CachePeer
         Assert::isUnreachable();
     }
 
+    /**
+     * @param $key
+     * @param $data
+     * @return bool|void
+     * @throws WrongArgumentException
+     */
     public function append($key, $data)
     {
         try {
@@ -147,9 +183,15 @@ class PeclMemcache extends CachePeer
         Assert::isUnreachable();
     }
 
-    protected function store(
-        $action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
-    )
+    /**
+     * @param $action
+     * @param $key
+     * @param $value
+     * @param int $expires
+     * @return bool
+     * @throws WrongArgumentException
+     */
+    protected function store($action, $key, $value, $expires = Cache::EXPIRES_MEDIUM)
     {
         try {
             return

@@ -19,13 +19,10 @@ class RubberFileSystem extends CachePeer
     private $directory = null;
 
     /**
-     * @return RubberFileSystem
-     **/
-    public static function create($directory = 'cache/')
-    {
-        return new self($directory);
-    }
-
+     * RubberFileSystem constructor.
+     * @param string $directory
+     * @throws WrongArgumentException
+     */
     public function __construct($directory = 'cache/')
     {
         $directory = ONPHP_TEMP_PATH . $directory;
@@ -38,18 +35,32 @@ class RubberFileSystem extends CachePeer
             }
         }
 
-        if ($directory[strlen($directory) - 1] != DIRECTORY_SEPARATOR)
+        if ($directory[strlen($directory) - 1] != DIRECTORY_SEPARATOR) {
             $directory .= DIRECTORY_SEPARATOR;
+        }
 
         $this->directory = $directory;
     }
 
+    /**
+     * @param string $directory
+     * @return RubberFileSystem
+     */
+    public static function create($directory = 'cache/') : RubberFileSystem
+    {
+        return new self($directory);
+    }
+
+    /**
+     * @return bool
+     */
     public function isAlive()
     {
-        if (!is_writable($this->directory))
+        if (!is_writable($this->directory)) {
             return mkdir($this->directory, 0700, true);
-        else
+        } else {
             return true;
+        }
     }
 
     /**
@@ -63,6 +74,11 @@ class RubberFileSystem extends CachePeer
         return parent::clean();
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return mixed|null
+     */
     public function increment($key, $value)
     {
         $path = $this->makePath($key);
@@ -76,6 +92,82 @@ class RubberFileSystem extends CachePeer
         return null;
     }
 
+    /**
+     * @param $key
+     * @return string
+     */
+    private function makePath($key) : string
+    {
+        return
+            $this->directory
+            . $key[0] . $key[1]
+            . DIRECTORY_SEPARATOR
+            . substr($key, 2);
+    }
+
+    /**
+     * @param $path
+     * @param null $value
+     * @param null $expires
+     * @return mixed|null
+     * @throws WrongArgumentException
+     */
+    private function operate($path, $value = null, $expires = null)
+    {
+        $key = hexdec(substr(md5($path), 3, 2)) + 1;
+
+        $pool = SemaphorePool::me();
+
+        if (!$pool->get($key)) {
+            return null;
+        }
+
+        try {
+            $old = umask(0077);
+            $fp = fopen($path, $value !== null ? 'wb' : 'rb');
+            umask($old);
+        } catch (BaseException $e) {
+            $pool->drop($key);
+            return null;
+        }
+
+        if ($value !== null) {
+            fwrite($fp, $this->prepareData($value));
+            fclose($fp);
+
+            if ($expires < parent::TIME_SWITCH) {
+                $expires += time();
+            }
+
+            try {
+                touch($path, $expires);
+            } catch (BaseException $e) {
+                // race-removed
+            }
+
+            return $pool->drop($key);
+        } else {
+            if (($size = filesize($path)) > 0) {
+                $data = fread($fp, $size);
+            } else {
+                $data = null;
+            }
+
+            fclose($fp);
+
+            $pool->drop($key);
+
+            return $data ? $this->restoreData($data) : null;
+        }
+
+        Assert::isUnreachable();
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     * @return mixed|null
+     */
     public function decrement($key, $value)
     {
         $path = $this->makePath($key);
@@ -89,6 +181,10 @@ class RubberFileSystem extends CachePeer
         return null;
     }
 
+    /**
+     * @param $key
+     * @return mixed|null
+     */
     public function get($key)
     {
         $path = $this->makePath($key);
@@ -110,18 +206,12 @@ class RubberFileSystem extends CachePeer
         return null;
     }
 
-    public function delete($key)
-    {
-        try {
-            unlink($this->makePath($key));
-        } catch (BaseException $e) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function append($key, $data)
+    /**
+     * @param $key
+     * @param $data
+     * @return bool
+     */
+    public function append($key, $data) : bool
     {
         $path = $this->makePath($key);
 
@@ -135,8 +225,9 @@ class RubberFileSystem extends CachePeer
             }
         }
 
-        if (!is_writable($path))
+        if (!is_writable($path)) {
             return false;
+        }
 
         try {
             $fp = fopen($path, 'ab');
@@ -151,7 +242,14 @@ class RubberFileSystem extends CachePeer
         return true;
     }
 
-    protected function store($action, $key, $value, $expires = 0)
+    /**
+     * @param $action
+     * @param $key
+     * @param $value
+     * @param int $expires
+     * @return bool
+     */
+    protected function store($action, $key, $value, $expires = 0) : bool
     {
         $path = $this->makePath($key);
         $time = time();
@@ -171,8 +269,9 @@ class RubberFileSystem extends CachePeer
             $action == 'add'
             && is_readable($path)
             && filemtime($path) > $time
-        )
+        ) {
             return true;
+        }
 
         // do not replace, when file not exist or expired
         if ($action == 'replace') {
@@ -190,60 +289,18 @@ class RubberFileSystem extends CachePeer
         return true;
     }
 
-    private function operate($path, $value = null, $expires = null)
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function delete($key) : bool
     {
-        $key = hexdec(substr(md5($path), 3, 2)) + 1;
-
-        $pool = SemaphorePool::me();
-
-        if (!$pool->get($key))
-            return null;
-
         try {
-            $old = umask(0077);
-            $fp = fopen($path, $value !== null ? 'wb' : 'rb');
-            umask($old);
+            unlink($this->makePath($key));
         } catch (BaseException $e) {
-            $pool->drop($key);
-            return null;
+            return false;
         }
 
-        if ($value !== null) {
-            fwrite($fp, $this->prepareData($value));
-            fclose($fp);
-
-            if ($expires < parent::TIME_SWITCH)
-                $expires += time();
-
-            try {
-                touch($path, $expires);
-            } catch (BaseException $e) {
-                // race-removed
-            }
-
-            return $pool->drop($key);
-        } else {
-            if (($size = filesize($path)) > 0)
-                $data = fread($fp, $size);
-            else
-                $data = null;
-
-            fclose($fp);
-
-            $pool->drop($key);
-
-            return $data ? $this->restoreData($data) : null;
-        }
-
-        Assert::isUnreachable();
-    }
-
-    private function makePath($key)
-    {
-        return
-            $this->directory
-            . $key[0] . $key[1]
-            . DIRECTORY_SEPARATOR
-            . substr($key, 2);
+        return true;
     }
 }

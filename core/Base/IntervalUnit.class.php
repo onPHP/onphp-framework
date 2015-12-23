@@ -77,7 +77,7 @@ class IntervalUnit
 
         if (!$result) {
             $result = [
-                // name			=> array(months,	days,	seconds)
+                // name        => array(months, days,   seconds)
                 'microsecond' => [0, 0, 0.000001],
                 'millisecond' => [0, 0, 0.001],
                 'second' => [0, 0, 1],
@@ -169,8 +169,8 @@ class IntervalUnit
 
         } elseif ($this->months) {
 
-            $startMonthsCount = $start->getYear() * 12 + ($start->getMonth() - 1);
-            $endMonthsCount = $end->getYear() * 12 + ($end->getMonth() - 1);
+            $startMonthsCount = (int)$start->getYear() * 12 + (int)($start->getMonth() - 1);
+            $endMonthsCount = (int)$end->getYear() * 12 + (int)($end->getMonth() - 1);
 
             $result = ($endMonthsCount - $startMonthsCount) / $this->months;
         }
@@ -183,7 +183,7 @@ class IntervalUnit
             . 'result: ' . var_export($result, true)
         );
 
-        return (integer) $result;
+        return (int) $result;
     }
 
     /**
@@ -236,13 +236,13 @@ class IntervalUnit
 
         } elseif ($this->months) {
 
-            $monthsCount = $time->getYear() * 12 + ($time->getMonth() - 1);
+            $monthsCount = (int)$time->getYear() * 12 + (int)($time->getMonth() - 1);
 
             if (
                 $ceil
                 && (
-                    ($time->getDay() - 1) + $time->getHour()
-                    + $time->getMinute() + $time->getSecond() > 0
+                    (int)($time->getDay() - 1) + (int)$time->getHour()
+                    + (int)$time->getMinute() + (int)$time->getSecond() > 0
                 )
             ) {
                 $monthsCount += 0.1;

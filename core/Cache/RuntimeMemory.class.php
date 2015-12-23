@@ -21,16 +21,24 @@ class RuntimeMemory extends CachePeer
     /**
      * @return RuntimeMemory
      **/
-    public static function create()
+    public static function create() : RuntimeMemory
     {
         return new self;
     }
 
-    public function isAlive()
+    /**
+     * @return bool
+     */
+    public function isAlive() : bool
     {
         return true;
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return null
+     */
     public function increment($key, $value)
     {
         if (isset($this->cache[$key]))
@@ -39,6 +47,11 @@ class RuntimeMemory extends CachePeer
         return null;
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return null
+     */
     public function decrement($key, $value)
     {
         if (isset($this->cache[$key]))
@@ -47,6 +60,10 @@ class RuntimeMemory extends CachePeer
         return null;
     }
 
+    /**
+     * @param $key
+     * @return null
+     */
     public function get($key)
     {
         if (isset($this->cache[$key]))
@@ -55,6 +72,10 @@ class RuntimeMemory extends CachePeer
         return null;
     }
 
+    /**
+     * @param $key
+     * @return bool
+     */
     public function delete($key)
     {
         if (isset($this->cache[$key])) {
@@ -75,6 +96,11 @@ class RuntimeMemory extends CachePeer
         return parent::clean();
     }
 
+    /**
+     * @param $key
+     * @param $data
+     * @return bool
+     */
     public function append($key, $data)
     {
         if (isset($this->cache[$key])) {
@@ -85,6 +111,13 @@ class RuntimeMemory extends CachePeer
         return false;
     }
 
+    /**
+     * @param $action
+     * @param $key
+     * @param $value
+     * @param int $expires
+     * @return bool
+     */
     protected function store($action, $key, $value, $expires = 0)
     {
         if ($action == 'add' && isset($this->cache[$key]))

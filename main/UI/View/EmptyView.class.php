@@ -31,8 +31,8 @@ class EmptyView implements View, Stringable
         return $this;
     }
 
-    public function toString()
+    public function toString() : string
     {
-        return null;
+        return '';
     }
 }

@@ -14,13 +14,19 @@
  *
  * @ingroup Lockers
  **/
-final class SystemFiveLocker extends BaseLocker
+class SystemFiveLocker extends BaseLocker
 {
+    /**
+     * @param $key
+     * @return bool|null
+     * @throws WrongArgumentException
+     */
     public function get($key)
     {
         try {
-            if (!isset($this->pool[$key]))
+            if (!isset($this->pool[$key])) {
                 $this->pool[$key] = sem_get($key, 1, ONPHP_IPC_PERMS, false);
+            }
 
             return sem_acquire($this->pool[$key]);
         } catch (BaseException $e) {
@@ -30,6 +36,10 @@ final class SystemFiveLocker extends BaseLocker
         Assert::isUnreachable();
     }
 
+    /**
+     * @param $key
+     * @return bool|null
+     */
     public function free($key)
     {
         if (isset($this->pool[$key])) {
@@ -44,6 +54,10 @@ final class SystemFiveLocker extends BaseLocker
         return null;
     }
 
+    /**
+     * @param $key
+     * @return bool|null
+     */
     public function drop($key)
     {
         if (isset($this->pool[$key])) {

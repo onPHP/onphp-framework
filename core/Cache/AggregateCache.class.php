@@ -17,13 +17,15 @@
  **/
 class AggregateCache extends BaseAggregateCache
 {
-    const LEVEL_ULTRAHIGH = 0xFFFF;
-    const LEVEL_HIGH = 0xC000;
-    const LEVEL_NORMAL = 0x8000;
-    const LEVEL_LOW = 0x4000;
-    const LEVEL_VERYLOW = 0x0001;
+    const
+        LEVEL_ULTRAHIGH = 0xFFFF,
+        LEVEL_HIGH = 0xC000,
+        LEVEL_NORMAL = 0x8000,
+        LEVEL_LOW = 0x4000,
+        LEVEL_VERYLOW = 0x0001;
 
-    private $levels = array();
+    /** @var array  */
+    private $levels = [];
 
     /**
      * @return AggregateCache
@@ -37,9 +39,10 @@ class AggregateCache extends BaseAggregateCache
      * @return AggregateCache
      **/
     public function addPeer(
-        $label, CachePeer $peer, $level = self::LEVEL_NORMAL
-    )
-    {
+        $label,
+        CachePeer $peer,
+        $level = self::LEVEL_NORMAL
+    ) {
         $this->doAddPeer($label, $peer);
 
         $this->peers[$label]['level'] = $level;
@@ -59,29 +62,34 @@ class AggregateCache extends BaseAggregateCache
 
     /**
      * brain
-     **/
+     *
+     * @param $key
+     * @return mixed
+     */
     protected function guessLabel($key)
     {
         $class = $this->getClassName();
 
-        if (isset($this->levels[$class]))
+        if (isset($this->levels[$class])) {
             $classLevel = $this->levels[$class];
-        else
+        } else {
             $classLevel = self::LEVEL_NORMAL;
+        }
 
         // init by $key, randomness will be restored later
         mt_srand(hexdec(substr(md5($key), 3, 7)));
 
-        $zeroDistances = array();
-        $weights = array();
+        $zeroDistances = [];
+        $weights = [];
 
         foreach ($this->peers as $label => $peer) {
             $distance = abs($classLevel - $peer['level']);
 
-            if (!$distance)
+            if (!$distance) {
                 $zeroDistances[] = $label;
-            else
-                $weights[$peer['level']] = 1 / pow($distance, 2); // BOVM
+            } else {
+                $weights[$peer['level']] = 1 / pow($distance, 2);
+            } // BOVM
         }
 
         if (count($zeroDistances)) {
@@ -98,28 +106,31 @@ class AggregateCache extends BaseAggregateCache
                 if ($sum <= $weight) {
                     $peerLevel = $level;
                     break;
-                } else
+                } else {
                     $sum -= $weight;
+                }
             }
 
-            $selectedPeers = array();
+            $selectedPeers = [];
             foreach ($this->peers as $label => $peer) {
-                if ($peer['level'] == $peerLevel)
+                if ($peer['level'] == $peerLevel) {
                     $selectedPeers[] = $label;
+                }
             }
 
             $selectedLabel = $selectedPeers[mt_rand(0, count($selectedPeers) - 1)];
         }
 
-        if (isset($this->peers[$selectedLabel]['stat'][$class]))
+        if (isset($this->peers[$selectedLabel]['stat'][$class])) {
             ++$this->peers[$selectedLabel]['stat'][$class];
-        else
+        } else {
             $this->peers[$selectedLabel]['stat'][$class] = 1;
+        }
 
         // restore randomness
         mt_srand(
-            (int)(
-                (int)(microtime(true) << 2)
+            (int) (
+                (int) (microtime(true) << 2)
                 * (rand(time() / 2, time()) >> 2)
             )
         );

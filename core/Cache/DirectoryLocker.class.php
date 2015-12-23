@@ -18,6 +18,11 @@ class DirectoryLocker extends BaseLocker
 {
     private $directory = null;
 
+    /**
+     * DirectoryLocker constructor.
+     * @param string $directory
+     * @throws WrongArgumentException
+     */
     protected function __construct($directory = 'dir-locking/')
     {
         $this->directory = ONPHP_TEMP_PATH . $directory;
@@ -31,6 +36,10 @@ class DirectoryLocker extends BaseLocker
         }
     }
 
+    /**
+     * @param $key
+     * @return bool
+     */
     public function get($key)
     {
         $mseconds = 0;
@@ -50,6 +59,19 @@ class DirectoryLocker extends BaseLocker
         return false;
     }
 
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function drop($key)
+    {
+        return $this->free($key);
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
     public function free($key)
     {
         try {
@@ -57,10 +79,5 @@ class DirectoryLocker extends BaseLocker
         } catch (BaseException $e) {
             return false;
         }
-    }
-
-    public function drop($key)
-    {
-        return $this->free($key);
     }
 }

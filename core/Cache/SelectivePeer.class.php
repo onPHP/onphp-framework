@@ -19,14 +19,18 @@ abstract class SelectivePeer extends CachePeer
     protected $className = null;
 
     /**
-     * @return SelectivePeer
-     **/
+     * @param $className
+     * @return $this
+     */
     public function mark($className)
     {
         $this->className = $className;
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     protected function getClassName()
     {
         if (!$this->className)

@@ -23,7 +23,7 @@ class SimplePhpView extends EmptyView
         $this->partViewResolver = $partViewResolver;
     }
 
-    public function toString($model = null)
+    public function toString($model = null) : string
     {
         try {
             ob_start();
@@ -38,8 +38,7 @@ class SimplePhpView extends EmptyView
     /**
      * @return SimplePhpView
      **/
-    public function render(/* Model */
-        $model = null)
+    public function render(/* Model */$model = null)
     {
         Assert::isTrue($model === null || $model instanceof Model);
 

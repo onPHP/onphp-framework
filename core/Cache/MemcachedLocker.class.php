@@ -24,18 +24,29 @@ class MemcachedLocker extends BaseLocker implements Instantiatable
      */
     private $memcachedClient = null;
 
-    public static function me()
+    /**
+     * @return MemcachedLocker
+     */
+    public static function me() : MemcachedLocker
     {
         return Singleton::getInstance(__CLASS__);
     }
 
-    public function setMemcachedClient(CachePeer $memcachedPeer)
+    /**
+     * @param CachePeer $memcachedPeer
+     * @return MemcachedLocker
+     */
+    public function setMemcachedClient(CachePeer $memcachedPeer) : MemcachedLocker
     {
         $this->memcachedClient = $memcachedPeer;
 
         return $this;
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function get($key)
     {
         return $this->memcachedClient->add(
@@ -45,11 +56,19 @@ class MemcachedLocker extends BaseLocker implements Instantiatable
         );
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function free($key)
     {
         return $this->memcachedClient->delete($key);
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function drop($key)
     {
         return $this->free($key);

@@ -16,42 +16,46 @@
  **/
 class SharedMemory extends SelectivePeer
 {
-    const INDEX_SEGMENT = 12345678;
+    const
+        INDEX_SEGMENT = 12345678,
+        DEFAULT_SEGMENT_SIZE = 4194304;
 
-    const DEFAULT_SEGMENT_SIZE = 4194304; // 128^3 * 2
-
+    private static $attached = [];
     private $defaultSize = null;
-    private $customSized = array();
-
-    private static $attached = array();
+    private $customSized = [];
 
     /**
-     * @return SharedMemory
-     **/
-    public static function create(
-        $defaultSize = self::DEFAULT_SEGMENT_SIZE,
-        $customSized = array()
-    )
-    {
-        return new self($defaultSize, $customSized);
-    }
-
-    /**
-     * @return SharedMemory
-     **/
+     * SharedMemory constructor.
+     * @param int $defaultSize
+     * @param array $customSized
+     */
     public function __construct(
         $defaultSize = self::DEFAULT_SEGMENT_SIZE,
-        $customSized = array() // 'className' => segmentSizeInBytes
+        $customSized = [] // 'className' => segmentSizeInBytes
     )
     {
         $this->defaultSize = $defaultSize;
         $this->customSized = $customSized;
     }
 
+    /**
+     * @param int $defaultSize
+     * @param array $customSized
+     * @return SharedMemory
+     */
+    public static function create($defaultSize = self::DEFAULT_SEGMENT_SIZE, $customSized = []) : SharedMemory
+    {
+        return new self($defaultSize, $customSized);
+    }
+
+    /**
+     * @see __destruct
+     */
     public function __destruct()
     {
-        foreach (self::$attached as $segment)
+        foreach (self::$attached as $segment) {
             shm_detach($segment);
+        }
 
         // sync classes
         $segment = shm_attach(
@@ -61,7 +65,7 @@ class SharedMemory extends SelectivePeer
         try {
             $index = shm_get_var($segment, 1);
         } catch (BaseException $e) {
-            $index = array();
+            $index = [];
         }
 
         try {
@@ -83,6 +87,11 @@ class SharedMemory extends SelectivePeer
         }
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return mixed|null
+     */
     public function increment($key, $value)
     {
         if (null !== ($current = $this->get($key))) {
@@ -93,16 +102,11 @@ class SharedMemory extends SelectivePeer
         return null;
     }
 
-    public function decrement($key, $value)
-    {
-        if (null !== ($current = $this->get($key))) {
-            $this->set($key, $current -= $value);
-            return $current;
-        }
-
-        return null;
-    }
-
+    /**
+     * @param $key
+     * @return mixed|null
+     * @throws WrongArgumentException
+     */
     public function get($key)
     {
         $segment = $this->getSegment();
@@ -127,6 +131,40 @@ class SharedMemory extends SelectivePeer
         Assert::isUnreachable();
     }
 
+    /**
+     * @return mixed
+     */
+    private function getSegment()
+    {
+        $class = $this->getClassName();
+
+        if (!isset(self::$attached[$class])) {
+            self::$attached[$class] = shm_attach(
+                $this->stringToInt($class),
+                isset($this->customSized[$class])
+                    ? $this->customSized[$class]
+                    : $this->defaultSize,
+                ONPHP_IPC_PERMS
+            );
+        }
+
+        return self::$attached[$class];
+    }
+
+    /**
+     * @param $string
+     * @return number
+     */
+    private function stringToInt($string)
+    {
+        return hexdec(substr(md5($string), 0, 8));
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     * @throws WrongArgumentException
+     */
     public function delete($key)
     {
         try {
@@ -140,7 +178,25 @@ class SharedMemory extends SelectivePeer
         Assert::isUnreachable();
     }
 
-    public function isAlive()
+    /**
+     * @param $key
+     * @param $value
+     * @return mixed|null
+     */
+    public function decrement($key, $value)
+    {
+        if (null !== ($current = $this->get($key))) {
+            $this->set($key, $current -= $value);
+            return $current;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAlive() : bool
     {
         // any better idea how to detect shm-availability?
         return true;
@@ -174,6 +230,11 @@ class SharedMemory extends SelectivePeer
         return parent::clean();
     }
 
+    /**
+     * @param $key
+     * @param $data
+     * @return bool
+     */
     public function append($key, $data)
     {
         $segment = $this->getSegment();
@@ -200,21 +261,30 @@ class SharedMemory extends SelectivePeer
         }
     }
 
+    /**
+     * @param $action
+     * @param $key
+     * @param $value
+     * @param int $expires
+     * @return bool
+     * @throws WrongArgumentException
+     */
     protected function store($action, $key, $value, $expires = 0)
     {
         $segment = $this->getSegment();
 
-        if ($expires < parent::TIME_SWITCH)
+        if ($expires < parent::TIME_SWITCH) {
             $expires += time();
+        }
 
         try {
             shm_put_var(
                 $segment,
                 $this->stringToInt($key),
-                array(
+                [
                     'value' => $this->prepareData($value),
                     'expires' => $expires
-                )
+                ]
             );
 
             return true;
@@ -225,26 +295,5 @@ class SharedMemory extends SelectivePeer
         }
 
         Assert::isUnreachable();
-    }
-
-    private function getSegment()
-    {
-        $class = $this->getClassName();
-
-        if (!isset(self::$attached[$class]))
-            self::$attached[$class] = shm_attach(
-                $this->stringToInt($class),
-                isset($this->customSized[$class])
-                    ? $this->customSized[$class]
-                    : $this->defaultSize,
-                ONPHP_IPC_PERMS
-            );
-
-        return self::$attached[$class];
-    }
-
-    private function stringToInt($string)
-    {
-        return hexdec(substr(md5($string), 0, 8));
     }
 }

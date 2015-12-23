@@ -19,16 +19,26 @@
  *
  * @ingroup Lockers
  **/
-final class SemaphorePool extends BaseLocker implements Instantiatable
+class SemaphorePool extends BaseLocker implements Instantiatable
 {
+    /** @var string  */
     private static $lockerName = 'DirectoryLocker';
-    private static $locker = null;
 
+    /** @var  BaseLocker */
+    private static $locker;
+
+    /**
+     * SemaphorePool constructor.
+     */
     protected function __construct()
     {
         self::$locker = Singleton::getInstance(self::$lockerName);
     }
 
+    /**
+     * @param $name
+     * @throws WrongArgumentException
+     */
     public static function setDefaultLocker($name)
     {
         Assert::classExists($name);
@@ -45,26 +55,44 @@ final class SemaphorePool extends BaseLocker implements Instantiatable
         return Singleton::getInstance(__CLASS__);
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function get($key)
     {
         return self::$locker->get($key);
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function free($key)
     {
         return self::$locker->free($key);
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function drop($key)
     {
         return self::$locker->drop($key);
     }
 
+    /**
+     * @return mixed
+     */
     public function clean()
     {
         return self::$locker->clean();
     }
 
+    /**
+     * @see __destruct
+     */
     public function __destruct()
     {
         self::$locker->clean();

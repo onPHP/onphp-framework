@@ -19,9 +19,10 @@
  **/
 class PeclMemcached extends CachePeer
 {
-    const DEFAULT_PORT = 11211;
-    const DEFAULT_HOST = '127.0.0.1';
-    const DEFAULT_TIMEOUT = 1;
+    const
+        DEFAULT_PORT = 11211,
+        DEFAULT_HOST = '127.0.0.1',
+        DEFAULT_TIMEOUT = 1;
 
     protected $host = null;
     protected $port = null;
@@ -33,8 +34,11 @@ class PeclMemcached extends CachePeer
     private $instance = null;
 
     /**
+     * @param string $host
+     * @param int $port
+     * @param int $connectTimeout
      * @return PeclMemcached
-     **/
+     */
     public static function create(
         $host = self::DEFAULT_HOST,
         $port = self::DEFAULT_PORT,
@@ -44,6 +48,12 @@ class PeclMemcached extends CachePeer
         return new self($host, $port, $connectTimeout);
     }
 
+    /**
+     * PeclMemcached constructor.
+     * @param string $host
+     * @param int $port
+     * @param int $connectTimeout
+     */
     public function __construct(
         $host = self::DEFAULT_HOST,
         $port = self::DEFAULT_PORT,
@@ -55,6 +65,9 @@ class PeclMemcached extends CachePeer
         $this->connectTimeout = $connectTimeout;
     }
 
+    /**
+     * @see __destruct
+     */
     public function __destruct()
     {
         if ($this->alive) {
@@ -66,7 +79,10 @@ class PeclMemcached extends CachePeer
         }
     }
 
-    public function isAlive()
+    /**
+     * @return bool
+     */
+    public function isAlive() : bool
     {
         $this->ensureTriedToConnect();
 
@@ -89,6 +105,11 @@ class PeclMemcached extends CachePeer
         return parent::clean();
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return bool|null
+     */
     public function increment($key, $value)
     {
         $this->ensureTriedToConnect();
@@ -100,6 +121,11 @@ class PeclMemcached extends CachePeer
         }
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return int|null
+     */
     public function decrement($key, $value)
     {
         $this->ensureTriedToConnect();
@@ -111,6 +137,10 @@ class PeclMemcached extends CachePeer
         }
     }
 
+    /**
+     * @param $indexes
+     * @return array|null|string
+     */
     public function getList($indexes)
     {
         $this->ensureTriedToConnect();
@@ -121,6 +151,11 @@ class PeclMemcached extends CachePeer
                 : array();
     }
 
+    /**
+     * @param $index
+     * @return array|null|string
+     * @throws WrongArgumentException
+     */
     public function get($index)
     {
         $this->ensureTriedToConnect();
@@ -139,6 +174,11 @@ class PeclMemcached extends CachePeer
         Assert::isUnreachable();
     }
 
+    /**
+     * @param $index
+     * @return bool
+     * @throws WrongArgumentException
+     */
     public function delete($index)
     {
         $this->ensureTriedToConnect();
@@ -155,6 +195,12 @@ class PeclMemcached extends CachePeer
         Assert::isUnreachable();
     }
 
+    /**
+     * @param $key
+     * @param $data
+     * @return bool|void
+     * @throws WrongArgumentException
+     */
     public function append($key, $data)
     {
         $this->ensureTriedToConnect();
@@ -189,7 +235,10 @@ class PeclMemcached extends CachePeer
         return $this->requestTimeout;
     }
 
-    protected function ensureTriedToConnect()
+    /**
+     * @return PeclMemcached
+     */
+    protected function ensureTriedToConnect() : PeclMemcached
     {
         if ($this->triedConnect)
             return $this;
@@ -201,6 +250,14 @@ class PeclMemcached extends CachePeer
         return $this;
     }
 
+    /**
+     * @param $action
+     * @param $key
+     * @param $value
+     * @param int $expires
+     * @return bool
+     * @throws WrongArgumentException
+     */
     protected function store(
         $action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
     )
@@ -224,6 +281,9 @@ class PeclMemcached extends CachePeer
         Assert::isUnreachable();
     }
 
+    /**
+     * @see connect
+     */
     protected function connect()
     {
         $this->instance = new Memcache();

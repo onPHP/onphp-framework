@@ -23,12 +23,14 @@ class Cache extends StaticFactory implements Instantiatable
 {
     const NOT_FOUND = 'nil';
 
-    const EXPIRES_FOREVER = 604800; // 7 days
-    const EXPIRES_MAXIMUM = 21600; // 6 hrs
-    const EXPIRES_MEDIUM = 3600; // 1 hr
-    const EXPIRES_MINIMUM = 300; // 5 mins
+    const
+        EXPIRES_FOREVER = 60480, // 7 days
+        EXPIRES_MAXIMUM = 21600, // 6 hrs
+        EXPIRES_MEDIUM = 3600, // 1 hr
+        EXPIRES_MINIMUM = 300; // 5 mins
 
-    const DO_NOT_CACHE = -2005;
+    const
+        DO_NOT_CACHE = -2005;
 
     /// map dao -> worker
     private static $map = null;
@@ -40,26 +42,32 @@ class Cache extends StaticFactory implements Instantiatable
     private static $worker = null;
 
     /// spawned workers
-    private static $instances = array();
+    private static $instances = [];
 
     /**
      * @return CachePeer
      **/
     public static function me()
     {
-        if (!self::$peer || !self::$peer->isAlive())
+        if (!self::$peer || !self::$peer->isAlive()) {
             self::$peer = new RuntimeMemory();
+        }
 
         return self::$peer;
     }
 
-    /* void */
+    /**
+     * @param CachePeer $peer
+     */
     public static function setPeer(CachePeer $peer)
     {
         self::$peer = $peer;
     }
 
-    /* void */
+    /**
+     * @param $worker
+     * @throws WrongArgumentException
+     */
     public static function setDefaultWorker($worker)
     {
         Assert::classExists($worker);
@@ -68,19 +76,23 @@ class Cache extends StaticFactory implements Instantiatable
     }
 
     /**
+     * @param $map
+     */
+    public static function appendDaoMap($map)
+    {
+        if (self::$map) {
+            self::$map = array_merge(self::$map, $map);
+        } else {
+            self::setDaoMap($map);
+        }
+    }
+
+    /**
      * associative array, className -> workerName
      **/
     public static function setDaoMap($map)
     {
         self::$map = $map;
-    }
-
-    public static function appendDaoMap($map)
-    {
-        if (self::$map)
-            self::$map = array_merge(self::$map, $map);
-        else
-            self::setDaoMap($map);
     }
 
     /**
@@ -94,18 +106,21 @@ class Cache extends StaticFactory implements Instantiatable
             if (isset(self::$map[$class])) {
                 $className = self::$map[$class];
                 self::$instances[$class] = new $className($dao);
-            } elseif ($worker = self::$worker)
+            } elseif ($worker = self::$worker) {
                 self::$instances[$class] = new $worker($dao);
-            else
+            } else {
                 self::$instances[$class] = new CommonDaoWorker($dao);
+            }
         }
 
         return self::$instances[$class];
     }
 
-    /* void */
+    /**
+     * drop workers
+     */
     public static function dropWorkers()
     {
-        self::$instances = array();
+        self::$instances = [];
     }
 }

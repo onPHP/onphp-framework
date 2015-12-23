@@ -24,47 +24,42 @@ class WatermarkedPeer extends SelectivePeer
     private $map = null;
 
     /**
-     * @return WatermarkedPeer
-     **/
-    public static function create(
-        CachePeer $peer,
-        $watermark = "Single onPHP's project"
-    )
-    {
-        return new self($peer, $watermark);
-    }
-
-    public function __construct(
-        CachePeer $peer,
-        $watermark = "Single onPHP's project"
-    )
+     * WatermarkedPeer constructor.
+     * @param CachePeer $peer
+     * @param string $watermark
+     */
+    public function __construct(CachePeer $peer, $watermark = "Single onPHP's project")
     {
         $this->peer = $peer;
         $this->setWatermark($watermark);
     }
 
+    /**
+     * @return WatermarkedPeer
+     **/
+    public static function create(CachePeer $peer, $watermark = "Single onPHP's project") : WatermarkedPeer
+    {
+        return new self($peer, $watermark);
+    }
+
+    /**
+     * @return null
+     */
+    public function getWatermark()
+    {
+        return $this->watermark;
+    }
+
+    /**
+     * @param $watermark
+     * @return $this
+     */
     public function setWatermark($watermark)
     {
         $this->originalWatermark = $watermark;
         $this->watermark = md5($watermark . ' [' . ONPHP_VERSION . ']::');
 
         return $this;
-    }
-
-    public function getWatermark()
-    {
-        return $this->watermark;
-    }
-
-    public function getActualWatermark()
-    {
-        if (
-            $this->className
-            && isset($this->map[$this->className])
-        )
-            return $this->map[$this->className];
-
-        return $this->watermark;
     }
 
     /**
@@ -74,10 +69,11 @@ class WatermarkedPeer extends SelectivePeer
      **/
     public function setClassMap($map)
     {
-        $this->map = array();
+        $this->map = [];
 
-        foreach ($map as $className => $watermark)
+        foreach ($map as $className => $watermark) {
             $this->map[$className] = md5($watermark . ' [' . ONPHP_VERSION . ']::');
+        }
 
         return $this;
     }
@@ -94,6 +90,26 @@ class WatermarkedPeer extends SelectivePeer
         return $this;
     }
 
+    /**
+     * @return null
+     */
+    public function getActualWatermark()
+    {
+        if (
+            $this->className
+            && isset($this->map[$this->className])
+        ) {
+            return $this->map[$this->className];
+        }
+
+        return $this->watermark;
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     * @return mixed
+     */
     public function increment($key, $value)
     {
         return $this->peer->increment(
@@ -102,6 +118,11 @@ class WatermarkedPeer extends SelectivePeer
         );
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return mixed
+     */
     public function decrement($key, $value)
     {
         return $this->peer->decrement(
@@ -110,16 +131,21 @@ class WatermarkedPeer extends SelectivePeer
         );
     }
 
+    /**
+     * @param $indexes
+     * @return array|null
+     */
     public function getList($indexes)
     {
-        $peerIndexMap = array();
-        foreach ($indexes as $index)
+        $peerIndexMap = [];
+        foreach ($indexes as $index) {
             $peerIndexMap[$this->getActualWatermark() . $index] = $index;
+        }
 
         $peerIndexes = array_keys($peerIndexMap);
         $peerResult = $this->peer->getList($peerIndexes);
 
-        $result = array();
+        $result = [];
         if (!empty($peerResult)) {
             foreach ($peerResult as $key => $value) {
                 $result[$peerIndexMap[$key]] = $value;
@@ -131,11 +157,19 @@ class WatermarkedPeer extends SelectivePeer
         return $result;
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function get($key)
     {
         return $this->peer->get($this->getActualWatermark() . $key);
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function delete($key)
     {
         return $this->peer->delete($this->getActualWatermark() . $key);
@@ -151,11 +185,19 @@ class WatermarkedPeer extends SelectivePeer
         return parent::clean();
     }
 
+    /**
+     * @return bool
+     */
     public function isAlive()
     {
         return $this->peer->isAlive();
     }
 
+    /**
+     * @param $key
+     * @param $data
+     * @return mixed
+     */
     public function append($key, $data)
     {
         return $this->peer->append($this->getActualWatermark() . $key, $data);
@@ -174,10 +216,19 @@ class WatermarkedPeer extends SelectivePeer
         return $newWm;
     }
 
+    /**
+     * @param $action
+     * @param $key
+     * @param $value
+     * @param int $expires
+     * @return mixed
+     */
     protected function store(
-        $action, $key, $value, $expires = Cache::EXPIRES_MEDIUM
-    )
-    {
+        $action,
+        $key,
+        $value,
+        $expires = Cache::EXPIRES_MEDIUM
+    ) {
         return
             $this->peer->$action(
                 $this->getActualWatermark() . $key, $value, $expires

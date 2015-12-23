@@ -14,10 +14,18 @@
  *
  * @ingroup Lockers
  **/
-final class FileLocker extends BaseLocker
+class FileLocker extends BaseLocker
 {
+    /**
+     * @var null|string
+     */
     private $directory = null;
 
+    /**
+     * FileLocker constructor.
+     * @param string $directory
+     * @throws WrongArgumentException
+     */
     public function __construct($directory = 'file-locking/')
     {
         $this->directory = ONPHP_TEMP_PATH . $directory;
@@ -31,19 +39,31 @@ final class FileLocker extends BaseLocker
         }
     }
 
-    public function get($key)
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function get($key) : bool
     {
         $this->pool[$key] = fopen($this->directory . $key, 'w+');
 
         return flock($this->pool[$key], LOCK_EX);
     }
 
-    public function free($key)
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function free($key) : bool
     {
         return flock($this->pool[$key], LOCK_UN);
     }
 
-    public function drop($key)
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function drop($key) : bool
     {
         try {
             fclose($this->pool[$key]);

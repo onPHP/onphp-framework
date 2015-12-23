@@ -9,54 +9,57 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Containers
-	**/
-	final class ManyToManyLinkedLazy extends ManyToManyLinkedWorker
-	{
-		/**
-		 * @throws WrongArgumentException
-		 * @return ManyToManyLinkedLazy
-		**/
-		public function sync($insert, $update = array(), $delete)
-		{
-			Assert::isTrue($update === array());
-			
-			$dao = $this->container->getDao();
-			
-			$db = DBPool::getByDao($dao);
-			
-			if ($insert)
-				for ($i = 0, $size = count($insert); $i < $size; ++$i)
-					$db->queryNull($this->makeInsertQuery($insert[$i]));
+/**
+ * @ingroup Containers
+ **/
+final class ManyToManyLinkedLazy extends ManyToManyLinkedWorker
+{
+    /**
+     * @throws WrongArgumentException
+     * @return ManyToManyLinkedLazy
+     **/
+    public function sync($insert, $update = [], $delete)
+    {
+        Assert::isTrue($update === []);
 
-			if ($delete) {
-				$db->queryNull($this->makeDeleteQuery($delete));
-				
-				$dao->uncacheByIds($delete);
-			}
+        $dao = $this->container->getDao();
 
-			return $this;
-		}
-		
-		/**
-		 * @return SelectQuery
-		**/
-		public function makeFetchQuery()
-		{
-			$uc = $this->container;
-			
-			return
-				$this->joinHelperTable(
-					$this->makeSelectQuery()->
-					dropFields()->
-					get(
-						new DBField(
-							$uc->getChildIdField(),
-							$uc->getHelperTable()
-						)
-					)
-				);
-		}
-	}
+        $db = DBPool::getByDao($dao);
+
+        if ($insert) {
+            for ($i = 0, $size = count($insert); $i < $size; ++$i) {
+                $db->queryNull($this->makeInsertQuery($insert[$i]));
+            }
+        }
+
+        if ($delete) {
+            $db->queryNull($this->makeDeleteQuery($delete));
+
+            $dao->uncacheByIds($delete);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return SelectQuery
+     **/
+    public function makeFetchQuery()
+    {
+        $uc = $this->container;
+
+        return
+            $this->joinHelperTable(
+                $this->makeSelectQuery()->
+                dropFields()->
+                get(
+                    new DBField(
+                        $uc->getChildIdField(),
+                        $uc->getHelperTable()
+                    )
+                )
+            );
+    }
+}
+
 ?>

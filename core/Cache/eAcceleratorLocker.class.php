@@ -14,23 +14,38 @@
  *
  * @ingroup Lockers
  **/
-final class eAcceleratorLocker extends BaseLocker
+class eAcceleratorLocker extends BaseLocker
 {
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function get($key)
     {
         return eaccelerator_lock($key);
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function free($key)
     {
         return eaccelerator_unlock($key);
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function drop($key)
     {
         return $this->free($key);
     }
 
+    /**
+     * @return bool
+     */
     public function clean()
     {
         // will be cleaned out upon script's shutdown

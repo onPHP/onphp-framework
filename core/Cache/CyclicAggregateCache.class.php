@@ -23,12 +23,32 @@ class CyclicAggregateCache extends BaseAggregateCache
     /**
      * @return CyclicAggregateCache
      **/
-    public static function create()
+    public static function create() : CyclicAggregateCache
     {
         return new self();
     }
 
-    public function setSummaryWeight($weight)
+    /**
+     * @param array $first
+     * @param array $second
+     * @return int
+     */
+    private static function comparePeers(array $first, array $second) : int
+    {
+        if ($first['mountPoint'] == $second['mountPoint']) {
+            return 0;
+        }
+
+        return
+            ($first['mountPoint'] < $second['mountPoint']) ? -1 : 1;
+    }
+
+    /**
+     * @param $weight
+     * @return CyclicAggregateCache
+     * @throws WrongArgumentException
+     */
+    public function setSummaryWeight($weight) : CyclicAggregateCache
     {
         Assert::isPositiveInteger($weight);
 
@@ -38,7 +58,14 @@ class CyclicAggregateCache extends BaseAggregateCache
         return $this;
     }
 
-    public function addPeer($label, CachePeer $peer, $mountPoint)
+    /**
+     * @param $label
+     * @param CachePeer $peer
+     * @param $mountPoint
+     * @return CyclicAggregateCache
+     * @throws WrongArgumentException
+     */
+    public function addPeer($label, CachePeer $peer, $mountPoint) : CyclicAggregateCache
     {
         Assert::isLesserOrEqual($mountPoint, $this->summaryWeight);
         Assert::isGreaterOrEqual($mountPoint, 0);
@@ -51,10 +78,16 @@ class CyclicAggregateCache extends BaseAggregateCache
         return $this;
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     * @throws WrongArgumentException
+     */
     protected function guessLabel($key)
     {
-        if (!$this->sorted)
+        if (!$this->sorted) {
             $this->sortPeers();
+        }
 
         $point = hexdec(substr(sha1($key), 0, 5)) % $this->summaryWeight;
 
@@ -62,8 +95,9 @@ class CyclicAggregateCache extends BaseAggregateCache
 
         while ($peer = current($this->peers)) {
 
-            if ($point <= $peer['mountPoint'])
+            if ($point <= $peer['mountPoint']) {
                 return key($this->peers);
+            }
 
             next($this->peers);
         }
@@ -77,21 +111,15 @@ class CyclicAggregateCache extends BaseAggregateCache
         Assert::isUnreachable();
     }
 
-    private function sortPeers()
+    /**
+     * @return CyclicAggregateCache
+     */
+    private function sortPeers() : CyclicAggregateCache
     {
-        uasort($this->peers, array('self', 'comparePeers'));
+        uasort($this->peers, ['self', 'comparePeers']);
 
         $this->sorted = true;
 
         return $this;
-    }
-
-    private static function comparePeers(array $first, array $second)
-    {
-        if ($first['mountPoint'] == $second['mountPoint'])
-            return 0;
-
-        return
-            ($first['mountPoint'] < $second['mountPoint']) ? -1 : 1;
     }
 }
