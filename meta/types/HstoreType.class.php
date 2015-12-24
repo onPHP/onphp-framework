@@ -40,7 +40,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::TEXT)';
+			return 'new DataType(DataType::TEXT)';
 		}
 	}
 ?>

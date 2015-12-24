@@ -22,6 +22,8 @@ class NullController implements Controller
     }
 
     /**
+     * @deprecated
+     *
      * @return NullController
      **/
     public static function create(Model $model = null)
@@ -34,7 +36,7 @@ class NullController implements Controller
      **/
     public function handleRequest(HttpRequest $request)
     {
-        $result = ModelAndView::create();
+        $result = new ModelAndView();
 
         if ($this->model)
             $result->setModel($this->model);

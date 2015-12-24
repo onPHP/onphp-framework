@@ -35,7 +35,7 @@ abstract class MethodMappedController implements Controller
             return $mav;
 
         } else
-            return ModelAndView::create();
+            return new ModelAndView();
 
         Assert::isUnreachable();
     }
@@ -47,7 +47,7 @@ abstract class MethodMappedController implements Controller
         if ($this->getDefaultAction())
             $action->setDefault($this->getDefaultAction());
 
-        Form::create()
+        (new Form())
             ->add($action)
             ->import($request->getGet())
             ->importMore($request->getPost())

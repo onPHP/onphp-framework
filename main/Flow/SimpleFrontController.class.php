@@ -25,7 +25,7 @@ class SimpleFrontController implements Controller
     const DEFAULT_FORMAT = 'html';
 
 
-    protected $allowedFormatList = array(self::DEFAULT_FORMAT);
+    protected $allowedFormatList = [self::DEFAULT_FORMAT];
 
     /**
      * @var HttpRequest
@@ -72,23 +72,23 @@ class SimpleFrontController implements Controller
             RouterRewrite::me()->
             addRoute(
                 self::DEFAULT_ROUTE_NAME,
-                RouterRegexpRule::create(self::ROUTE_REGEXP)->
-                setMap(
-                    array(
-                        1 => 'area',
-                        4 => 'id',
-                        6 => 'action',
-                        8 => 'format',
+                (new RouterRegexpRule(self::ROUTE_REGEXP))
+                    ->setMap(
+                        [
+                            1 => 'area',
+                            4 => 'id',
+                            6 => 'action',
+                            8 => 'format',
+                        ]
                     )
-                )->
-                setDefaults(
-                    array(
-                        'area' => self::DEFAULT_CONTROLLER,
-                        'action' => self::DEFAULT_ACTION,
-                        'id' => 0,
-                        'format' => self::DEFAULT_FORMAT
+                    ->setDefaults(
+                        [
+                            'area' => self::DEFAULT_CONTROLLER,
+                            'action' => self::DEFAULT_ACTION,
+                            'id' => 0,
+                            'format' => self::DEFAULT_FORMAT
+                        ]
                     )
-                )
             );
     }
 
@@ -112,12 +112,14 @@ class SimpleFrontController implements Controller
         $view = $mav->getView() ?: self::DEFAULT_TEMPLATE;
         $model = $mav->getModel();
 
-        if (!$view instanceof RedirectView)
+        if (!$view instanceof RedirectView) {
             $model->set('area', $this->controllerName);
+        }
 
         if (is_string($view)) {
-            if ($view == $this->controllerName)
+            if ($view == $this->controllerName) {
                 $view = self::DEFAULT_TEMPLATE;
+            }
 
             $viewResolver = $this->getViewResolver();
 
@@ -134,17 +136,17 @@ class SimpleFrontController implements Controller
     protected function getViewResolver()
     {
         return
-            MultiPrefixPhpViewResolver::create()->
-            setViewClassName('SimplePhpView');
+            (new MultiPrefixPhpViewResolver())
+                ->setViewClassName('SimplePhpView');
     }
 
     protected function getTemplatePathList()
     {
         return
-            array(
+            [
                 $this->templatesDirectory . $this->request->getAttachedVar('format') . '/' . $this->controllerName . '/',
                 $this->templatesDirectory . $this->request->getAttachedVar('format') . '/'
-            );
+            ];
     }
 
     /**
@@ -160,8 +162,9 @@ class SimpleFrontController implements Controller
             && ClassUtils::isClassName(
                 $this->request->getAttachedVar('area')
             )
-        )
+        ) {
             $this->controllerName = $this->request->getAttachedVar('area');
+        }
 
         return new $this->controllerName;
     }

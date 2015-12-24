@@ -15,6 +15,8 @@
 class SaveCommand extends TakeCommand
 {
     /**
+     * @deprecated
+     *
      * @return SaveCommand
      **/
     public static function create()

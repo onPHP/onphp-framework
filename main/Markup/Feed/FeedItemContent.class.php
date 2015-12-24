@@ -18,6 +18,7 @@
 		private $body = null;
 		
 		/**
+		 * @deprecated
 		 * @return FeedItemContent
 		**/
 		public static function create()

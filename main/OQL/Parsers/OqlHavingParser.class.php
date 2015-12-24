@@ -14,6 +14,7 @@
 		const CLASS_NAME = 'HavingProjection';
 		
 		/**
+		 * @deprecated
 		 * @return OqlHavingParser
 		**/
 		public static function create()
@@ -26,7 +27,7 @@
 		**/
 		protected function makeOqlObject()
 		{
-			return OqlHavingClause::create();
+			return new OqlHavingClause();
 		}
 		
 		protected function handleState()

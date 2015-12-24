@@ -560,11 +560,11 @@
 					}
 					
 					$query =
-						Criteria::create($dao)->
-						setLimit(1)->
-						add(Expression::notNull($class->getIdentifier()->getName()))->
-						addOrder($class->getIdentifier()->getName())->
-						toSelectQuery();
+						(new Criteria($dao))
+							->setLimit(1)
+							->add(Expression::notNull($class->getIdentifier()->getName()))
+							->addOrder($class->getIdentifier()->getName())
+							->toSelectQuery();
 					
 					$out->warning(
 						' ('
@@ -602,9 +602,9 @@
 					$out->warning('/');
 					
 					if (
-						Criteria::create($dao)->
-						setFetchStrategy(FetchStrategy::cascade())->
-						toSelectQuery()
+						(new Criteria($dao))
+							->setFetchStrategy(FetchStrategy::cascade())
+							->toSelectQuery()
 						== $dao->makeSelectHead()
 					) {
 						$out->info('H', true);

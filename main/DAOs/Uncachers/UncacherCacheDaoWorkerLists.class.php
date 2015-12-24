@@ -22,6 +22,8 @@ class UncacherCacheDaoWorkerLists implements UncacherBase
     }
 
     /**
+     * @deprecated
+     *
      * @return UncacherBaseDaoWorker
      */
     public static function create($className)

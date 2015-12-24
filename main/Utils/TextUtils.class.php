@@ -119,10 +119,10 @@
 		**/
 		public static function normalizeUri($uri)
 		{
-			return GenericUri::create()->
-				parse($uri, true)->
-				normalize()->
-				toString();
+			return (new GenericUri())
+				->parse($uri, true)
+				->normalize()
+				->toString();
 		}
 		
 		public static function hex2Binary($hex)

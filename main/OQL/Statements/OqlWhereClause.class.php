@@ -15,6 +15,7 @@
 	final class OqlWhereClause extends OqlQueryExpressionClause
 	{
 		/**
+		 * @deprecated
 		 * @return OqlWhereClause
 		**/
 		public static function create()

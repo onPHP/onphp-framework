@@ -26,7 +26,7 @@
 		
 		public function toColumnType($length = null)
 		{
-			return 'DataType::create(DataType::BINARY)';
+			return 'new DataType(DataType::BINARY)';
 		}
 		
 		public function isMeasurable()

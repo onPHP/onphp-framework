@@ -36,7 +36,7 @@ final class DalayedDropDaoWorker extends NullDaoWorker
      */
     public function getUncacherById($id)
     {
-        return UncacherNullDaoWorker::create();
+        return new UncacherNullDaoWorker();
     }
 
     public function dropWith($worker)

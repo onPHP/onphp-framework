@@ -59,6 +59,8 @@
 		);
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return MobileRequestDetector
 		**/
 		public static function create()

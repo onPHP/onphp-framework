@@ -105,8 +105,8 @@ class ObjectToDirectoryBinder extends DirectoryBuilder
     public function makeReverseBuilder()
     {
         return
-            DirectoryToObjectBinder::create($this->proto)->
-            setIdentityMap($this->identityMap);
+            (new DirectoryToObjectBinder($this->proto))
+                ->setIdentityMap($this->identityMap);
     }
 
     /**

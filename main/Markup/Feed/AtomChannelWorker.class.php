@@ -27,7 +27,7 @@
 		**/
 		public function makeChannel(SimpleXMLElement $xmlFeed)
 		{
-			$feedChannel = FeedChannel::create((string) $xmlFeed->title);
+			$feedChannel = new FeedChannel((string) $xmlFeed->title);
 			
 			if (isset($xmlFeed->link))
 				if (is_array($xmlFeed->link))

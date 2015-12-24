@@ -39,12 +39,11 @@
 			);
 			
 			$criteria =
-				Criteria::create($object->dao())->
-				addOrder(
-					OrderBy::create(self::$property)->
-					desc()
-				)->
-				setLimit(1);
+				(new Criteria($object->dao()))
+					->addOrder(
+						(new OrderBy(self::$property))->desc()
+					)
+					->setLimit(1);
 			
 			if ($exp)
 				$criteria->add($exp);
@@ -78,17 +77,10 @@
 			$oldPosition = $object->$getMethod();
 			
 			$criteria =
-				Criteria::create($object->dao())->
-				add(
-					Expression::gt(
-						self::$property,
-						$oldPosition
-					)
-				)->
-				addOrder(
-					OrderBy::create(self::$property)->asc()
-				)->
-				setLimit(1);
+				(new Criteria($object->dao()))
+					->add(Expression::gt(self::$property, $oldPosition))
+					->addOrder((new OrderBy(self::$property))->asc())
+					->setLimit(1);
 			
 			if ($exp)
 				$criteria->add($exp);

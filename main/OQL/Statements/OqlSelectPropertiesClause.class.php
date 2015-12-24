@@ -17,6 +17,7 @@
 		private $distinct = false;
 		
 		/**
+		 * @deprecated
 		 * @return OqlSelectPropertiesClause
 		**/
 		public static function create()

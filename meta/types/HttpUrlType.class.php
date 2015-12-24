@@ -31,7 +31,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::VARCHAR)';
+			return 'new DataType(DataType::VARCHAR)';
 		}
 	}
 ?>

@@ -55,7 +55,7 @@
 
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::BOOLEAN)';
+			return 'new DataType(DataType::BOOLEAN)';
 		}
 
 		public function toGetter(

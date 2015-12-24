@@ -15,6 +15,7 @@
 class AddCommand extends MakeCommand
 {
     /**
+     * @deprecated
      * @return AddCommand
      **/
     public static function create()

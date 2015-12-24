@@ -36,7 +36,7 @@
 		**/
 		public static function spawn(array $assoc)
 		{
-			return self::create()->fill($assoc);
+			return (new self())->fill($assoc);
 		}
 
 		/**

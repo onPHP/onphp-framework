@@ -21,6 +21,7 @@ class DirectoryToObjectBinder extends ObjectBuilder
     }
 
     /**
+     * @deprecated
      * @return FormToObjectConverter
      **/
     public static function create(EntityProto $proto)
@@ -70,8 +71,8 @@ class DirectoryToObjectBinder extends ObjectBuilder
     public function makeReverseBuilder()
     {
         return
-            ObjectToDirectoryBinder::create($this->proto)->
-            setIdentityMap($this->identityMap);
+            (new ObjectToDirectoryBinder($this->proto))
+                ->setIdentityMap($this->identityMap);
     }
 
     public function make($object, $recursive = true)
@@ -82,13 +83,15 @@ class DirectoryToObjectBinder extends ObjectBuilder
 
         $result = $this->identityMap->lookup($realObject);
 
-        if ($result)
+        if ($result) {
             return $result;
+        }
 
         $result = parent::make($realObject, $recursive);
 
-        if ($result instanceof Identifiable)
+        if ($result instanceof Identifiable) {
             $result->setId(basename($realObject));
+        }
 
         return $result;
     }
@@ -100,27 +103,28 @@ class DirectoryToObjectBinder extends ObjectBuilder
         if (is_link($object)) {
             $result = readlink($object);
 
-            if ($result === false)
+            if ($result === false) {
                 throw new WrongStateException("invalid link: $object");
+            }
 
             if (substr($result, 0, 1) !== DIRECTORY_SEPARATOR) {
-                $result = GenericUri::create()->
-                setScheme('file')->
-                setPath($object)->
-                transform(
-                    GenericUri::create()->
-                    setPath($result)
-                )->
-                getPath();
+                $result = (new GenericUri())
+                    ->setScheme('file')
+                    ->setPath($object)
+                    ->transform(
+                        (new GenericUri)->setPath($result)
+                    )
+                    ->getPath();
             }
         }
 
         $realResult = realpath($result);
 
-        if ($realResult === false)
+        if ($realResult === false) {
             throw new WrongStateException(
                 "invalid context: $object ($result)"
             );
+        }
 
         return $realResult;
     }

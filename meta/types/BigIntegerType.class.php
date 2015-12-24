@@ -21,7 +21,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::BIGINT)';
+			return 'new DataType(DataType::BIGINT)';
 		}
 	}
 ?>

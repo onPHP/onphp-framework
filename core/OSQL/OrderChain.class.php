@@ -17,6 +17,8 @@
 		private $chain = array();
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return OrderChain
 		**/
 		public static function create()

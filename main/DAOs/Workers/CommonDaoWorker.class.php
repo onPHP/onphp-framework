@@ -26,11 +26,12 @@ class CommonDaoWorker extends BaseDaoWorker
             ($expires !== Cache::DO_NOT_CACHE)
             && ($object = $this->getCachedById($id))
         ) {
-            if ($object === Cache::NOT_FOUND)
+            if ($object === Cache::NOT_FOUND) {
                 throw new CachedObjectNotFoundException(
                     "there is no such object for '"
                     . $this->dao->getObjectName() . "' with id=" . $id
                 );
+            }
 
             return $this->dao->completeObject($object);
         } else {
@@ -39,7 +40,7 @@ class CommonDaoWorker extends BaseDaoWorker
                 makeSelectHead()->
                 andWhere(
                     Expression::eq(
-                        DBField::create(
+                        new DBField(
                             $this->dao->getIdName(),
                             $this->dao->getTable()
                         ),
@@ -69,9 +70,9 @@ class CommonDaoWorker extends BaseDaoWorker
     }
 
     public function getByLogic(
-        LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        LogicalObject $logic,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         return
             $this->getByQuery(
                 $this->dao->makeSelectHead()->andWhere($logic), $expires
@@ -79,26 +80,28 @@ class CommonDaoWorker extends BaseDaoWorker
     }
 
     public function getByQuery(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         if (
             ($expires !== Cache::DO_NOT_CACHE)
             && ($object = $this->getCachedByQuery($query))
         ) {
-            if ($object === Cache::NOT_FOUND)
+            if ($object === Cache::NOT_FOUND) {
                 throw new CachedObjectNotFoundException();
+            }
 
             return $this->dao->completeObject($object);
         } else {
-            if ($expires === Cache::DO_NOT_CACHE)
+            if ($expires === Cache::DO_NOT_CACHE) {
                 $object = $this->fetchObject($query);
-            else
+            } else {
                 $object = $this->cachedFetchObject($query, $expires, false);
+            }
 
-            if ($object)
+            if ($object) {
                 return $object;
-            else
+            } else {
                 throw new ObjectNotFoundException(
                     "there is no such object for '" . $this->dao->getObjectName()
                     . (
@@ -112,25 +115,26 @@ class CommonDaoWorker extends BaseDaoWorker
                         : null
                     )
                 );
+            }
         }
     }
 
     public function getListByIds(
         array $ids,
         $expires = Cache::EXPIRES_MEDIUM
-    )
-    {
-        $list = array();
+    ) {
+        $list = [];
 
         // dupes, if any, will be resolved later @ ArrayUtils::regularizeList
         $ids = array_unique($ids);
 
         if ($expires !== Cache::DO_NOT_CACHE) {
-            $toFetch = array();
-            $prefixed = array();
+            $toFetch = [];
+            $prefixed = [];
 
-            foreach ($ids as $id)
+            foreach ($ids as $id) {
                 $prefixed[$id] = $this->makeIdKey($id);
+            }
 
             if (
             $cachedList
@@ -198,9 +202,9 @@ class CommonDaoWorker extends BaseDaoWorker
     //@{
 
     public function getListByLogic(
-        LogicalObject $logic, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        LogicalObject $logic,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         return
             $this->getListByQuery(
                 $this->dao->makeSelectHead()->andWhere($logic), $expires
@@ -208,15 +212,16 @@ class CommonDaoWorker extends BaseDaoWorker
     }
 
     public function getListByQuery(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         if (
             ($expires !== Cache::DO_NOT_CACHE)
             && ($list = $this->getCachedByQuery($query))
         ) {
-            if ($list === Cache::NOT_FOUND)
+            if ($list === Cache::NOT_FOUND) {
                 throw new CachedObjectNotFoundException();
+            }
 
             return $list;
         } elseif ($list = $this->fetchList($query)) {
@@ -247,8 +252,7 @@ class CommonDaoWorker extends BaseDaoWorker
         /* Identifiable */
         $object,
         $expires = Cache::DO_NOT_CACHE
-    )
-    {
+    ) {
         if ($expires !== Cache::DO_NOT_CACHE) {
 
             Cache::me()->mark($this->className)->
@@ -283,13 +287,14 @@ class CommonDaoWorker extends BaseDaoWorker
     //@{
 
     public function getCustom(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
-        if ($query->getLimit() > 1)
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
+        if ($query->getLimit() > 1) {
             throw new WrongArgumentException(
                 'can not handle non-single row queries'
             );
+        }
 
         $db = DBPool::getByDao($this->dao);
 
@@ -297,16 +302,18 @@ class CommonDaoWorker extends BaseDaoWorker
             ($expires !== Cache::DO_NOT_CACHE)
             && ($object = $this->getCachedByQuery($query))
         ) {
-            if ($object === Cache::NOT_FOUND)
+            if ($object === Cache::NOT_FOUND) {
                 throw new CachedObjectNotFoundException();
+            }
 
             return $object;
 
         } elseif ($object = $db->queryRow($query)) {
-            if ($expires === Cache::DO_NOT_CACHE)
+            if ($expires === Cache::DO_NOT_CACHE) {
                 return $object;
-            else
+            } else {
                 return $this->cacheByQuery($query, $object, $expires);
+            }
         } else {
             throw new ObjectNotFoundException(
                 "zero"
@@ -325,15 +332,16 @@ class CommonDaoWorker extends BaseDaoWorker
     }
 
     public function getCustomList(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         if (
             ($expires !== Cache::DO_NOT_CACHE)
             && ($list = $this->getCachedByQuery($query))
         ) {
-            if ($list === Cache::NOT_FOUND)
+            if ($list === Cache::NOT_FOUND) {
                 throw new CachedObjectNotFoundException();
+            }
 
             return $list;
         } elseif ($list = DBPool::getByDao($this->dao)->querySet($query)) {
@@ -364,20 +372,22 @@ class CommonDaoWorker extends BaseDaoWorker
     //@{
 
     public function getCustomRowList(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
-        if ($query->getFieldsCount() !== 1)
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
+        if ($query->getFieldsCount() !== 1) {
             throw new WrongArgumentException(
                 'you should select only one row when using this method'
             );
+        }
 
         if (
             ($expires !== Cache::DO_NOT_CACHE)
             && ($list = $this->getCachedByQuery($query))
         ) {
-            if ($list === Cache::NOT_FOUND)
+            if ($list === Cache::NOT_FOUND) {
                 throw new CachedObjectNotFoundException();
+            }
 
             return $list;
         } elseif ($list = DBPool::getByDao($this->dao)->queryColumn($query)) {
@@ -408,9 +418,9 @@ class CommonDaoWorker extends BaseDaoWorker
     //@{
 
     public function getQueryResult(
-        SelectQuery $query, $expires = Cache::DO_NOT_CACHE
-    )
-    {
+        SelectQuery $query,
+        $expires = Cache::DO_NOT_CACHE
+    ) {
         if (
             ($expires !== Cache::DO_NOT_CACHE)
             && ($list = $this->getCachedByQuery($query))
@@ -424,7 +434,7 @@ class CommonDaoWorker extends BaseDaoWorker
             $count =
                 DBPool::getByDao($this->dao)->queryRow(
                     $count->dropFields()->dropOrder()->limit(null, null)->
-                    get(SQLFunction::create('COUNT', '*')->setAlias('count'))
+                    get((new SQLFunction('COUNT', '*'))->setAlias('count'))
                 );
 
             return
@@ -433,12 +443,12 @@ class CommonDaoWorker extends BaseDaoWorker
 
                     $list
                         ?
-                        QueryResult::create()->
-                        setList($list)->
-                        setCount($count['count'])->
-                        setQuery($query)
+                        (new QueryResult())
+                            ->setList($list)
+                            ->setCount($count['count'])
+                            ->setQuery($query)
                         :
-                        QueryResult::create(),
+                        new QueryResult(),
 
                     $expires
                 );
@@ -456,13 +466,15 @@ class CommonDaoWorker extends BaseDaoWorker
 
     public function uncacheByIds($ids)
     {
-        if (empty($ids))
+        if (empty($ids)) {
             return;
+        }
 
         $uncacher = $this->getUncacherById(array_shift($ids));
 
-        foreach ($ids as $id)
+        foreach ($ids as $id) {
             $uncacher->merge($this->getUncacherById($id));
+        }
 
         return $this->registerUncacher($uncacher->uncache());
     }
@@ -476,7 +488,7 @@ class CommonDaoWorker extends BaseDaoWorker
      */
     public function getUncacherById($id)
     {
-        return UncacherCommonDaoWorker::create(
+        return new UncacherCommonDaoWorker(
             $this->className,
             $this->makeIdKey($id)
         );
@@ -493,9 +505,9 @@ class CommonDaoWorker extends BaseDaoWorker
     }
 
     protected function cacheById(
-        Identifiable $object, $expires = Cache::EXPIRES_MEDIUM
-    )
-    {
+        Identifiable $object,
+        $expires = Cache::EXPIRES_MEDIUM
+    ) {
         if ($expires !== Cache::DO_NOT_CACHE) {
 
             Cache::me()->mark($this->className)->
@@ -515,8 +527,7 @@ class CommonDaoWorker extends BaseDaoWorker
         SelectQuery $query,
         /* array || Cache::NOT_FOUND */
         $array
-    )
-    {
+    ) {
         throw new UnimplementedFeatureException();
     }
     //@}

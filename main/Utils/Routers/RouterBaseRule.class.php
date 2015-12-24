@@ -83,7 +83,7 @@
 				return $reducedUrl;
 			}
 			
-			$result = HttpUrl::create();
+			$result = new HttpUrl();
 			
 			$baseSegments = explode('/', $base->getPath());
 			$segments = explode('/', $reducedUrl->getPath());
@@ -118,7 +118,7 @@
 				$path =
 					$this->
 						getPath(
-							HttpUrl::create()->
+						(new HttpUrl())->
 							parse($request->getServerVar('REQUEST_URI'))
 						);
 			else

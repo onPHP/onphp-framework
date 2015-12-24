@@ -42,6 +42,8 @@
 		private $encoding		= 'utf8';
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return TidyValidator
 		**/
 		public static function create()
@@ -52,7 +54,7 @@
 		/**
 		 * Sets content to validate.
 		 * 
-		 * For example: TidyValidator::create()->setContent('<b>blabla</b>');
+		 * For example: (new TidyValidator())->setContent('<b>blabla</b>');
 		 * 
 		 * @param $content content itself
 		 * @return TidyValidator
@@ -77,7 +79,7 @@
 		/**
 		 * Sets configuration array for tidy. There is default config (see code).
 		 * 
-		 * For example: TidyValidator::create()->setConfig('output-xhtml' => true);
+		 * For example: (new TidyValidator())->setConfig('output-xhtml' => true);
 		 * 
 		 * @param $config array with tidy's configuration
 		 * @return TidyValidator
@@ -116,7 +118,7 @@
 		/**
 		 * Sets encoding for content. There is default encoding 'utf8'.
 		 * 
-		 * For example: TidyValidator::create()->setEncoding('utf8');
+		 * For example: (new TidyValidator())->setEncoding('utf8');
 		 * 
 		 * @param $encoding encoding name
 		 * @return TidyValidator
@@ -148,14 +150,14 @@
 		 * 
 		 * For example:
 		 * 	$repairedContent =
-		 * 		TidyValidator::create()->
+		 * 		(new TidyValidator())->
 		 * 		setContent('<b>blablabla')->
 		 * 		validateContent()->
 		 * 		getContent();
 		 * 
 		 * Or just:
 		 * 	$repairedContent =
-		 * 		TidyValidator::create()->
+		 * 		(new TidyValidator())->
 		 * 		validateContent('<b>blablabla')->
 		 * 		getContent();
 		 * 

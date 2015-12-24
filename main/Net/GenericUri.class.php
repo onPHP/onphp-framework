@@ -781,8 +781,7 @@ class GenericUri implements Stringable
         $result = preg_replace_callback(
             '/((' . self::PATTERN_PCTENCODED . ')|(.))/sui',
             [
-                PercentEncodingNormalizator::create()->
-                setUnreservedPartChars($unreservedPartChars),
+                (new PercentEncodingNormalizator())->setUnreservedPartChars($unreservedPartChars),
                 'normalize'
             ],
             $string
@@ -800,6 +799,7 @@ final class PercentEncodingNormalizator
     private $unreservedPartChars = null;
 
     /**
+     * @deprecated
      * @return PercentEncodingNormalizator
      **/
     public static function create()

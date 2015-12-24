@@ -24,6 +24,8 @@
 		private $query		= null;
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return QueryResult
 		**/
 		public static function create()

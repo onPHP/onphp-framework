@@ -18,6 +18,7 @@
 		private $endMark	= null;
 		
 		/**
+		 * @deprecated
 		 * @return SgmlIgnoredTag
 		**/
 		public static function create()
@@ -30,7 +31,7 @@
 		**/
 		public static function comment()
 		{
-			return self::create()->setId('!--')->setEndMark('--');
+			return (new self())->setId('!--')->setEndMark('--');
 		}
 		
 		/**

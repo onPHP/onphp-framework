@@ -45,7 +45,7 @@
 		public static function makeFirstDayOfMonth(Date $date)
 		{
 			return
-				Timestamp::create(
+				new Timestamp(
 					mktime(0, 0, 0, $date->getMonth(), 1, $date->getYear())
 				);
 		}
@@ -53,7 +53,7 @@
 		public static function makeLastDayOfMonth(Date $date)
 		{
 			return
-				Timestamp::create(
+				new Timestamp(
 					mktime(0, 0, 0, $date->getMonth() + 1, 0, $date->getYear())
 				);
 		}
@@ -65,7 +65,7 @@
 			$date = $unit->truncate($range->getStart());
 			
 			if ('Date' == get_class($range->getStart()))
-				$date = Date::create($date->toStamp());
+				$date = new Date($date->toStamp());
 			
 			$dates = array();
 			
@@ -92,7 +92,7 @@
 			
 			$align = floor($rawStamp / $seconds);
 			
-			return Timestamp::create($align * $seconds);
+			return new Timestamp($align * $seconds);
 		}
 	}
 ?>

@@ -19,8 +19,7 @@ class ControllersCollection implements Controller
     public function __construct()
     {
         $this->mav =
-            ModelAndView::create()
-                ->setModel(Model::create());
+            (new ModelAndView())->setModel(new Model());
 
         $this->defaultRequestType = RequestType::post();
     }
@@ -117,9 +116,9 @@ class ControllersCollection implements Controller
             $requestType = $this->defaultRequestType;
 
         $this->innerControllers[get_class($controller)] =
-            ProxyController::create()->
-            setInner($controller)->
-            setRequestType($requestType);
+            (new ProxyController())
+                ->setInner($controller)
+                ->setRequestType($requestType);
 
         return $this;
     }

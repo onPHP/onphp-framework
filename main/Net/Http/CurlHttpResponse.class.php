@@ -22,11 +22,12 @@
 		
 		public function __construct()
 		{
-			$this->headerParser = HeaderParser::create();
+			$this->headerParser = new HeaderParser();
 			$this->currentFileSize = 0;
 		}
 		
 		/**
+		 * @deprecated
 		 * @return CurlHttpResponse
 		**/
 		public static function create()

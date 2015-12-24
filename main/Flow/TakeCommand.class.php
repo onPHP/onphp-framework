@@ -22,14 +22,14 @@ abstract class TakeCommand implements EditorCommand
         $subject = $subject->dao()->{$this->daoMethod()}($subject);
 
         return
-            ModelAndView::create()->
-            setView(
-                EditorController::COMMAND_SUCCEEDED
-            )->
-            setModel(
-                Model::create()->
-                set('id', $subject->getId())
-            );
+            (new ModelAndView())
+                ->setView(
+                    EditorController::COMMAND_SUCCEEDED
+                )
+                ->setModel(
+                    (new Model())
+                        ->set('id', $subject->getId())
+                );
     }
 
     abstract protected function daoMethod();

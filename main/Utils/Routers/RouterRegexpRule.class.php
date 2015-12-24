@@ -19,6 +19,7 @@
 		protected $values	= array();
 		
 		/**
+		 * @deprecated
 		 * @return RouterRegexpRule
 		**/
 		public static function create($route)

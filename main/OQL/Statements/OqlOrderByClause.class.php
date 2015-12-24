@@ -15,6 +15,7 @@
 	final class OqlOrderByClause extends OqlQueryListedClause
 	{
 		/**
+		 * @deprecated
 		 * @return OqlOrderByClause
 		**/
 		public static function create()
@@ -27,7 +28,7 @@
 		**/
 		public function toOrder()
 		{
-			$order = OrderChain::create();
+			$order = new OrderChain();
 			foreach ($this->list as $property) {
 				$order->add(
 					$property->evaluate($this->parameters)

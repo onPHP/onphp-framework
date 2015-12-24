@@ -16,7 +16,11 @@
 	{
 		private $headers		= array();
 		private $currentHeader	= null;
-		
+
+		/**
+		 * @deprecated
+		 * @return HeaderParser
+		 */
 		public static function create()
 		{
 			return new self;

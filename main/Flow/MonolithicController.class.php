@@ -42,7 +42,7 @@ abstract class MonolithicController extends BaseEditor
                 $this->subject, $form, $request
             );
         } else
-            $mav = ModelAndView::create();
+            $mav = new ModelAndView();
 
         return $this->postHandleRequest($mav, $request);
     }
@@ -54,7 +54,7 @@ abstract class MonolithicController extends BaseEditor
         Prototyped $subject, Form $form, HttpRequest $request
     )
     {
-        return ImportCommand::create()->run($subject, $form, $request);
+        return (new ImportCommand())->run($subject, $form, $request);
     }
 
     /**
@@ -64,7 +64,7 @@ abstract class MonolithicController extends BaseEditor
         Prototyped $subject, Form $form, HttpRequest $request
     )
     {
-        return DropCommand::create()->run($subject, $form, $request);
+        return (new DropCommand())->run($subject, $form, $request);
     }
 
     /**
@@ -74,7 +74,7 @@ abstract class MonolithicController extends BaseEditor
         Prototyped $subject, Form $form, HttpRequest $request
     )
     {
-        return SaveCommand::create()->run($subject, $form, $request);
+        return (new SaveCommand())->run($subject, $form, $request);
     }
 
     /**
@@ -84,7 +84,7 @@ abstract class MonolithicController extends BaseEditor
         Prototyped $subject, Form $form, HttpRequest $request
     )
     {
-        return EditCommand::create()->run($subject, $form, $request);
+        return (new EditCommand())->run($subject, $form, $request);
     }
 
     /**
@@ -94,6 +94,6 @@ abstract class MonolithicController extends BaseEditor
         Prototyped $subject, Form $form, HttpRequest $request
     )
     {
-        return AddCommand::create()->run($subject, $form, $request);
+        return (new AddCommand())->run($subject, $form, $request);
     }
 }

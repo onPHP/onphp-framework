@@ -12,6 +12,7 @@
 class ObjectToFormConverter extends FormBuilder
 {
     /**
+     * @deprecated
      * @return ObjectToFormConverter
      **/
     public static function create(EntityProto $proto)

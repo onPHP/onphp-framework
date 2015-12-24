@@ -12,6 +12,7 @@
 	final class OqlWhereParser extends OqlParser
 	{
 		/**
+		 * @deprecated
 		 * @return OqlWhereParser
 		**/
 		public static function create()
@@ -24,7 +25,7 @@
 		**/
 		protected function makeOqlObject()
 		{
-			return OqlWhereClause::create();
+			return new OqlWhereClause();
 		}
 		
 		protected function handleState()

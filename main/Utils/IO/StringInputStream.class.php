@@ -29,6 +29,8 @@
 		}
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return StringInputStream
 		**/
 		public static function create($string)

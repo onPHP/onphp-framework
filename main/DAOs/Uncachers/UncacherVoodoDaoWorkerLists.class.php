@@ -22,6 +22,8 @@ class UncacherVoodoDaoWorkerLists implements UncacherBase
     }
 
     /**
+     * @deprecated
+     *
      * @return UncacherBaseDaoWorker
      */
     public static function create($className, SegmentHandler $handler)

@@ -25,6 +25,8 @@
 		}
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return LogRecord
 		**/
 		public static function create()

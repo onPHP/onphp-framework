@@ -13,11 +13,7 @@
 	{
 		final public function makeDto()
 		{
-			return
-				ObjectToDTOConverter::create(
-					$this->entityProto()
-				)->
-					make($this);
+			return (new ObjectToDTOConverter($this->entityProto()))->make($this);
 		}
 	}
 ?>

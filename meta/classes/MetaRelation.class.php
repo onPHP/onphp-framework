@@ -37,7 +37,7 @@
 		**/
 		public static function makeFromName($name)
 		{
-			$self = self::create(self::getAnyId());
+			$self = new self(self::getAnyId());
 			$id = array_search($name, $self->getNameList());
 			
 			if ($id)

@@ -243,12 +243,12 @@ abstract class ProtoDAO extends GenericDAO
                 if (!$query->hasJoinedTable($helperAlias)) {
                     $logic =
                         Expression::eq(
-                            DBField::create(
+                            new DBField(
                                 $this->getIdName(),
                                 $table
                             ),
 
-                            DBField::create(
+                            new DBField(
                                 $self->$getter()->getParentIdField(),
                                 $helperAlias
                             )
@@ -262,12 +262,12 @@ abstract class ProtoDAO extends GenericDAO
 
                 $logic =
                     Expression::eq(
-                        DBField::create(
+                        new DBField(
                             $propertyDao->getIdName(),
                             $alias
                         ),
 
-                        DBField::create(
+                        new DBField(
                             $self->$getter()->getChildIdField(),
                             $helperAlias
                         )
@@ -275,12 +275,12 @@ abstract class ProtoDAO extends GenericDAO
             } else {
                 $logic =
                     Expression::eq(
-                        DBField::create(
+                        new DBField(
                             $self->$getter()->getParentIdField(),
                             $alias
                         ),
 
-                        DBField::create(
+                        new DBField(
                             $this->getIdName(),
                             $table
                         )
@@ -310,12 +310,12 @@ abstract class ProtoDAO extends GenericDAO
             if (!$query->hasJoinedTable($alias)) {
                 $logic =
                     Expression::eq(
-                        DBField::create(
+                        new DBField(
                             $property->getColumnName(),
                             $table
                         ),
 
-                        DBField::create(
+                        new DBField(
                             $propertyDao->getIdName(),
                             $alias
                         )

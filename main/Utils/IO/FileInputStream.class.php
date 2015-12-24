@@ -45,6 +45,7 @@
 		}
 		
 		/**
+		 * @deprecated
 		 * @return FileInputStream
 		**/
 		public static function create($nameOrFd)

@@ -26,7 +26,7 @@
 
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::TIME)';
+			return 'new DataType(DataType::TIME)';
 		}
 	}
 ?>

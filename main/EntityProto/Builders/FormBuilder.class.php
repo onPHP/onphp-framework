@@ -48,6 +48,6 @@ abstract class FormBuilder extends PrototypedBuilder
      **/
     protected function createEmpty()
     {
-        return Form::create();
+        return new Form();
     }
 }

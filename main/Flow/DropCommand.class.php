@@ -15,6 +15,8 @@
 class DropCommand implements EditorCommand
 {
     /**
+     * @deprecated
+     *
      * @return DropCommand
      **/
     public static function create()
@@ -34,8 +36,7 @@ class DropCommand implements EditorCommand
                 $object->dao()->drop($object);
 
                 return
-                    ModelAndView::create()
-                        ->setView(BaseEditor::COMMAND_SUCCEEDED);
+                    (new ModelAndView())->setView(BaseEditor::COMMAND_SUCCEEDED);
 
             } else {
                 // already deleted
@@ -43,7 +44,7 @@ class DropCommand implements EditorCommand
             }
         }
 
-        return ModelAndView::create();
+        return new ModelAndView();
     }
 }
 

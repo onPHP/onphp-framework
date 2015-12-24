@@ -20,6 +20,7 @@
 		private $map = array();
 		
 		/**
+		 * @deprecated
 		 * @return MappedForm
 		**/
 		public static function create(Form $form)

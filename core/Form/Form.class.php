@@ -403,13 +403,14 @@
 		**/
 		private function importPrimitive($scope, BasePrimitive $prm)
 		{
+
 			if (!$this->importFiltering) {
 				if ($prm instanceof FiltrablePrimitive) {
 					
 					$chain = $prm->getImportFilter();
 					
 					$prm->dropImportFilters();
-					
+
 					$result = $this->checkImportResult(
 						$prm,
 						$prm->import($scope)

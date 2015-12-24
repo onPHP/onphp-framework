@@ -112,7 +112,7 @@ class NullDaoWorker extends CommonDaoWorker
      */
     public function getUncacherById($id)
     {
-        return UncacherNullDaoWorker::create();
+        return new UncacherNullDaoWorker();
     }
     //@}
 

@@ -15,6 +15,8 @@
 class ImportCommand extends MakeCommand
 {
     /**
+     * @deprecated
+     *
      * @return ImportCommand
      **/
     public static function create()

@@ -15,6 +15,7 @@
 	final class OqlHavingClause extends OqlQueryExpressionClause
 	{
 		/**
+		 * @deprecated
 		 * @return OqlHavingClause
 		**/
 		public static function create()

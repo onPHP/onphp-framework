@@ -34,6 +34,7 @@
 		private $parts			= array();
 		
 		/**
+		 * @deprecated
 		 * @return MimePart
 		**/
 		public static function create()

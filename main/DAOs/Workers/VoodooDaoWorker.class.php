@@ -92,7 +92,7 @@ class VoodooDaoWorker extends TransparentDaoWorker
     public function uncacheLists()
     {
         return $this->registerUncacher(
-            UncacherVoodoDaoWorkerLists::create($this->className, $this->handler)
+            new UncacherVoodoDaoWorkerLists($this->className, $this->handler)
         );
     }
     //@}

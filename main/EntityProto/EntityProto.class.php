@@ -184,7 +184,7 @@ class EntityProto extends Singleton
             attachPrimitives(
                 $this->baseProto()
                     ? $this->baseProto()->makeForm()
-                    : Form::create()
+                    : new Form()
             );
     }
 

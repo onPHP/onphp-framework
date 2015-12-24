@@ -26,7 +26,7 @@
 				$proto = $object->proto();
 				
 				foreach (array_keys($proto->getExpandedPropertyList()) as $name) {
-					if ($form->primitiveExists($name)) {
+					if ($form->exists($name)) {
 						$proto->importPrimitive(
 							$name,
 							$form,
@@ -123,7 +123,7 @@
 		 */
 		public static function removePrefix(Form $form, $prefix)
 		{
-			$newForm = Form::create(;
+			$newForm = new Form();
 
 			foreach ($form->getPrimitiveList() as $primitive) {
 				$primitive->setName(

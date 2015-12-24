@@ -54,19 +54,16 @@
 			
 			if ($query->isDistinct()) {
 				$countFunction =
-					SQLFunction::create(
+					(new SQLFunction(
 						'count',
-						DBField::create(
-							$this->container->getDao()->getIdName(),
-							$this->container->getDao()->getTable()
-						)
-					)->
-					setAggregateDistinct();
+						(new DBField($this->container->getDao()->getIdName(), $this->container->getDao()->getTable()))
+					))
+						->setAggregateDistinct();
 				
 				$query->unDistinct();
 			
 			} else {
-				$countFunction = SQLFunction::create('count', DBValue::create('*'));
+				$countFunction = new SQLFunction('count', new DBValue('*'));
 			}
 			
 			return $query->

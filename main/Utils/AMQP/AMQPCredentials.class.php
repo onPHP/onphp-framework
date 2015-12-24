@@ -24,6 +24,8 @@
 		protected $password = null;
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return AMQPCredentials
 		**/
 		public static function create()
@@ -37,12 +39,12 @@
 		public static function createDefault()
 		{
 			return
-				self::create()->
-				setHost(self::DEFAULT_HOST)->
-				setPort(self::DEFAULT_PORT)->
-				setLogin(self::DEFAULT_LOGIN)->
-				setPassword(self::DEFAULT_PASSWORD)->
-				setVirtualHost(self::DEFAULT_VHOST);
+				(new self())
+					->setHost(self::DEFAULT_HOST)
+					->setPort(self::DEFAULT_PORT)
+					->setLogin(self::DEFAULT_LOGIN)
+					->setPassword(self::DEFAULT_PASSWORD)
+					->setVirtualHost(self::DEFAULT_VHOST);
 		}
 
 		public function getHost()

@@ -84,29 +84,29 @@
 				$this->randomSource
 			);
 			
-			$request = HttpRequest::create()->
-				setMethod(HttpMethod::post())->
-				setUrl($server)->
-				setPostVar('openid.ns', self::NAMESPACE_2_0)->
-				setPostVar('openid.mode', 'associate')->
-				setPostVar('openid.assoc_type', self::ASSOCIATION_TYPE)->
-				setPostVar('openid.session_type', 'DH-SHA1')->
-				setPostVar(
+			$request = (new HttpRequest())
+				->setMethod(HttpMethod::post())
+				->setUrl($server)
+				->setPostVar('openid.ns', self::NAMESPACE_2_0)
+				->setPostVar('openid.mode', 'associate')
+				->setPostVar('openid.assoc_type', self::ASSOCIATION_TYPE)
+				->setPostVar('openid.session_type', 'DH-SHA1')
+				->setPostVar(
 					'openid.dh_modulus',
 					base64_encode($dhParameters->getModulus()->toBinary())
-				)->
-				setPostVar(
+				)
+				->setPostVar(
 					'openid.dh_gen',
 					base64_encode($dhParameters->getGen()->toBinary())
-				)->
-				setPostVar(
+				)
+				->setPostVar(
 					'openid.dh_consumer_public',
 					base64_encode($keyPair->getPublic()->toBinary())
 				);
 			
-			$response = $this->httpClient->
-				setFollowLocation(true)->
-				send($request);
+			$response = $this->httpClient
+				->setFollowLocation(true)
+				->send($request);
 			
 			if ($response->getStatus()->getId() != HttpStatus::CODE_200)
 				throw new OpenIdException('bad response code from server');
@@ -173,24 +173,22 @@
 		{
 			Assert::isTrue($returnTo->isValid());
 			
-			$view = RedirectView::create(
-				$credentials->getServer()->toString()
-			);
+			$view = new RedirectView($credentials->getServer()->toString());
 			
-			$model = Model::create()->
-				set(
+			$model = (new Model())
+				->set(
 					'openid.ns',
 					self::NAMESPACE_2_0
-				)->
-				set(
+				)
+				->set(
 					'openid.identity',
 					$credentials->getRealId()->toString()
-				)->
-				set(
+				)
+				->set(
 					'openid.return_to',
 					$returnTo->toString()
-				)->
-				set(
+				)
+				->set(
 					'openid.claimed_id',
 					$credentials->getRealId()->toString()
 				);
@@ -229,7 +227,7 @@
 					);
 			}
 			
-			return ModelAndView::create()->setModel($model)->setView($view);
+			return (new ModelAndView())->setModel($model)->setView($view);
 		}
 		
 		/**
@@ -313,7 +311,7 @@
 			
 			if ($parameters['openid.mode'] == 'id_res') {
 				if (isset($parameters['openid.user_setup_url'])) {
-					$setupUrl = HttpUrl::create()->parse(
+					$setupUrl =(new HttpUrl())->parse(
 						$parameters['openid.user_setup_url']
 					);
 					
@@ -332,8 +330,8 @@
 				throw new WrongArgumentException('no identity');
 			
 			$identity =
-				HttpUrl::create()->
-				parse($parameters['openid.identity']);
+				(new HttpUrl())
+					->parse($parameters['openid.identity']);
 			
 			Assert::isTrue($identity->isValid(), 'invalid identity');
 			$identity->makeComparable();
@@ -412,13 +410,13 @@
 		)
 		{
 			$credentials = new OpenIdCredentials(
-				HttpUrl::create()->parse($parameters['openid.identity']),
+				(new HttpUrl())->parse($parameters['openid.identity']),
 				$this->httpClient
 			);
 			
-			$request = HttpRequest::create()->
-				setMethod(HttpMethod::post())->
-				setUrl($credentials->getServer());
+			$request = (new HttpRequest())
+				->setMethod(HttpMethod::post())
+				->setUrl($credentials->getServer());
 			
 			if (isset($parameters['openid.invalidate_handle']) && $manager)
 				$request->setPostVar(

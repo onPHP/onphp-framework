@@ -52,8 +52,8 @@
 		{
 			return
 				$length
-					? 'DataType::create(DataType::VARCHAR)'
-					: 'DataType::create(DataType::TEXT)';
+					? 'new DateType(DataType::VARCHAR)'
+					: 'new DataType(DataType::TEXT)';
 		}
 	}
 ?>

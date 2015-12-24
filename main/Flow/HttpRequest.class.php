@@ -15,25 +15,25 @@
 class HttpRequest
 {
     // contains all variables from $_GET
-    private $get = array();
+    private $get = [];
 
     // from $_POST
-    private $post = array();
+    private $post = [];
 
     // guess what
-    private $server = array();
+    private $server = [];
 
     // fortune one
-    private $cookie = array();
+    private $cookie = [];
 
     // reference, not copy
-    private $session = array();
+    private $session = [];
 
     // uploads and downloads (CurlHttpClient)
-    private $files = array();
+    private $files = [];
 
     // all other sh1t
-    private $attached = array();
+    private $attached = [];
 
     private $headers = null;
 
@@ -60,15 +60,16 @@ class HttpRequest
     public static function createFromGlobals()
     {
         $request =
-            static::create()
+            (new HttpRequest())
                 ->setGet($_GET)
                 ->setPost($_POST)
                 ->setServer($_SERVER)
                 ->setCookie($_COOKIE)
                 ->setFiles($_FILES);
 
-        if (isset($_SESSION))
+        if (isset($_SESSION)) {
             $request->setSession($_SESSION);
+        }
 
         foreach ($_SERVER as $name => $value) {
             if (strpos($name, 'HTTP_') === 0) {
@@ -80,8 +81,9 @@ class HttpRequest
         if (
             $request->hasServerVar('CONTENT_TYPE')
             && $request->getServerVar('CONTENT_TYPE') !== 'application/x-www-form-urlencoded'
-        )
+        ) {
             $request->setBody(file_get_contents('php://input'));
+        }
 
         $request->setMethod(
             HttpMethod::createByName($request->getServerVar('REQUEST_METHOD'))

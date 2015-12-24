@@ -36,7 +36,7 @@
 				);
 			
 			$feedChannel =
-				FeedChannel::create((string) $xmlFeed->channel->title);
+				new FeedChannel((string) $xmlFeed->channel->title);
 			
 			if (isset($xmlFeed->channel->link))
 				$feedChannel->setLink((string) $xmlFeed->channel->link);

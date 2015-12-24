@@ -20,6 +20,7 @@
 		private $feedItems		= array();
 		
 		/**
+		 * @deprecated
 		 * @return FeedChannel
 		**/
 		public static function create($title)

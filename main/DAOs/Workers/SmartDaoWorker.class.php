@@ -38,7 +38,7 @@ class SmartDaoWorker extends TransparentDaoWorker
     {
         $intKey = $this->keyToInt($this->indexKey);
         return $this->registerUncacher(
-            UncacherSmartDaoWorkerLists::create($this->className, $this->indexKey, $intKey)
+            new UncacherSmartDaoWorkerLists($this->className, $this->indexKey, $intKey)
         );
     }
 

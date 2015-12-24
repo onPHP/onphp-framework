@@ -20,7 +20,8 @@
 		private $charset	= null; // reference
 		
 		/**
-		 * @return HttpContentType
+		 * @deprecated
+		 * @return ContentTypeHeader
 		**/
 		public static function create()
 		{
@@ -28,7 +29,7 @@
 		}
 		
 		/**
-		 * @return HttpContentType
+		 * @return ContentTypeHeader
 		**/
 		public function setMediaType($mediaType)
 		{
@@ -43,7 +44,7 @@
 		}
 		
 		/**
-		 * @return HttpContentType
+		 * @return ContentTypeHeader
 		**/
 		public function setParameter($attribute, $value)
 		{
@@ -53,7 +54,7 @@
 		}
 		
 		/**
-		 * @return HttpContentType
+		 * @return ContentTypeHeader
 		**/
 		public function dropParameter($attribute)
 		{
@@ -79,7 +80,7 @@
 		}
 		
 		/**
-		 * @return HttpContentType
+		 * @return ContentTypeHeader
 		**/
 		public function setParametersList($parameters)
 		{
@@ -101,7 +102,7 @@
 		}
 		
 		/**
-		 * @return HttpContentType
+		 * @return ContentTypeHeader
 		**/
 		public function setCharset($charset)
 		{
@@ -115,7 +116,7 @@
 		}
 		
 		/**
-		 * @return HttpContentType
+		 * @return ContentTypeHeader
 		 * 
 		 * sample argument: text/html; charset="utf-8"
 		**/

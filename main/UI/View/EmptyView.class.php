@@ -15,6 +15,7 @@
 class EmptyView implements View, Stringable
 {
     /**
+     * @deprecated
      * @return EmptyView
      **/
     public static function create()

@@ -15,6 +15,7 @@
 class EditCommand implements EditorCommand
 {
     /**
+     * @deprecated
      * @return EditCommand
      **/
     public static function create()
@@ -30,6 +31,6 @@ class EditCommand implements EditorCommand
         if ($object = $form->getValue('id'))
             FormUtils::object2form($object, $form);
 
-        return ModelAndView::create();
+        return new ModelAndView();
     }
 }

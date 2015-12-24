@@ -29,17 +29,15 @@
 			if (isset($xmlFeed->channel->item)) {
 				foreach ($xmlFeed->channel->item as $item) {
 					$feedItem =
-						FeedItem::create((string) $item->title)->
-						setContent(
-							FeedItemContent::create()->
-							setBody((string) $item->description)
-						)->
-						setPublished(
-							Timestamp::create(
-								strtotime((string) $item->pubDate)
+						(new FeedItem((string) $item->title))
+							->setContent(
+								(new FeedItemContent())
+									->setBody((string) $item->description)
 							)
-						)->
-						setLink((string) $item->link);
+							->setPublished(
+								new Timestamp(strtotime((string) $item->pubDate))
+							)
+							->setLink((string) $item->link);
 					
 					if (isset($item->guid))
 						$feedItem->setId($item->guid);

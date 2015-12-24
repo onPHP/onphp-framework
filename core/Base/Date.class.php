@@ -90,6 +90,7 @@ class Date implements Stringable, DialectString
     }
 
     /**
+     * @deprecated
      * @return Date
      **/
     public static function create($date)

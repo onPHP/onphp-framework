@@ -42,6 +42,8 @@
 		const OFFSET_STATE		= 8;
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return OqlSelectParser
 		**/
 		public static function create()
@@ -54,7 +56,7 @@
 		**/
 		protected function makeOqlObject()
 		{
-			return OqlSelectQuery::create();
+			return new OqlSelectQuery();
 		}
 		
 		protected function handleState()
@@ -99,9 +101,9 @@
 			if ($this->checkKeyword($token, 'from'))
 				return self::FROM_STATE;
 			
-			$clause = OqlSelectPropertiesParser::create()->
-				setTokenizer($this->tokenizer)->
-				parse();
+			$clause = (new OqlSelectPropertiesParser())
+				->setTokenizer($this->tokenizer)
+				->parse();
 			
 			$this->oqlObject->addProperties($clause);
 			if ($clause->isDistinct())
@@ -147,9 +149,9 @@
 				$this->tokenizer->next();
 				
 				$this->oqlObject->where(
-					OqlWhereParser::create()->
-						setTokenizer($this->tokenizer)->
-						parse()
+					(new OqlWhereParser())
+						->setTokenizer($this->tokenizer)
+						->parse()
 				);
 			}
 			
@@ -162,9 +164,9 @@
 				$this->tokenizer->next();
 				
 				$this->oqlObject->addGroupBy(
-					OqlGroupByParser::create()->
-						setTokenizer($this->tokenizer)->
-						parse()
+					(new OqlGroupByParser())
+						->setTokenizer($this->tokenizer)
+						->parse()
 				);
 			}
 			
@@ -177,9 +179,9 @@
 				$this->tokenizer->next();
 				
 				$this->oqlObject->addOrderBy(
-					OqlOrderByParser::create()->
-						setTokenizer($this->tokenizer)->
-						parse()
+					(new OqlOrderByParser())
+						->setTokenizer($this->tokenizer)
+						->parse()
 				);
 			}
 			
@@ -192,9 +194,9 @@
 				$this->tokenizer->next();
 				
 				$this->oqlObject->addHaving(
-					OqlHavingParser::create()->
-						setTokenizer($this->tokenizer)->
-						parse()
+					(new OqlHavingParser())
+						->setTokenizer($this->tokenizer)
+						->parse()
 				);
 			}
 			

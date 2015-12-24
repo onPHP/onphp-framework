@@ -20,6 +20,7 @@
 		private $parameters	= array();
 		
 		/**
+		 * @deprecated
 		 * @return OqlQueryExpression
 		**/
 		public static function create()

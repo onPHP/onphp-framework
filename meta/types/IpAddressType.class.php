@@ -31,7 +31,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::IP)';
+			return 'new DataType(DataType::IP)';
 		}
 	}
 ?>

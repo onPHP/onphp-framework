@@ -31,6 +31,7 @@
 		);
 		
 		/**
+		 * @deprecated
 		 * @return OqlSelectPropertiesParser
 		**/
 		public static function create()
@@ -43,7 +44,7 @@
 		**/
 		protected function makeOqlObject()
 		{
-			return OqlSelectPropertiesClause::create();
+			return new OqlSelectPropertiesClause();
 		}
 		
 		protected function handleState()

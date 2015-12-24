@@ -17,6 +17,7 @@
 		private $fullText	= null;
 		
 		/**
+		 * @deprecated
 		 * @return YandexRssFeedItem
 		**/
 		public static function create($title)

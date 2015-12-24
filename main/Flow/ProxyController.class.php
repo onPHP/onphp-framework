@@ -31,6 +31,7 @@ class ProxyController implements Controller
     }
 
     /**
+     * @deprecated
      * @return ProxyController
      **/
     public static function create()

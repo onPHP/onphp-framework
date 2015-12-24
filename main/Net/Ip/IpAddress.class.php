@@ -17,6 +17,8 @@
 		private $longIp = null;
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return IpAddress
 		**/
 		public static function create($ip)
@@ -29,7 +31,7 @@
 			if (substr_count($ip, '.') < 3)
 				return self::createFromCutted($ip.'.0');
 			
-			return self::create($ip);
+			return new self($ip);
 		}
 		
 		public function __construct($ip)

@@ -13,9 +13,7 @@
 	{
 		final public function makeObject(Form $form)
 		{
-			return
-				FormToObjectConverter::create($this->entityProto())->
-					make($form);
+			return (new FormToObjectConverter($this->entityProto()))->make($form);
 		}
 		
 		/**
@@ -24,10 +22,7 @@
 		final public function toForm()
 		{
 			return
-				ObjectToFormConverter::create(
-					$this->entityProto()
-				)->
-					make($this);
+				(new ObjectToFormConverter($this->entityProto()))->make($this);
 		}
 	}
 ?>

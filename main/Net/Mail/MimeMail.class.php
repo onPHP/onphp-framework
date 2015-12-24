@@ -43,9 +43,9 @@
 				$this->boundary = '=_'.md5(microtime(true));
 			
 			$mail =
-				MimePart::create()->
-				setContentType('multipart/mixed')->
-				setBoundary($this->boundary);
+				(new MimePart())
+					->setContentType('multipart/mixed')
+					->setBoundary($this->boundary);
 			
 			$this->headers =
 				"MIME-Version: 1.0\n"

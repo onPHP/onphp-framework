@@ -12,6 +12,7 @@
 	final class OqlOrderByParser extends OqlParser
 	{
 		/**
+		 * @deprecated
 		 * @return OqlOrderByParser
 		**/
 		public static function create()
@@ -24,7 +25,7 @@
 		**/
 		protected function makeOqlObject()
 		{
-			return OqlOrderByClause::create();
+			return new OqlOrderByClause();
 		}
 		
 		protected function handleState()

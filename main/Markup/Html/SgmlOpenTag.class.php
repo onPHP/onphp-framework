@@ -18,6 +18,7 @@
 		private $empty		= false;
 		
 		/**
+		 * @deprecated
 		 * @return SgmlOpenTag
 		**/
 		public static function create()

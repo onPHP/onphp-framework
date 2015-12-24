@@ -47,6 +47,7 @@ class Criteria extends QueryIdentification
     }
 
     /**
+     * @deprecated
      * @return Criteria
      **/
     public static function create(/* ProtoDAO */

@@ -21,7 +21,7 @@
 
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::TIMESTAMPTZ)->setTimezoned(true)';
+			return '(new DataType(DataType::TIMESTAMPTZ))->setTimezoned(true)';
 		}
 	}
 ?>

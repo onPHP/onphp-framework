@@ -42,7 +42,7 @@ abstract class EditorController extends BaseEditor
                 $this->subject, $form, $request
             );
         } else
-            $mav = ModelAndView::create();
+            $mav = new ModelAndView();
 
         return $this->postHandleRequest($mav, $request);
     }

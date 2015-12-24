@@ -30,6 +30,7 @@
 		);
 		
 		/**
+		 * @deprecated
 		 * @return Url
 		**/
 		public static function create()
@@ -82,7 +83,7 @@
 			if ($this->scheme || $this->getAuthority())
 				return $this;
 			
-			$urlSubSchemes = Url::create()->getKnownSubSchemes();
+			$urlSubSchemes = (new Url)->getKnownSubSchemes();
 			
 			$matches = array();
 			

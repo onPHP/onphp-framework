@@ -20,6 +20,7 @@
 		private $strict	= false;
 		
 		/**
+		 * @deprecated
 		 * @return Cdata
 		**/
 		public static function create()

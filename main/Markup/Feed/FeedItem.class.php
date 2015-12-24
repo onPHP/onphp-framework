@@ -23,6 +23,8 @@
 		private $category	= null;
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return FeedItem
 		**/
 		public static function create($title)

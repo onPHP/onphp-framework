@@ -22,6 +22,7 @@ class UncacherSmartDaoWorkerLists implements UncacherBase
     }
 
     /**
+     * @deprecated
      * @return UncacherSmartDaoWorkerLists
      */
     public static function create($className, $indexKey, $intKey)

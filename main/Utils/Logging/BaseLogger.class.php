@@ -45,9 +45,9 @@
 		final public function log(LogLevel $level, $message)
 		{
 			$this->logRecord(
-				LogRecord::create()->
-				setLevel($level)->
-				setMessage($message)
+				(new LogRecord())
+					->setLevel($level)
+					->setMessage($message)
 			);
 			
 			return $this;

@@ -27,10 +27,6 @@ class ForbiddenCommand implements EditorCommand
      **/
     public function run(Prototyped $subject, Form $form, HttpRequest $request)
     {
-        return
-            ModelAndView::create()
-                ->setView(
-                    EditorController::COMMAND_FAILED
-                );
+        return (new ModelAndView())->setView(EditorController::COMMAND_FAILED);
     }
 }

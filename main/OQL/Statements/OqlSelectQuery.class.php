@@ -25,6 +25,8 @@
 		private $offset			= null;
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return OqlSelectQuery
 		**/
 		public static function create()
@@ -305,8 +307,7 @@
 		**/
 		public function toCriteria()
 		{
-			$criteria = Criteria::create($this->dao)->
-				setDistinct($this->distinct);
+			$criteria = (new Criteria($this->dao))->setDistinct($this->distinct);
 			
 			$projections = array_merge(
 				$this->properties,

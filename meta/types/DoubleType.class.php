@@ -16,7 +16,7 @@
 	{
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::DOUBLE)';
+			return 'new DataType(DataType::DOUBLE)';
 		}
 	}
 ?>

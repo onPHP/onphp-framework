@@ -18,6 +18,8 @@
 		private $bindable	= false;
 		
 		/**
+		 * @deprecated
+		 *
 		 * @return OqlQueryParameter
 		**/
 		public static function create()

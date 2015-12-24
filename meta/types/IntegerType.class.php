@@ -55,7 +55,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::INTEGER)';
+			return 'new DataType(DataType::INTEGER)';
 		}
 	}
 ?>

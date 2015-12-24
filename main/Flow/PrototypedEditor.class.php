@@ -24,11 +24,9 @@ abstract class PrototypedEditor extends MethodMappedController
     {
         $this->subject = $subject;
         $this->map =
-            MappedForm::create(
-                $this->subject->proto()->makeForm()
-            )->
-            addSource('id', RequestType::get())->
-            setDefaultType(RequestType::post());
+            (new MappedForm($this->subject->proto()->makeForm()))
+                ->addSource('id', RequestType::get())
+                ->setDefaultType(RequestType::post());
 
         $this->
         setMethodMapping('drop', 'doDrop')->
@@ -53,27 +51,30 @@ abstract class PrototypedEditor extends MethodMappedController
 
                 $this->dropObject($request, $form, $object);
 
-                return ModelAndView::create()->setModel(
-                    Model::create()->
-                    set('editorResult', self::COMMAND_SUCCEEDED)
-                );
+                return (new ModelAndView())
+                    ->setModel(
+                        (new Model())
+                            ->set('editorResult', self::COMMAND_SUCCEEDED)
+                    );
 
             } else {
 
                 // already deleted
                 $form->markMissing('id');
 
-                return ModelAndView::create()->setModel(
-                    Model::create()->
-                    set('editorResult', self::COMMAND_FAILED)->
-                    set('form', $form)
+                return (new ModelAndView())
+                    ->setModel(
+                        (new Model())
+                            ->set('editorResult', self::COMMAND_FAILED)
+                            ->set('form', $form)
                 );
             }
         } else {
-            return ModelAndView::create()->setModel(
-                Model::create()->
-                set('editorResult', self::COMMAND_FAILED)->
-                set('form', $form)
+            return (new ModelAndView())
+                ->setModel(
+                    (new Model())
+                        ->set('editorResult', self::COMMAND_FAILED)
+                        ->set('form', $form)
             );
         }
 
@@ -123,24 +124,25 @@ abstract class PrototypedEditor extends MethodMappedController
                 : self::COMMAND_SUCCEEDED;
 
             return
-                ModelAndView::create()->
-                setModel(
-                    Model::create()->
-                    set('id', $object->getId())->
-                    set('subject', $object)->
-                    set('form', $form)->
-                    set('editorResult', $editorResult)
+                (new ModelAndView())
+                    ->setModel(
+                        (new Model())
+                            ->set('id', $object->getId())
+                            ->set('subject', $object)
+                            ->set('form', $form)
+                            ->set('editorResult', $editorResult)
                 );
         } else {
             $model =
-                Model::create()->
-                set('form', $form)->
-                set('editorResult', self::COMMAND_FAILED);
+                (new Model())
+                    ->set('form', $form)
+                    ->set('editorResult', self::COMMAND_FAILED);
 
-            if ($object)
+            if ($object) {
                 $model->set('subject', $object);
+            }
 
-            return ModelAndView::create()->setModel($model);
+            return (new ModelAndView())->setModel($model);
         }
 
         Assert::isUnreachable();
@@ -177,24 +179,25 @@ abstract class PrototypedEditor extends MethodMappedController
                 : self::COMMAND_SUCCEEDED;
 
             return
-                ModelAndView::create()->
-                setModel(
-                    Model::create()->
-                    set('id', $object->getId())->
-                    set('subject', $object)->
-                    set('form', $form)->
-                    set('editorResult', $editorResult)
+                (new ModelAndView())
+                    ->setModel(
+                        (new Model())
+                            ->set('id', $object->getId())
+                            ->set('subject', $object)
+                            ->set('form', $form)
+                            ->set('editorResult', $editorResult)
                 );
         } else {
             $model =
-                Model::create()->
-                set('form', $form)->
-                set('editorResult', self::COMMAND_FAILED);
+                (new Model())
+                    ->set('form', $form)
+                    ->set('editorResult', self::COMMAND_FAILED);
 
-            if ($object)
+            if ($object) {
                 $model->set('subject', $object);
+            }
 
-            return ModelAndView::create()->setModel($model);
+            return (new ModelAndView())->setModel($model);
         }
 
         Assert::isUnreachable();
@@ -208,19 +211,21 @@ abstract class PrototypedEditor extends MethodMappedController
         $this->map->import($request);
         $form = $this->getForm();
 
-        if ($form->getValue('id'))
+        if ($form->getValue('id')) {
             $object = $form->getValue('id');
-        else
+        } else {
             $object = clone $this->subject;
+        }
 
         FormUtils::object2form($object, $form);
 
         $form->dropAllErrors();
 
-        return ModelAndView::create()->setModel(
-            Model::create()->
-            set('subject', $object)->
-            set('form', $form)
+        return (new ModelAndView())
+            ->setModel(
+                (new Model())
+                    ->set('subject', $object)
+                    ->set('form', $form)
         );
     }
 
@@ -244,22 +249,22 @@ abstract class PrototypedEditor extends MethodMappedController
                 : self::COMMAND_SUCCEEDED;
 
             return
-                ModelAndView::create()->
-                setModel(
-                    Model::create()->
-                    set('id', $object->getId())->
-                    set('subject', $object)->
-                    set('form', $form)->
-                    set('editorResult', $editorResult)
+                (new ModelAndView())
+                    ->setModel(
+                        (new Model())
+                            ->set('id', $object->getId())
+                            ->set('subject', $object)
+                            ->set('form', $form)
+                            ->set('editorResult', $editorResult)
                 );
         } else {
             return
-                ModelAndView::create()->
-                setModel(
-                    Model::create()->
-                    set('form', $form)->
-                    set('subject', $object)->
-                    set('editorResult', self::COMMAND_FAILED)
+                (new ModelAndView())
+                    ->setModel(
+                    (new Model())
+                        ->set('form', $form)
+                        ->set('subject', $object)
+                        ->set('editorResult', self::COMMAND_FAILED)
                 );
         }
 

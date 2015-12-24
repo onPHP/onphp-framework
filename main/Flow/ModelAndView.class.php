@@ -24,6 +24,7 @@ class ModelAndView
     }
 
     /**
+     * @deprecated
      * @return ModelAndView
      **/
     public static function create()

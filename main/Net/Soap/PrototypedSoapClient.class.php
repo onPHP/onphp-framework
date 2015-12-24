@@ -111,8 +111,7 @@
 			if (defined('__LOCAL_DEBUG__') && !defined('SIMPLE_TEST') ) {
 				// self-validation
 				
-				$form = ObjectToFormConverter::create($request->entityProto())->
-					make($request);
+				$form = (new ObjectToFormConverter($request->entityProto()))->make($request);
 				
 				Assert::isTrue(
 					!$form->getErrors()
@@ -162,8 +161,7 @@
 					$resultClass
 				);
 				
-				$form = DTOToFormImporter::create($resultDto->entityProto())->
-					make($resultDto);
+				$form = (new DTOToFormImporter($resultDto->entityProto()))->make($resultDto);
 				
 				Assert::isTrue(
 					!$form->getErrors(),

@@ -69,8 +69,7 @@
 			
 			Assert::isNotNull($time);
 			
-			$result = TextMessage::create(Timestamp::create($time))->
-				setText($text);
+			$result = (new TextMessage(new Timestamp($time)))->setText($text);
 			
 			return $result;
 		}
@@ -83,10 +82,8 @@
 			if (!$this->stream) {
 				Assert::isNotNull($this->queue->getFileName());
 				
-				$this->stream = FileInputStream::create(
-					$this->queue->getFileName()
-				)->
-					seek($this->queue->getOffset());
+				$this->stream = (new FileInputStream($this->queue->getFileName()))
+					->seek($this->queue->getOffset());
 			}
 			
 			return $this->stream;

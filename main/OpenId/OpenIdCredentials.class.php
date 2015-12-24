@@ -38,10 +38,10 @@
 			$this->httpClient = $httpClient;
 			
 			$response = $httpClient->send(
-				HttpRequest::create()->
-				setHeaderVar('Accept', self::HEADER_ACCEPT)->
-				setMethod(HttpMethod::get())->
-				setUrl($claimedId)
+				(new HttpRequest())
+					->setHeaderVar('Accept', self::HEADER_ACCEPT)
+					->setMethod(HttpMethod::get())
+					->setUrl($claimedId)
 			);
 			
 			if ($response->getStatus()->getId() != 200) {
@@ -87,7 +87,7 @@
 		public function getRealId()
 		{
 			if ($this->isIdentifierSelect()) {
-				return  HttpUrl::create()->parse(self::IDENTIFIER_SELECT);
+				return  (new HttpUrl())->parse(self::IDENTIFIER_SELECT);
 			}
 			
 			return $this->realId;
@@ -118,11 +118,9 @@
 		
 		protected function parseHTML($content)
 		{
-			$tokenizer = HtmlTokenizer::create(
-					StringInputStream::create($content)
-				)->
-				lowercaseTags(true)->
-				lowercaseAttributes(true);
+			$tokenizer = (new HtmlTokenizer(new StringInputStream($content)))
+				->lowercaseTags(true)
+				->lowercaseAttributes(true);
 			
 			$insideHead = false;
 			while ($token = $tokenizer->nextToken()) {
@@ -146,12 +144,11 @@
 						&& $token->hasAttribute('href')
 					) {
 						if ($token->getAttribute('rel') == 'openid.server')
-							$this->server = HttpUrl::create()->parse(
-								$token->getAttribute('href')
-							);
+							$this->server = (new HttpUrl())
+								->parse($token->getAttribute('href'));
 						
 						if ($token->getAttribute('rel') == 'openid.delegate')
-							$this->realId = HttpUrl::create()->parse(
+							$this->realId = (new HttpUrl())->parse(
 								$token->getAttribute('href')
 							);
 					}
@@ -177,7 +174,7 @@
 		protected function parseXRDS($content)
 		{
 			if (preg_match('|<URI>(.*?)</URI>|uis', $content, $match)) {
-				$this->server = HttpUrl::create()->parse($match[1]);
+				$this->server = (new HttpUrl())->parse($match[1]);
 			}
 			
 			return $this;
@@ -186,10 +183,10 @@
 		protected function loadXRDS($url)
 		{
 			$response = $this->httpClient->send(
-				HttpRequest::create()->
-				setHeaderVar('Accept', self::HEADER_ACCEPT)->
-				setMethod(HttpMethod::get())->
-				setUrl(HttpUrl::create()->parse($url))
+				(new HttpRequest())
+					->setHeaderVar('Accept', self::HEADER_ACCEPT)
+					->setMethod(HttpMethod::get())
+					->setUrl((new HttpUrl())->parse($url))
 			);
 			
 			if ($response->getStatus()->getId() != 200) {

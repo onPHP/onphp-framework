@@ -16,7 +16,7 @@
 	{
 		public function toColumnType($length = null)
 		{
-			return 'DataType::create(DataType::CHAR)';
+			return 'new DataType(DataType::CHAR)';
 		}
 	}
 ?>

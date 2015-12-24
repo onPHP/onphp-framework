@@ -21,7 +21,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::SMALLINT)';
+			return 'new DataType(DataType::SMALLINT)';
 		}
 	}
 ?>

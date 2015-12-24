@@ -42,10 +42,10 @@ abstract class BaseEditor implements Controller
             );
 
         $this->map =
-            MappedForm::create($form)->
-            addSource('id', RequestType::get())->
-            addSource('action', RequestType::get())->
-            setDefaultType(RequestType::post());
+            (new MappedForm($form))
+                ->addSource('id', RequestType::get())
+                ->addSource('action', RequestType::get())
+                ->setDefaultType(RequestType::post());
 
         if ($this->idFieldName)
             $this->map->addSource($this->idFieldName, RequestType::get());

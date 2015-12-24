@@ -28,6 +28,7 @@ class MultiPrefixPhpViewResolver implements ViewResolver
     private $viewClassName = 'SimplePhpView';
 
     /**
+     * @deprecated
      * @return MultiPrefixPhpViewResolver
      **/
     public static function create()
@@ -152,7 +153,7 @@ class MultiPrefixPhpViewResolver implements ViewResolver
                 'can not resolve view: ' . $viewName
             );
 
-        return EmptyView::create();
+        return new EmptyView();
     }
 
     protected function findPrefix($viewName, $checkDisabled = true)

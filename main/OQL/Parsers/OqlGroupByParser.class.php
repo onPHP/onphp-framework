@@ -14,6 +14,7 @@
 		const CLASS_NAME = 'GroupByPropertyProjection';
 		
 		/**
+		 * @deprecated
 		 * @return OqlGroupByParser
 		**/
 		public static function create()
@@ -26,7 +27,7 @@
 		**/
 		protected function makeOqlObject()
 		{
-			return OqlProjectionClause::create();
+			return new OqlProjectionClause();
 		}
 		
 		protected function handleState()

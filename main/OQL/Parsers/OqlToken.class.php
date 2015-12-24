@@ -35,6 +35,7 @@
 		private $position	= null;
 		
 		/**
+		 * @deprecated
 		 * @return OqlToken
 		**/
 		public static function create()
@@ -47,8 +48,7 @@
 		**/
 		public static function make($value, $rawValue, $type, $line, $position)
 		{
-			return
-				self::create()->
+			return (new OqlToken())->
 					setValue($value)->
 					setRawValue($rawValue)->
 					setType($type)->

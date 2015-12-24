@@ -15,6 +15,11 @@
 		private $timestamp	= null;
 		private $text		= null;
 
+		/**
+		 * @deprecated
+		 * @param Timestamp|null $timestamp
+		 * @return TextMessage
+		 */
 		public static function create(Timestamp $timestamp = null)
 		{
 			return new self($timestamp);

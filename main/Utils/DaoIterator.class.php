@@ -131,7 +131,7 @@
 			
 			$this->offset = 0;
 			
-			$criteria = Criteria::create($this->dao);
+			$criteria = new Criteria($this->dao);
 			
 			if ($this->projection)
 				$criteria->setProjection($this->projection);

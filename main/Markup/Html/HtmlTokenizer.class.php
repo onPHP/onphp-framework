@@ -78,6 +78,7 @@
 		}
 		
 		/**
+		 * @deprecated
 		 * @return HtmlTokenizer
 		**/
 		public static function create(InputStream $stream)
@@ -414,7 +415,7 @@
 		private function dumpBuffer()
 		{
 			if ($this->buffer !== null) {
-				$this->tag = Cdata::create()->setData($this->buffer);
+				$this->tag = (new Cdata())->setData($this->buffer);
 				
 				$this->buffer = null;
 				
@@ -527,7 +528,7 @@
 			elseif ($this->lowercaseTags)
 				$this->tagId = strtolower($this->tagId);
 			
-			return $this->setupTag(SgmlOpenTag::create());
+			return $this->setupTag(new SgmlOpenTag());
 		}
 		
 		// START_TAG_STATE
@@ -566,11 +567,11 @@
 					
 					if ($externalTag) {
 						$this->setupTag(
-							SgmlIgnoredTag::create()->
-							setEndMark('?')
+							(new SgmlIgnoredTag())
+								->setEndMark('?')
 						);
 					} elseif ($doctypeTag) {
-						$this->setupTag(SgmlIgnoredTag::create());
+						$this->setupTag(new SgmlIgnoredTag());
 					} else
 						$this->createOpenTag();
 					
@@ -630,8 +631,8 @@
 				$this->error("end-tag id '{$this->tagId}' is invalid");
 			}
 			
-			$this->tag = SgmlEndTag::create()->
-				setId(
+			$this->tag = (new SgmlEndTag())
+				->setId(
 					self::optionalLowercase($this->tagId, $this->lowercaseTags)
 				);
 			
@@ -1118,9 +1119,9 @@
 			$content = $this->getContentToSubstring(']]>');
 			
 			$this->tag =
-				Cdata::create()->
-				setData($content)->
-				setStrict(true);
+				(new Cdata())
+					->setData($content)
+					->setStrict(true);
 			
 			$this->makeTag();
 			
@@ -1171,7 +1172,7 @@
 			$this->tag =
 				SgmlIgnoredTag::comment()->
 				setCdata(
-					Cdata::create()->setData($content)
+					(new Cdata())->setData($content)
 				);
 			
 			$this->makeTag();
@@ -1205,7 +1206,7 @@
 					);
 			}
 			
-			$this->tag->setCdata(Cdata::create()->setData($content));
+			$this->tag->setCdata((new Cdata())->setData($content));
 			
 			$this->makeTag();
 			
@@ -1224,7 +1225,7 @@
 			if (!$this->substringFound)
 				$this->error('unexpected end-of-file inside doctype tag');
 			
-			$this->tag->setCdata(Cdata::create()->setData($content));
+			$this->tag->setCdata((new Cdata())->setData($content));
 			
 			$this->makeTag();
 			

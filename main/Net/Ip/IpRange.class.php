@@ -127,8 +127,8 @@
 				$parts = explode('-', $interval);
 
 				$this->setup(
-					IpAddress::create(trim($parts[0])),
-					IpAddress::create(trim($parts[1]))
+					new IpAddress(trim($parts[0])),
+					new IpAddress(trim($parts[1]))
 				);
 
 			} catch (Exception $e) {
@@ -151,18 +151,13 @@
 			if (($ip->getLongIp() & $longMask) != $ip->getLongIp())
 				throw new WrongArgumentException('wrong ip network given');
 			
-			$this->setup(
-				$ip,
-				IpAddress::create(
-					long2ip($ip->getLongIp() | ~$longMask)
-				)
-			);
+			$this->setup($ip, new IpAddress(long2ip($ip->getLongIp() | ~$longMask)));
 		}
 		
 		private function createFromString($string)
 		{
 			if (preg_match(self::SINGLE_IP_PATTERN, $string)) {
-				$ip = IpAddress::create($string);
+				$ip = new IpAddress($string);
 				$this->setup ($ip, $ip);
 				
 			} elseif (preg_match(self::IP_SLASH_PATTERN, $string)) {

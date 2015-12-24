@@ -28,7 +28,7 @@ class CacheDaoWorker extends TransparentDaoWorker
     public function uncacheLists()
     {
         return $this->registerUncacher(
-            UncacherCacheDaoWorkerLists::create($this->className)
+            new UncacherCacheDaoWorkerLists($this->className)
         );
     }
 

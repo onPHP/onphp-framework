@@ -59,7 +59,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::REAL)';
+			return 'new DataType(DataType::REAL)';
 		}
 	}
 ?>

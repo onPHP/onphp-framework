@@ -54,9 +54,7 @@
 			if (!$this->stream) {
 				Assert::isNotNull($this->queue->getFileName());
 				
-				$this->stream = FileOutputStream::create(
-					$this->queue->getFileName(), true
-				);
+				$this->stream = (new FileOutputStream($this->queue->getFileName(), true));
 			}
 			
 			return $this->stream;

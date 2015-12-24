@@ -97,7 +97,7 @@ abstract class BaseDaoWorker implements BaseDAO
      */
     public function getUncacherById($id)
     {
-        return UncacherBaseDaoWorker::create(
+        return new UncacherBaseDaoWorker(
             $this->className,
             $this->makeIdKey($id)
         );
@@ -115,7 +115,7 @@ abstract class BaseDaoWorker implements BaseDAO
     public function uncacheByQuery(SelectQuery $query)
     {
         return $this->registerUncacher(
-            UncacherBaseDaoWorker::create(
+            new UncacherBaseDaoWorker(
                 $this->className,
                 $this->makeQueryKey($query, self::SUFFIX_QUERY)
             )

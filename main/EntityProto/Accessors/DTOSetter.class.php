@@ -37,8 +37,8 @@ class DTOSetter extends PrototypedSetter
                 && ($value instanceof PrototypedEntity)
             )
                 $value =
-                    ObjectToDTOConverter::create($value->entityProto())->
-                    make($value);
+                    (new ObjectToDTOConverter($value->entityProto()))
+                        ->make($value);
             else
                 $value = $this->dtoValue($value, $primitive);
 

@@ -687,8 +687,7 @@
 		**/
 		protected function makeQueryExpression($className /*, ... */)
 		{
-			$expression = OqlQueryExpression::create()->
-				setClassName($className);
+			$expression = (new OqlQueryExpression())->setClassName($className);
 			
 			$arguments = func_get_args();
 			reset($arguments);
@@ -726,13 +725,12 @@
 				return $argument;
 			
 			} elseif ($argument instanceof OqlToken) {
-				return OqlQueryParameter::create()->
-					setValue($argument->getValue())->
-					setBindable($argument->getType() == OqlToken::SUBSTITUTION);
+				return (new OqlQueryParameter())
+					->setValue($argument->getValue())
+					->setBindable($argument->getType() == OqlToken::SUBSTITUTION);
 			
 			} else {
-				return OqlQueryParameter::create()->
-					setValue($argument);
+				return (new OqlQueryParameter())->setValue($argument);
 			}
 		}
 		

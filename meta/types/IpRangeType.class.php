@@ -31,7 +31,7 @@
 		
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::IP_RANGE)';
+			return 'new DataType(DataType::IP_RANGE)';
 		}
 	}
 ?>
