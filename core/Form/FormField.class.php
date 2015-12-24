@@ -9,38 +9,49 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * Atom for using in LogicalExpression.
-	 * 
-	 * @see DBField
-	 * 
-	 * @ingroup Form
-	**/
-	final class FormField
-	{
-		private $primitiveName	= null;
-		
-		public function __construct($name)
-		{
-			$this->primitiveName = $name;
-		}
-		
-		/**
-		 * @return FormField
-		**/
-		public static function create($name)
-		{
-			return new self($name);
-		}
+/**
+ * Atom for using in LogicalExpression.
+ *
+ * @see DBField
+ *
+ * @ingroup Form
+ **/
+final class FormField
+{
+    /** @var null  */
+    private $primitiveName = null;
 
-		public function getName()
-		{
-			return $this->primitiveName;
-		}
-		
-		public function toValue(Form $form)
-		{
-			return $form->getValue($this->primitiveName);
-		}
-	}
-?>
+    /**
+     * FormField constructor.
+     * @param $name
+     */
+    public function __construct($name)
+    {
+        $this->primitiveName = $name;
+    }
+
+    /**
+     * @return FormField
+     **/
+    public static function create($name)
+    {
+        return new self($name);
+    }
+
+    /**
+     * @return null
+     */
+    public function getName()
+    {
+        return $this->primitiveName;
+    }
+
+    /**
+     * @param Form $form
+     * @return null
+     */
+    public function toValue(Form $form)
+    {
+        return $form->getValue($this->primitiveName);
+    }
+}

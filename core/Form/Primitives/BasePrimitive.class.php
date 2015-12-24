@@ -213,7 +213,7 @@ abstract class BasePrimitive
      * @param $scope
      * @return bool|null
      */
-    protected function import($scope)
+    public function import($scope)
     {
         if (
             !empty($scope[$this->name])

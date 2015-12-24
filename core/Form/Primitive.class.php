@@ -9,390 +9,443 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * Factory for various Primitives.
-	 *
-	 * @ingroup Form
-	**/
-	final class Primitive extends StaticFactory
-	{
-		/**
-		 * @return BasePrimitive
-		**/
-		public static function spawn($primitive, $name)
-		{
-			Assert::classExists($primitive);
-			
-			return new $primitive($name);
-		}
-		
-		/**
-		 * @return Primitive
-		**/
-		public static function alias($name, BasePrimitive $prm)
-		{
-			return new PrimitiveAlias($name, $prm);
-		}
-		
-		/**
-		 * @return PrimitiveAnyType
-		**/
-		public static function anyType($name)
-		{
-			return new PrimitiveAnyType($name);
-		}
-		
-		/**
-		 * @return PrimitiveInteger
-		**/
-		public static function integer($name)
-		{
-			return new PrimitiveInteger($name);
-		}
-		
-		/**
-		 * @return PrimitiveFloat
-		**/
-		public static function float($name)
-		{
-			return new PrimitiveFloat($name);
-		}
-		
-		/**
-		 * @return PrimitiveIdentifier
-		 * @obsoleted by integerIdentifier and scalarIdentifier
-		**/
-		public static function identifier($name)
-		{
-			return new PrimitiveIdentifier($name);
-		}
-		
-		/**
-		 * @return PrimitiveIntegerIdentifier
-		**/
-		public static function integerIdentifier($name)
-		{
-			return new PrimitiveIntegerIdentifier($name);
-		}
-		
-		/**
-		 * @return PrimitiveScalarIdentifier
-		**/
-		public static function scalarIdentifier($name)
-		{
-			return new PrimitiveScalarIdentifier($name);
-		}
-		
-		/**
-		 * @return PrimitivePolymorphicIdentifier
-		**/
-		public static function polymorphicIdentifier($name)
-		{
-			return new PrimitivePolymorphicIdentifier($name);
-		}
-		
-		/**
-		 * @return PrimitiveIdentifierList
-		**/
-		public static function identifierlist($name)
-		{
-			return new PrimitiveIdentifierList($name);
-		}
-		
-		/**
-		 * @return PrimitiveClass
-		**/
-		public static function clazz($name)
-		{
-			return new PrimitiveClass($name);
-		}
-		
-		/**
-		 * @return PrimitiveEnumeration
-		**/
-		public static function enumeration($name)
-		{
-			return new PrimitiveEnumeration($name);
-		}
-		
-		/**
-		 * @return PrimitiveEnumerationByValue
-		**/
-		public static function enumerationByValue($name)
-		{
-			return new PrimitiveEnumerationByValue($name);
-		}
-		
-		/**
-		 * @return PrimitiveEnumerationList
-		**/
-		public static function enumerationList($name)
-		{
-			return new PrimitiveEnumerationList($name);
-		}
-		
-		/**
-		 * @return PrimitiveDate
-		**/
-		public static function date($name)
-		{
-			return new PrimitiveDate($name);
-		}
-		
-		/**
-		 * @return PrimitiveTimestamp
-		**/
-		public static function timestamp($name)
-		{
-			return new PrimitiveTimestamp($name);
-		}
+/**
+ * Factory for various Primitives.
+ *
+ * @ingroup Form
+ **/
+final class Primitive extends StaticFactory
+{
+    /**
+     * @param $primitive
+     * @param $name
+     * @return BasePrimitive
+     * @throws WrongArgumentException
+     */
+    public static function spawn($primitive, $name)
+    {
+        Assert::classExists($primitive);
 
-		/**
-		 * @return PrimitiveTimestampTZ
-		**/
-		public static function timestampTZ($name)
-		{
-			return new PrimitiveTimestampTZ($name);
-		}
-		
-		/**
-		 * @return PrimitiveTime
-		**/
-		public static function time($name)
-		{
-			return new PrimitiveTime($name);
-		}
-		
-		/**
-		 * @return PrimitiveString
-		**/
-		public static function string($name)
-		{
-			return new PrimitiveString($name);
-		}
-		
-		/**
-		 * @return PrimitiveBinary
-		**/
-		public static function binary($name)
-		{
-			return new PrimitiveBinary($name);
-		}
-		
-		/**
-		 * @return PrimitiveRange
-		**/
-		public static function range($name)
-		{
-			return new PrimitiveRange($name);
-		}
-		
-		/**
-		 * @return PrimitiveDateRange
-		**/
-		public static function dateRange($name)
-		{
-			return new PrimitiveDateRange($name);
-		}
-		
-		/**
-		 * @return PrimitiveTimestampRange
-		**/
-		public static function timestampRange($name)
-		{
-			return new PrimitiveTimestampRange($name);
-		}
-		
-		/**
-		 * @return PrimitiveList
-		**/
-		public static function choice($name)
-		{
-			return new PrimitiveList($name);
-		}
-		
-		/**
-		 * @return PrimitiveArray
-		**/
-		public static function set($name)
-		{
-			return new PrimitiveArray($name);
-		}
-		
-		/**
-		 * @return PrimitiveHstore
-		**/
-		public static function hstore($name)
-		{
-			return new PrimitiveHstore($name);
-		}
-		
-		/**
-		 * @return PrimitiveMultiList
-		**/
-		public static function multiChoice($name)
-		{
-			return new PrimitiveMultiList($name);
-		}
-		
-		/**
-		 * @return PrimitivePlainList
-		**/
-		public static function plainChoice($name)
-		{
-			return new PrimitivePlainList($name);
-		}
-		
-		/**
-		 * @return PrimitiveBoolean
-		**/
-		public static function boolean($name)
-		{
-			return new PrimitiveBoolean($name);
-		}
-		
-		/**
-		 * @return PrimitiveTernary
-		**/
-		public static function ternary($name)
-		{
-			return new PrimitiveTernary($name);
-		}
-		
-		/**
-		 * @return PrimitiveFile
-		**/
-		public static function file($name)
-		{
-			return new PrimitiveFile($name);
-		}
-		
-		/**
-		 * @return PrimitiveImage
-		**/
-		public static function image($name)
-		{
-			return new PrimitiveImage($name);
-		}
-		
-		/**
-		 * @return ExplodedPrimitive
-		**/
-		public static function exploded($name)
-		{
-			return new ExplodedPrimitive($name);
-		}
-		
-		/**
-		 * @return PrimitiveInet
-		**/
-		public static function inet($name)
-		{
-			return new PrimitiveInet($name);
-		}
-		
-		/**
-		 * @return PrimitiveForm
-		**/
-		public static function form($name)
-		{
-			return new PrimitiveForm($name);
-		}
-		
-		/**
-		 * @return PrimitiveFormsList
-		**/
-		public static function formsList($name)
-		{
-			return new PrimitiveFormsList($name);
-		}
-		
-		/**
-		 * @return PrimitiveNoValue
-		**/
-		public static function noValue($name)
-		{
-			return new PrimitiveNoValue($name);
-		}
-		
-		/**
-		 * @return PrimitiveHttpUrl
-		**/
-		public static function httpUrl($name)
-		{
-			return new PrimitiveHttpUrl($name);
-		}
-		
-		/**
-		 * @return BasePrimitive
-		**/
-		public static function prototyped($class, $propertyName, $name = null)
-		{
-			Assert::isInstance($class, 'Prototyped');
-			
-			$proto = is_string($class)
-				? call_user_func(array($class, 'proto'))
-				: $class->proto();
-			
-			if (!$name)
-				$name = $propertyName;
-			
-			return $proto->getPropertyByName($propertyName)->
-				makePrimitive($name);
-		}
-		
-		/**
-		 * @return PrimitiveIdentifier
-		**/
-		public static function prototypedIdentifier($class, $name = null)
-		{
-			Assert::isInstance($class, 'DAOConnected');
-			
-			$dao = is_string($class)
-				? call_user_func(array($class, 'dao'))
-				: $class->dao();
-			
-			return self::prototyped($class, $dao->getIdName(), $name);
-		}
-		
-		/**
-		 * @return PrimitiveIpAddress
-		**/
-		public static function ipAddress($name)
-		{
-			return new PrimitiveIpAddress($name);
-		}
-		
-		/**
-		 * @return PrimitiveIpRange
-		 */
-		public static function ipRange($name)
-		{
-			return new PrimitiveIpRange($name);
-		}
+        return new $primitive($name);
+    }
 
-		/**
-		 * @return PrimitiveEnum
-		**/
-		public static function enum($name)
-		{
-			return new PrimitiveEnum($name);
-		}
+    /**
+     * @param $name
+     * @param BasePrimitive $prm
+     * @return PrimitiveAlias
+     */
+    public static function alias($name, BasePrimitive $prm)
+    {
+        return new PrimitiveAlias($name, $prm);
+    }
 
-		/**
-		 * @return PrimitiveEnumByValue
-		**/
-		public static function enumByValue($name)
-		{
-			return new PrimitiveEnumByValue($name);
-		}
+    /**
+     * @param $name
+     * @return PrimitiveAnyType
+     */
+    public static function anyType($name)
+    {
+        return new PrimitiveAnyType($name);
+    }
 
-		/**
-		 * @return PrimitiveEnumList
-		**/
-		public static function enumList($name)
-		{
-			return new PrimitiveEnumList($name);
-		}
-	}
-?>
+    /**
+     * @param $name
+     * @return PrimitiveInteger
+     */
+    public static function integer($name)
+    {
+        return new PrimitiveInteger($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveFloat
+     */
+    public static function float($name)
+    {
+        return new PrimitiveFloat($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveIdentifier
+     */
+    public static function identifier($name)
+    {
+        return new PrimitiveIdentifier($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveIntegerIdentifier
+     */
+    public static function integerIdentifier($name)
+    {
+        return new PrimitiveIntegerIdentifier($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveScalarIdentifier
+     */
+    public static function scalarIdentifier($name)
+    {
+        return new PrimitiveScalarIdentifier($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitivePolymorphicIdentifier
+     */
+    public static function polymorphicIdentifier($name)
+    {
+        return new PrimitivePolymorphicIdentifier($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveIdentifierList
+     */
+    public static function identifierlist($name)
+    {
+        return new PrimitiveIdentifierList($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveClass
+     */
+    public static function clazz($name)
+    {
+        return new PrimitiveClass($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveEnumeration
+     */
+    public static function enumeration($name)
+    {
+        return new PrimitiveEnumeration($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveEnumerationByValue
+     */
+    public static function enumerationByValue($name)
+    {
+        return new PrimitiveEnumerationByValue($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveEnumerationList
+     */
+    public static function enumerationList($name)
+    {
+        return new PrimitiveEnumerationList($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveDate
+     */
+    public static function date($name)
+    {
+        return new PrimitiveDate($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveTimestamp
+     */
+    public static function timestamp($name)
+    {
+        return new PrimitiveTimestamp($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveTimestampTZ
+     */
+    public static function timestampTZ($name)
+    {
+        return new PrimitiveTimestampTZ($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveTime
+     */
+    public static function time($name)
+    {
+        return new PrimitiveTime($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveString
+     */
+    public static function string($name)
+    {
+        return new PrimitiveString($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveBinary
+     */
+    public static function binary($name)
+    {
+        return new PrimitiveBinary($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveRange
+     */
+    public static function range($name)
+    {
+        return new PrimitiveRange($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveDateRange
+     */
+    public static function dateRange($name)
+    {
+        return new PrimitiveDateRange($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveTimestampRange
+     */
+    public static function timestampRange($name)
+    {
+        return new PrimitiveTimestampRange($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveList
+     */
+    public static function choice($name)
+    {
+        return new PrimitiveList($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveArray
+     */
+    public static function set($name)
+    {
+        return new PrimitiveArray($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveHstore
+     */
+    public static function hstore($name)
+    {
+        return new PrimitiveHstore($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveMultiList
+     */
+    public static function multiChoice($name)
+    {
+        return new PrimitiveMultiList($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitivePlainList
+     */
+    public static function plainChoice($name)
+    {
+        return new PrimitivePlainList($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveBoolean
+     */
+    public static function boolean($name)
+    {
+        return new PrimitiveBoolean($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveTernary
+     */
+    public static function ternary($name)
+    {
+        return new PrimitiveTernary($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveFile
+     */
+    public static function file($name)
+    {
+        return new PrimitiveFile($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveImage
+     */
+    public static function image($name)
+    {
+        return new PrimitiveImage($name);
+    }
+
+    /**
+     * @param $name
+     * @return ExplodedPrimitive
+     */
+    public static function exploded($name)
+    {
+        return new ExplodedPrimitive($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveInet
+     */
+    public static function inet($name)
+    {
+        return new PrimitiveInet($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveForm
+     */
+    public static function form($name)
+    {
+        return new PrimitiveForm($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveFormsList
+     */
+    public static function formsList($name)
+    {
+        return new PrimitiveFormsList($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveNoValue
+     */
+    public static function noValue($name)
+    {
+        return new PrimitiveNoValue($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveHttpUrl
+     */
+    public static function httpUrl($name)
+    {
+        return new PrimitiveHttpUrl($name);
+    }
+
+    /**
+     * @param $class
+     * @param null $name
+     * @return BasePrimitive
+     * @throws WrongArgumentException
+     */
+    public static function prototypedIdentifier($class, $name = null)
+    {
+        Assert::isInstance($class, 'DAOConnected');
+
+        $dao = is_string($class)
+            ? call_user_func([$class, 'dao'])
+            : $class->dao();
+
+        return self::prototyped($class, $dao->getIdName(), $name);
+    }
+
+    /**
+     * @param $class
+     * @param $propertyName
+     * @param null $name
+     * @return mixed
+     * @throws WrongArgumentException
+     */
+    public static function prototyped($class, $propertyName, $name = null)
+    {
+        Assert::isInstance($class, 'Prototyped');
+
+        $proto = is_string($class)
+            ? call_user_func([$class, 'proto'])
+            : $class->proto();
+
+        if (!$name) {
+            $name = $propertyName;
+        }
+
+        return $proto
+            ->getPropertyByName($propertyName)
+            ->makePrimitive($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveIpAddress
+     */
+    public static function ipAddress($name)
+    {
+        return new PrimitiveIpAddress($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveIpRange
+     */
+    public static function ipRange($name)
+    {
+        return new PrimitiveIpRange($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveEnum
+     */
+    public static function enum($name)
+    {
+        return new PrimitiveEnum($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveEnumByValue
+     */
+    public static function enumByValue($name)
+    {
+        return new PrimitiveEnumByValue($name);
+    }
+
+    /**
+     * @param $name
+     * @return PrimitiveEnumList
+     */
+    public static function enumList($name)
+    {
+        return new PrimitiveEnumList($name);
+    }
+}
