@@ -121,9 +121,9 @@ abstract class Enumeration extends NamedObject implements Serializable
     }
 
     /**
-     * @return null
+     * @return string
      */
-    public function toString()
+    public function toString() : string
     {
         return $this->name;
     }

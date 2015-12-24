@@ -474,7 +474,7 @@ class LightMetaProperty implements Stringable
         return $this->identifier;
     }
 
-    final public function toString()
+    final public function toString() : string
     {
         return
             get_class($this) . '::fill('
