@@ -22,15 +22,15 @@ final class Filter extends StaticFactory
     public static function textImport()
     {
         return
-            (new FilterChain())->
-            add(Filter::stripTags())->
-            add(Filter::trim());
+            (new FilterChain())
+                ->add(Filter::stripTags())
+                ->add(Filter::trim());
     }
 
     /**
      * @return StripTagsFilter
      **/
-    public static function stripTags()
+    public static function stripTags() : StripTagsFilter
     {
         return new StripTagsFilter();
     }
@@ -38,7 +38,7 @@ final class Filter extends StaticFactory
     /**
      * @return TrimFilter
      **/
-    public static function trim()
+    public static function trim() : TrimFilter
     {
         return new TrimFilter();
     }
@@ -46,7 +46,7 @@ final class Filter extends StaticFactory
     /**
      * @return FilterChain
      **/
-    public static function chain()
+    public static function chain() : FilterChain
     {
         return new FilterChain();
     }
@@ -54,7 +54,7 @@ final class Filter extends StaticFactory
     /**
      * @return HashFilter
      **/
-    public static function hash($binary = false)
+    public static function hash($binary = false) : HashFilter
     {
         return new HashFilter($binary);
     }
@@ -62,7 +62,7 @@ final class Filter extends StaticFactory
     /**
      * @return PCREFilter
      **/
-    public static function pcre()
+    public static function pcre() : PCREFilter
     {
         return new PCREFilter();
     }
@@ -70,7 +70,7 @@ final class Filter extends StaticFactory
     /**
      * @return CropFilter
      **/
-    public static function crop()
+    public static function crop() : CropFilter
     {
         return new CropFilter();
     }
@@ -78,7 +78,7 @@ final class Filter extends StaticFactory
     /**
      * @return LowerCaseFilter
      **/
-    public static function lowerCase()
+    public static function lowerCase() : LowerCaseFilter
     {
         return Singleton::getInstance('LowerCaseFilter');
     }
@@ -86,7 +86,7 @@ final class Filter extends StaticFactory
     /**
      * @return UpperCaseFilter
      **/
-    public static function upperCase()
+    public static function upperCase() : UpperCaseFilter
     {
         return Singleton::getInstance('UpperCaseFilter');
     }
@@ -94,7 +94,7 @@ final class Filter extends StaticFactory
     /**
      * @return HtmlSpecialCharsFilter
      **/
-    public static function htmlSpecialChars()
+    public static function htmlSpecialChars() : HtmlSpecialCharsFilter
     {
         return Singleton::getInstance('HtmlSpecialCharsFilter');
     }
@@ -102,7 +102,7 @@ final class Filter extends StaticFactory
     /**
      * @return NewLinesToBreaks
      **/
-    public static function nl2br()
+    public static function nl2br() : NewLinesToBreaks
     {
         return Singleton::getInstance('NewLinesToBreaks');
     }
@@ -110,7 +110,7 @@ final class Filter extends StaticFactory
     /**
      * @return UrlEncodeFilter
      **/
-    public static function urlencode()
+    public static function urlencode() : UrlEncodeFilter
     {
         return Singleton::getInstance('UrlEncodeFilter');
     }
@@ -118,7 +118,7 @@ final class Filter extends StaticFactory
     /**
      * @return UrlDecodeFilter
      **/
-    public static function urldecode()
+    public static function urldecode() : UrlDecodeFilter
     {
         return Singleton::getInstance('UrlDecodeFilter');
     }
@@ -126,7 +126,7 @@ final class Filter extends StaticFactory
     /**
      * @return UnixToUnixDecode
      **/
-    public static function uudecode()
+    public static function uudecode() : UnixToUnixDecode
     {
         return Singleton::getInstance('UnixToUnixDecode');
     }
@@ -134,7 +134,7 @@ final class Filter extends StaticFactory
     /**
      * @return UnixToUnixEncode
      **/
-    public static function uuencode()
+    public static function uuencode() : UnixToUnixEncode
     {
         return Singleton::getInstance('UnixToUnixEncode');
     }
@@ -142,7 +142,7 @@ final class Filter extends StaticFactory
     /**
      * @return StringReplaceFilter
      **/
-    public static function replaceSymbols($search = null, $replace = null)
+    public static function replaceSymbols($search = null, $replace = null) : StringReplaceFilter
     {
         return new StringReplaceFilter($search, $replace);
     }
@@ -150,7 +150,7 @@ final class Filter extends StaticFactory
     /**
      * @return SafeUtf8Filter
      **/
-    public static function safeUtf8()
+    public static function safeUtf8() : SafeUtf8Filter
     {
         return Singleton::getInstance('SafeUtf8Filter');
     }

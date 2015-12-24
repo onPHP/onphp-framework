@@ -82,10 +82,10 @@ class Time implements Stringable
                 case 5:
                 case 6:
 
-                    $this->
-                    setHour(substr($input, 0, 2))->
-                    setMinute(substr($input, 2, 2))->
-                    setSecond(substr($input, 4, 2));
+                    $this
+                        ->setHour(substr($input, 0, 2))
+                        ->setMinute(substr($input, 2, 2))
+                        ->setSecond(substr($input, 4, 2));
 
                     break;
 

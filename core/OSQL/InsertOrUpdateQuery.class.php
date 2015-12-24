@@ -67,13 +67,13 @@
 			elseif ($object instanceof Identifiable)
 				$this->set($field, $object->getId());
 			elseif ($object instanceof Range)
-				$this->
-					set($field.'_min', $object->getMin())->
-					set($field.'_max', $object->getMax());
+				$this
+					->set($field.'_min', $object->getMin())
+					->set($field.'_max', $object->getMax());
 			elseif ($object instanceof DateRange)
-				$this->
-					set($field.'_start', $object->getStart())->
-					set($field.'_end', $object->getEnd());
+				$this
+					->set($field.'_start', $object->getStart())
+					->set($field.'_end', $object->getEnd());
 			elseif ($object instanceof Time)
 				$this->set($field, $object->toFullString());
 			elseif ($object instanceof Stringable)

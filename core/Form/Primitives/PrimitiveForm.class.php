@@ -179,10 +179,10 @@ class PrimitiveForm extends BasePrimitive
         }
 
         if (!$importFiltering) {
-            $this->value->
-            disableImportFiltering()->
-            import($this->rawValue)->
-            enableImportFiltering();
+            $this->value
+                ->disableImportFiltering()
+                ->import($this->rawValue)
+                ->enableImportFiltering();
         } else {
             $this->value->import($this->rawValue);
         }
