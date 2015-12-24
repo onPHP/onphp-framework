@@ -78,7 +78,7 @@ class PgSQL extends DB
     /**
      * @return bool
      */
-    public function isConnected()
+    public function isConnected() : bool
     {
         return is_resource($this->link);
     }
@@ -214,7 +214,7 @@ class PgSQL extends DB
     /**
      * @return bool
      */
-    public function hasSequences()
+    public function hasSequences() : bool
     {
         return true;
     }

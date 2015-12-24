@@ -9,8 +9,10 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveAnyType extends BasePrimitive {/* nop */}
-?>
+/**
+ * @ingroup Primitives
+ **/
+final class PrimitiveAnyType extends BasePrimitive
+{
+    /* nop */
+}

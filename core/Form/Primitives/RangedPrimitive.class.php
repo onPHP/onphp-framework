@@ -9,43 +9,52 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	 * @ingroup Module
-	**/
-	abstract class RangedPrimitive extends BasePrimitive
-	{
-		protected $min = null;
-		protected $max = null;
-		
-		public function getMin()
-		{
-			return $this->min;
-		}
-		
-		/**
-		 * @return RangedPrimitive
-		**/
-		public function setMin($min)
-		{
-			$this->min = $min;
-			
-			return $this;
-		}
-		
-		public function getMax()
-		{
-			return $this->max;
-		}
-		
-		/**
-		 * @return RangedPrimitive
-		**/
-		public function setMax($max)
-		{
-			$this->max = $max;
-			
-			return $this;
-		}
-	}
-?>
+/**
+ * @ingroup Primitives
+ * @ingroup Module
+ **/
+abstract class RangedPrimitive extends BasePrimitive
+{
+    /** @var null  */
+    protected $min = null;
+    /** @var null  */
+    protected $max = null;
+
+    /**
+     * @return null
+     */
+    public function getMin()
+    {
+        return $this->min;
+    }
+
+    /**
+     * @param $min
+     * @return RangedPrimitive
+     */
+    public function setMin($min)
+    {
+        $this->min = $min;
+
+        return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function getMax()
+    {
+        return $this->max;
+    }
+
+    /**
+     * @param $max
+     * @return RangedPrimitive
+     */
+    public function setMax($max)
+    {
+        $this->max = $max;
+
+        return $this;
+    }
+}

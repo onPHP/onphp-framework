@@ -9,16 +9,20 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveIntegerIdentifier extends PrimitiveIdentifier
-	{
-		protected $scalar = false;
-		
-		public function setScalar($orly = false)
-		{
-			throw new WrongStateException();
-		}
-	}
-?>
+/**
+ * @ingroup Primitives
+ **/
+final class PrimitiveIntegerIdentifier extends PrimitiveIdentifier
+{
+    protected $scalar = false;
+
+    /**
+     * @param bool $orly
+     * @return IdentifiablePrimitive|void
+     * @throws WrongStateException
+     */
+    public function setScalar($orly = false)
+    {
+        throw new WrongStateException();
+    }
+}

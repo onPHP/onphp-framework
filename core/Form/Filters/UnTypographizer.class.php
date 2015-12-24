@@ -9,43 +9,47 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Filters
-	**/
-	final class UnTypographizer extends BaseFilter
-	{
-		private static $symbols =
-			array(
-				'&nbsp;'	=> ' ',
-				' &lt; '	=> ' < ',
-				' &gt; '	=> ' > ',
-				'&#133;'	=> '…',
-				'&trade;'	=> '™',
-				'&copy;'	=> '©',
-				'&#8470;'	=> '№',
-				'&#151;'	=> '—',
-				'&mdash;'	=> '—',
-				'&laquo;'	=> '«',
-				'&raquo;'	=> '»',
-				'&bull;'	=> '•',
-				'&reg;'		=> '®',
-				'&frac14;'	=> '¼',
-				'&frac12;'	=> '½',
-				'&frac34;'	=> '¾',
-				'&plusmn;'	=> '±'
-			);
-		
-		/**
-		 * @return UnTypographizer
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return strtr($value, self::$symbols);
-		}
-	}
-?>
+/**
+ * @ingroup Filters
+ **/
+final class UnTypographizer extends BaseFilter
+{
+    /** @var array  */
+    private static $symbols =
+        [
+            '&nbsp;' => ' ',
+            ' &lt; ' => ' < ',
+            ' &gt; ' => ' > ',
+            '&#133;' => '…',
+            '&trade;' => '™',
+            '&copy;' => '©',
+            '&#8470;' => '№',
+            '&#151;' => '—',
+            '&mdash;' => '—',
+            '&laquo;' => '«',
+            '&raquo;' => '»',
+            '&bull;' => '•',
+            '&reg;' => '®',
+            '&frac14;' => '¼',
+            '&frac12;' => '½',
+            '&frac34;' => '¾',
+            '&plusmn;' => '±'
+        ];
+
+    /**
+     * @return UnTypographizer
+     **/
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function apply($value) : string
+    {
+        return strtr($value, self::$symbols);
+    }
+}

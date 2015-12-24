@@ -9,24 +9,27 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * HTML Special Characters replacer.
-	 * 
-	 * @ingroup Filters
-	**/
-	final class HtmlSpecialCharsFilter extends BaseFilter
-	{
-		/**
-		 * @return HtmlSpecialCharsFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return htmlspecialchars($value);
-		}
-	}
-?>
+/**
+ * HTML Special Characters replacer.
+ *
+ * @ingroup Filters
+ **/
+final class HtmlSpecialCharsFilter extends BaseFilter
+{
+    /**
+     * @return HtmlSpecialCharsFilter
+     **/
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function apply($value) : string
+    {
+        return htmlspecialchars($value);
+    }
+}

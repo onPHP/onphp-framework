@@ -9,25 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Unserialize string
-	 * 
-	 * @ingroup Filters
-	 * @deprecated Because of the potential security problem.
-	**/
-	final class UnserializeFilter extends BaseFilter
-	{
-		/**
-		 * @return UnserializeFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return unserialize($value);
-		}
-	}
-?>
+/**
+ * Unserialize string
+ *
+ * @ingroup Filters
+ * @deprecated Because of the potential security problem.
+ **/
+final class UnserializeFilter extends BaseFilter
+{
+    /**
+     * @return UnserializeFilter
+     **/
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function apply($value)
+    {
+        return unserialize($value);
+    }
+}

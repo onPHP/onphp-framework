@@ -9,163 +9,201 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveIdentifierList extends PrimitiveIdentifier
-	{
-		protected $value = array();
-		private $ignoreEmpty = false;
-		private $ignoreWrong = false;
-		
-		/**
-		 * @return PrimitiveIdentifierList
-		**/
-		public function clean()
-		{
-			parent::clean();
-			
-			// restoring our very own default
-			$this->value = array();
-			
-			return $this;
-		}
-		
-		/**
-		 * @return PrimitiveIdentifierList
-		**/
-		public function setValue($value)
-		{
-			if ($value) {
-				Assert::isArray($value);
-				Assert::isInstance(current($value), $this->className);
-			}
-			
-			$this->value = $value;
-			
-			return $this;
-		}
-		
-		public function importValue($value)
-		{
-			if ($value instanceof UnifiedContainer) {
-				if ($value->isLazy())
-					return $this->import(
-						array($this->name => $value->getList())
-					);
-				elseif (
-					$value->getParentObject()->getId()
-					&& ($list = $value->getList())
-				) {
-					return $this->import(
-						array($this->name => ArrayUtils::getIdsArray($list))
-					);
-				} else {
-					return parent::importValue(null);
-				}
-			}
-			
-			if (is_array($value)) {
-				try {
-					if ($this->scalar)
-						Assert::isScalar(current($value));
-					else
-						Assert::isInteger(current($value));
-					
-					return $this->import(
-						array($this->name => $value)
-					);
-				} catch (WrongArgumentException $e) {
-					return $this->import(
-						array($this->name => ArrayUtils::getIdsArray($value))
-					);
-				}
-			}
-			
-			return parent::importValue($value);
-		}
-		
-		public function import($scope)
-		{
-			if (!$this->className)
-				throw new WrongStateException(
-					"no class defined for PrimitiveIdentifierList '{$this->name}'"
-				);
-			
-			if (!BasePrimitive::import($scope))
-				return null;
-			
-			if (!is_array($scope[$this->name]))
-				return false;
-			
-			$list = array_unique($scope[$this->name]);
-			
-			$values = array();
-			
-			foreach ($list as $id) {
-				if ((string) $id == "" && $this->isIgnoreEmpty())
-					continue;
+/**
+ * @ingroup Primitives
+ **/
+final class PrimitiveIdentifierList extends PrimitiveIdentifier
+{
+    /** @var array  */
+    protected $value = [];
+    /** @var bool  */
+    private $ignoreEmpty = false;
+    /** @var bool  */
+    private $ignoreWrong = false;
 
-				if (
-					($this->scalar && !Assert::checkScalar($id))
-					|| (!$this->scalar && !Assert::checkInteger($id))
-				) {
-					if (!$this->isIgnoreWrong())
-						return false;
-					else
-						continue; //just skip it
-				}
-				
-				$values[] = $id;
-			}
-			
-			$objectList = $this->dao()->getListByIds($values);
-			
-			if (
-				(
-					(count($objectList) == count($values))
-					|| $this->isIgnoreWrong()
-				)
-				&& !($this->min && count($values) < $this->min)
-				&& !($this->max && count($values) > $this->max)
-			) {
-				$this->value = $objectList;
-				return true;
-			}
-			
-			return false;
-		}
-		
-		public function exportValue()
-		{
-			if (!$this->value)
-				return null;
-			
-			return ArrayUtils::getIdsArray($this->value);
-		}
+    /**
+     * @return PrimitiveIdentifierList
+     */
+    public function clean() : PrimitiveIdentifierList
+    {
+        parent::clean();
 
-		public function setIgnoreEmpty($orly = true)
-		{
-			$this->ignoreEmpty = ($orly === true);
+        // restoring our very own default
+        $this->value = [];
 
-			return $this;
-		}
+        return $this;
+    }
 
-		public function isIgnoreEmpty()
-		{
-			return $this->ignoreEmpty;
-		}
-		
-		public function setIgnoreWrong($orly = true)
-		{
-			$this->ignoreWrong = ($orly === true);
-			
-			return $this;
-		}
-		
-		public function isIgnoreWrong()
-		{
-			return $this->ignoreWrong;
-		}
-	}
-?>
+    /**
+     * @param $value
+     * @return PrimitiveIdentifierList
+     * @throws WrongArgumentException
+     */
+    public function setValue($value) : PrimitiveIdentifierList
+    {
+        if ($value) {
+            Assert::isArray($value);
+            Assert::isInstance(current($value), $this->className);
+        }
+
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param $value
+     * @return bool|mixed|null
+     * @throws WrongStateException
+     */
+    public function importValue($value)
+    {
+        if ($value instanceof UnifiedContainer) {
+            if ($value->isLazy()) {
+                return $this->import(
+                    [$this->name => $value->getList()]
+                );
+            } elseif (
+                $value->getParentObject()->getId()
+                && ($list = $value->getList())
+            ) {
+                return $this->import(
+                    [$this->name => ArrayUtils::getIdsArray($list)]
+                );
+            } else {
+                return parent::importValue(null);
+            }
+        }
+
+        if (is_array($value)) {
+            try {
+                if ($this->scalar) {
+                    Assert::isScalar(current($value));
+                } else {
+                    Assert::isInteger(current($value));
+                }
+
+                return $this->import(
+                    [$this->name => $value]
+                );
+            } catch (WrongArgumentException $e) {
+                return $this->import(
+                    [$this->name => ArrayUtils::getIdsArray($value)]
+                );
+            }
+        }
+
+        return parent::importValue($value);
+    }
+
+    /**
+     * @param $scope
+     * @return bool|null
+     * @throws WrongStateException
+     */
+    public function import($scope)
+    {
+        if (!$this->className) {
+            throw new WrongStateException(
+                "no class defined for PrimitiveIdentifierList '{$this->name}'"
+            );
+        }
+
+        if (!BasePrimitive::import($scope)) {
+            return null;
+        }
+
+        if (!is_array($scope[$this->name])) {
+            return false;
+        }
+
+        $list = array_unique($scope[$this->name]);
+
+        $values = [];
+
+        foreach ($list as $id) {
+            if ((string) $id == "" && $this->isIgnoreEmpty()) {
+                continue;
+            }
+
+            if (
+                ($this->scalar && !Assert::checkScalar($id))
+                || (!$this->scalar && !Assert::checkInteger($id))
+            ) {
+                if (!$this->isIgnoreWrong()) {
+                    return false;
+                } else {
+                    continue;
+                } //just skip it
+            }
+
+            $values[] = $id;
+        }
+
+        $objectList = $this->dao()->getListByIds($values);
+
+        if (
+            (
+                (count($objectList) == count($values))
+                || $this->isIgnoreWrong()
+            )
+            && !($this->min && count($values) < $this->min)
+            && !($this->max && count($values) > $this->max)
+        ) {
+            $this->value = $objectList;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isIgnoreEmpty() : bool
+    {
+        return $this->ignoreEmpty;
+    }
+
+    /**
+     * @param bool $orly
+     * @return PrimitiveIdentifierList
+     */
+    public function setIgnoreEmpty($orly = true) : PrimitiveIdentifierList
+    {
+        $this->ignoreEmpty = ($orly === true);
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isIgnoreWrong() : bool
+    {
+        return $this->ignoreWrong;
+    }
+
+    /**
+     * @param bool $orly
+     * @return $this
+     */
+    public function setIgnoreWrong($orly = true)
+    {
+        $this->ignoreWrong = ($orly === true);
+
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function exportValue()
+    {
+        if (!$this->value) {
+            return null;
+        }
+
+        return ArrayUtils::getIdsArray($this->value);
+    }
+}

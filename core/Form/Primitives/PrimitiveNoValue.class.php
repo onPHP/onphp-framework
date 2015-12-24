@@ -9,51 +9,72 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveNoValue extends BasePrimitive
-	{
-		/**
-		 * @return PrimitiveNoValue
-		**/
-		public function setValue($value)
-		{
-			Assert::isUnreachable('No value!');
-			
-			return $this;
-		}
-		
-		public function setDefaultValue($default)
-		{
-			Assert::isUnreachable('No default value!');
-			
-			return $this;
-		}
-		
-		public function setRawValue($raw)
-		{
-			Assert::isUnreachable('No raw value!');
-			
-			return $this;
-		}
-		
-		public function importValue($value)
-		{
-			Assert::isUnreachable('No import value!');
-			
-			return $this;
-		}
-		
-		public function import($scope)
-		{
-			if (
-				array_key_exists($this->name, $scope)
-				&& $scope[$this->name] == null
-			)
-				return $this->imported = true;
-			
-			return null;
-		}
-	}
-?>
+/**
+ * @ingroup Primitives
+ **/
+final class PrimitiveNoValue extends BasePrimitive
+{
+    /**
+     * @param $value
+     * @return PrimitiveNoValue
+     * @throws WrongArgumentException
+     */
+    public function setValue($value) : PrimitiveNoValue
+    {
+        Assert::isUnreachable('No value!');
+
+        return $this;
+    }
+
+    /**
+     * @param $default
+     * @return PrimitiveNoValue
+     * @throws WrongArgumentException
+     */
+    public function setDefaultValue($default) : PrimitiveNoValue
+    {
+        Assert::isUnreachable('No default value!');
+
+        return $this;
+    }
+
+    /**
+     * @param $raw
+     * @return PrimitiveNoValue
+     * @throws WrongArgumentException
+     */
+    public function setRawValue($raw) : PrimitiveNoValue
+    {
+        Assert::isUnreachable('No raw value!');
+
+        return $this;
+    }
+
+    /**
+     * @param $value
+     * @return PrimitiveNoValue
+     * @throws WrongArgumentException
+     */
+    public function importValue($value) : PrimitiveNoValue
+    {
+        Assert::isUnreachable('No import value!');
+
+        return $this;
+    }
+
+    /**
+     * @param $scope
+     * @return bool|null
+     */
+    public function import($scope)
+    {
+        if (
+            array_key_exists($this->name, $scope)
+            && $scope[$this->name] == null
+        ) {
+            return $this->imported = true;
+        }
+
+        return null;
+    }
+}

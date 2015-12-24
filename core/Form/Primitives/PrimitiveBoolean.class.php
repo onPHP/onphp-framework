@@ -9,37 +9,49 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveBoolean extends BasePrimitive
-	{
-		public function import($scope)
-		{
-			if (isset($scope[$this->name]))
-				$this->value = true;
-			else
-				$this->value = false;
-			
-			return $this->imported = true;
-		}
-		
-		public function importValue($value)
-		{
-			if (
-				false === $value
-				|| null === $value
-			)
-				$this->value = false;
-			else
-				$this->value = true;
-			
-			return $this->imported = true;
-		}
-		
-		public function isImported()
-		{
-			return ($this->imported && $this->value);
-		}
-	}
-?>
+/**
+ * @ingroup Primitives
+ **/
+final class PrimitiveBoolean extends BasePrimitive
+{
+    /**
+     * @param $scope
+     * @return bool
+     */
+    public function import($scope)
+    {
+        if (isset($scope[$this->name])) {
+            $this->value = true;
+        } else {
+            $this->value = false;
+        }
+
+        return $this->imported = true;
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    public function importValue($value)
+    {
+        if (
+            false === $value
+            || null === $value
+        ) {
+            $this->value = false;
+        } else {
+            $this->value = true;
+        }
+
+        return $this->imported = true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isImported()
+    {
+        return ($this->imported && $this->value);
+    }
+}

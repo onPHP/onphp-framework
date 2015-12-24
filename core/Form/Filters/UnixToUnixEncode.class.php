@@ -9,24 +9,27 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Uuencode a string.
-	 * 
-	 * @ingroup Filters
-	**/
-	final class UnixToUnixEncode extends BaseFilter
-	{
-		/**
-		 * @return UnixToUnixEncode
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return convert_uuencode($value);
-		}
-	}
-?>
+/**
+ * Uuencode a string.
+ *
+ * @ingroup Filters
+ **/
+final class UnixToUnixEncode extends BaseFilter
+{
+    /**
+     * @return UnixToUnixEncode
+     **/
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function apply($value) : string
+    {
+        return convert_uuencode($value);
+    }
+}

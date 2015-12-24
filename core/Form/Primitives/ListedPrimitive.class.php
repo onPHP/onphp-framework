@@ -9,17 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	 * @ingroup Module
-	**/
-	interface ListedPrimitive
-	{
-		/// @return plain array of possible primitive choices
-		public function getList();
-		public function setList($list);
-		
-		public function getChoiceValue();
-		public function getActualChoiceValue();
-	}
-?>
+/**
+ * @ingroup Primitives
+ * @ingroup Module
+ **/
+interface ListedPrimitive
+{
+    /// @return plain array of possible primitive choices
+    public function getList();
+
+    public function setList($list);
+
+    public function getChoiceValue();
+
+    public function getActualChoiceValue();
+}

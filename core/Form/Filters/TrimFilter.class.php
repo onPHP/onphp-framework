@@ -9,76 +9,82 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Filters
-	**/
-	final class TrimFilter implements Filtrator
-	{
-		const LEFT	= 'l';
-		const RIGHT	= 'r';
-		const BOTH	= null;
-		
-		private $charlist	= null;
-		private $direction	= self::BOTH;
-		
-		/**
-		 * @deprecated
-		 * @return TrimFilter
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return TrimFilter
-		**/
-		public function setLeft()
-		{
-			$this->direction = self::LEFT;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return TrimFilter
-		**/
-		public function setRight()
-		{
-			$this->direction = self::RIGHT;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return TrimFilter
-		**/
-		public function setBoth()
-		{
-			$this->direction = self::BOTH;
-			
-			return $this;
-		}
-		
-		public function apply($value)
-		{
-			$function = $this->direction.'trim';
-			
-			return (
-				$this->charlist
-					? $function($value, $this->charlist)
-					: $function($value)
-				);
-		}
-		
-		/**
-		 * @return TrimFilter
-		**/
-		public function setCharlist($charlist)
-		{
-			$this->charlist = $charlist;
-			
-			return $this;
-		}
-	}
+/**
+ * @ingroup Filters
+ **/
+final class TrimFilter implements Filtrator
+{
+    const LEFT = 'l';
+    const RIGHT = 'r';
+    const BOTH = null;
+
+    private $charlist = null;
+    private $direction = self::BOTH;
+
+    /**
+     * @deprecated
+     * @return TrimFilter
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return TrimFilter
+     **/
+    public function setLeft() : TrimFilter
+    {
+        $this->direction = self::LEFT;
+
+        return $this;
+    }
+
+    /**
+     * @return TrimFilter
+     */
+    public function setRight() : TrimFilter
+    {
+        $this->direction = self::RIGHT;
+
+        return $this;
+    }
+
+    /**
+     * @return TrimFilter
+     */
+    public function setBoth() : TrimFilter
+    {
+        $this->direction = self::BOTH;
+
+        return $this;
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function apply($value)
+    {
+        $function = $this->direction . 'trim';
+
+        return (
+        $this->charlist
+            ? $function($value, $this->charlist)
+            : $function($value)
+        );
+    }
+
+    /**
+     * @param $charlist
+     * @return TrimFilter
+     */
+    public function setCharlist($charlist) : TrimFilter
+    {
+        $this->charlist = $charlist;
+
+        return $this;
+    }
+}
+
 ?>

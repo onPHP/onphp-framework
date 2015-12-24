@@ -9,26 +9,31 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Filters
-	**/
-	final class Paragraphizer extends BaseFilter
-	{
-		/**
-		 * @return Paragraphizer
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return preg_replace(
-				'~^([^<].+)\s$~Uums',
-				'<p>$1</p>'."\n",
-				$value
-			);
-		}
-	}
+/**
+ * @ingroup Filters
+ **/
+final class Paragraphizer extends BaseFilter
+{
+    /**
+     * @return Paragraphizer
+     **/
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function apply($value)
+    {
+        return preg_replace(
+            '~^([^<].+)\s$~Uums',
+            '<p>$1</p>' . "\n",
+            $value
+        );
+    }
+}
+
 ?>

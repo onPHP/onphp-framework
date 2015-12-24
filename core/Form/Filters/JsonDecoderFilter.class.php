@@ -9,34 +9,37 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Filters
-	**/
-	final class JsonDecoderFilter extends BaseFilter
-	{
-		private $assoc = false;
-		
-		/**
-		 * @return JsonDecodeFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		/**
-		 * @return JsonDecodeFilter
-		**/
-		public function setAssoc($orly = true)
-		{
-			$this->assoc = (true === $orly);
-			
-			return $this;
-		}
-		
-		public function apply($value)
-		{
-			return json_decode($value, $this->assoc);
-		}
-	}
-?>
+/**
+ * @ingroup Filters
+ **/
+final class JsonDecoderFilter extends BaseFilter
+{
+    private $assoc = false;
+
+    /**
+     * @return JsonDecoderFilter
+     **/
+    public static function me() : JsonDecoderFilter
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    /**
+     * @return JsonDecoderFilter
+     **/
+    public function setAssoc($orly = true) : JsonDecoderFilter
+    {
+        $this->assoc = (true === $orly);
+
+        return $this;
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function apply($value)
+    {
+        return json_decode($value, $this->assoc);
+    }
+}

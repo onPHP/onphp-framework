@@ -9,24 +9,27 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Inserts HTML line breaks before all newlines in a string.
-	 * 
-	 * @ingroup Filters
-	**/
-	final class NewLinesToBreaks extends BaseFilter
-	{
-		/**
-		 * @return NewLinesToBreaks
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return nl2br($value);
-		}
-	}
-?>
+/**
+ * Inserts HTML line breaks before all newlines in a string.
+ *
+ * @ingroup Filters
+ **/
+final class NewLinesToBreaks extends BaseFilter
+{
+    /**
+     * @return NewLinesToBreaks
+     **/
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function apply($value) : string
+    {
+        return nl2br($value);
+    }
+}

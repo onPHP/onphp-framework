@@ -9,19 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitivePlainList extends PrimitiveList
-	{
-		/**
-		 * @return PrimitivePlainList
-		**/
-		public function setList($list)
-		{
-			$this->list = array_combine($list, $list);
-			
-			return $this;
-		}
-	}
-?>
+/**
+ * @ingroup Primitives
+ **/
+final class PrimitivePlainList extends PrimitiveList
+{
+    /**
+     * @return PrimitivePlainList
+     **/
+    public function setList($list) : PrimitivePlainList
+    {
+        $this->list = array_combine($list, $list);
+
+        return $this;
+    }
+}

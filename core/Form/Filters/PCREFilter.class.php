@@ -9,54 +9,61 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Filters
-	**/
-	final class PCREFilter implements Filtrator
-	{
-		private $search 	= null;
-		private $replace	= null;
-		private $limit		= -1;
-		
-		/**
-		 * @deprecated
-		 * @return PCREFilter
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return PCREFilter
-		**/
-		public function setExpression($search, $replace)
-		{
-			$this->search 	= $search;
-			$this->replace 	= $replace;
-			
-			return $this;
-		}
-		
-		public function apply($value)
-		{
-			return
-				preg_replace(
-					$this->search,
-					$this->replace,
-					$value,
-					$this->limit
-				);
-		}
-		
-		/**
-		 * @return PCREFilter
-		**/
-		public function setLimit($limit)
-		{
-			$this->limit = $limit;
-			
-			return $this;
-		}
-	}
+/**
+ * @ingroup Filters
+ **/
+final class PCREFilter implements Filtrator
+{
+    private $search = null;
+    private $replace = null;
+    private $limit = -1;
+
+    /**
+     * @deprecated
+     * @return PCREFilter
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @param $search
+     * @param $replace
+     * @return PCREFilter
+     */
+    public function setExpression($search, $replace) : PCREFilter
+    {
+        $this->search = $search;
+        $this->replace = $replace;
+
+        return $this;
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function apply($value)
+    {
+        return
+            preg_replace(
+                $this->search,
+                $this->replace,
+                $value,
+                $this->limit
+            );
+    }
+
+    /**
+     * @return PCREFilter
+     **/
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+}
+
 ?>

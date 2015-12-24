@@ -9,41 +9,47 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @see RegulatedPrimitive::addImportFilter()
-	 * 
-	 * @ingroup Filters
-	**/
-	final class StripTagsFilter implements Filtrator
-	{
-		private $exclude = null;
-		
-		/**
-		 * @deprecated
-		 *
-		 * @return StripTagsFilter
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return StripTagsFilter
-		**/
-		public function setAllowableTags($exclude)
-		{
-			if (null !== $exclude)
-				Assert::isString($exclude);
-			
-			$this->exclude = $exclude;
-			
-			return $this;
-		}
-		
-		public function apply($value)
-		{
-			return strip_tags($value, $this->exclude);
-		}
-	}
+/**
+ * @see RegulatedPrimitive::addImportFilter()
+ *
+ * @ingroup Filters
+ **/
+final class StripTagsFilter implements Filtrator
+{
+    private $exclude = null;
+
+    /**
+     * @deprecated
+     *
+     * @return StripTagsFilter
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return StripTagsFilter
+     **/
+    public function setAllowableTags($exclude)
+    {
+        if (null !== $exclude) {
+            Assert::isString($exclude);
+        }
+
+        $this->exclude = $exclude;
+
+        return $this;
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function apply($value)
+    {
+        return strip_tags($value, $this->exclude);
+    }
+}
+
 ?>

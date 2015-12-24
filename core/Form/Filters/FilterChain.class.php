@@ -9,48 +9,53 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Chained Filtrator.
-	 * 
-	 * @ingroup Form
-	**/
-	final class FilterChain implements Filtrator
-	{
-		private $chain = array();
+/**
+ * Chained Filtrator.
+ *
+ * @ingroup Form
+ **/
+final class FilterChain implements Filtrator
+{
+    private $chain = [];
 
-		/**
-		 * @deprecated
-		 * @return FilterChain
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return FilterChain
-		**/
-		public function add(Filtrator $filter)
-		{
-			$this->chain[] = $filter;
-			return $this;
-		}
+    /**
+     * @deprecated
+     * @return FilterChain
+     **/
+    public static function create()
+    {
+        return new self;
+    }
 
-		/**
-		 * @return FilterChain
-		**/
-		public function dropAll()
-		{
-			$this->chain = array();
-			return $this;
-		}
+    /**
+     * @param Filtrator $filter
+     * @return FilterChain
+     */
+    public function add(Filtrator $filter) : FilterChain
+    {
+        $this->chain[] = $filter;
+        return $this;
+    }
 
-		public function apply($value)
-		{
-			foreach ($this->chain as $filter)
-				$value = $filter->apply($value);
+    /**
+     * @return FilterChain
+     */
+    public function dropAll() : FilterChain
+    {
+        $this->chain = [];
+        return $this;
+    }
 
-			return $value;
-		}
-	}
-?>
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function apply($value)
+    {
+        foreach ($this->chain as $filter) {
+            $value = $filter->apply($value);
+        }
+
+        return $value;
+    }
+}

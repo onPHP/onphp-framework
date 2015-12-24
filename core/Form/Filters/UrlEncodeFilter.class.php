@@ -9,22 +9,25 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Filters
-	**/
-	final class UrlEncodeFilter extends BaseFilter
-	{
-		/**
-		 * @return UrlEncodeFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return urlencode($value);
-		}
-	}
-?>
+/**
+ * @ingroup Filters
+ **/
+final class UrlEncodeFilter extends BaseFilter
+{
+    /**
+     * @return UrlEncodeFilter
+     **/
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function apply($value)
+    {
+        return urlencode($value);
+    }
+}

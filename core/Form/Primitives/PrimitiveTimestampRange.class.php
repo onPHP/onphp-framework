@@ -9,38 +9,48 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveTimestampRange extends PrimitiveDateRange
-	{
-		private $className = null;
-		
-		/**
-		 * @return PrimitiveTimestampRange
-		**/
-		public static function create($name)
-		{
-			return new self($name);
-		}
-		
-		protected function getObjectName()
-		{
-			return 'TimestampRange';
-		}
-		
-		protected function makeRange($string)
-		{
-			if (strpos($string, ' - ') !== false) {
-				list($first, $second) = explode(' - ', $string);
-				
-				return new TimestampRange(
-					new Timestamp(trim($first)),
-					new Timestamp(trim($second))
-				);
-			}
-			
-			throw new WrongArgumentException();
-		}
-	}
+/**
+ * @ingroup Primitives
+ **/
+final class PrimitiveTimestampRange extends PrimitiveDateRange
+{
+
+    /**
+     * @deprecated
+     *
+     * @return PrimitiveTimestampRange
+     **/
+    public static function create($name)
+    {
+        return new self($name);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getObjectName() : string
+    {
+        return 'TimestampRange';
+    }
+
+    /**
+     * @param $string
+     * @return TimestampRange
+     * @throws WrongArgumentException
+     */
+    protected function makeRange($string)
+    {
+        if (strpos($string, ' - ') !== false) {
+            list($first, $second) = explode(' - ', $string);
+
+            return new TimestampRange(
+                new Timestamp(trim($first)),
+                new Timestamp(trim($second))
+            );
+        }
+
+        throw new WrongArgumentException();
+    }
+}
+
 ?>

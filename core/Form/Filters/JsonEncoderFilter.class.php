@@ -9,22 +9,25 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Filters
-	**/
-	final class JsonEncoderFilter extends BaseFilter
-	{
-		/**
-		 * @return JsonEncoderFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return json_encode($value);
-		}
-	}
-?>
+/**
+ * @ingroup Filters
+ **/
+final class JsonEncoderFilter extends BaseFilter
+{
+    /**
+     * @return JsonEncoderFilter
+     **/
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function apply($value) : string
+    {
+        return json_encode($value);
+    }
+}

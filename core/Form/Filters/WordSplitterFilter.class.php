@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2008 by Evgeniy N. Sokolov	                           *
+ *   Copyright (C) 2008 by Evgeniy N. Sokolov                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -9,59 +9,77 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Filters
-	**/
-	final class WordSplitterFilter implements Filtrator
-	{
-		private $maxWordLength 	= 25;
-		private $delimer 		= '&#x200B;';
-		
-		/**
-		 * @return WordSplitterFilter
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return WordSplitterFilter
-		**/
-		public function setMaxWordLength($length)
-		{
-			$this->maxWordLength = $length;
-			return $this;
-		}
-		
-		public function getMaxWordLength()
-		{
-			return $this->maxWordLength;
-		}
-		
-		/**
-		 * @return WordSplitterFilter
-		**/
-		public function setDelimer($delimer)
-		{
-			$this->delimer = $delimer;
-			return $this;
-		}
-		
-		public function getDelimer()
-		{
-			return $this->delimer;
-		}
-		
-		public function apply($value)
-		{
-			return
-				preg_replace(
-					'/([^\s]{'.$this->getMaxWordLength().','
-						.$this->getMaxWordLength().'})([^\s])/u',
-					'$1'.$this->getDelimer().'$2',
-					$value
-				);
-		}
-	}
+/**
+ * @ingroup Filters
+ **/
+final class WordSplitterFilter implements Filtrator
+{
+    /** @var int  */
+    private $maxWordLength = 25;
+
+    /** @var string  */
+    private $delimer = '&#x200B;';
+
+    /**
+     * @deprecated
+     * @return WordSplitterFilter
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function apply($value)
+    {
+        return
+            preg_replace(
+                '/([^\s]{' . $this->getMaxWordLength() . ','
+                . $this->getMaxWordLength() . '})([^\s])/u',
+                '$1' . $this->getDelimer() . '$2',
+                $value
+            );
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getMaxWordLength() : int
+    {
+        return $this->maxWordLength;
+    }
+
+    /**
+     * @param $length
+     * @return WordSplitterFilter
+     */
+    public function setMaxWordLength($length)
+    {
+        $this->maxWordLength = $length;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDelimer() : string
+    {
+        return $this->delimer;
+    }
+
+    /**
+     * @param $delimer
+     * @return WordSplitterFilter
+     */
+    public function setDelimer($delimer)
+    {
+        $this->delimer = $delimer;
+        return $this;
+    }
+}
+
 ?>
