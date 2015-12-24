@@ -9,13 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Support interface for Form's logic rules.
-	 * 
-	 * @ingroup Logic
-	**/
-	interface LogicalObject extends DialectString
-	{
-		public function toBoolean(Form $form);
-	}
-?>
+/**
+ * Support interface for Form's logic rules.
+ *
+ * @ingroup Logic
+ **/
+interface LogicalObject extends DialectString
+{
+    public function toBoolean(Form $form);
+}
