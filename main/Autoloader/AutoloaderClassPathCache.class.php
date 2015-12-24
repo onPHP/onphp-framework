@@ -26,6 +26,7 @@ class AutoloaderClassPathCache implements AutoloaderRecachable, AutoloaderWithNa
     private $classCachePath = ONPHP_CLASS_CACHE;
 
     /**
+     * @deprecated
      * @return AutoloaderClassPathCache
      */
     public static function create()

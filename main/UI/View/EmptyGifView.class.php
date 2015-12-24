@@ -15,6 +15,7 @@
 class EmptyGifView implements View
 {
     /**
+     * @deprecated
      * @return EmptyGifView
      **/
     public static function create()

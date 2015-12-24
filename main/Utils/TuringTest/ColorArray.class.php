@@ -17,6 +17,7 @@ class ColorArray
     private $colors = array();
 
     /**
+     * @deprecated
      * @return ColorArray
      */
     public static function create()

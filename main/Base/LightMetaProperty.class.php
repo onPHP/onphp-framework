@@ -74,6 +74,8 @@ class LightMetaProperty implements Stringable
     private $identifier = null;
 
     /**
+     * @deprecated
+     *
      * @return LightMetaProperty
      **/
     public static function create()

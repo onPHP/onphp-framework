@@ -17,6 +17,7 @@ class NamespaceResolverPSR0 extends NamespaceResolverOnPHP
     private $allowedUnderline = false;
 
     /**
+     * @deprecated
      * @return NamespaceResolverPSR0
      */
     public static function create()

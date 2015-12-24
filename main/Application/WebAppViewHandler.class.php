@@ -23,6 +23,7 @@ class WebAppViewHandler implements InterceptingChainHandler
     private $headers = array();
 
     /**
+     * @deprecated
      * @return WebAppViewHandler
      */
     public static function create()

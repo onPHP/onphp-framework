@@ -12,6 +12,8 @@
 class WebAppControllerHandler implements InterceptingChainHandler
 {
     /**
+     * @deprecated
+     *
      * @return WebAppControllerHandler
      */
     public static function create()

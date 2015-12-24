@@ -13,6 +13,8 @@ class ApplicationToken
     protected $imported = false;
 
     /**
+     * @deprecated
+     *
      * @return ApplicationToken
      */
     public static function create()

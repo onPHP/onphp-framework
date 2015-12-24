@@ -17,6 +17,8 @@
 final class InnerMetaProperty extends LightMetaProperty
 {
     /**
+     * @deprecated
+     *
      * @return InnerMetaProperty
      **/
     public static function create()

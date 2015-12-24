@@ -70,6 +70,8 @@ class WebApplication extends InterceptingChain implements IServiceLocatorSupport
     }
 
     /**
+     * @deprecated
+     *
      * @return WebApplication
      */
     public static function create()

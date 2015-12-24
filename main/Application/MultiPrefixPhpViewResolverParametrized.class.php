@@ -16,6 +16,8 @@ class MultiPrefixPhpViewResolverParametrized extends MultiPrefixPhpViewResolver
     protected $params = array();
 
     /**
+     * @deprecated
+     *
      * @return MultiPrefixPhpViewResolverParametrized
      **/
     public static function create()

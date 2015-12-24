@@ -18,6 +18,8 @@ class WebAppControllerResolverHandler implements InterceptingChainHandler
     protected $notfoundController = 'NotFoundController';
 
     /**
+     * @deprecated
+     *
      * @return WebAppControllerResolverHandler
      */
     public static function create()

@@ -29,6 +29,8 @@ class ApplicationUrl
     protected $absolute = false;
 
     /**
+     * @deprecated
+     *
      * @return ApplicationUrl
      **/
     public static function create()

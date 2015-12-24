@@ -37,6 +37,8 @@ class InnerTransactionWrapper
 
     /**
      * @deprecated
+     *
+     * @deprecated
      * @return InnerTransactionWrapper
      */
     public static function create() : InnerTransactionWrapper

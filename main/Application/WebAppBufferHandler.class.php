@@ -12,6 +12,8 @@
 class WebAppBufferHandler implements InterceptingChainHandler
 {
     /**
+     * @deprecated
+     *
      * @return WebAppBufferHandler
      */
     public static function create()

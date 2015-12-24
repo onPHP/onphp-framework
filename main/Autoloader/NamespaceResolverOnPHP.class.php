@@ -16,6 +16,7 @@ class NamespaceResolverOnPHP implements NamespaceResolver
     private $classExtension = EXT_CLASS;
 
     /**
+     * @deprecated
      * @return NamespaceResolverOnPHP
      */
     public static function create()

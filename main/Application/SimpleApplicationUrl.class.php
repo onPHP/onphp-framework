@@ -6,6 +6,8 @@
 class SimpleApplicationUrl extends ApplicationUrl
 {
     /**
+     * @deprecated
+     *
      * @return SimpleApplicationUrl
      **/
     public static function create()

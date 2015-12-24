@@ -15,6 +15,7 @@
 class ForbiddenCommand implements EditorCommand
 {
     /**
+     * @deprecated
      * @return ForbiddenCommand
      **/
     public static function create()

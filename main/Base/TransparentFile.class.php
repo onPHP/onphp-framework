@@ -17,6 +17,8 @@ final class TransparentFile
     private $tempFile = null;
 
     /**
+     * @deprecated
+     *
      * @return TransparentFile
      **/
     public static function create()

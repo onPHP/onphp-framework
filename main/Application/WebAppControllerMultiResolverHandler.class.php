@@ -15,6 +15,8 @@ class WebAppControllerMultiResolverHandler extends WebAppControllerResolverHandl
     protected $subPathList = array();
 
     /**
+     * @deprecated
+     *
      * @return WebAppControllerMultiResolverHandler
      */
     public static function create()

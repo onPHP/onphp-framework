@@ -19,6 +19,8 @@ class WebAppLinkerInjector implements InterceptingChainHandler
     private $baseUrl = null;
 
     /**
+     * @deprecated
+     *
      * @return WebAppLinkerInjector
      */
     public static function create()

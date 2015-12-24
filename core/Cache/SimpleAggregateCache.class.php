@@ -21,6 +21,8 @@ class SimpleAggregateCache extends AggregateCache
     private $labels = null;
 
     /**
+     * @deprecated
+     *
      * @return SimpleAggregateCache
      **/
     public static function create()

@@ -21,6 +21,8 @@ class Identifier implements Identifiable
     private $final = false;
 
     /**
+     * @deprecated
+     *
      * @return Identifier
      */
     public static function create() : Identifier

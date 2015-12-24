@@ -32,6 +32,7 @@ class JsonXssView extends JsonPView
     protected $callback = 'name';
 
     /**
+     * @deprecated
      * @static
      * @return JsonXssView
      */

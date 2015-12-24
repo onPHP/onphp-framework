@@ -17,6 +17,8 @@ class CallChain
     private $chain = array();
 
     /**
+     * @deprecated
+     *
      * @return CallChain
      **/
     public static function create()

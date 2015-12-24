@@ -26,6 +26,7 @@ class JsonPView extends JsonView
     protected $callback = null;
 
     /**
+     * @deprecated
      * @static
      * @return JsonPView
      */

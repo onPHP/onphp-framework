@@ -18,6 +18,8 @@ class WebAppAjaxHandler implements InterceptingChainHandler
     private static $pjaxRequestVar = 'HTTP_X_PJAX';
 
     /**
+     * @deprecated
+     *
      * @return WebAppAjaxHandler
      */
     public static function create()

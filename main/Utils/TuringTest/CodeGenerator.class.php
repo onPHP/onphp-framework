@@ -22,6 +22,7 @@ class CodeGenerator
     private $similarAllowed = true;
 
     /**
+     * @deprecated
      * @return CodeGenerator
      **/
     public static function create()

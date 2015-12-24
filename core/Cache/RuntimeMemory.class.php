@@ -19,6 +19,8 @@ class RuntimeMemory extends CachePeer
     private $cache = array();
 
     /**
+     * @deprecated
+     *
      * @return RuntimeMemory
      **/
     public static function create() : RuntimeMemory

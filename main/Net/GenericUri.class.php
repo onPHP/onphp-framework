@@ -42,7 +42,7 @@ class GenericUri implements Stringable
     /**
      * @return GenericUri
      **/
-    public static function parse($uri, $guessClass = false)
+    public function parse($uri, $guessClass = false)
     {
         static $schemePattern = '([^:/?#]+):';
         static $authorityPattern = '(//([^/?#]*))';

@@ -28,6 +28,8 @@ class AggregateCache extends BaseAggregateCache
     private $levels = [];
 
     /**
+     * @deprecated
+     *
      * @return AggregateCache
      **/
     public static function create()

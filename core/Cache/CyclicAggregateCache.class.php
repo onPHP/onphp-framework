@@ -21,6 +21,8 @@ class CyclicAggregateCache extends BaseAggregateCache
     private $sorted = false;
 
     /**
+     * @deprecated
+     *
      * @return CyclicAggregateCache
      **/
     public static function create() : CyclicAggregateCache
