@@ -18,98 +18,44 @@ class DBPool extends Singleton implements Instantiatable
 {
     private $default = null;
 
-    private $pool = array();
+    private $pool = [];
 
     /**
-     * @return DBPool
-     **/
-    public static function me()
-    {
-        return Singleton::getInstance(__CLASS__);
-    }
-
-    /**
+     * @param GenericDAO $dao
      * @return DB
-     **/
+     * @throws MissingElementException
+     */
     public static function getByDao(GenericDAO $dao)
     {
         return self::me()->getLink($dao->getLinkName());
     }
 
     /**
-     * @return DBPool
-     **/
-    public function setDefault(DB $db)
-    {
-        $this->default = $db;
-
-        return $this;
-    }
-
-    /**
-     * @return DBPool
-     **/
-    public function dropDefault()
-    {
-        $this->default = null;
-
-        return $this;
-    }
-
-    /**
-     * @throws WrongArgumentException
-     * @return DBPool
-     **/
-    public function addLink($name, DB $db)
-    {
-        if (isset($this->pool[$name]))
-            throw new WrongArgumentException(
-                "already have '{$name}' link"
-            );
-
-        $this->pool[$name] = $db;
-
-        return $this;
-    }
-
-    /**
-     * @throws MissingElementException
-     * @return DBPool
-     **/
-    public function dropLink($name)
-    {
-        if (!isset($this->pool[$name]))
-            throw new MissingElementException(
-                "link '{$name}' not found"
-            );
-
-        unset($this->pool[$name]);
-
-        return $this;
-    }
-
-    /**
-     * @throws MissingElementException
+     * @param null $name
      * @return DB
-     **/
+     * @throws MissingElementException
+     */
     public function getLink($name = null)
     {
         $link = null;
 
         // single-DB project
         if (!$name) {
-            if (!$this->default)
+            if (!$this->default) {
                 throw new MissingElementException(
                     'i have no default link and requested link name is null'
                 );
+            }
 
             $link = $this->default;
-        } elseif (isset($this->pool[$name]))
+        } elseif (isset($this->pool[$name])) {
             $link = $this->pool[$name];
+        }
 
         if ($link) {
-            if (!$link->isConnected())
+            if (!$link->isConnected()) {
                 $link->connect();
+            }
 
             return $link;
         }
@@ -122,26 +68,94 @@ class DBPool extends Singleton implements Instantiatable
     /**
      * @return DBPool
      **/
-    public function shutdown()
+    public static function me()
     {
-        $this->disconnect();
+        return Singleton::getInstance(__CLASS__);
+    }
 
-        $this->default = null;
-        $this->pool = array();
+    /**
+     * @param DB $db
+     * @return $this
+     */
+    public function setDefault(DB $db)
+    {
+        $this->default = $db;
 
         return $this;
     }
 
     /**
-     * @return DBPool
-     **/
+     * @return $this
+     */
+    public function dropDefault()
+    {
+        $this->default = null;
+
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param DB $db
+     * @return $this
+     * @throws WrongArgumentException
+     */
+    public function addLink($name, DB $db)
+    {
+        if (isset($this->pool[$name])) {
+            throw new WrongArgumentException(
+                "already have '{$name}' link"
+            );
+        }
+
+        $this->pool[$name] = $db;
+
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @return $this
+     * @throws MissingElementException
+     */
+    public function dropLink($name)
+    {
+        if (!isset($this->pool[$name])) {
+            throw new MissingElementException(
+                "link '{$name}' not found"
+            );
+        }
+
+        unset($this->pool[$name]);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function shutdown()
+    {
+        $this->disconnect();
+
+        $this->default = null;
+        $this->pool = [];
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     public function disconnect()
     {
-        if ($this->default)
+        if ($this->default) {
             $this->default->disconnect();
+        }
 
-        foreach ($this->pool as $db)
+        foreach ($this->pool as $db) {
             $db->disconnect();
+        }
 
         return $this;
     }

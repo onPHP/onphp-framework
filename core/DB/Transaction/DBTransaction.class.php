@@ -16,7 +16,7 @@
  **/
 class DBTransaction extends BaseTransaction
 {
-    /** @var bool  */
+    /** @var bool */
     private $started = false;
 
     /**
@@ -24,23 +24,9 @@ class DBTransaction extends BaseTransaction
      */
     public function __destruct()
     {
-        if ($this->isStarted())
+        if ($this->isStarted()) {
             $this->db->queryRaw("rollback;\n");
-    }
-
-    /**
-     * @param DB $db
-     * @return BaseTransaction
-     * @throws WrongStateException
-     */
-    public function setDB(DB $db)
-    {
-        if ($this->isStarted())
-            throw new WrongStateException(
-                'transaction already started, can not switch to another db'
-            );
-
-        return parent::setDB($db);
+        }
     }
 
     /**
@@ -49,6 +35,24 @@ class DBTransaction extends BaseTransaction
     public function isStarted() : bool
     {
         return $this->started;
+    }
+
+    /**
+     * @param DB $db
+     * @return DBTransaction
+     * @throws WrongStateException
+     */
+    public function setDB(DB $db) : DBTransaction
+    {
+        if ($this->isStarted()) {
+            throw new WrongStateException(
+                'transaction already started, can not switch to another db'
+            );
+        }
+
+        parent::setDB($db);
+
+        return $this;
     }
 
     /**

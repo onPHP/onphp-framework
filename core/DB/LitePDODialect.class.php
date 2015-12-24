@@ -18,6 +18,10 @@
  **/
 class LitePDODialect extends LiteDialect
 {
+    /**
+     * @param $value
+     * @return string
+     */
     public function quoteValue($value)
     {
         /// @see Sequenceless for this convention
@@ -31,12 +35,21 @@ class LitePDODialect extends LiteDialect
         return $this->getLink()->quote($value);
     }
 
+    /**
+     * @param $data
+     * @return string
+     */
     public function quoteBinary($data)
     {
         //here must be PDO::PARAM_LOB, but i couldn't get success result, so used base64_encode/decode
         return $this->getLink()->quote(base64_encode($data), PDO::PARAM_STR);
     }
 
+    /**
+     * @param $data
+     * @return string
+     * @throws UnimplementedFeatureException
+     */
     public function unquoteBinary($data)
     {
         try {
@@ -54,5 +67,3 @@ class LitePDODialect extends LiteDialect
         return parent::getLink();
     }
 }
-
-?>

@@ -18,6 +18,10 @@
  **/
 class LiteDialect extends Dialect implements Instantiatable
 {
+    /**
+     * @param $value
+     * @return string
+     */
     public function quoteValue($value)
     {
         /// @see Sequenceless for this convention
@@ -31,21 +35,37 @@ class LiteDialect extends Dialect implements Instantiatable
         return "'" . sqlite_escape_string($value) . "'";
     }
 
+    /**
+     * @param bool $cascade
+     * @return null
+     */
     public static function dropTableMode($cascade = false)
     {
         return null;
     }
 
+    /**
+     * @param $data
+     * @return string
+     */
     public function quoteBinary($data)
     {
         return "'" . sqlite_udf_encode_binary($data) . "'";
     }
 
+    /**
+     * @param $data
+     * @return string
+     */
     public function unquoteBinary($data)
     {
         return sqlite_udf_decode_binary($data);
     }
 
+    /**
+     * @param DataType $type
+     * @return null|string
+     */
     public function typeToString(DataType $type)
     {
         switch ($type->getId()) {
@@ -61,6 +81,10 @@ class LiteDialect extends Dialect implements Instantiatable
         return parent::typeToString($type);
     }
 
+    /**
+     * @param $logic
+     * @return mixed|string
+     */
     public function logicToString($logic)
     {
         switch ($logic) {
@@ -72,6 +96,10 @@ class LiteDialect extends Dialect implements Instantiatable
         return parent::logicToString($logic);
     }
 
+    /**
+     * @param $literal
+     * @return mixed|string
+     */
     public function literalToString($literal)
     {
         switch ($literal) {
@@ -83,6 +111,10 @@ class LiteDialect extends Dialect implements Instantiatable
         return parent::literalToString($literal);
     }
 
+    /**
+     * @param DBColumn $column
+     * @return null
+     */
     public function preAutoincrement(DBColumn $column)
     {
         self::checkColumn($column);
@@ -90,6 +122,10 @@ class LiteDialect extends Dialect implements Instantiatable
         return null;
     }
 
+    /**
+     * @param DBColumn $column
+     * @return null
+     */
     public function postAutoincrement(DBColumn $column)
     {
         self::checkColumn($column);
@@ -97,21 +133,34 @@ class LiteDialect extends Dialect implements Instantiatable
         return null; // or even 'AUTOINCREMENT'?
     }
 
+    /**
+     * @return bool
+     */
     public function hasTruncate()
     {
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function hasMultipleTruncate()
     {
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function hasReturning()
     {
         return false;
     }
 
+    /**
+     * @param DBColumn $column
+     * @throws WrongArgumentException
+     */
     private static function checkColumn(DBColumn $column)
     {
         $type = $column->getType();

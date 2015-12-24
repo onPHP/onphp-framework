@@ -30,46 +30,79 @@ class ImaginaryDialect extends Dialect
         return self::$self;
     }
 
+    /**
+     * @param DBColumn $column
+     * @return null
+     */
     public function preAutoincrement(DBColumn $column)
     {
         return null;
     }
 
+    /**
+     * @param DBColumn $column
+     * @return string
+     */
     public function postAutoincrement(DBColumn $column)
     {
         return 'AUTOINCREMENT';
     }
 
+    /**
+     * @param $value
+     * @return mixed
+     */
     public function quoteValue($value)
     {
         return $value;
     }
 
+    /**
+     * @param $field
+     * @return mixed
+     */
     public function quoteField($field)
     {
         return $field;
     }
 
+    /**
+     * @param $table
+     * @return mixed
+     */
     public function quoteTable($table)
     {
         return $table;
     }
 
+    /**
+     * @return bool
+     */
     public function hasTruncate()
     {
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function hasMultipleTruncate()
     {
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function hasReturning()
     {
         return false;
     }
 
+    /**
+     * @param $field
+     * @return mixed
+     */
     public function fieldToString($field)
     {
         return
@@ -78,6 +111,10 @@ class ImaginaryDialect extends Dialect
                 : $field;
     }
 
+    /**
+     * @param $value
+     * @return mixed|string
+     */
     public function valueToString($value)
     {
         return
@@ -86,6 +123,12 @@ class ImaginaryDialect extends Dialect
                 : $value;
     }
 
+    /**
+     * @param $field
+     * @param $words
+     * @param $logic
+     * @return string
+     */
     public function fullTextSearch($field, $words, $logic)
     {
         return
@@ -96,6 +139,12 @@ class ImaginaryDialect extends Dialect
             . '")';
     }
 
+    /**
+     * @param $field
+     * @param $words
+     * @param $logic
+     * @return string
+     */
     public function fullTextRank($field, $words, $logic)
     {
         return
@@ -104,6 +153,11 @@ class ImaginaryDialect extends Dialect
             . '")';
     }
 
+    /**
+     * @param $range
+     * @param $ip
+     * @return string
+     */
     public function quoteIpInRange($range, $ip)
     {
         $string = '';

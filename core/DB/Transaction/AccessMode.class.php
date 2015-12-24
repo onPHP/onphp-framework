@@ -22,8 +22,8 @@ class AccessMode extends Enumeration
         READ_ONLY = 0x01,
         READ_WRITE = 0x02;
 
-    protected $names = array(
+    protected $names = [
         self::READ_ONLY => 'read only',
         self::READ_WRITE => 'read write'
-    );
+    ];
 }

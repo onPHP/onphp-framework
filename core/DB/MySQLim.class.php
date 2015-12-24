@@ -22,10 +22,11 @@ final class MySQLim extends Sequenceless
     private $needAutoCommit = false;
     private $defaultEngine;
 
+
     /**
      * @param $flag
-     * @return MySQLim
-     **/
+     * @return $this
+     */
     public function setNeedAutoCommit($flag)
     {
         $this->needAutoCommit = $flag == true;
@@ -33,6 +34,9 @@ final class MySQLim extends Sequenceless
         return $this;
     }
 
+    /**
+     * @see setupAutoCommit
+     */
     private function setupAutoCommit()
     {
         if ($this->isConnected()) {
@@ -40,7 +44,10 @@ final class MySQLim extends Sequenceless
         }
     }
 
-    public function isConnected()
+    /**
+     * @return bool
+     */
+    public function isConnected() : bool
     {
         return (parent::isConnected() || $this->link instanceof \mysqli)
         && mysqli_ping($this->link);
@@ -57,6 +64,9 @@ final class MySQLim extends Sequenceless
         return $this;
     }
 
+    /**
+     * @see setupDefaultEngint
+     */
     private function setupDefaultEngine()
     {
         if ($this->defaultEngine && $this->isConnected()) {
@@ -105,8 +115,8 @@ final class MySQLim extends Sequenceless
     }
 
     /**
-     * @return MySQLim
-     **/
+     * @return $this
+     */
     public function setDbEncoding()
     {
         mysqli_set_charset($this->link, $this->encoding);
@@ -115,8 +125,8 @@ final class MySQLim extends Sequenceless
     }
 
     /**
-     * @return MySQLim
-     **/
+     * @return $this
+     */
     public function disconnect()
     {
         if ($this->isConnected()) {
@@ -137,6 +147,11 @@ final class MySQLim extends Sequenceless
         return mysqli_affected_rows($this->link);
     }
 
+    /**
+     * @param Query $query
+     * @return array|null
+     * @throws TooManyRowsException
+     */
     public function queryRow(Query $query)
     {
         $res = $this->query($query);
@@ -148,6 +163,11 @@ final class MySQLim extends Sequenceless
         }
     }
 
+    /**
+     * @param $result
+     * @return mixed
+     * @throws TooManyRowsException
+     */
     private function checkSingle($result)
     {
         if (mysqli_num_rows($result) > 1) {
@@ -159,6 +179,10 @@ final class MySQLim extends Sequenceless
         return $result;
     }
 
+    /**
+     * @param Query $query
+     * @return array|null
+     */
     public function queryColumn(Query $query)
     {
         $res = $this->query($query);
@@ -176,6 +200,10 @@ final class MySQLim extends Sequenceless
         }
     }
 
+    /**
+     * @param Query $query
+     * @return array|null
+     */
     public function querySet(Query $query)
     {
         $res = $this->query($query);
@@ -193,6 +221,12 @@ final class MySQLim extends Sequenceless
         }
     }
 
+    /**
+     * @param $table
+     * @return DBTable
+     * @throws ObjectNotFoundException
+     * @throws WrongArgumentException
+     */
     public function getTableInfo($table)
     {
         static $types = [
@@ -286,6 +320,10 @@ final class MySQLim extends Sequenceless
         return $table;
     }
 
+    /**
+     * @param $queryString
+     * @return bool|mysqli_result
+     */
     public function queryRaw($queryString)
     {
         if (!$result = mysqli_query($this->link, $queryString)) {
@@ -307,11 +345,17 @@ final class MySQLim extends Sequenceless
         return $result;
     }
 
+    /**
+     * @return bool
+     */
     public function hasQueue()
     {
         return false;
     }
 
+    /**
+     * @return int|string
+     */
     protected function getInsertId()
     {
         return mysqli_insert_id($this->link);
@@ -325,5 +369,3 @@ final class MySQLim extends Sequenceless
         return new MyImprovedDialect();
     }
 }
-
-?>

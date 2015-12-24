@@ -9,30 +9,42 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * MySQL dialect.
-	 * 
-	 * @see http://www.mysql.com/
-	 * @see http://www.php.net/mysqli
-	 * 
-	 * @ingroup DB
-	**/
-	final class MyImprovedDialect extends MyDialect
-	{
-		public function quoteValue($value)
-		{
-			/// @see Sequenceless for this convention
-			
-			if ($value instanceof Identifier && !$value->isFinalized())
-				return "''"; // instead of 'null', to be compatible with v. 4
-			
-			return
-				"'".mysqli_real_escape_string($this->getLink(), $value)."'";
-		}
-		
-		public function quoteBinary($data)
-		{
-			return "'".mysqli_real_escape_string($this->getLink(), $data)."'";
-		}
-	}
+/**
+ * MySQL dialect.
+ *
+ * @see http://www.mysql.com/
+ * @see http://www.php.net/mysqli
+ *
+ * @ingroup DB
+ **/
+final class MyImprovedDialect extends MyDialect
+{
+    /**
+     * @param $value
+     * @return string
+     * @throws WrongStateException
+     */
+    public function quoteValue($value)
+    {
+        /// @see Sequenceless for this convention
+
+        if ($value instanceof Identifier && !$value->isFinalized()) {
+            return "''";
+        } // instead of 'null', to be compatible with v. 4
+
+        return
+            "'" . mysqli_real_escape_string($this->getLink(), $value) . "'";
+    }
+
+    /**
+     * @param $data
+     * @return string
+     * @throws WrongStateException
+     */
+    public function quoteBinary($data)
+    {
+        return "'" . mysqli_real_escape_string($this->getLink(), $data) . "'";
+    }
+}
+
 ?>

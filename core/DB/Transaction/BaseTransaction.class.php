@@ -24,11 +24,26 @@ abstract class BaseTransaction
     /** @var AccessMode */
     protected $mode = null;
 
-    abstract public function flush();
-
+    /**
+     * BaseTransaction constructor.
+     * @param DB $db
+     */
     public function __construct(DB $db)
     {
         $this->db = $db;
+    }
+
+    /**
+     * @return mixed
+     */
+    abstract public function flush();
+
+    /**
+     * @return DB
+     **/
+    public function getDB() : DB
+    {
+        return $this->db;
     }
 
     /**
@@ -39,14 +54,6 @@ abstract class BaseTransaction
         $this->db = $db;
 
         return $this;
-    }
-
-    /**
-     * @return DB
-     **/
-    public function getDB() : DB
-    {
-        return $this->db;
     }
 
     /**
@@ -76,11 +83,13 @@ abstract class BaseTransaction
     {
         $begin = 'start transaction';
 
-        if ($this->isoLevel)
+        if ($this->isoLevel) {
             $begin .= ' ' . $this->isoLevel->toString();
+        }
 
-        if ($this->mode)
+        if ($this->mode) {
             $begin .= ' ' . $this->mode->toString();
+        }
 
         return $begin . ";\n";
     }

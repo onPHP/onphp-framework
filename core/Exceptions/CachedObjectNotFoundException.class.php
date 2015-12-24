@@ -9,8 +9,10 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	**/
-	class CachedObjectNotFoundException extends ObjectNotFoundException {/*_*/}
-?>
+/**
+ * @ingroup Exceptions
+ **/
+class CachedObjectNotFoundException extends ObjectNotFoundException
+{
+    /*_*/
+}

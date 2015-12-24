@@ -20,17 +20,28 @@ class TransactionQueue extends BaseTransaction implements Query
 {
     private $queue = null;
 
+    /**
+     * TransactionQueue constructor.
+     * @param DB $db
+     */
     public function __construct(DB $db)
     {
         parent::__construct($db);
         $this->queue = new Queue();
     }
 
+    /**
+     * @return string
+     */
     public function getId()
     {
         return sha1(serialize($this));
     }
 
+    /**
+     * @param $id
+     * @throws UnsupportedMethodException
+     */
     public function setId($id)
     {
         throw new UnsupportedMethodException();
@@ -50,7 +61,7 @@ class TransactionQueue extends BaseTransaction implements Query
      * @throws DatabaseException
      * @return TransactionQueue
      **/
-    public function flush()
+    public function flush() : TransactionQueue
     {
         try {
             $this->db->queryRaw($this->getBeginString());

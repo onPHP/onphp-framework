@@ -14,24 +14,15 @@
  *
  * @see http://www.mysql.com/
  * @see http://www.php.net/mysql
- *
+ * @deprecated
  * @ingroup DB
  **/
 class MySQL extends Sequenceless
 {
     /**
-     * @return MySQL
-     **/
-    public function setDbEncoding()
-    {
-        mysql_query("SET NAMES '{$this->encoding}'", $this->link);
-
-        return $this;
-    }
-
-    /**
-     * @return MySQL
-     **/
+     * @return $this
+     * @throws DatabaseException
+     */
     public function connect()
     {
         $hostname =
@@ -65,14 +56,26 @@ class MySQL extends Sequenceless
                 $this->basename
                 && !mysql_select_db($this->basename, $this->link)
             )
-        )
+        ) {
             throw new DatabaseException(
                 'can not connect to MySQL server: ' . mysql_error($this->link),
                 mysql_errno($this->link)
             );
+        }
 
-        if ($this->encoding)
+        if ($this->encoding) {
             $this->setDbEncoding();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return MySQL
+     **/
+    public function setDbEncoding()
+    {
+        mysql_query("SET NAMES '{$this->encoding}'", $this->link);
 
         return $this;
     }
@@ -82,12 +85,16 @@ class MySQL extends Sequenceless
      **/
     public function disconnect()
     {
-        if ($this->isConnected())
+        if ($this->isConnected()) {
             mysql_close($this->link);
+        }
 
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isConnected()
     {
         return parent::isConnected() && mysql_ping($this->link);
@@ -104,69 +111,89 @@ class MySQL extends Sequenceless
         return mysql_affected_rows($this->link);
     }
 
+    /**
+     * @param Query $query
+     * @return array|null
+     * @throws TooManyRowsException
+     */
     public function queryRow(Query $query)
     {
         $res = $this->query($query);
 
-        if ($this->checkSingle($res))
+        if ($this->checkSingle($res)) {
             return mysql_fetch_assoc($res);
-        else
+        } else {
             return null;
+        }
     }
 
-    public function queryColumn(Query $query)
+    /**
+     * @param $result
+     * @return mixed
+     * @throws TooManyRowsException
+     */
+    private function checkSingle($result)
     {
-        $res = $this->query($query);
-
-        if ($res) {
-            $array = array();
-
-            while ($row = mysql_fetch_row($res))
-                $array[] = $row[0];
-
-            return $array;
-        } else
-            return null;
-    }
-
-    public function querySet(Query $query)
-    {
-        $res = $this->query($query);
-
-        if ($res) {
-            $array = array();
-
-            while ($row = mysql_fetch_assoc($res))
-                $array[] = $row;
-
-            return $array;
-        } else
-            return null;
-    }
-
-    public function queryRaw($queryString)
-    {
-        if (!$result = mysql_query($queryString, $this->link)) {
-
-            $code = mysql_errno($this->link);
-
-            if ($code == 1062)
-                $e = 'DuplicateObjectException';
-            else
-                $e = 'DatabaseException';
-
-            throw new $e(
-                mysql_error($this->link) . ' - ' . $queryString,
-                $code
+        if (mysql_num_rows($result) > 1) {
+            throw new TooManyRowsException(
+                'query returned too many rows (we need only one)'
             );
         }
 
         return $result;
     }
 
+    /**
+     * @param Query $query
+     * @return array|null
+     */
+    public function queryColumn(Query $query)
+    {
+        $res = $this->query($query);
+
+        if ($res) {
+            $array = [];
+
+            while ($row = mysql_fetch_row($res)) {
+                $array[] = $row[0];
+            }
+
+            return $array;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param Query $query
+     * @return array|null
+     */
+    public function querySet(Query $query)
+    {
+        $res = $this->query($query);
+
+        if ($res) {
+            $array = [];
+
+            while ($row = mysql_fetch_assoc($res)) {
+                $array[] = $row;
+            }
+
+            return $array;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param $table
+     * @return DBTable
+     * @throws ObjectNotFoundException
+     * @throws WrongArgumentException
+     */
     public function getTableInfo($table)
     {
-        static $types = array(
+        static $types = [
             'tinyint' => DataType::SMALLINT,
             'smallint' => DataType::SMALLINT,
             'int' => DataType::INTEGER,
@@ -192,7 +219,7 @@ class MySQL extends Sequenceless
             'set' => null,
             'enum' => null,
             'year' => null
-        );
+        ];
 
         try {
             $result = $this->queryRaw('SHOW COLUMNS FROM ' . $table);
@@ -206,8 +233,8 @@ class MySQL extends Sequenceless
 
         while ($row = mysql_fetch_assoc($result)) {
             $name = strtolower($row['Field']);
-            $matches = array();
-            $info = array('type' => null, 'extra' => null);
+            $matches = [];
+            $info = ['type' => null, 'extra' => null];
             if (
             preg_match(
                 '~(\w+)(\((\d+?)\)){0,1}\s*(\w*)~',
@@ -228,8 +255,9 @@ class MySQL extends Sequenceless
                 . '" found in column "' . $name . '"'
             );
 
-            if (empty($types[$info['type']]))
+            if (empty($types[$info['type']])) {
                 continue;
+            }
 
             $column = DBColumn::create(
                 DataType::create($types[$info['type']])->
@@ -243,8 +271,9 @@ class MySQL extends Sequenceless
             setAutoincrement(strtolower($row['Extra']) == 'auto_increment')->
             setPrimaryKey(strtolower($row['Key']) == 'pri');
 
-            if ($row['Default'])
+            if ($row['Default']) {
                 $column->setDefault($row['Default']);
+            }
 
             $table->addColumn($column);
         }
@@ -252,6 +281,34 @@ class MySQL extends Sequenceless
         return $table;
     }
 
+    /**
+     * @param $queryString
+     * @return resource
+     */
+    public function queryRaw($queryString)
+    {
+        if (!$result = mysql_query($queryString, $this->link)) {
+
+            $code = mysql_errno($this->link);
+
+            if ($code == 1062) {
+                $e = 'DuplicateObjectException';
+            } else {
+                $e = 'DatabaseException';
+            }
+
+            throw new $e(
+                mysql_error($this->link) . ' - ' . $queryString,
+                $code
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return bool
+     */
     public function hasQueue()
     {
         return false;
@@ -268,16 +325,6 @@ class MySQL extends Sequenceless
     protected function spawnDialect()
     {
         return new MyDialect();
-    }
-
-    private function checkSingle($result)
-    {
-        if (mysql_num_rows($result) > 1)
-            throw new TooManyRowsException(
-                'query returned too many rows (we need only one)'
-            );
-
-        return $result;
     }
 }
 

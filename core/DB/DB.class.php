@@ -91,10 +91,17 @@ abstract class DB
     }
 
     /**
-     * Shortcut.
+     * Shortcut
      *
+     * @param $connector
+     * @param $user
+     * @param $pass
+     * @param $host
+     * @param null $base
+     * @param bool $persistent
+     * @param null $encoding
      * @return DB
-     **/
+     */
     public static function spawn(
         $connector, $user, $pass, $host,
         $base = null, $persistent = false, $encoding = null
@@ -103,13 +110,13 @@ abstract class DB
         /** @var DB $db */
         $db = new $connector;
 
-        $db->
-        setUsername($user)->
-        setPassword($pass)->
-        setHostname($host)->
-        setBasename($base)->
-        setPersistent($persistent)->
-        setEncoding($encoding);
+        $db
+            ->setUsername($user)
+            ->setPassword($pass)
+            ->setHostname($host)
+            ->setBasename($base)
+            ->setPersistent($persistent)
+            ->setEncoding($encoding);
 
         return $db;
     }
@@ -158,7 +165,7 @@ abstract class DB
     /**
      * @return DB
      **/
-    public function commit()
+    public function commit() : DB
     {
         if ($this->toQueue)
             $this->queue[] = 'commit;';
@@ -177,7 +184,7 @@ abstract class DB
     /**
      * @return DB
      **/
-    public function rollback()
+    public function rollback() : DB
     {
         if ($this->toQueue)
             $this->queue[] = 'rollback;';
@@ -207,7 +214,7 @@ abstract class DB
     /**
      * @return DB
      **/
-    public function queueStart()
+    public function queueStart() : DB
     {
         if ($this->hasQueue())
             $this->toQueue = true;
@@ -218,7 +225,7 @@ abstract class DB
     /**
      * @return DB
      **/
-    public function queueStop()
+    public function queueStop() : DB
     {
         $this->toQueue = false;
 
@@ -228,7 +235,7 @@ abstract class DB
     /**
      * @return DB
      **/
-    public function queueDrop()
+    public function queueDrop() : DB
     {
         $this->queue = array();
 
@@ -238,7 +245,7 @@ abstract class DB
     /**
      * @return DB
      **/
-    public function queueFlush()
+    public function queueFlush() : DB
     {
         if ($this->queue)
             $this->queryRaw(
@@ -261,7 +268,7 @@ abstract class DB
      * @return DB
      * @throws DatabaseException
      */
-    public function savepointBegin($savepointName)
+    public function savepointBegin($savepointName) : DB
     {
         $this->assertSavePointName($savepointName);
         if (!$this->inTransaction())
@@ -347,22 +354,34 @@ abstract class DB
 
     //@}
 
-    public function isConnected()
+    /**
+     * @return bool
+     */
+    public function isConnected()  : bool
     {
         return is_resource($this->link);
     }
 
-    public function hasSequences()
+    /**
+     * @return bool
+     */
+    public function hasSequences() : bool
     {
         return false;
     }
 
-    public function hasQueue()
+    /**
+     * @return bool
+     */
+    public function hasQueue() :  bool
     {
         return true;
     }
 
-    public function isPersistent()
+    /**
+     * @return bool
+     */
+    public function isPersistent() : bool
     {
         return $this->persistent;
     }
