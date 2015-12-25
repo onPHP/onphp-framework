@@ -32,4 +32,3 @@ final class LowerCaseFilter extends BaseFilter
     }
 }
 
-?>

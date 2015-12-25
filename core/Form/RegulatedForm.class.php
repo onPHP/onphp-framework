@@ -74,5 +74,3 @@ abstract class RegulatedForm extends PlainForm
         return $this;
     }
 }
-
-?>

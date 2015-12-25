@@ -86,5 +86,3 @@ final class TrimFilter implements Filtrator
         return $this;
     }
 }
-
-?>

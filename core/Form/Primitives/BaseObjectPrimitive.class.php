@@ -73,5 +73,3 @@ abstract class BaseObjectPrimitive extends BasePrimitive
         return $this;
     }
 }
-
-?>

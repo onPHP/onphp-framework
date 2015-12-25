@@ -81,5 +81,3 @@ final class OSQL extends StaticFactory
         return new DropTableQuery($name, $cascade);
     }
 }
-
-?>

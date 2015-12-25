@@ -37,4 +37,3 @@ final class NormalizeUrlFilter implements Filtrator
     }
 }
 
-?>

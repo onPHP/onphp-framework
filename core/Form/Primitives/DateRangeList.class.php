@@ -220,5 +220,3 @@ final class DateRangeList extends BasePrimitive implements Stringable
         throw new UnimplementedFeatureException();
     }
 }
-
-?>

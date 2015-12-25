@@ -211,5 +211,3 @@ final class RussianTypograph extends BaseFilter
             );
     }
 }
-
-?>

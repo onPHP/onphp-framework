@@ -228,5 +228,3 @@ class PrimitiveFile extends RangedPrimitive
         return $this->checkUploaded;
     }
 }
-
-?>

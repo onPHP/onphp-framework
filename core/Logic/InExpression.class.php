@@ -142,5 +142,3 @@ final class InExpression implements LogicalObject, MappableObject
         }
     }
 }
-
-?>

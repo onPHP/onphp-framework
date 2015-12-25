@@ -171,5 +171,3 @@ class PrimitiveIdentifier extends IdentifiablePrimitive
         }
     }
 }
-
-?>

@@ -130,5 +130,3 @@ final class OrderChain implements DialectString, MappableObject
         return rtrim($out, ', ');
     }
 }
-
-?>

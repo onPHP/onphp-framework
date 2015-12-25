@@ -62,5 +62,3 @@ final class DeleteQuery extends QuerySkeleton implements SQLTableName
         }
     }
 }
-
-?>

@@ -81,5 +81,3 @@ final class WordSplitterFilter implements Filtrator
         return $this;
     }
 }
-
-?>

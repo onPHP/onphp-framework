@@ -281,5 +281,3 @@ abstract class QuerySkeleton extends QueryIdentification
         }
     }
 }
-
-?>

@@ -52,5 +52,3 @@ final class PrimitiveTimestampRange extends PrimitiveDateRange
         throw new WrongArgumentException();
     }
 }
-
-?>

@@ -328,4 +328,3 @@ class MySQL extends Sequenceless
     }
 }
 
-?>

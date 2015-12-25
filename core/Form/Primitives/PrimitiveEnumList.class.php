@@ -129,5 +129,3 @@ final class PrimitiveEnumList extends PrimitiveEnum
         return ArrayUtils::getIdsArray($this->value);
     }
 }
-
-?>

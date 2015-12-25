@@ -120,5 +120,3 @@ final class PrimitiveMultiList extends PrimitiveList
         throw new UnimplementedFeatureException();
     }
 }
-
-?>

@@ -612,5 +612,3 @@ final class Form extends RegulatedForm
         }
     }
 }
-
-?>

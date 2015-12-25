@@ -80,5 +80,3 @@ final class LogicalBetween implements LogicalObject, MappableObject
         && ($value <= $right);
     }
 }
-
-?>

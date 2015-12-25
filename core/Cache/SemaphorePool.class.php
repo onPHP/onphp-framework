@@ -99,4 +99,3 @@ class SemaphorePool extends BaseLocker implements Instantiatable
     }
 }
 
-?>

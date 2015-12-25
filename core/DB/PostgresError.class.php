@@ -558,4 +558,3 @@ final class PostgresError extends Enumeration
     }
 }
 
-?>

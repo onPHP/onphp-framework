@@ -81,5 +81,3 @@ final class PrimitiveTernary extends BasePrimitive
         return $this->imported = true;
     }
 }
-
-?>

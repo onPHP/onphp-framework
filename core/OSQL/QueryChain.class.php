@@ -100,5 +100,3 @@ final class QueryChain extends SQLChain
         return $this->exp($query, CombineQuery::EXCEPT_ALL);
     }
 }
-
-?>

@@ -51,5 +51,3 @@ final class PrimitiveEnumByValue extends PrimitiveEnum
         return null;
     }
 }
-
-?>

@@ -154,5 +154,3 @@ final class CombineQuery extends StaticFactory
         return QueryChain::block($args, self::EXCEPT_ALL);
     }
 }
-
-?>

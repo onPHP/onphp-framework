@@ -188,4 +188,3 @@ class MyDialect extends Dialect
     }
 }
 
-?>

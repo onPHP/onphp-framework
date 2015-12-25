@@ -51,5 +51,3 @@ abstract class PrimitiveNumber extends FiltrablePrimitive
 
     abstract protected function castNumber($number);
 }
-
-?>

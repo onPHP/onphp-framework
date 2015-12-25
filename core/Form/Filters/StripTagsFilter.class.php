@@ -51,5 +51,3 @@ final class StripTagsFilter implements Filtrator
         return strip_tags($value, $this->exclude);
     }
 }
-
-?>

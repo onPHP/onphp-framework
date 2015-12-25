@@ -44,5 +44,3 @@ class PrimitiveInteger extends PrimitiveNumber
         return (int) $number;
     }
 }
-
-?>

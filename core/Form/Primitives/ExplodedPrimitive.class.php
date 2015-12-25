@@ -96,5 +96,3 @@ final class ExplodedPrimitive extends PrimitiveString
         throw new UnimplementedFeatureException();
     }
 }
-
-?>

@@ -127,5 +127,3 @@ final class LogicalChain extends SQLChain
         Assert::isUnreachable();
     }
 }
-
-?>

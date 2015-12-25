@@ -35,5 +35,3 @@ final class DBBinary extends DBValue
         return $dialect->quoteBinary($this->getValue());
     }
 }
-
-?>

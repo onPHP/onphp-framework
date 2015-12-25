@@ -67,4 +67,3 @@ final class SyntaxErrorException extends BaseException
     }
 }
 
-?>

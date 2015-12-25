@@ -100,5 +100,3 @@ final class PrimitiveTimestampTZ extends PrimitiveTimestamp
         return 'TimestampTZ';
     }
 }
-
-?>

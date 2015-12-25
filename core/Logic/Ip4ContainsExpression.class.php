@@ -61,5 +61,3 @@ final class Ip4ContainsExpression implements LogicalObject, MappableObject
         throw new UnimplementedFeatureException('Author was too lazy to make it');
     }
 }
-
-?>

@@ -112,5 +112,3 @@ class PrimitiveTimestamp extends PrimitiveDate
         return 'Timestamp';
     }
 }
-
-?>

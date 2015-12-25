@@ -161,4 +161,3 @@ class DBPool extends Singleton implements Instantiatable
     }
 }
 
-?>
