@@ -394,7 +394,7 @@ final class Expression extends StaticFactory
      */
     public static function andBlock(...$args) : BinaryExpression
     {
-        return self::BinaryExpression(
+        return self::block(
             $args,
             BinaryExpression::EXPRESSION_AND
         );

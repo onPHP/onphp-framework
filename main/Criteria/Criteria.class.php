@@ -607,6 +607,9 @@ class Criteria extends QueryIdentification
         }
     }
 
+    /**
+     * @return null|string
+     */
     public function toString()
     {
         return $this->toDialectString(
