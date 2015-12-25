@@ -9,18 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	**/
-	final class SQLFullOuterJoin extends SQLBaseJoin
-	{
-		/**
-		 * @param Dialect $dialect
-		 * @return string
-		 */
-		public function toDialectString(Dialect $dialect)
-		{
-			return parent::baseToString($dialect, 'FULL OUTER ');
-		}
+/**
+ * @ingroup OSQL
+ **/
+final class SQLFullOuterJoin extends SQLBaseJoin
+{
+    /**
+     * @param Dialect $dialect
+     * @return string
+     */
+    public function toDialectString(Dialect $dialect) : string
+    {
+        return parent::baseToString($dialect, 'FULL OUTER ');
+    }
 
-	}
+}

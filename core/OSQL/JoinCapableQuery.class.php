@@ -9,16 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	**/
-	interface JoinCapableQuery
-	{
-		public function from($table, $alias = null);
-		public function join($table, LogicalObject $logic, $alias = null);
-		public function leftJoin($table, LogicalObject $logic, $alias = null);
-		public function rightJoin($table, LogicalObject $logic, $alias = null);
-		
-		public function hasJoinedTable($table);
-	}
-?>
+/**
+ * @ingroup OSQL
+ **/
+interface JoinCapableQuery
+{
+    public function from($table, $alias = null);
+
+    public function join($table, LogicalObject $logic, $alias = null);
+
+    public function leftJoin($table, LogicalObject $logic, $alias = null);
+
+    public function rightJoin($table, LogicalObject $logic, $alias = null);
+
+    public function hasJoinedTable($table);
+}

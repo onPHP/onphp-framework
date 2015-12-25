@@ -9,32 +9,43 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	abstract class FieldTable extends Castable
-	{
-		protected $field = null;
-		
-		public function __construct($field)
-		{
-			$this->field = $field;
-		}
-		
-		public function getField()
-		{
-			return $this->field;
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			$out = $dialect->fieldToString($this->field);
-			
-			return
-				$this->cast
-					? $dialect->toCasted($out, $this->cast)
-					: $out;
-		}
-	}
-?>
+/**
+ * @ingroup OSQL
+ * @ingroup Module
+ **/
+abstract class FieldTable extends Castable
+{
+    /** @var null  */
+    protected $field = null;
+
+    /**
+     * FieldTable constructor.
+     * @param $field
+     */
+    public function __construct($field)
+    {
+        $this->field = $field;
+    }
+
+    /**
+     * @return null
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
+
+    /**
+     * @param Dialect $dialect
+     * @return string
+     */
+    public function toDialectString(Dialect $dialect)
+    {
+        $out = $dialect->fieldToString($this->field);
+
+        return
+            $this->cast
+                ? $dialect->toCasted($out, $this->cast)
+                : $out;
+    }
+}

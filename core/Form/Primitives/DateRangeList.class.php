@@ -114,13 +114,17 @@ final class DateRangeList extends BasePrimitive implements Stringable
             $finish = self::toDate(trim($finish));
 
             if ($start || $finish) {
-                return (new DateRange)->lazySet($start, $finish);
+                return
+                    (new DateRange)
+                        ->lazySet($start, $finish);
             } elseif (trim($string) == '-') {
                 return new DateRange();
             }
         } elseif ($single = self::toDate(trim($string))) {
             return
-                (new DateRange())->setStart($single)->setEnd($single);
+                (new DateRange())
+                    ->setStart($single)
+                    ->setEnd($single);
         }
 
         throw new WrongArgumentException(

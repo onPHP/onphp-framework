@@ -83,8 +83,8 @@ final class PrimitiveFormsList extends PrimitiveForm
 
         foreach ($scope[$this->name] as $id => $value) {
             $this->value[$id] =
-                $this->proto->makeForm()->
-                import($value);
+                $this->proto->makeForm()
+                    ->import($value);
 
             if ($this->value[$id]->getErrors()) {
                 $error = true;

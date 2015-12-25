@@ -9,66 +9,80 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	**/
-	final class DBSchema extends QueryIdentification
-	{
-		private $tables	= array();
-		private $order	= array();
-		
-		public function getTables()
-		{
-			return $this->tables;
-		}
-		
-		public function getTableNames()
-		{
-			return $this->order;
-		}
-		
-		/**
-		 * @throws WrongArgumentException
-		 * @return DBSchema
-		**/
-		public function addTable(DBTable $table)
-		{
-			$name = $table->getName();
-			
-			Assert::isFalse(
-				isset($this->tables[$name]),
-				"table '{$name}' already exist"
-			);
-			
-			$this->tables[$table->getName()] = $table;
-			$this->order[] = $name;
-			
-			return $this;
-		}
-		
-		/**
-		 * @throws MissingElementException
-		 * @return DBTable
-		**/
-		public function getTableByName($name)
-		{
-			if (!isset($this->tables[$name]))
-				throw new MissingElementException(
-					"table '{$name}' does not exist"
-				);
-			
-			return $this->tables[$name];
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			$out = array();
-			
-			foreach ($this->order as $name) {
-				$out[] = $this->tables[$name]->toDialectString($dialect);
-			}
-			
-			return implode("\n\n", $out);
-		}
-	}
-?>
+/**
+ * @ingroup OSQL
+ **/
+final class DBSchema extends QueryIdentification
+{
+    /** @var array  */
+    private $tables = [];
+    /** @var array  */
+    private $order = [];
+
+    /**
+     * @return array
+     */
+    public function getTables() : array
+    {
+        return $this->tables;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTableNames() : array
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param DBTable $table
+     * @return DBSchema
+     * @throws WrongArgumentException
+     */
+    public function addTable(DBTable $table) : DBSchema
+    {
+        $name = $table->getName();
+
+        Assert::isFalse(
+            isset($this->tables[$name]),
+            "table '{$name}' already exist"
+        );
+
+        $this->tables[$table->getName()] = $table;
+        $this->order[] = $name;
+
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     * @throws MissingElementException
+     */
+    public function getTableByName($name) : DBSchema
+    {
+        if (!isset($this->tables[$name])) {
+            throw new MissingElementException(
+                "table '{$name}' does not exist"
+            );
+        }
+
+        return $this->tables[$name];
+    }
+
+    /**
+     * @param Dialect $dialect
+     * @return string
+     */
+    public function toDialectString(Dialect $dialect) : string
+    {
+        $out = [];
+
+        foreach ($this->order as $name) {
+            $out[] = $this->tables[$name]->toDialectString($dialect);
+        }
+
+        return implode("\n\n", $out);
+    }
+}

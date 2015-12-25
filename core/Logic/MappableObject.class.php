@@ -9,15 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Logic
-	 * @ingroup Module
-	**/
-	interface MappableObject extends DialectString
-	{
-		/**
-		 * @return MappableObject
-		**/
-		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query);
-	}
-?>
+/**
+ * @ingroup Logic
+ * @ingroup Module
+ **/
+interface MappableObject extends DialectString
+{
+    /**
+     * @return MappableObject
+     **/
+    public function toMapped(ProtoDAO $dao, JoinCapableQuery $query);
+}

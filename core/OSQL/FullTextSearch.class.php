@@ -9,19 +9,22 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	**/
-	final class FullTextSearch extends FullText
-	{
-		public function toDialectString(Dialect $dialect)
-		{
-			return
-				$dialect->fullTextSearch(
-					$this->field,
-					$this->words,
-					$this->logic
-				);
-		}
-	}
-?>
+/**
+ * @ingroup OSQL
+ **/
+final class FullTextSearch extends FullText
+{
+    /**
+     * @param Dialect $dialect
+     * @throws UnimplementedFeatureException
+     */
+    public function toDialectString(Dialect $dialect)
+    {
+        return
+            $dialect->fullTextSearch(
+                $this->field,
+                $this->words,
+                $this->logic
+            );
+    }
+}

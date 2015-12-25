@@ -9,120 +9,146 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	final class Joiner implements DialectString
-	{
-		private $from	= array();
-		private $tables	= array();
-		
-		/**
-		 * @return Joiner
-		**/
-		public function from(FromTable $from)
-		{
-			$this->from[] = $from;
-			
-			return $this;
-		}
-		
-		public function hasJoinedTable($table)
-		{
-			return isset($this->tables[$table]);
-		}
-		
-		public function getTablesCount()
-		{
-			return count($this->from);
-		}
-		
-		/**
-		 * @return Joiner
-		**/
-		public function join(SQLJoin $join)
-		{
-			$this->from[] = $join;
-			$this->tables[$join->getTable()] = true;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return Joiner
-		**/
-		public function leftJoin(SQLLeftJoin $join)
-		{
-			$this->from[] = $join;
-			$this->tables[$join->getTable()] = true;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return Joiner
-		**/
-		public function rightJoin(SQLRightJoin $join)
-		{
-			$this->from[] = $join;
-			$this->tables[$join->getTable()] = true;
-			
-			return $this;
-		}
+/**
+ * @ingroup OSQL
+ * @ingroup Module
+ **/
+final class Joiner implements DialectString
+{
+    /** @var array  */
+    private $from = [];
+    /** @var array  */
+    private $tables = [];
 
-		/**
-		 * @param SQLFullOuterJoin $join
-		 * @return Joiner
-		 */
-		public function fullOuterJoin(SQLFullOuterJoin $join)
-		{
-			$this->from[] = $join;
-			$this->tables[$join->getTable()] = true;
+    /**
+     * @param FromTable $from
+     * @return Joiner
+     */
+    public function from(FromTable $from)
+    {
+        $this->from[] = $from;
 
-			return $this;
-		}
-		
-		public function getFirstTable()
-		{
-			if ($this->from)
-				return $this->from[0]->getTable();
-			
-			return null;
-		}
-		
-		public function getLastTable()
-		{
-			if ($this->from)
-				return $this->from[count($this->from) - 1]->getTable();
-			
-			return null;
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			$fromString = null;
-			
-			for ($i = 0, $size = count($this->from); $i < $size; ++$i) {
-				if ($i == 0)
-					$separator = null;
-				elseif (
-					$this->from[$i] instanceof FromTable &&
-					!$this->from[$i]->getTable() instanceof SelectQuery
-				)
-					$separator = ', ';
-				else
-					$separator = ' ';
-				
-				$fromString .=
-					$separator
-					.$this->from[$i]->toDialectString($dialect);
-			}
-			
-			if ($fromString)
-				return ' FROM '.$fromString;
-			
-			return null;
-		}
-	}
-?>
+        return $this;
+    }
+
+    /**
+     * @param $table
+     * @return bool
+     */
+    public function hasJoinedTable($table) : bool
+    {
+        return isset($this->tables[$table]);
+    }
+
+    /**
+     * @return int
+     */
+    public function getTablesCount() : int
+    {
+        return count($this->from);
+    }
+
+    /**
+     * @param SQLJoin $join
+     * @return Joiner
+     */
+    public function join(SQLJoin $join) : Joiner
+    {
+        $this->from[] = $join;
+        $this->tables[$join->getTable()] = true;
+
+        return $this;
+    }
+
+    /**
+     * @param SQLLeftJoin $join
+     * @return Joiner
+     */
+    public function leftJoin(SQLLeftJoin $join) : Joiner
+    {
+        $this->from[] = $join;
+        $this->tables[$join->getTable()] = true;
+
+        return $this;
+    }
+
+    /**
+     * @param SQLRightJoin $join
+     * @return Joiner
+     */
+    public function rightJoin(SQLRightJoin $join) : Joiner
+    {
+        $this->from[] = $join;
+        $this->tables[$join->getTable()] = true;
+
+        return $this;
+    }
+
+    /**
+     * @param SQLFullOuterJoin $join
+     * @return Joiner
+     */
+    public function fullOuterJoin(SQLFullOuterJoin $join)
+    {
+        $this->from[] = $join;
+        $this->tables[$join->getTable()] = true;
+
+        return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function getFirstTable()
+    {
+        if ($this->from) {
+            return $this->from[0]->getTable();
+        }
+
+        return null;
+    }
+
+    /**
+     * @return null
+     */
+    public function getLastTable()
+    {
+        if ($this->from) {
+            return $this->from[count($this->from) - 1]->getTable();
+        }
+
+        return null;
+    }
+
+    /**
+     * @param Dialect $dialect
+     * @return null|string
+     */
+    public function toDialectString(Dialect $dialect) : string
+    {
+        $fromString = null;
+
+        for ($i = 0, $size = count($this->from); $i < $size; ++$i) {
+            if ($i == 0) {
+                $separator = null;
+            } elseif (
+                $this->from[$i] instanceof FromTable &&
+                !$this->from[$i]->getTable() instanceof SelectQuery
+            ) {
+                $separator = ', ';
+            } else {
+                $separator = ' ';
+            }
+
+            $fromString .=
+                $separator
+                . $this->from[$i]->toDialectString($dialect);
+        }
+
+        if ($fromString) {
+            return ' FROM ' . $fromString;
+        }
+
+        return null;
+    }
+}

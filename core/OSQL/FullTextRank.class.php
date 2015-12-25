@@ -9,21 +9,24 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * Full-text ranking. Mostly used in "ORDER BY".
-	 * 
-	 * @ingroup OSQL
-	**/
-	final class FullTextRank extends FullText
-	{
-		public function toDialectString(Dialect $dialect)
-		{
-			return
-				$dialect->fullTextRank(
-					$this->field,
-					$this->words,
-					$this->logic
-				);
-		}
-	}
-?>
+/**
+ * Full-text ranking. Mostly used in "ORDER BY".
+ *
+ * @ingroup OSQL
+ **/
+final class FullTextRank extends FullText
+{
+    /**
+     * @param Dialect $dialect
+     * @throws UnimplementedFeatureException
+     */
+    public function toDialectString(Dialect $dialect)
+    {
+        return
+            $dialect->fullTextRank(
+                $this->field,
+                $this->words,
+                $this->logic
+            );
+    }
+}

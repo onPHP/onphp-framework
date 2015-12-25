@@ -9,77 +9,99 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Logic
-	**/
-	final class PrefixUnaryExpression implements LogicalObject, MappableObject
-	{
-		const NOT	= 'NOT';
-		const MINUS	= '-';
+/**
+ * @ingroup Logic
+ **/
+final class PrefixUnaryExpression implements LogicalObject, MappableObject
+{
+    const
+        NOT = 'NOT',
+        MINUS = '-';
 
-		private $subject	= null;
-		private $logic		= null;
-		private $brackets   = true;
-		
-		/**
-		 * @return PrefixUnaryExpression
-		 */
-		public static function create($subject, $logic)
-		{
-			return new self($subject, $logic);
-		}
-		
-		public function __construct($logic, $subject)
-		{
-			$this->subject	= $subject;
-			$this->logic	= $logic;
-		}
-		
-		/**
-		 * @param boolean $noBrackets
-		 * @return PrefixUnaryExpression
-		 */
-		public function noBrackets($noBrackets = true)
-		{
-			$this->brackets = !$noBrackets;
-			return $this;
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			$sql = $dialect->logicToString($this->logic)
-				.' '.$dialect->toFieldString($this->subject);
-			
-			return $this->brackets ? "({$sql})" : $sql;
-		}
-		
-		/**
-		 * @return PrefixUnaryExpression
-		**/
-		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
-		{
-			$expression = new self(
-				$this->logic,
-				$dao->guessAtom($this->subject, $query)
-			);
-			return $expression->noBrackets($this->brackets);
-		}
-		
-		public function toBoolean(Form $form)
-		{
-			Assert::isTrue($this->brackets, 'brackets must be enabled');
-			$subject = $form->toFormValue($this->subject);
-				
-			switch ($this->logic) {
-				case self::NOT :
-					return false === $subject;
+    /** @var null  */
+    private $subject = null;
+    /** @var null  */
+    private $logic = null;
+    /** @var bool  */
+    private $brackets = true;
 
-				default:
-					
-					throw new UnsupportedMethodException(
-						"'{$this->logic}' doesn't supported yet"
-					);
-			}
-		}
-	}
-?>
+    /**
+     * PrefixUnaryExpression constructor.
+     * @param $logic
+     * @param $subject
+     */
+    public function __construct($logic, $subject)
+    {
+        $this->subject = $subject;
+        $this->logic = $logic;
+    }
+
+    /**
+     * @param $subject
+     * @param $logic
+     * @return PrefixUnaryExpression
+     */
+    public static function create($subject, $logic)
+    {
+        return new self($subject, $logic);
+    }
+
+    /**
+     * @param Dialect $dialect
+     * @return string
+     */
+    public function toDialectString(Dialect $dialect)
+    {
+        $sql = $dialect->logicToString($this->logic)
+            . ' ' . $dialect->toFieldString($this->subject);
+
+        return $this->brackets ? "({$sql})" : $sql;
+    }
+
+    /**
+     * @param ProtoDAO $dao
+     * @param JoinCapableQuery $query
+     * @return PrefixUnaryExpression
+     */
+    public function toMapped(ProtoDAO $dao, JoinCapableQuery $query) : PrefixUnaryExpression
+    {
+        $expression = new self(
+            $this->logic,
+            $dao->guessAtom($this->subject, $query)
+        );
+        return $expression->noBrackets($this->brackets);
+    }
+
+    /**
+     * @param bool $noBrackets
+     * @return PrefixUnaryExpression
+     */
+    public function noBrackets($noBrackets = true) : PrefixUnaryExpression
+    {
+        $this->brackets = !$noBrackets;
+        return $this;
+    }
+
+    /**
+     * @param Form $form
+     * @return bool
+     * @throws UnsupportedMethodException
+     * @throws WrongArgumentException
+     */
+    public function toBoolean(Form $form) : bool
+    {
+        Assert::isTrue($this->brackets, 'brackets must be enabled');
+        $subject = $form->toFormValue($this->subject);
+
+        switch ($this->logic) {
+            case self::NOT :
+                return false === $subject;
+
+            default:
+
+                throw new UnsupportedMethodException(
+                    "'{$this->logic}' doesn't supported yet"
+                );
+        }
+    }
+}

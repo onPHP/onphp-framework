@@ -9,9 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	interface Query extends DialectString, Identifiable, Stringable {/*_*/}
-?>
+/**
+ * @ingroup OSQL
+ * @ingroup Module
+ **/
+interface Query extends DialectString, Identifiable, Stringable
+{
+    /*_*/
+}

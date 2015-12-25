@@ -377,10 +377,10 @@ final class Expression extends StaticFactory
     }
 
     /**
-     * @param ...$args
-     * @return LogicalChain
+     * @param array ...$args
+     * @return BinaryExpression
      */
-    public static function orBlock(...$args) : LogicalChain
+    public static function orBlock(...$args) : BinaryExpression
     {
         return self::block(
             $args,
@@ -389,12 +389,12 @@ final class Expression extends StaticFactory
     }
 
     /**
-     * @param ...$args
-     * @return LogicalChain
+     * @param array ...$args
+     * @return BinaryExpression
      */
-    public static function andBlock(...$args) : LogicalChain
+    public static function andBlock(...$args) : BinaryExpression
     {
-        return self::block(
+        return self::BinaryExpression(
             $args,
             BinaryExpression::EXPRESSION_AND
         );

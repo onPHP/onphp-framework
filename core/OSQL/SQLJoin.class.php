@@ -9,14 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	**/
-	final class SQLJoin extends SQLBaseJoin
-	{
-		public function toDialectString(Dialect $dialect)
-		{
-			return parent::baseToString($dialect, null);
-		}
-	}
-?>
+/**
+ * @ingroup OSQL
+ **/
+final class SQLJoin extends SQLBaseJoin
+{
+    public function toDialectString(Dialect $dialect)
+    {
+        return parent::baseToString($dialect, null);
+    }
+}

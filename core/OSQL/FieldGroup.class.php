@@ -9,34 +9,40 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	**/
-	final class FieldGroup implements DialectString
-	{
-		private $list = array();
-		
-		/**
-		 * @return FieldGroup
-		**/
-		public function add(Castable $field)
-		{
-			$this->list[] = $field;
-			
-			return $this;
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			if (!$this->list)
-				return null;
-			
-			$out = array();
-			
-			foreach ($this->list as $field)
-				$out[] = $field->toDialectString($dialect);
-			
-			return implode(', ', $out);
-		}
-	}
-?>
+/**
+ * @ingroup OSQL
+ **/
+final class FieldGroup implements DialectString
+{
+    /** @var array  */
+    private $list = [];
+
+    /**
+     * @return FieldGroup
+     **/
+    public function add(Castable $field)
+    {
+        $this->list[] = $field;
+
+        return $this;
+    }
+
+    /**
+     * @param Dialect $dialect
+     * @return null|string
+     */
+    public function toDialectString(Dialect $dialect)
+    {
+        if (!$this->list) {
+            return null;
+        }
+
+        $out = [];
+
+        foreach ($this->list as $field) {
+            $out[] = $field->toDialectString($dialect);
+        }
+
+        return implode(', ', $out);
+    }
+}

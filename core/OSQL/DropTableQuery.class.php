@@ -9,33 +9,46 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	final class DropTableQuery extends QueryIdentification
-	{
-		private $name		= null;
-		
-		private $cascade	= false;
-		
-		public function getId()
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function __construct($name, $cascade = false)
-		{
-			$this->name = $name;
-			$this->cascade = (true === $cascade);
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			return
-				'DROP TABLE '.$dialect->quoteTable($this->name)
-				.$dialect->dropTableMode($this->cascade)
-				.';';
-		}
-	}
-?>
+/**
+ * @ingroup OSQL
+ * @ingroup Module
+ **/
+final class DropTableQuery extends QueryIdentification
+{
+    /** @var null  */
+    private $name = null;
+
+    /** @var bool  */
+    private $cascade = false;
+
+    /**
+     * DropTableQuery constructor.
+     * @param $name
+     * @param bool $cascade
+     */
+    public function __construct($name, $cascade = false)
+    {
+        $this->name = $name;
+        $this->cascade = (true === $cascade);
+    }
+
+    /**
+     * @throws UnsupportedMethodException
+     */
+    public function getId()
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    /**
+     * @param Dialect $dialect
+     * @return string
+     */
+    public function toDialectString(Dialect $dialect) : string
+    {
+        return
+            'DROP TABLE ' . $dialect->quoteTable($this->name)
+            . $dialect->dropTableMode($this->cascade)
+            . ';';
+    }
+}

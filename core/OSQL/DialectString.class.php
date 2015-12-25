@@ -9,14 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Basis for almost all implementations of SQL parts.
-	 * 
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	interface DialectString
-	{
-		public function toDialectString(Dialect $dialect);
-	}
-?>
+/**
+ * Basis for almost all implementations of SQL parts.
+ *
+ * @ingroup OSQL
+ * @ingroup Module
+ **/
+interface DialectString
+{
+    public function toDialectString(Dialect $dialect);
+}

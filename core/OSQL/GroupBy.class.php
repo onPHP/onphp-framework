@@ -9,39 +9,45 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	final class GroupBy extends FieldTable implements MappableObject
-	{
-		/**
-		 * @deprecated
-		 *
-		 * @return GroupBy
-		**/
-		public static function create($field)
-		{
-			return new self($field);
-		}
-		
-		/**
-		 * @return GroupBy
-		**/
-		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
-		{
-			return new self($dao->guessAtom($this->field, $query));
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			if (
-				$this->field instanceof SelectQuery
-				|| $this->field instanceof LogicalObject
-			)
-				return '('.$dialect->fieldToString($this->field).')';
-			else
-				return parent::toDialectString($dialect);
-		}
-	}
-?>
+/**
+ * @ingroup OSQL
+ * @ingroup Module
+ **/
+final class GroupBy extends FieldTable implements MappableObject
+{
+    /**
+     * @deprecated
+     *
+     * @return GroupBy
+     **/
+    public static function create($field)
+    {
+        return new self($field);
+    }
+
+    /**
+     * @param ProtoDAO $dao
+     * @param JoinCapableQuery $query
+     * @return GroupBy
+     */
+    public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
+    {
+        return new self($dao->guessAtom($this->field, $query));
+    }
+
+    /**
+     * @param Dialect $dialect
+     * @return string
+     */
+    public function toDialectString(Dialect $dialect) : string
+    {
+        if (
+            $this->field instanceof SelectQuery
+            || $this->field instanceof LogicalObject
+        ) {
+            return '(' . $dialect->fieldToString($this->field) . ')';
+        } else {
+            return parent::toDialectString($dialect);
+        }
+    }
+}

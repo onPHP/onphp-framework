@@ -9,24 +9,23 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * Cast-able SQL parts.
-	 * 
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	abstract class Castable implements DialectString
-	{
-		protected $cast	= null;
-		
-		/**
-		 * @return Castable
-		**/
-		public function castTo($cast)
-		{
-			$this->cast = $cast;
-			
-			return $this;
-		}
-	}
-?>
+/**
+ * Cast-able SQL parts.
+ *
+ * @ingroup OSQL
+ * @ingroup Module
+ **/
+abstract class Castable implements DialectString
+{
+    protected $cast = null;
+
+    /**
+     * @return Castable
+     **/
+    public function castTo($cast)
+    {
+        $this->cast = $cast;
+
+        return $this;
+    }
+}

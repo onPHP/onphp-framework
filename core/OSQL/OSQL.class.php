@@ -9,71 +9,77 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Factory for OSQL's queries.
-	 * 
-	 * @ingroup OSQL
-	 * 
-	 * @see http://onphp.org/examples.OSQL.en.html
-	**/
-	final class OSQL extends StaticFactory
-	{
-		/**
-		 * @deprecated
-		 *
-		 * @return SelectQuery
-		**/
-		public static function select()
-		{
-			return new SelectQuery();
-		}
-		
-		/**
-		 * @return InsertQuery
-		**/
-		public static function insert()
-		{
-			return new InsertQuery();
-		}
-		
-		/**
-		 * @return UpdateQuery
-		**/
-		public static function update($table = null)
-		{
-			return new UpdateQuery($table);
-		}
-		
-		/**
-		 * @return DeleteQuery
-		**/
-		public static function delete()
-		{
-			return new DeleteQuery();
-		}
-		
-		/**
-		 * @return TruncateQuery
-		**/
-		public static function truncate($whom = null)
-		{
-			return new TruncateQuery($whom);
-		}
-		
-		/**
-		 * @return CreateTableQuery
-		**/
-		public static function createTable(DBTable $table)
-		{
-			return new CreateTableQuery($table);
-		}
-		
-		/**
-		 * @return DropTableQuery
-		**/
-		public static function dropTable($name, $cascade = false)
-		{
-			return new DropTableQuery($name, $cascade);
-		}
-	}
+/**
+ * Factory for OSQL's queries.
+ *
+ * @ingroup OSQL
+ *
+ * @see http://onphp.org/examples.OSQL.en.html
+ **/
+final class OSQL extends StaticFactory
+{
+    /**
+     * @deprecated
+     *
+     * @return SelectQuery
+     **/
+    public static function select()
+    {
+        return new SelectQuery();
+    }
+
+    /**
+     * @return InsertQuery
+     **/
+    public static function insert()
+    {
+        return new InsertQuery();
+    }
+
+    /**
+     * @param null $table
+     * @return UpdateQuery
+     */
+    public static function update($table = null)
+    {
+        return new UpdateQuery($table);
+    }
+
+    /**
+     * @return DeleteQuery
+     */
+    public static function delete()
+    {
+        return new DeleteQuery();
+    }
+
+    /**
+     * @param null $whom
+     * @return TruncateQuery
+     */
+    public static function truncate($whom = null)
+    {
+        return new TruncateQuery($whom);
+    }
+
+    /**
+     * @param DBTable $table
+     * @return CreateTableQuery
+     */
+    public static function createTable(DBTable $table)
+    {
+        return new CreateTableQuery($table);
+    }
+
+    /**
+     * @param $name
+     * @param bool $cascade
+     * @return DropTableQuery
+     */
+    public static function dropTable($name, $cascade = false)
+    {
+        return new DropTableQuery($name, $cascade);
+    }
+}
+
 ?>

@@ -9,25 +9,34 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	abstract class QueryIdentification implements Query
-	{
-		public function getId()
-		{
-			return sha1($this->toString());
-		}
-		
-		final public function setId($id)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function toString() : string
-		{
-			return $this->toDialectString(ImaginaryDialect::me());
-		}
-	}
-?>
+/**
+ * @ingroup OSQL
+ * @ingroup Module
+ **/
+abstract class QueryIdentification implements Query
+{
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return sha1($this->toString());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function toString()
+    {
+        return $this->toDialectString(ImaginaryDialect::me());
+    }
+
+    /**
+     * @param $id
+     * @throws UnsupportedMethodException
+     */
+    final public function setId($id)
+    {
+        throw new UnsupportedMethodException();
+    }
+}

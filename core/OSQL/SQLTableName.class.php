@@ -9,12 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	interface SQLTableName extends DialectString
-	{
-		public function getTable();
-	}
-?>
+/**
+ * @ingroup OSQL
+ * @ingroup Module
+ **/
+interface SQLTableName extends DialectString
+{
+    public function getTable();
+}

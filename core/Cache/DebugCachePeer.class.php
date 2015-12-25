@@ -35,7 +35,8 @@ class DebugCachePeer extends SelectivePeer
         $this->peer = $peer;
         $this->isWeb = $isWeb;
         $this->logger =
-            (new StreamLogger)->setOutputStream(new FileOutputStream($logfile, $appendFile));
+            (new StreamLogger)
+                ->setOutputStream(new FileOutputStream($logfile, $appendFile));
     }
 
     /**

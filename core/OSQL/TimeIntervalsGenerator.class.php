@@ -9,168 +9,229 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	**/
-	final class TimeIntervalsGenerator extends QueryIdentification
-	{
-		const ITERATOR_ALIAS	= 'iterator';
-		
-		private $range		= null;
-		private $interval	= null;
-		
-		private $overlapped	= true;
-		
-		private $field		= 'time';
-		
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function setRange(DateRange $range)
-		{
-			$this->range = $range;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return DateRange
-		**/
-		public function getRange()
-		{
-			return $this->range;
-		}
-		
-		public function setInterval(IntervalUnit $interval)
-		{
-			$this->interval = $interval;
-			
-			return $this;
-		}
-		
-		public function setOverlapped($overlapped = true)
-		{
-			Assert::isBoolean($overlapped);
-			
-			$this->overlapped = ($overlapped === true);
-			
-			return $this;
-		}
-		
-		public function isOverlapped()
-		{
-			return $this->overlapped;
-		}
-		
-		public function getField()
-		{
-			return $this->field;
-		}
-		
-		public function setField($field)
-		{
-			$this->field = $field;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return IntervalUnit
-		**/
-		public function getInterval()
-		{
-			return $this->interval;
-		}
-		
-		public function toSelectQuery()
-		{
-			if (!$this->range || !$this->interval)
-				throw new WrongStateException(
-					'define time range and interval units first'
-				);
-			
-			if (!$this->range->getStart() || !$this->range->getEnd())
-				throw new WrongArgumentException(
-					'cannot operate with unlimited range'
-				);
-			
-			$firstIntervalStart =
-				$this->interval->truncate(
-					$this->range->getStart(), !$this->overlapped
-				);
-				
-			$maxIntervals =
-				$this->interval->countInRange(
-					$this->range, $this->overlapped
-				) - 1;
-			
-			$generator = $this->getSeriesGenerator(0, $maxIntervals);
-			
-			$result = OSQL::select()->
-				from($generator, self::ITERATOR_ALIAS)->
-				get(
-					Expression::add(
-						DBValue::create($firstIntervalStart->toString())->
-						castTo(
-							DataType::create(DataType::TIMESTAMP)->
-							getName()
-						),
-						
-						Expression::mul(
-							DBValue::create("1 {$this->interval->getName()}")->
-							castTo(
-								DataType::create(DataType::INTERVAL)->
-								getName()
-							),
-							
-							DBField::create(self::ITERATOR_ALIAS)
-						)
-					),
-					$this->field
-				);
-			
-			return $result;
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			return $this->toSelectQuery()->toDialectString($dialect);
-		}
-		
-		/**
-		 * @return DialectString
-		 * 
-		 * FIXME: DBI-result, method works only for PostgreSQL.
-		 * Research how to generate series of values in MySQL and implement
-		 * this.
-		**/
-		private function getSeriesGenerator($start, $stop, $step = null)
-		{
-			if (!$step)
-				$result = SQLFunction::create(
-					'generate_series',
-					DBValue::create($start)->
-					castTo(DataType::create(DataType::INTEGER)->getName()),
-					
-					DBValue::create($stop)->
-					castTo(DataType::create(DataType::INTEGER)->getName())
-				);
-			else
-				$result = SQLFunction::create(
-					'generate_series',
-					DBValue::create($start)->
-					castTo(DataType::create(DataType::INTEGER)->getName()),
-					
-					DBValue::create($stop)->
-					castTo(DataType::create(DataType::INTEGER)->getName()),
-					
-					DBValue::create($step)->
-					castTo(DataType::create(DataType::INTEGER)->getName())
-				);
-			
-			return $result;
-		}
-	}
-?>
+/**
+ * @ingroup OSQL
+ **/
+final class TimeIntervalsGenerator extends QueryIdentification
+{
+    const ITERATOR_ALIAS = 'iterator';
+
+    /** @var null */
+    private $range = null;
+
+    /** @var null */
+    private $interval = null;
+
+    /** @var bool */
+    private $overlapped = true;
+
+    /** @var string */
+    private $field = 'time';
+
+    /**
+     * @deprecated
+     *
+     * @return TimeIntervalsGenerator
+     */
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return DateRange
+     **/
+    public function getRange()
+    {
+        return $this->range;
+    }
+
+    /**
+     * @param DateRange $range
+     * @return TimeIntervalsGenerator
+     */
+    public function setRange(DateRange $range) : TimeIntervalsGenerator
+    {
+        $this->range = $range;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOverlapped() : bool
+    {
+        return $this->overlapped;
+    }
+
+    /**
+     * @param bool $overlapped
+     * @return TimeIntervalsGenerator
+     * @throws WrongArgumentException
+     */
+    public function setOverlapped(bool $overlapped = true)
+    {
+        Assert::isBoolean($overlapped);
+
+        $this->overlapped = ($overlapped === true);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getField() : string
+    {
+        return $this->field;
+    }
+
+    /**
+     * @param $field
+     * @return TimeIntervalsGenerator
+     */
+    public function setField($field) : TimeIntervalsGenerator
+    {
+        $this->field = $field;
+
+        return $this;
+    }
+
+    /**
+     * @return IntervalUnit
+     **/
+    public function getInterval()
+    {
+        return $this->interval;
+    }
+
+    /**
+     * @param IntervalUnit $interval
+     * @return TimeIntervalsGenerator
+     */
+    public function setInterval(IntervalUnit $interval) : TimeIntervalsGenerator
+    {
+        $this->interval = $interval;
+
+        return $this;
+    }
+
+    /**
+     * @param Dialect $dialect
+     * @return string
+     * @throws WrongArgumentException
+     * @throws WrongStateException
+     */
+    public function toDialectString(Dialect $dialect) : string
+    {
+        return $this->toSelectQuery()->toDialectString($dialect);
+    }
+
+    /**
+     * @return SelectQuery
+     * @throws WrongArgumentException
+     * @throws WrongStateException
+     */
+    public function toSelectQuery() : SelectQuery
+    {
+        if (!$this->range || !$this->interval) {
+            throw new WrongStateException(
+                'define time range and interval units first'
+            );
+        }
+
+        if (!$this->range->getStart() || !$this->range->getEnd()) {
+            throw new WrongArgumentException(
+                'cannot operate with unlimited range'
+            );
+        }
+
+        $firstIntervalStart =
+            $this->interval->truncate(
+                $this->range->getStart(), !$this->overlapped
+            );
+
+        $maxIntervals =
+            $this->interval->countInRange(
+                $this->range, $this->overlapped
+            ) - 1;
+
+        $generator = $this->getSeriesGenerator(0, $maxIntervals);
+
+        $result = (new SelectQuery())
+            ->from($generator, self::ITERATOR_ALIAS)
+            ->get(
+                Expression::add(
+                    (new DBValue($firstIntervalStart->toString()))
+                        ->castTo(
+                            (new DataType(DataType::TIMESTAMP))
+                                ->getName()
+                        ),
+
+                    Expression::mul(
+                        (new DBValue("1 {$this->interval->getName()}"))
+                            ->castTo(
+                                (new DataType(DataType::INTERVAL))
+                                    ->getName()
+                            ),
+
+                        new DBField(self::ITERATOR_ALIAS)
+                    )
+                ),
+                $this->field
+            );
+
+        return $result;
+    }
+
+    /**
+     * @return DialectString
+     *
+     * FIXME: DBI-result, method works only for PostgreSQL.
+     * Research how to generate series of values in MySQL and implement
+     * this.
+     **/
+    private function getSeriesGenerator($start, $stop, $step = null)
+    {
+        if (!$step) {
+            $result = new SQLFunction(
+                'generate_series',
+                (new DBValue($start))
+                    ->castTo(
+                        (new DataType(DataType::INTEGER))
+                            ->getName()
+                    ),
+
+                (new DBValue($stop))
+                    ->castTo(
+                        (new DataType(DataType::INTEGER))
+                            ->getName()
+                    )
+            );
+        } else {
+            $result = new SQLFunction(
+                'generate_series',
+                (new DBValue($start))
+                    ->castTo(
+                        (new DataType(DataType::INTEGER))
+                            ->getName()
+                    ),
+
+                (new DBValue($stop))
+                    ->castTo(
+                        (new DataType(DataType::INTEGER))
+                            ->getName()
+                    ),
+
+                (new DBValue($step))
+                    ->castTo(
+                        (new DataType(DataType::INTEGER))
+                            ->getName()
+                    )
+            );
+        }
+
+        return $result;
+    }
+}
