@@ -97,6 +97,7 @@ final class BinaryExpression implements LogicalObject, MappableObject
         return $this->logic;
     }
 
+
     /**
      * @param boolean $noBrackets
      * @return BinaryExpression
