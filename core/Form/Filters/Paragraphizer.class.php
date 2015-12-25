@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class Paragraphizer extends BaseFilter
+class Paragraphizer extends BaseFilter
 {
     /**
      * @return Paragraphizer

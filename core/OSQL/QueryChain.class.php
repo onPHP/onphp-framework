@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class QueryChain extends SQLChain
+class QueryChain extends SQLChain
 {
     /**
      * @param $args

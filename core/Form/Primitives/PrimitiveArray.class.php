@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveArray extends FiltrablePrimitive
+class PrimitiveArray extends FiltrablePrimitive
 {
     /**
      * Fetching strategy for incoming containers:

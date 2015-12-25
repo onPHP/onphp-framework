@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveTimestampRange extends PrimitiveDateRange
+class PrimitiveTimestampRange extends PrimitiveDateRange
 {
 
     /**

@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveAlias extends BasePrimitive
+class PrimitiveAlias extends BasePrimitive
 {
     /** @var BasePrimitive  */
     private $primitive = null;

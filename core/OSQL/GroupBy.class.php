@@ -13,7 +13,7 @@
  * @ingroup OSQL
  * @ingroup Module
  **/
-final class GroupBy extends FieldTable implements MappableObject
+class GroupBy extends FieldTable implements MappableObject
 {
     /**
      * @deprecated

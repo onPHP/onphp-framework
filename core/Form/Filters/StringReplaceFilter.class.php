@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class StringReplaceFilter implements Filtrator
+class StringReplaceFilter implements Filtrator
 {
     private $search = null;
     private $replace = null;

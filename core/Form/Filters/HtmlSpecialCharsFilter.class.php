@@ -14,7 +14,7 @@
  *
  * @ingroup Filters
  **/
-final class HtmlSpecialCharsFilter extends BaseFilter
+class HtmlSpecialCharsFilter extends BaseFilter
 {
     /**
      * @return HtmlSpecialCharsFilter

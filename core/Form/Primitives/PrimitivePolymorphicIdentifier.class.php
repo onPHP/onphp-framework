@@ -13,7 +13,7 @@
  * Hint: use raw values like 'City.42' or 'Country.42' where City and
  * Country are childrens of base class GeoLocation, for example.
  **/
-final class PrimitivePolymorphicIdentifier extends PrimitiveIdentifier
+class PrimitivePolymorphicIdentifier extends PrimitiveIdentifier
 {
     const
         WRONG_CID_FORMAT = 201,

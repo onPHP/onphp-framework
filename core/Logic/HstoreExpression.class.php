@@ -13,7 +13,7 @@
  * @ingroup Logic
  * @see http://www.postgresql.org/docs/8.3/interactive/hstore.html
  **/
-final class HstoreExpression extends StaticFactory
+class HstoreExpression extends StaticFactory
 {
     const
         CONTAIN = '?',

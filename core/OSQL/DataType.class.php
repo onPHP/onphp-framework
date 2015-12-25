@@ -14,7 +14,7 @@
  *
  * @ingroup OSQL
  **/
-final class DataType extends Enumeration implements DialectString
+class DataType extends Enumeration implements DialectString
 {
     const
         SMALLINT = 0x001001,

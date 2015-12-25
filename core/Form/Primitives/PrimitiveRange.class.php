@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveRange extends ComplexPrimitive
+class PrimitiveRange extends ComplexPrimitive
 {
     const
         MIN = 'min',

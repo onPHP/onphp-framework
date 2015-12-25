@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class CallbackFilter implements Filtrator
+class CallbackFilter implements Filtrator
 {
     /**
      * @var Closure

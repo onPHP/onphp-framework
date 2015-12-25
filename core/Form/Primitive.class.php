@@ -14,7 +14,7 @@
  *
  * @ingroup Form
  **/
-final class Primitive extends StaticFactory
+class Primitive extends StaticFactory
 {
     /**
      * @param $primitive

@@ -15,7 +15,7 @@
  * @see http://www.postgresql.org/docs/current/interactive/ltree.html
  * @ingroup Logic
  **/
-final class LTreeExpression extends StaticFactory
+class LTreeExpression extends StaticFactory
 {
     const
         ANCESTOR = '@>',

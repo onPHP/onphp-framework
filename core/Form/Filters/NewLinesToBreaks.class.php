@@ -14,7 +14,7 @@
  *
  * @ingroup Filters
  **/
-final class NewLinesToBreaks extends BaseFilter
+class NewLinesToBreaks extends BaseFilter
 {
     /**
      * @return NewLinesToBreaks

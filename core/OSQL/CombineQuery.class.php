@@ -21,7 +21,7 @@
  *
  * @ingroup OSQL
  **/
-final class CombineQuery extends StaticFactory
+class CombineQuery extends StaticFactory
 {
     const
         UNION = 'UNION',

@@ -14,7 +14,7 @@
  *
  * @ingroup Filters
  **/
-final class CropFilter implements Filtrator
+class CropFilter implements Filtrator
 {
     private $start = 0;
     private $length = 0;

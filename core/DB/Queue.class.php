@@ -18,7 +18,7 @@
  *
  * @todo introduce DBs without multi-query support handling
  **/
-final class Queue implements Query
+class Queue implements Query
 {
     private $queue = [];
 

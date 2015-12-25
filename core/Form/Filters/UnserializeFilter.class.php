@@ -15,7 +15,7 @@
  * @ingroup Filters
  * @deprecated Because of the potential security problem.
  **/
-final class UnserializeFilter extends BaseFilter
+class UnserializeFilter extends BaseFilter
 {
     /**
      * @return UnserializeFilter

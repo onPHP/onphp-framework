@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveBinary extends FiltrablePrimitive
+class PrimitiveBinary extends FiltrablePrimitive
 {
     /**
      * @param $scope

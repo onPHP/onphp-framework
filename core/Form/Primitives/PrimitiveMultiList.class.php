@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveMultiList extends PrimitiveList
+class PrimitiveMultiList extends PrimitiveList
 {
     private $selected = [];
 

@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class TruncateQuery extends QueryIdentification
+class TruncateQuery extends QueryIdentification
 {
     /** @var array|null */
     private $targets = [];

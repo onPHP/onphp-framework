@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class DateRangeDisplayFilter extends BaseFilter
+class DateRangeDisplayFilter extends BaseFilter
 {
     /**
      * @return DateRangeDisplayFilter

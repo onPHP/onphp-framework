@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class TimeList extends BasePrimitive
+class TimeList extends BasePrimitive
 {
     /** @var array  */
     protected $value = [];

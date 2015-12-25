@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-final class SequentialCache extends CachePeer
+class SequentialCache extends CachePeer
 {
     /**
      * List of all peers, including master

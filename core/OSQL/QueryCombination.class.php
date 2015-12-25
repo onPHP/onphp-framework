@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class QueryCombination extends QueryIdentification implements DialectString
+class QueryCombination extends QueryIdentification implements DialectString
 {
     /** @var null|Query  */
     private $left = null;

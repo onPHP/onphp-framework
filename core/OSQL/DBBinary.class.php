@@ -15,7 +15,7 @@
  * @ingroup OSQL
  * @ingroup Module
  **/
-final class DBBinary extends DBValue
+class DBBinary extends DBValue
 {
     /**
      * @deprecated

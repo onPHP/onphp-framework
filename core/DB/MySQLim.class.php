@@ -17,7 +17,7 @@
  *
  * @ingroup DB
  **/
-final class MySQLim extends Sequenceless
+class MySQLim extends Sequenceless
 {
     private $needAutoCommit = false;
     private $defaultEngine;

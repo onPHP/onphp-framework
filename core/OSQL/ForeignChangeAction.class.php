@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class ForeignChangeAction extends Enumeration
+class ForeignChangeAction extends Enumeration
 {
     const
         NO_ACTION = 0x01,

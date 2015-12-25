@@ -14,7 +14,7 @@
  *
  * @ingroup Filters
  **/
-final class NormalizeUrlFilter implements Filtrator
+class NormalizeUrlFilter implements Filtrator
 {
     /**
      * @return NormalizeUrlFilter

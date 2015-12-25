@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveIpRange extends BaseObjectPrimitive
+class PrimitiveIpRange extends BaseObjectPrimitive
 {
     protected $className = 'IpRange';
 }

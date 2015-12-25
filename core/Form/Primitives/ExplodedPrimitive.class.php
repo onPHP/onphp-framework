@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class ExplodedPrimitive extends PrimitiveString
+class ExplodedPrimitive extends PrimitiveString
 {
     /** @var string  */
     protected $separator = ' ';

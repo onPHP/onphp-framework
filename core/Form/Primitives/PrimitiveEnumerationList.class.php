@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveEnumerationList extends PrimitiveEnumeration
+class PrimitiveEnumerationList extends PrimitiveEnumeration
 {
     protected $value = [];
 

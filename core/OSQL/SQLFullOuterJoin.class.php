@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class SQLFullOuterJoin extends SQLBaseJoin
+class SQLFullOuterJoin extends SQLBaseJoin
 {
     /**
      * @param Dialect $dialect

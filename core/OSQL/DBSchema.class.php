@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class DBSchema extends QueryIdentification
+class DBSchema extends QueryIdentification
 {
     /** @var array  */
     private $tables = [];

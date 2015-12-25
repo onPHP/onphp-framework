@@ -13,7 +13,7 @@
  * @ingroup Exceptions
  * @ingroup Module
  **/
-final class ClassNotFoundException extends BaseException
+class ClassNotFoundException extends BaseException
 {
     /*_*/
 }

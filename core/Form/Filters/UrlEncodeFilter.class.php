@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class UrlEncodeFilter extends BaseFilter
+class UrlEncodeFilter extends BaseFilter
 {
     /**
      * @return UrlEncodeFilter

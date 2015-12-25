@@ -16,7 +16,7 @@
  *
  * @see http://www.postgresql.org/docs/current/interactive/errcodes-appendix.html
  **/
-final class PostgresError extends Enumeration
+class PostgresError extends Enumeration
 {
     // Class 00 - Successful Completion
     const SUCCESSFUL_COMPLETION = '00000';

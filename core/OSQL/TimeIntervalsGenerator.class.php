@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class TimeIntervalsGenerator extends QueryIdentification
+class TimeIntervalsGenerator extends QueryIdentification
 {
     const ITERATOR_ALIAS = 'iterator';
 

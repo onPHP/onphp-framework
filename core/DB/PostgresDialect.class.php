@@ -16,7 +16,7 @@
  *
  * @ingroup DB
  **/
-final class PostgresDialect extends Dialect
+class PostgresDialect extends Dialect
 {
     private static $tsConfiguration = 'utf8_russian';
     private static $rankFunction = 'rank';

@@ -14,7 +14,7 @@
  *
  * @ingroup Filters
  **/
-final class StripTagsFilter implements Filtrator
+class StripTagsFilter implements Filtrator
 {
     private $exclude = null;
 

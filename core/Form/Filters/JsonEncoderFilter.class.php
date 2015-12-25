@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class JsonEncoderFilter extends BaseFilter
+class JsonEncoderFilter extends BaseFilter
 {
     /**
      * @return JsonEncoderFilter

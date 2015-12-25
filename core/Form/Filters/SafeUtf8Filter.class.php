@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class SafeUtf8Filter extends BaseFilter
+class SafeUtf8Filter extends BaseFilter
 {
     /**
      * @return SafeUtf8Filter

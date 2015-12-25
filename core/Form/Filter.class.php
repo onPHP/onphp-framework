@@ -14,7 +14,7 @@
  *
  * @ingroup Form
  **/
-final class Filter extends StaticFactory
+class Filter extends StaticFactory
 {
     /**
      * @return FilterChain

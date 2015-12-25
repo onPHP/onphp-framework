@@ -14,7 +14,7 @@
  *
  * @ingroup OSQL
  **/
-final class DatePart extends Enumeration
+class DatePart extends Enumeration
 {
     const
         CENTURY = 1,

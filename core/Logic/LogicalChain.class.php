@@ -14,7 +14,7 @@
  *
  * @ingroup Logic
  **/
-final class LogicalChain extends SQLChain
+class LogicalChain extends SQLChain
 {
     /**
      * @param $args

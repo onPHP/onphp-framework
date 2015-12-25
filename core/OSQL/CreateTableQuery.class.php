@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class CreateTableQuery extends QueryIdentification
+class CreateTableQuery extends QueryIdentification
 {
     /** @var DBTable|null  */
     private $table = null;

@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitivePlainList extends PrimitiveList
+class PrimitivePlainList extends PrimitiveList
 {
     /**
      * @return PrimitivePlainList

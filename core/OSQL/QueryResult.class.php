@@ -14,7 +14,7 @@
  *
  * @ingroup OSQL
  **/
-final class QueryResult implements Identifiable
+class QueryResult implements Identifiable
 {
     /** @var array  */
     private $list = [];

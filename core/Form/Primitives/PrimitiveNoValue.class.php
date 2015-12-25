@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveNoValue extends BasePrimitive
+class PrimitiveNoValue extends BasePrimitive
 {
     /**
      * @param $value

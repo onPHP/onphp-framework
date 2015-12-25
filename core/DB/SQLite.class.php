@@ -18,7 +18,7 @@
  *
  * @ingroup DB
  **/
-final class SQLite extends Sequenceless
+class SQLite extends Sequenceless
 {
     /**
      * @return $this

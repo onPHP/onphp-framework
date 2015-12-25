@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-final class FormCollection implements Iterator
+class FormCollection implements Iterator
 {
     /** @var Form|null */
     private $sampleForm = null;

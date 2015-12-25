@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class WordSplitterFilter implements Filtrator
+class WordSplitterFilter implements Filtrator
 {
     /** @var int  */
     private $maxWordLength = 25;

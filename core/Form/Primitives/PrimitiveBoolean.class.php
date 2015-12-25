@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveBoolean extends BasePrimitive
+class PrimitiveBoolean extends BasePrimitive
 {
     /**
      * @param $scope

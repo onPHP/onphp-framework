@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class InsertQuery extends InsertOrUpdateQuery
+class InsertQuery extends InsertOrUpdateQuery
 {
     /**
      * @var SelectQuery

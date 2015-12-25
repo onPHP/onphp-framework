@@ -20,7 +20,7 @@
  *
  * @ingroup Filters
  **/
-final class Utf16ConverterFilter extends BaseFilter
+class Utf16ConverterFilter extends BaseFilter
 {
     /**
      * @return Utf16ConverterFilter

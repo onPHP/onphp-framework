@@ -14,7 +14,7 @@
  *
  * @ingroup Logic
  **/
-final class InExpression implements LogicalObject, MappableObject
+class InExpression implements LogicalObject, MappableObject
 {
     const
         IN = 'IN',

@@ -12,7 +12,7 @@
 /**
  * @ingroup Logic
  **/
-final class Ip4ContainsExpression implements LogicalObject, MappableObject
+class Ip4ContainsExpression implements LogicalObject, MappableObject
 {
     /** @var null  */
     private $range = null;

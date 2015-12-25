@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveIpAddress extends BaseObjectPrimitive
+class PrimitiveIpAddress extends BaseObjectPrimitive
 {
     protected $className = 'IpAddress';
 }

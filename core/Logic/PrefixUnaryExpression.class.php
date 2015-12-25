@@ -12,7 +12,7 @@
 /**
  * @ingroup Logic
  **/
-final class PrefixUnaryExpression implements LogicalObject, MappableObject
+class PrefixUnaryExpression implements LogicalObject, MappableObject
 {
     const
         NOT = 'NOT',

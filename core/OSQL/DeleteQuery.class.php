@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class DeleteQuery extends QuerySkeleton implements SQLTableName
+class DeleteQuery extends QuerySkeleton implements SQLTableName
 {
     protected $table = null;
 

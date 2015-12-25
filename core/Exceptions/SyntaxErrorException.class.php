@@ -12,7 +12,7 @@
 /**
  * @ingroup Exceptions
  **/
-final class SyntaxErrorException extends BaseException
+class SyntaxErrorException extends BaseException
 {
     private $errorLine = null;
     private $errorPosition = null;

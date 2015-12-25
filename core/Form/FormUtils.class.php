@@ -12,7 +12,7 @@
 /**
  * @ingroup Form
  **/
-final class FormUtils extends StaticFactory
+class FormUtils extends StaticFactory
 {
     /**
      * @param Form $form

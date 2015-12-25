@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class DBColumn implements SQLTableName
+class DBColumn implements SQLTableName
 {
     /** @var DataType|null */
     private $type = null;

@@ -17,7 +17,7 @@
  *
  * @see http://onphp.org/examples.Form.en.html
  **/
-final class Form extends RegulatedForm
+class Form extends RegulatedForm
 {
     const
         WRONG = 0x0001,

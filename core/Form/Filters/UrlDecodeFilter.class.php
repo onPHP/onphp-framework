@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class UrlDecodeFilter extends BaseFilter
+class UrlDecodeFilter extends BaseFilter
 {
     /**
      * @return UrlDecodeFilter

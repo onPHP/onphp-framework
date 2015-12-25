@@ -16,7 +16,7 @@
  *
  * @ingroup Filters
  **/
-final class CompressWhitespaceFilter extends BaseFilter
+class CompressWhitespaceFilter extends BaseFilter
 {
     /**
      * @return CompressWhitespaceFilter

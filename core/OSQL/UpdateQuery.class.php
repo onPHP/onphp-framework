@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class UpdateQuery extends InsertOrUpdateQuery implements JoinCapableQuery
+class UpdateQuery extends InsertOrUpdateQuery implements JoinCapableQuery
 {
     /** @var Joiner|null  */
     private $joiner = null;

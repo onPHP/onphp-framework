@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class JsonDecoderFilter extends BaseFilter
+class JsonDecoderFilter extends BaseFilter
 {
     private $assoc = false;
 

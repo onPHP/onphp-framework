@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveIdentifierList extends PrimitiveIdentifier
+class PrimitiveIdentifierList extends PrimitiveIdentifier
 {
     /** @var array  */
     protected $value = [];

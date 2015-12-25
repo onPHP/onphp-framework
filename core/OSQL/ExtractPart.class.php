@@ -13,7 +13,7 @@
  * @ingroup OSQL
  * @ingroup Module
  **/
-final class ExtractPart implements DialectString, MappableObject
+class ExtractPart implements DialectString, MappableObject
 {
     /** @var DatePart|null */
     private $what = null;

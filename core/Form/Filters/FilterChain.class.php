@@ -14,7 +14,7 @@
  *
  * @ingroup Form
  **/
-final class FilterChain implements Filtrator
+class FilterChain implements Filtrator
 {
     private $chain = [];
 

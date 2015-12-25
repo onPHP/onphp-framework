@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class SQLJoin extends SQLBaseJoin
+class SQLJoin extends SQLBaseJoin
 {
     public function toDialectString(Dialect $dialect)
     {

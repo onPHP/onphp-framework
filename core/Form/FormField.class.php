@@ -16,7 +16,7 @@
  *
  * @ingroup Form
  **/
-final class FormField
+class FormField
 {
     /** @var null  */
     private $primitiveName = null;

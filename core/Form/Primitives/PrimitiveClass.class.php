@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveClass extends PrimitiveString
+class PrimitiveClass extends PrimitiveString
 {
     /** @var null  */
     private $ofClassName = null;

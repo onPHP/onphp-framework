@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class SelectQuery extends QuerySkeleton implements Named, JoinCapableQuery, Aliased
+class SelectQuery extends QuerySkeleton implements Named, JoinCapableQuery, Aliased
 {
     /** @var bool */
     private $distinct = false;

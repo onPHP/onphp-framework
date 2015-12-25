@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveScalarIdentifier extends PrimitiveIdentifier
+class PrimitiveScalarIdentifier extends PrimitiveIdentifier
 {
     protected $scalar = true;
 

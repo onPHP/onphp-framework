@@ -14,7 +14,7 @@
  *
  * @ingroup Logic
  **/
-final class Expression extends StaticFactory
+class Expression extends StaticFactory
 {
     /**
      * @param $left

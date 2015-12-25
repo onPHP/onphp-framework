@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveTime extends ComplexPrimitive
+class PrimitiveTime extends ComplexPrimitive
 {
     const
         HOURS = PrimitiveTimestamp::HOURS,

@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveEnumByValue extends PrimitiveEnum
+class PrimitiveEnumByValue extends PrimitiveEnum
 {
     /**
      * @param $scope

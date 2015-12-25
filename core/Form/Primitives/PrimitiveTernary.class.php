@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveTernary extends BasePrimitive
+class PrimitiveTernary extends BasePrimitive
 {
     /** @var int  */
     private $falseValue = 0;

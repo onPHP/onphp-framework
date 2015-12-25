@@ -13,7 +13,7 @@
  * @ingroup OSQL
  * @ingroup Module
  **/
-final class Joiner implements DialectString
+class Joiner implements DialectString
 {
     /** @var array  */
     private $from = [];

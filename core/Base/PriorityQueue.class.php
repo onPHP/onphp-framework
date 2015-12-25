@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class PriorityQueue
+class PriorityQueue
 {
     /** @var array  */
     private $heap = [0];

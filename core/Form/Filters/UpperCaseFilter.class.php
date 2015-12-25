@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class UpperCaseFilter extends BaseFilter
+class UpperCaseFilter extends BaseFilter
 {
     /**
      * @return LowerCaseFilter

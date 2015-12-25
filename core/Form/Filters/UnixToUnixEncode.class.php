@@ -14,7 +14,7 @@
  *
  * @ingroup Filters
  **/
-final class UnixToUnixEncode extends BaseFilter
+class UnixToUnixEncode extends BaseFilter
 {
     /**
      * @return UnixToUnixEncode

@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveFloat extends PrimitiveNumber
+class PrimitiveFloat extends PrimitiveNumber
 {
     /**
      * @param $number

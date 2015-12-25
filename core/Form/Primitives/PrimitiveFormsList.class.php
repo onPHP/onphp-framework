@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveFormsList extends PrimitiveForm
+class PrimitiveFormsList extends PrimitiveForm
 {
     protected $value = [];
 

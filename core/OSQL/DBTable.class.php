@@ -12,7 +12,7 @@
 /**
  * @ingroup OSQL
  **/
-final class DBTable implements DialectString
+class DBTable implements DialectString
 {
     /** @var null  */
     private $name = null;

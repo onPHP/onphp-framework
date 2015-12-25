@@ -14,7 +14,7 @@
  *
  * @ingroup Filters
  **/
-final class RemoveNewlineFilter extends BaseFilter
+class RemoveNewlineFilter extends BaseFilter
 {
     /**
      * @return RemoveNewLineFilter

@@ -13,7 +13,7 @@
  * @ingroup OSQL
  * @ingroup Module
  **/
-final class DropTableQuery extends QueryIdentification
+class DropTableQuery extends QueryIdentification
 {
     /** @var null  */
     private $name = null;

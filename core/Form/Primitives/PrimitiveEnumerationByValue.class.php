@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveEnumerationByValue extends PrimitiveEnumeration
+class PrimitiveEnumerationByValue extends PrimitiveEnumeration
 {
     /**
      * @param $scope

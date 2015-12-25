@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class TrimFilter implements Filtrator
+class TrimFilter implements Filtrator
 {
     const LEFT = 'l';
     const RIGHT = 'r';

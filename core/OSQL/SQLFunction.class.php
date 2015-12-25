@@ -14,7 +14,7 @@
  *
  * @ingroup OSQL
  **/
-final class SQLFunction extends Castable implements MappableObject, Aliased
+class SQLFunction extends Castable implements MappableObject, Aliased
 {
     const
         AGGREGATE_ALL = 1,

@@ -16,7 +16,7 @@
  *
  * @ingroup OSQL
  **/
-final class DBRaw implements LogicalObject
+class DBRaw implements LogicalObject
 {
     /** @var null  */
     private $string = null;

@@ -12,7 +12,7 @@
 /**
  * @ingroup Filters
  **/
-final class PCREFilter implements Filtrator
+class PCREFilter implements Filtrator
 {
     private $search = null;
     private $replace = null;

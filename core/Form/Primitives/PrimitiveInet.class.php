@@ -12,7 +12,7 @@
 /**
  * @ingroup Primitives
  **/
-final class PrimitiveInet extends BasePrimitive
+class PrimitiveInet extends BasePrimitive
 {
     /**
      * @param $scope

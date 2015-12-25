@@ -17,7 +17,7 @@
  *
  * @ingroup DB
  **/
-final class SQLitePDO extends Sequenceless
+class SQLitePDO extends Sequenceless
 {
 
     const ERROR_CONSTRAINT = 19;

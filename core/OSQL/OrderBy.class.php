@@ -13,7 +13,7 @@
  * @ingroup OSQL
  * @ingroup Module
  **/
-final class OrderBy extends FieldTable implements MappableObject
+class OrderBy extends FieldTable implements MappableObject
 {
     /** @var null|Ternary */
     private $direction = null;

@@ -14,7 +14,7 @@
  *
  * @ingroup OSQL
  **/
-final class FullTextRank extends FullText
+class FullTextRank extends FullText
 {
     /**
      * @param Dialect $dialect

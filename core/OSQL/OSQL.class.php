@@ -16,7 +16,7 @@
  *
  * @see http://onphp.org/examples.OSQL.en.html
  **/
-final class OSQL extends StaticFactory
+class OSQL extends StaticFactory
 {
     /**
      * @deprecated

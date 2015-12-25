@@ -14,7 +14,7 @@
  *
  * @see http://www.artlebedev.ru/tools/typograf/
  **/
-final class RussianTypograph extends BaseFilter
+class RussianTypograph extends BaseFilter
 {
     const MAGIC_DELIMITER = '<>'; // brilliant!
 
