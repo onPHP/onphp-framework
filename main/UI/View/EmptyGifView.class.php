@@ -27,8 +27,8 @@ class EmptyGifView implements View
      * @return EmptyGifView
      **/
     public function render(/* Model */
-        $model = null)
-    {
+        $model = null
+    ) {
         header('Content-Type: image/gif');
         header('Content-Length: 43');
         header('Accept-Ranges: none');

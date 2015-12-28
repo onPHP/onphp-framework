@@ -40,8 +40,9 @@ class RandomLinesBackgroundDrawer extends BackgroundDrawer
 
             $angle = mt_rand(0, 180);
 
-            while ($angle == 90)
+            while ($angle == 90) {
                 $angle = mt_rand(0, 180);
+            }
 
             $angleRad = deg2rad($angle);
 

@@ -14,7 +14,7 @@
  **/
 class CodeGenerator
 {
-    static private $similarSymbols = array('0', 'o', '1', 'l');
+    static private $similarSymbols = ['0', 'o', '1', 'l'];
     private $length = 5;
     private $lowerAllowed = true;
     private $upperAllowed = true;
@@ -34,15 +34,16 @@ class CodeGenerator
     {
         $code = null;
 
-        for ($i = 0; $i < $this->length; ++$i)
+        for ($i = 0; $i < $this->length; ++$i) {
             $code .= $this->generateOneSymbol();
+        }
 
         return $code;
     }
 
     private function generateOneSymbol()
     {
-        $variants = array();
+        $variants = [];
 
         Assert::isTrue(
             $this->lowerAllowed
@@ -53,14 +54,17 @@ class CodeGenerator
         );
 
         do {
-            if ($this->lowerAllowed)
+            if ($this->lowerAllowed) {
                 $variants[] = $this->randomChar();
-            
-            if ($this->upperAllowed)
-                $variants[] = strtoupper($this->randomChar());
+            }
 
-            if ($this->numbersAllowed)
+            if ($this->upperAllowed) {
+                $variants[] = strtoupper($this->randomChar());
+            }
+
+            if ($this->numbersAllowed) {
                 $variants[] = $this->randomNumber();
+            }
 
             shuffle($variants);
 

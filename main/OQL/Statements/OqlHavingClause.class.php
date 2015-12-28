@@ -9,31 +9,32 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup OQL
-	**/
-	final class OqlHavingClause extends OqlQueryExpressionClause
-	{
-		/**
-		 * @deprecated
-		 * @return OqlHavingClause
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return HavingProjection
-		**/
-		public function toProjection()
-		{
-			return $this->toLogic();
-		}
-		
-		protected static function checkExpression(OqlQueryExpression $expression)
-		{
-			Assert::isInstance($expression->getClassName(), 'HavingProjection');
-		}
-	}
+/**
+ * @ingroup OQL
+ **/
+final class OqlHavingClause extends OqlQueryExpressionClause
+{
+    /**
+     * @deprecated
+     * @return OqlHavingClause
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    protected static function checkExpression(OqlQueryExpression $expression)
+    {
+        Assert::isInstance($expression->getClassName(), 'HavingProjection');
+    }
+
+    /**
+     * @return HavingProjection
+     **/
+    public function toProjection()
+    {
+        return $this->toLogic();
+    }
+}
+
 ?>

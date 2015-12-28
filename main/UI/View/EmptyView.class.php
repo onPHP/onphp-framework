@@ -27,8 +27,8 @@ class EmptyView implements View, Stringable
      * @return EmptyView
      **/
     public function render(/* Model */
-        $model = null)
-    {
+        $model = null
+    ) {
         return $this;
     }
 

@@ -9,21 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @see http://www.php.net/manual/en/amqp.constants.php
-	**/
-	final class AMQPPeclExchangeBitmask extends AMQPPeclBaseBitmask
-	{
-		public function getBitmask($config)
-		{
-			Assert::isInstance($config, 'AMQPExchangeConfig');
+/**
+ * @see http://www.php.net/manual/en/amqp.constants.php
+ **/
+final class AMQPPeclExchangeBitmask extends AMQPPeclBaseBitmask
+{
+    public function getBitmask($config)
+    {
+        Assert::isInstance($config, 'AMQPExchangeConfig');
 
-			$bitmask = parent::getBitmask($config);
+        $bitmask = parent::getBitmask($config);
 
-			if ($config->getInternal())
-				$bitmask = $bitmask | AMQP_INTERNAL;
-			
-			return $bitmask;
-		}
-	}
+        if ($config->getInternal()) {
+            $bitmask = $bitmask | AMQP_INTERNAL;
+        }
+
+        return $bitmask;
+    }
+}
+
 ?>

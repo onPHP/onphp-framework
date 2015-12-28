@@ -29,4 +29,5 @@ abstract class BackgroundDrawer extends Drawer
         return $invertColor;
     }
 }
+
 ?>

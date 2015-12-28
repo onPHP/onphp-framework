@@ -9,25 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OpenId
-	**/
-	interface OpenIdConsumerAssociation
-	{
-		public function getHandle();
-		
-		public function getType();
-		
-		public function getSecret();
-		
-		/**
-		 * @return Timestamp
-		**/
-		public function getExpires();
-		
-		/**
-		 * @return HttpUrl
-		**/
-		public function getServer();
-	}
+/**
+ * @ingroup OpenId
+ **/
+interface OpenIdConsumerAssociation
+{
+    public function getHandle();
+
+    public function getType();
+
+    public function getSecret();
+
+    /**
+     * @return Timestamp
+     **/
+    public function getExpires();
+
+    /**
+     * @return HttpUrl
+     **/
+    public function getServer();
+}
+
 ?>

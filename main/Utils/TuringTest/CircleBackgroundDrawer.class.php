@@ -22,8 +22,9 @@ class CircleBackgroundDrawer extends BackgroundDrawer
 
     public function __construct($count, $minRadius, $maxRadius = null)
     {
-        if ($maxRadius === null)
+        if ($maxRadius === null) {
             $maxRadius = $minRadius;
+        }
 
         $this->maxRadius = $maxRadius;
         $this->minRadius = $minRadius;
@@ -50,7 +51,7 @@ class CircleBackgroundDrawer extends BackgroundDrawer
     /* void */
     private function drawCircle($x, $y, $radius)
     {
-        $vertexArray = array();
+        $vertexArray = [];
 
         $angleStep = 360 / CircleBackgroundDrawer::VERTEX_COUNT;
         $angle = 0;

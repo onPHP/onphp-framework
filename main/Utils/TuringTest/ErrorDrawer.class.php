@@ -29,8 +29,9 @@ class ErrorDrawer
      **/
     public function draw($string = 'ERROR!')
     {
-        if (!ErrorDrawer::isDrawError())
+        if (!ErrorDrawer::isDrawError()) {
             return $this;
+        }
 
         $y = round(
             $this->turingImage->getHeight() / 2
@@ -39,10 +40,11 @@ class ErrorDrawer
 
         $textWidth = imagefontwidth(ErrorDrawer::FONT_SIZE) * strlen($string);
 
-        if ($this->turingImage->getWidth() > $textWidth)
+        if ($this->turingImage->getWidth() > $textWidth) {
             $x = round(($this->turingImage->getWidth() - $textWidth) / 2);
-        else
+        } else {
             $x = 0;
+        }
 
         $color = $this->turingImage->getOneCharacterColor();
 

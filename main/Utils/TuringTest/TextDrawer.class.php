@@ -48,8 +48,9 @@ abstract class TextDrawer extends Drawer
 
     private function getFont()
     {
-        if (!$font = $this->getTuringImage()->getFont())
+        if (!$font = $this->getTuringImage()->getFont()) {
             throw new MissingElementException('the font is not installed');
+        }
 
         return $font;
     }

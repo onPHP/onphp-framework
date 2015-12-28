@@ -9,24 +9,27 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @see http://www.php.net/manual/en/amqp.constants.php
-	**/
-	final class AMQPPeclOutgoingMessageBitmask implements AMQPBitmaskResolver
-	{
-		public function getBitmask($config)
-		{
-			Assert::isInstance($config, 'AMQPOutgoingMessage');
+/**
+ * @see http://www.php.net/manual/en/amqp.constants.php
+ **/
+final class AMQPPeclOutgoingMessageBitmask implements AMQPBitmaskResolver
+{
+    public function getBitmask($config)
+    {
+        Assert::isInstance($config, 'AMQPOutgoingMessage');
 
-			$bitmask = 0;
+        $bitmask = 0;
 
-			if ($config->getMandatory())
-				$bitmask = $bitmask | AMQP_MANDATORY;
+        if ($config->getMandatory()) {
+            $bitmask = $bitmask | AMQP_MANDATORY;
+        }
 
-			if ($config->getImmediate())
-				$bitmask = $bitmask | AMQP_IMMEDIATE;
+        if ($config->getImmediate()) {
+            $bitmask = $bitmask | AMQP_IMMEDIATE;
+        }
 
-			return $bitmask;
-		}
-	}
+        return $bitmask;
+    }
+}
+
 ?>

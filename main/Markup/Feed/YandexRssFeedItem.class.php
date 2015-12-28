@@ -9,35 +9,36 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Feed
-	**/
-	final class YandexRssFeedItem extends FeedItem
-	{
-		private $fullText	= null;
-		
-		/**
-		 * @deprecated
-		 * @return YandexRssFeedItem
-		**/
-		public static function create($title)
-		{
-			return new self($title);
-		}
-		
-		public function getFullText()
-		{
-			return $this->fullText;
-		}
-		
-		/**
-		 * @return YandexRssFeedItem
-		**/
-		public function setFullText($fullText)
-		{
-			$this->fullText = $fullText;
-			
-			return $this;
-		}
-	}
+/**
+ * @ingroup Feed
+ **/
+final class YandexRssFeedItem extends FeedItem
+{
+    private $fullText = null;
+
+    /**
+     * @deprecated
+     * @return YandexRssFeedItem
+     **/
+    public static function create($title)
+    {
+        return new self($title);
+    }
+
+    public function getFullText()
+    {
+        return $this->fullText;
+    }
+
+    /**
+     * @return YandexRssFeedItem
+     **/
+    public function setFullText($fullText)
+    {
+        $this->fullText = $fullText;
+
+        return $this;
+    }
+}
+
 ?>

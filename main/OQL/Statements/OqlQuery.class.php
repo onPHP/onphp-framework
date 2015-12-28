@@ -9,29 +9,30 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup OQL
-	**/
-	abstract class OqlQuery extends OqlQueryClause
-	{
-		protected $dao = null;
-		
-		/**
-		 * @return ProtoDAO
-		**/
-		public function getDao()
-		{
-			return $this->dao;
-		}
-		
-		/**
-		 * @return OqlQuery
-		**/
-		public function setDao(ProtoDAO $dao)
-		{
-			$this->dao = $dao;
-			
-			return $this;
-		}
-	}
+/**
+ * @ingroup OQL
+ **/
+abstract class OqlQuery extends OqlQueryClause
+{
+    protected $dao = null;
+
+    /**
+     * @return ProtoDAO
+     **/
+    public function getDao()
+    {
+        return $this->dao;
+    }
+
+    /**
+     * @return OqlQuery
+     **/
+    public function setDao(ProtoDAO $dao)
+    {
+        $this->dao = $dao;
+
+        return $this;
+    }
+}
+
 ?>

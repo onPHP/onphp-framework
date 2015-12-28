@@ -9,8 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Utils
-	**/
-	class ArchiverException extends BaseException {/*_*/}
+/**
+ * @ingroup Utils
+ **/
+class ArchiverException extends BaseException
+{/*_*/
+}
+
 ?>

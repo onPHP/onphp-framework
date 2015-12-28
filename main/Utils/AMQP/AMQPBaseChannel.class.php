@@ -9,53 +9,55 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Base class modelling an AMQ channel
-	**/
-	abstract class AMQPBaseChannel implements AMQPChannelInterface
-	{
-		protected $id = null;
+/**
+ * Base class modelling an AMQ channel
+ **/
+abstract class AMQPBaseChannel implements AMQPChannelInterface
+{
+    protected $id = null;
 
-		/**
-		 * @var AMQPInterface
-		**/
-		protected $transport = null;
+    /**
+     * @var AMQPInterface
+     **/
+    protected $transport = null;
 
-		public function __construct($id, AMQPInterface $transport)
-		{
-			$this->id = $id;
-			$this->transport = $transport;
-		}
+    public function __construct($id, AMQPInterface $transport)
+    {
+        $this->id = $id;
+        $this->transport = $transport;
+    }
 
-		public function __destruct()
-		{
-			if ($this->isOpen())
-				$this->close();
-		}
+    public function __destruct()
+    {
+        if ($this->isOpen()) {
+            $this->close();
+        }
+    }
 
-		public function getTransport()
-		{
-			return $this->transport;
-		}
+    public function getTransport()
+    {
+        return $this->transport;
+    }
 
-		public function getId()
-		{
-			return $this->id;
-		}
+    public function getId()
+    {
+        return $this->id;
+    }
 
-		/**
-		 * @throws AMQPServerConnectionException
-		 * @return AMQPBaseChannel
-		**/
-		protected function checkConnection()
-		{
-			if (!$this->transport->getLink()->isConnected()) {
-				throw new AMQPServerConnectionException(
-					"No connection available"
-				);
-			}
+    /**
+     * @throws AMQPServerConnectionException
+     * @return AMQPBaseChannel
+     **/
+    protected function checkConnection()
+    {
+        if (!$this->transport->getLink()->isConnected()) {
+            throw new AMQPServerConnectionException(
+                "No connection available"
+            );
+        }
 
-			return $this;
-		}
-	}
+        return $this;
+    }
+}
+
 ?>

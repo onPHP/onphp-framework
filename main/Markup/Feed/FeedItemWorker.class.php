@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Feed
-	**/
-	interface FeedItemWorker extends Instantiatable
-	{
-		public function makeItems(SimpleXMLElement $xmlFeed);
-		public function toXml(FeedItem $item);
-	}
+/**
+ * @ingroup Feed
+ **/
+interface FeedItemWorker extends Instantiatable
+{
+    public function makeItems(SimpleXMLElement $xmlFeed);
+
+    public function toXml(FeedItem $item);
+}
+
 ?>

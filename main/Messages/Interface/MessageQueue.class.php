@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2009 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,8 +9,8 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-
-
-	interface MessageQueue { /* nop */ }
+interface MessageQueue
+{ /* nop */
+}
 
 ?>

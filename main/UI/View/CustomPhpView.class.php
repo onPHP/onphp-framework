@@ -49,8 +49,9 @@ class CustomPhpView extends EmptyView
 
         Assert::isTrue($model === null || $model instanceof Model);
 
-        if ($model)
+        if ($model) {
             extract($model->getList());
+        }
 
         $partViewer = new PartViewer($this->partViewResolver, $model);
 

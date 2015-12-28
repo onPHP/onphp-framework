@@ -9,29 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OpenId
-	**/
-	final class OpenIdConsumerSetupRequired implements OpenIdConsumerResult
-	{
-		private $url = null;
-		
-		public function __construct(HttpUrl $url)
-		{
-			$this->url = $url;
-		}
-		
-		/**
-		 * @return HttpUrl
-		**/
-		public function getUrl()
-		{
-			return $this->url;
-		}
-		
-		public function isOk()
-		{
-			return false;
-		}
-	}
+/**
+ * @ingroup OpenId
+ **/
+final class OpenIdConsumerSetupRequired implements OpenIdConsumerResult
+{
+    private $url = null;
+
+    public function __construct(HttpUrl $url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @return HttpUrl
+     **/
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    public function isOk()
+    {
+        return false;
+    }
+}
+
 ?>

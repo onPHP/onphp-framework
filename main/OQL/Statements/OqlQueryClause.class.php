@@ -9,42 +9,44 @@
  *                                                                          *
  ****************************************************************************/
 
+/**
+ * @ingroup OQL
+ **/
+abstract class OqlQueryClause
+{
+	protected $parameters = [];
+
 	/**
-	 * @ingroup OQL
-	**/
-	abstract class OqlQueryClause
+	 * @return OqlQueryClause
+	 **/
+	public function bindNext($value)
 	{
-		protected $parameters = array();
-		
-		/**
-		 * @return OqlQueryClause
-		**/
-		public function bind($index, $value)
-		{
-			$this->parameters[$index] = $value;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlQueryClause
-		**/
-		public function bindNext($value)
-		{
-			end($this->parameters);
-			
-			return $this->bind(key($this->parameters) + 1, $value);
-		}
-		
-		/**
-		 * @return OqlQueryClause
-		**/
-		public function bindAll(array $parameters)
-		{
-			if ($parameters)
-				$this->parameters = $parameters;
-			
-			return $this;
-		}
+		end($this->parameters);
+
+		return $this->bind(key($this->parameters) + 1, $value);
 	}
+
+	/**
+	 * @return OqlQueryClause
+	 **/
+	public function bind($index, $value)
+	{
+		$this->parameters[$index] = $value;
+
+		return $this;
+	}
+
+	/**
+	 * @return OqlQueryClause
+	 **/
+	public function bindAll(array $parameters)
+	{
+		if ($parameters) {
+			$this->parameters = $parameters;
+		}
+
+		return $this;
+	}
+}
+
 ?>

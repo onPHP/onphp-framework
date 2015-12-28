@@ -9,46 +9,47 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * URN is an absolute URI without authority part.
-	 * 
-	 * @ingroup Net
-	**/
-	final class Urn extends GenericUri
-	{
-		protected $schemeSpecificPart	= null;
-		
-		protected static $knownSubSchemes	= array(
-			'urn'		=> 'Urn',
-			'mailto'	=> 'Urn',
-			'news'		=> 'Urn',
-			'isbn'		=> 'Urn',
-			'tel'		=> 'Urn',
-			'fax'		=> 'Urn',
-		);
-		
-		/**
-		 * @return Urn
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public static function getKnownSubSchemes()
-		{
-			return static::$knownSubSchemes;
-		}
-		
-		public function isValid()
-		{
-			if (
-				$this->scheme === null
-				|| $this->getAuthority() !== null
-			)
-				return false;
-			
-			return parent::isValid();
-		}
-	}
+/**
+ * URN is an absolute URI without authority part.
+ *
+ * @ingroup Net
+ **/
+final class Urn extends GenericUri
+{
+    protected static $knownSubSchemes = [
+        'urn' => 'Urn',
+        'mailto' => 'Urn',
+        'news' => 'Urn',
+        'isbn' => 'Urn',
+        'tel' => 'Urn',
+        'fax' => 'Urn',
+    ];
+    protected $schemeSpecificPart = null;
+
+    /**
+     * @return Urn
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    public static function getKnownSubSchemes()
+    {
+        return static::$knownSubSchemes;
+    }
+
+    public function isValid()
+    {
+        if (
+            $this->scheme === null
+            || $this->getAuthority() !== null
+        ) {
+            return false;
+        }
+
+        return parent::isValid();
+    }
+}
+
 ?>

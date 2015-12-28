@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2009 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,50 +9,49 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+final class TextMessage implements Message
+{
+    private $timestamp = null;
+    private $text = null;
 
+    public function __construct(Timestamp $timestamp = null)
+    {
+        $this->timestamp = $timestamp ?: Timestamp::makeNow();
+    }
 
-	final class TextMessage implements Message
-	{
-		private $timestamp	= null;
-		private $text		= null;
+    /**
+     * @deprecated
+     * @param Timestamp|null $timestamp
+     * @return TextMessage
+     */
+    public static function create(Timestamp $timestamp = null)
+    {
+        return new self($timestamp);
+    }
 
-		/**
-		 * @deprecated
-		 * @param Timestamp|null $timestamp
-		 * @return TextMessage
-		 */
-		public static function create(Timestamp $timestamp = null)
-		{
-			return new self($timestamp);
-		}
+    public function getTimestamp()
+    {
+        return $this->timestamp;
+    }
 
-		public function __construct(Timestamp $timestamp = null)
-		{
-			$this->timestamp = $timestamp ?: Timestamp::makeNow();
-		}
+    public function setTimestamp(Timestamp $timestamp)
+    {
+        $this->timestamp = $timestamp;
 
-		public function setTimestamp(Timestamp $timestamp)
-		{
-			$this->timestamp = $timestamp;
+        return $this;
+    }
 
-			return $this;
-		}
+    public function getText()
+    {
+        return $this->text;
+    }
 
-		public function getTimestamp()
-		{
-			return $this->timestamp;
-		}
+    public function setText($text)
+    {
+        $this->text = $text;
 
-		public function setText($text)
-		{
-			$this->text = $text;
+        return $this;
+    }
+}
 
-			return $this;
-		}
-
-		public function getText()
-		{
-			return $this->text;
-		}
-	}
 ?>

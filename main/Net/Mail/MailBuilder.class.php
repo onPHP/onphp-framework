@@ -9,15 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Mail
-	**/
-	interface MailBuilder
-	{
-		/// returns encoded body as string
-		public function getEncodedBody();
-		
-		/// returns all related headers as string
-		public function getHeaders();
-	}
+/**
+ * @ingroup Mail
+ **/
+interface MailBuilder
+{
+    /// returns encoded body as string
+    public function getEncodedBody();
+
+    /// returns all related headers as string
+    public function getHeaders();
+}
+
 ?>

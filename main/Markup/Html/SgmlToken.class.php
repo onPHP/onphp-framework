@@ -9,27 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Html
-	 * @ingroup Module
-	**/
-	class SgmlToken
-	{
-		private $value	= null;
-		
-		/**
-		 * @return SgmlToken
-		**/
-		public function setValue($value)
-		{
-			$this->value = $value;
-			
-			return $this;
-		}
-		
-		public function getValue()
-		{
-			return $this->value;
-		}
-	}
+/**
+ * @ingroup Html
+ * @ingroup Module
+ **/
+class SgmlToken
+{
+    private $value = null;
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @return SgmlToken
+     **/
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+}
+
 ?>

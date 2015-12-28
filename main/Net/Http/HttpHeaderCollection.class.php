@@ -9,113 +9,117 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Http
-	**/
-	class HttpHeaderCollection implements IteratorAggregate
-	{
-		private $headers = array();
+/**
+ * @ingroup Http
+ **/
+class HttpHeaderCollection implements IteratorAggregate
+{
+    private $headers = [];
 
-		public function __construct(array $headers = array())
-		{
-			foreach ($headers as $name => $value)
-				$this->set($name, $value);
-		}
+    public function __construct(array $headers = [])
+    {
+        foreach ($headers as $name => $value) {
+            $this->set($name, $value);
+        }
+    }
 
-		public function set($name, $value)
-		{
-			$this->headers[$this->normalizeName($name)]=
-				array_values((array) $value);
+    public function set($name, $value)
+    {
+        $this->headers[$this->normalizeName($name)] =
+            array_values((array) $value);
 
-			return $this;
-		}
+        return $this;
+    }
 
-		public function add($name, $value)
-		{
-			$name = $this->normalizeName($name);
+    private function normalizeName($name)
+    {
+        return
+            preg_replace_callback(
+                '/(?<name>[^-]+)/',
+                function ($match) {
+                    return
+                        strtoupper(substr($match['name'], 0, 1))
+                        . strtolower(substr($match['name'], 1));
+                },
+                $name
+            );
+    }
 
-			if (array_key_exists($name, $this->headers))
-				$this->headers[$name][] = $value;
-			else
-				$this->set($name, $value);
+    public function add($name, $value)
+    {
+        $name = $this->normalizeName($name);
 
-			return $this;
-		}
+        if (array_key_exists($name, $this->headers)) {
+            $this->headers[$name][] = $value;
+        } else {
+            $this->set($name, $value);
+        }
 
-		public function remove($name)
-		{
-			if (!$this->has($name)) {
-				throw new MissingElementException(
-					sprintf('Header "%s" does not exist', $name)
-				);
-			}
+        return $this;
+    }
 
-			unset($this->headers[$this->normalizeName($name)]);
+    public function remove($name)
+    {
+        if (!$this->has($name)) {
+            throw new MissingElementException(
+                sprintf('Header "%s" does not exist', $name)
+            );
+        }
 
-			return $this;
-		}
+        unset($this->headers[$this->normalizeName($name)]);
 
-		public function get($name)
-		{
-			$valueList = $this->getRaw($name);
-			return end($valueList);
-		}
+        return $this;
+    }
 
-		public function has($name)
-		{
-			return
-				array_key_exists(
-					$this->normalizeName($name),
-					$this->headers
-				);
-		}
+    public function has($name)
+    {
+        return
+            array_key_exists(
+                $this->normalizeName($name),
+                $this->headers
+            );
+    }
 
-		public function getRaw($name)
-		{
-			if (!$this->has($name)) {
-				throw new MissingElementException(
-					sprintf('Header "%s" does not exist', $name)
-				);
-			}
+    public function get($name)
+    {
+        $valueList = $this->getRaw($name);
+        return end($valueList);
+    }
 
-			return $this->headers[$this->normalizeName($name)];
-		}
+    public function getRaw($name)
+    {
+        if (!$this->has($name)) {
+            throw new MissingElementException(
+                sprintf('Header "%s" does not exist', $name)
+            );
+        }
 
-		public function getAll()
-		{
-			return
-				array_map(
-					function (array $value) {
-						return end($value);
-					},
-					$this->headers
-				);
-		}
+        return $this->headers[$this->normalizeName($name)];
+    }
 
-		public function getIterator()
-		{
-			$headerList = array();
+    public function getAll()
+    {
+        return
+            array_map(
+                function (array $value) {
+                    return end($value);
+                },
+                $this->headers
+            );
+    }
 
-			foreach ($this->headers as $header => $valueList)
-				foreach ($valueList as $value)
-					$headerList[] = sprintf('%s: %s', $header, $value);
+    public function getIterator()
+    {
+        $headerList = [];
 
-			return new ArrayIterator($headerList);
-		}
+        foreach ($this->headers as $header => $valueList) {
+            foreach ($valueList as $value) {
+                $headerList[] = sprintf('%s: %s', $header, $value);
+            }
+        }
 
-		private function normalizeName($name)
-		{
-			return
-				preg_replace_callback(
-					'/(?<name>[^-]+)/',
-					function ($match) {
-						return
-							strtoupper(substr($match['name'], 0, 1))
-							.strtolower(substr($match['name'], 1))
-						;
-					},
-					$name
-				);
-		}
-	}
+        return new ArrayIterator($headerList);
+    }
+}
+
 ?>

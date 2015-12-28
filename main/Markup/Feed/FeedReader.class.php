@@ -9,78 +9,82 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Feed
-	**/
-	final class FeedReader
-	{
-		private $xml			= null;
-		private $formats		= array();
-		
-		/**
-		 * @return FeedReader
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function __construct()
-		{
-			$this->formats[] = YandexRssFeedFormat::me();
-			$this->formats[] = AtomFeedFormat::me();
-			$this->formats[] = RssFeedFormat::me();
-		}
-		
-		/**
-		 * @return SimpleXMLElement
-		**/
-		public function getXml()
-		{
-			return $this->xml;
-		}
-		
-		/**
-		 * @return FeedChannel
-		**/
-		public function parseFile($file)
-		{
-			try {
-				$this->xml = simplexml_load_file($file);
-			} catch (BaseException $e) {
-				throw new WrongArgumentException(
-					'Invalid link or content: '.$e->getMessage()
-				);
-			}
-			
-			if (!$this->xml)
-				throw new WrongStateException('simplexml_load_file failed.');
-			
-			return $this->parse();
-		}
-		
-		/**
-		 * @return FeedReader
-		**/
-		public function parseXml($xml)
-		{
-			$this->xml = new SimpleXMLElement($xml);
-			
-			return $this->parse();
-		}
-		
-		/**
-		 * @return FeedChannel
-		**/
-		private function parse()
-		{
-			foreach ($this->formats as $format)
-				if ($format->isAcceptable($this->xml))
-					return $format->parse($this->xml);
-			
-			throw new WrongStateException(
-				'you\'re using unsupported format of feed'
-			);
-		}
-	}
+/**
+ * @ingroup Feed
+ **/
+final class FeedReader
+{
+    private $xml = null;
+    private $formats = [];
+
+    public function __construct()
+    {
+        $this->formats[] = YandexRssFeedFormat::me();
+        $this->formats[] = AtomFeedFormat::me();
+        $this->formats[] = RssFeedFormat::me();
+    }
+
+    /**
+     * @return FeedReader
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return SimpleXMLElement
+     **/
+    public function getXml()
+    {
+        return $this->xml;
+    }
+
+    /**
+     * @return FeedChannel
+     **/
+    public function parseFile($file)
+    {
+        try {
+            $this->xml = simplexml_load_file($file);
+        } catch (BaseException $e) {
+            throw new WrongArgumentException(
+                'Invalid link or content: ' . $e->getMessage()
+            );
+        }
+
+        if (!$this->xml) {
+            throw new WrongStateException('simplexml_load_file failed.');
+        }
+
+        return $this->parse();
+    }
+
+    /**
+     * @return FeedChannel
+     **/
+    private function parse()
+    {
+        foreach ($this->formats as $format) {
+            if ($format->isAcceptable($this->xml)) {
+                return $format->parse($this->xml);
+            }
+        }
+
+        throw new WrongStateException(
+            'you\'re using unsupported format of feed'
+        );
+    }
+
+    /**
+     * @return FeedReader
+     **/
+    public function parseXml($xml)
+    {
+        $this->xml = new SimpleXMLElement($xml);
+
+        return $this->parse();
+    }
+}
+
 ?>

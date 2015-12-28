@@ -9,59 +9,60 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @see http://www.rabbitmq.com/amqp-0-9-1-quickref.html#exchange.declare
-	**/
-	final class AMQPExchangeConfig extends AMQPBaseConfig
-	{
-		protected $internal = null;
+/**
+ * @see http://www.rabbitmq.com/amqp-0-9-1-quickref.html#exchange.declare
+ **/
+final class AMQPExchangeConfig extends AMQPBaseConfig
+{
+    protected $internal = null;
 
-		/**
-		 * @var AMQPExchangeType
-		**/
-		protected $type = null;
+    /**
+     * @var AMQPExchangeType
+     **/
+    protected $type = null;
 
-		/**
-		 * @return AMQPExchangeConfig
-		**/
-		public static function create()
-		{
-			return new self();
-		}
+    /**
+     * @return AMQPExchangeConfig
+     **/
+    public static function create()
+    {
+        return new self();
+    }
 
-		/**
-		 * @param AMQPExchangeType $type
-		 * @return AMQPExchangeConfig
-		**/
-		public function setType(AMQPExchangeType $type)
-		{
-			$this->type = $type;
+    /**
+     * @return AMQPExchangeType
+     **/
+    public function getType()
+    {
+        return $this->type;
+    }
 
-			return $this;
-		}
+    /**
+     * @param AMQPExchangeType $type
+     * @return AMQPExchangeConfig
+     **/
+    public function setType(AMQPExchangeType $type)
+    {
+        $this->type = $type;
 
-		/**
-		 * @return AMQPExchangeType
-		**/
-		public function getType()
-		{
-			return $this->type;
-		}
+        return $this;
+    }
 
-		public function getInternal()
-		{
-			return $this->internal;
-		}
+    public function getInternal()
+    {
+        return $this->internal;
+    }
 
-		/**
-		 * @param boolean $internal
-		 * @return AMQPExchangeConfig
-		**/
-		public function setInternal($internal)
-		{
-			$this->internal = $internal;
+    /**
+     * @param boolean $internal
+     * @return AMQPExchangeConfig
+     **/
+    public function setInternal($internal)
+    {
+        $this->internal = $internal;
 
-			return $this;
-		}		
-	}
+        return $this;
+    }
+}
+
 ?>

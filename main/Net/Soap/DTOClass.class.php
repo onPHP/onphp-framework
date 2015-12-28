@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,21 +9,21 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+abstract class DTOClass implements PrototypedEntity
+{
+    final public function makeObject(Form $form)
+    {
+        return (new FormToObjectConverter($this->entityProto()))->make($form);
+    }
 
-	abstract class DTOClass implements PrototypedEntity
-	{
-		final public function makeObject(Form $form)
-		{
-			return (new FormToObjectConverter($this->entityProto()))->make($form);
-		}
-		
-		/**
-		 * @return Form
-		**/
-		final public function toForm()
-		{
-			return
-				(new ObjectToFormConverter($this->entityProto()))->make($this);
-		}
-	}
+    /**
+     * @return Form
+     **/
+    final public function toForm()
+    {
+        return
+            (new ObjectToFormConverter($this->entityProto()))->make($this);
+    }
+}
+
 ?>

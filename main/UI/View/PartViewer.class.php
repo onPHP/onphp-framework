@@ -50,8 +50,9 @@ class PartViewer
                 ? $this->model->get('parentModel')
                 : null;
 
-        } else
+        } else {
             $parentModel = $this->model;
+        }
 
         $model->set('parentModel', $parentModel);
 
@@ -61,10 +62,11 @@ class PartViewer
 
         $model->set('rootModel', $rootModel);
 
-        if ($partName instanceof View)
+        if ($partName instanceof View) {
             $partName->render($model);
-        else
+        } else {
             $this->viewResolver->resolveViewName($partName)->render($model);
+        }
 
         return $this;
     }

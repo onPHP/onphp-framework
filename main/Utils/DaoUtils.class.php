@@ -9,112 +9,120 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Utils
-	**/
-	final class DaoUtils extends StaticFactory
-	{
-		private static $nullValue	= 0;
-		
-		/* void */ public static function swap(
-			DAOConnected $first,
-			DAOConnected $second,
-			$property = 'position'
-		)
-		{
-			Assert::isTrue(
-				get_class($first) === get_class($second)
-			);
-			
-			$setMethod = 'set'.ucfirst($property);
-			$getMethod = 'get'.ucfirst($property);
-			
-			Assert::isTrue(
-				method_exists($first, $setMethod)
-				&& method_exists($first, $getMethod)
-			);
-			
-			$dao = $first->dao();
-			$db = DBPool::me()->getByDao($dao);
+/**
+ * @ingroup Utils
+ **/
+final class DaoUtils extends StaticFactory
+{
+    private static $nullValue = 0;
 
-			$oldPosition = $first->$getMethod();
-			$newPosition = $second->$getMethod();
-			
-			$db->begin();
+    /* void */
+    public static function swap(
+        DAOConnected $first,
+        DAOConnected $second,
+        $property = 'position'
+    ) {
+        Assert::isTrue(
+            get_class($first) === get_class($second)
+        );
 
-			$e = null;
-			
-			try {
-				$dao->save(
-					$first->$setMethod(self::$nullValue)
-				);
+        $setMethod = 'set' . ucfirst($property);
+        $getMethod = 'get' . ucfirst($property);
 
-				$dao->save(
-					$second->$setMethod($oldPosition)
-				);
-				
-				$dao->save(
-					$first->$setMethod($newPosition)
-				);
+        Assert::isTrue(
+            method_exists($first, $setMethod)
+            && method_exists($first, $getMethod)
+        );
 
-				$db->commit();
-			} catch (DatabaseException $e) {
-				$db->rollback();
-			}
-			
-			$dao->
-				uncacheByIds(
-					array(
-						$first->getId(), $second->getId()
-					)
-				);
-			
-			if ($e)
-				throw $e;
-		}
-		
-		/* void */ public static function setNullValue($nullValue)
-		{
-			self::$nullValue = $nullValue;
-		}
+        $dao = $first->dao();
+        $db = DBPool::me()->getByDao($dao);
 
-		public static function increment(
-			DAOConnected &$object,
-			array $fields /* fieldName => value */,
-			$refreshCurrent = true,
-			/*UpdateQuery*/ $query = null
-		)
-		{
-			$objectDao = $object->dao();
+        $oldPosition = $first->$getMethod();
+        $newPosition = $second->$getMethod();
 
-			if ($query)
-				$updateQuery = $query;
-			else
-				$updateQuery =
-					OSQL::update()->setTable($objectDao->getTable())->
-					where(Expression::eqId('id', $object));
+        $db->begin();
 
-			$mapping = $objectDao->getProtoClass()->getMapping();
+        $e = null;
 
-			foreach ($mapping as $field => $column)
-				if (isset($fields[$field]))
-					$updateQuery->set(
-						$column,
-						Expression::add($column, $fields[$field])
-					);
+        try {
+            $dao->save(
+                $first->$setMethod(self::$nullValue)
+            );
 
-			$updateCount =
-				DBPool::getByDao($objectDao)->queryCount($updateQuery);
+            $dao->save(
+                $second->$setMethod($oldPosition)
+            );
 
-			if ($query)
-				$objectDao->uncacheLists();
-			else
-				$objectDao->uncacheById($object->getId());
+            $dao->save(
+                $first->$setMethod($newPosition)
+            );
 
-			if ($refreshCurrent && !$query)
-				$object = $objectDao->getById($object->getId());
+            $db->commit();
+        } catch (DatabaseException $e) {
+            $db->rollback();
+        }
 
-			return $updateCount;
-		}
-	}
+        $dao->
+        uncacheByIds(
+            [
+                $first->getId(), $second->getId()
+            ]
+        );
+
+        if ($e) {
+            throw $e;
+        }
+    }
+
+    /* void */
+    public static function setNullValue($nullValue)
+    {
+        self::$nullValue = $nullValue;
+    }
+
+    public static function increment(
+        DAOConnected &$object,
+        array $fields /* fieldName => value */,
+        $refreshCurrent = true,
+        /*UpdateQuery*/
+        $query = null
+    ) {
+        $objectDao = $object->dao();
+
+        if ($query) {
+            $updateQuery = $query;
+        } else {
+            $updateQuery =
+                OSQL::update()->setTable($objectDao->getTable())->
+                where(Expression::eqId('id', $object));
+        }
+
+        $mapping = $objectDao->getProtoClass()->getMapping();
+
+        foreach ($mapping as $field => $column) {
+            if (isset($fields[$field])) {
+                $updateQuery->set(
+                    $column,
+                    Expression::add($column, $fields[$field])
+                );
+            }
+        }
+
+        $updateCount =
+            DBPool::getByDao($objectDao)->queryCount($updateQuery);
+
+        if ($query) {
+            $objectDao->uncacheLists();
+        } else {
+            $objectDao->uncacheById($object->getId());
+        }
+
+        if ($refreshCurrent && !$query) {
+            $object = $objectDao->getById($object->getId());
+        }
+
+        return $updateCount;
+    }
+}
+
 ?>

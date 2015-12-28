@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2009 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,39 +9,39 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+class TextFileQueue implements MessageQueue
+{
+    private $fileName = null;
+    private $offset = null;
 
-	class TextFileQueue implements MessageQueue
-	{
-		private $fileName	= null;
-		private $offset		= null;
+    public static function create()
+    {
+        return new self;
+    }
 
-		public static function create()
-		{
-			return new self;
-		}
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
 
-		public function setFileName($fileName)
-		{
-			$this->fileName = $fileName;
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
 
-			return $this;
-		}
+        return $this;
+    }
 
-		public function getFileName()
-		{
-			return $this->fileName;
-		}
+    public function getOffset()
+    {
+        return $this->offset;
+    }
 
-		public function setOffset($offset)
-		{
-			$this->offset = $offset;
+    public function setOffset($offset)
+    {
+        $this->offset = $offset;
 
-			return $this;
-		}
+        return $this;
+    }
+}
 
-		public function getOffset()
-		{
-			return $this->offset;
-		}
-	}
 ?>

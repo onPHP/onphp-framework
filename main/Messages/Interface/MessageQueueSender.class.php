@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2009 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,17 +9,17 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+interface MessageQueueSender
+{
+    /**
+     * @return MessageQueueReceiver
+     **/
+    public function send(Message $message);
 
-	interface MessageQueueSender
-	{
-		/**
-		 * @return MessageQueueReceiver
-		**/
-		public function send(Message $message);
-		
-		/**
-		 * @return MessageQueue
-		**/
-		public function getQueue();
-	}
+    /**
+     * @return MessageQueue
+     **/
+    public function getQueue();
+}
+
 ?>

@@ -14,7 +14,7 @@
  **/
 class ColorArray
 {
-    private $colors = array();
+    private $colors = [];
 
     /**
      * @deprecated
@@ -51,18 +51,20 @@ class ColorArray
      **/
     public function getRandomTextColor()
     {
-        if ($this->isEmpty())
+        if ($this->isEmpty()) {
             throw new MissingElementException('Not set colors in the object ');
+        }
 
         return $this->colors[array_rand($this->colors)];
     }
 
     public function isEmpty()
     {
-        if (count($this->colors) == 0)
+        if (count($this->colors) == 0) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     public function getColors()

@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2011 by Sergey S. Sergeev                               *
  *                                                                         *
@@ -8,82 +9,82 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+abstract class AMQPBaseConfig
+{
+    protected $passive = false;
+    protected $durable = false;
+    protected $autodelete = false;
+    protected $nowait = false;
+    protected $arguments = [];
 
-	abstract class AMQPBaseConfig
-	{
-		protected $passive = false;
-		protected $durable = false;
-		protected $autodelete = false;
-		protected $nowait = false;
-		protected $arguments = array();
+    public function getPassive()
+    {
+        return $this->passive;
+    }
 
-		public function getPassive()
-		{
-			return $this->passive;
-		}
+    public function setPassive($passive)
+    {
+        $this->passive = $passive === true;
 
-		public function setPassive($passive)
-		{
-			$this->passive = $passive === true;
+        return $this;
+    }
 
-			return $this;
-		}
+    public function getDurable()
+    {
+        return $this->durable;
+    }
 
-		public function getDurable()
-		{
-			return $this->durable;
-		}
+    public function setDurable($durable)
+    {
+        $this->durable = $durable === true;
 
-		public function setDurable($durable)
-		{
-			$this->durable = $durable === true;
+        return $this;
+    }
 
-			return $this;
-		}
+    public function getAutodelete()
+    {
+        return $this->autodelete;
+    }
 
-		public function getAutodelete()
-		{
-			return $this->autodelete;
-		}
+    public function setAutodelete($autodelete)
+    {
+        $this->autodelete = $autodelete === true;
 
-		public function setAutodelete($autodelete)
-		{
-			$this->autodelete = $autodelete === true;
+        return $this;
+    }
 
-			return $this;
-		}
+    public function getNowait()
+    {
+        return $this->nowait;
+    }
 
-		public function getNowait()
-		{
-			return $this->nowait;
-		}
+    public function setNowait($nowait)
+    {
+        $this->nowait = $nowait === true;
 
-		public function setNowait($nowait)
-		{
-			$this->nowait = $nowait === true;
+        return $this;
+    }
 
-			return $this;
-		}
+    /**
+     * @param AMQPBitmaskResolver $resolver
+     * @return integer - it's bitmask
+     **/
+    public function getBitmask(AMQPBitmaskResolver $resolver)
+    {
+        return $resolver->getBitmask($this);
+    }
 
-		public function setArguments(array $assoc)
-		{
-			$this->arguments = $assoc;
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
 
-			return $this;
-		}
+    public function setArguments(array $assoc)
+    {
+        $this->arguments = $assoc;
 
-		/**
-		 * @param AMQPBitmaskResolver $resolver
-		 * @return integer - it's bitmask
-		**/
-		public function getBitmask(AMQPBitmaskResolver $resolver)
-		{
-			return $resolver->getBitmask($this);
-		}
+        return $this;
+    }
+}
 
-		public function getArguments()
-		{
-			return $this->arguments;
-		}
-	}
 ?>

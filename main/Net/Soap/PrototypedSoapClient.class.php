@@ -9,248 +9,250 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Quick reference:
-	 * 
-	 * 1. extend this class
-	 * 
-	 * 2. redefine wsdlUrl and classMap ('complexType' => 'DtoClass')
-	 * 
-	 * 3. make EntityProtos, Dtos and Business classes for your Xsd objects
-	 *    and exception classes for your faults
-	 * 
-	 * 4. implement your methods, corresponding to operations in wsdl, in such
-	 *    manner:
-	 * 
-	 *	public function login(LoginRequest $request)
-	 *	{
-	 *		// preparations...
-	 *		
-	 *		$result = $this->call(
-	 *			'login', $request, 'LoginResponse'
-	 *		);
-	 *		
-	 *		// additional asserts...
-	 *		
-	 *		return $result;
-	 *	}
-	 * 
-	 *	5. implement logCall(), if you need debugging output
-	 * 
-	**/
-	abstract class PrototypedSoapClient
-	{
-		protected $wsdlUrl		= null;
-		protected $classMap		= array();
-		
-		protected $soapClient	= null;
-		
-		final public static function convertSoapFault(SoapFault $e)
-		{
-			$r = new ReflectionObject($e);
-			
-			if (!$r->hasProperty('detail') || !($e->detail instanceof stdClass))
-				return $e;
-			
-			$r = new ReflectionObject($e->detail);
-			
-			if (
-				$r->hasProperty('exception')
-				&& $e->detail->exception instanceof SoapVar
-			) {
-				$exception = $e->detail->exception->enc_value;
-				
-				Assert::isInstance($exception, 'BaseException');
-				
-				return $exception;
-			}
-			
-			return $e;
-		}
-		
-		public function __construct()
-		{
-			$wsdlUrl = $this->getWsdlUrl();
-			
-			Assert::isNotNull($wsdlUrl);
-			
-			$this->soapClient = new SoapClient(
-				$wsdlUrl,
-				array(
-					'soap_version'	=> SOAP_1_1,
-					'classmap'		=> $this->classMap(),
-					
-					// TODO:?
-					/*
-					'compression'	=> SOAP_COMPRESSION_ACCEPT
-						| SOAP_COMPRESSION_GZIP
-					*/
-					
-					'trace'			=> true,
-					'exceptions'	=> true
-				)
-			);
-		}
-		
-		public function getWsdlUrl()
-		{
-			return $this->wsdlUrl;
-		}
-		
-		public function classMap()
-		{
-			return $this->classMap;
-		}
-		
-		protected function call($method, DTOMessage $request, $resultClass)
-		{
-			$requestDto = $request->makeDto();
-			
-			Assert::isInstance($requestDto, 'DTOClass');
-			
-			if (defined('__LOCAL_DEBUG__') && !defined('SIMPLE_TEST') ) {
-				// self-validation
-				
-				$form = (new ObjectToFormConverter($request->entityProto()))->make($request);
-				
-				Assert::isTrue(
-					!$form->getErrors()
-					&& $request->entityProto()->
-						validate($request, $form),
-					
-					Assert::dumpArgument($request)
-				);
-			}
-			
-			try {
-				try {
-					
-					$resultDto = $this->getSoapClient()->$method($requestDto);
-					
-				} catch (BaseException $e) {
-					
-					if (get_class($e) == 'BaseException') {
-						throw new SoapFault(
-							'Server',
-							get_class($e).': '.$e->getMessage()
-						);
-						
-					} else {
-						$this->logCall();
-						throw $e;
-					}
-				}
-				
-			} catch (SoapFault $e) {
-				
-				$this->logCall();
-				throw self::convertSoapFault($e);
-			}
-			
-			$this->logCall();
-			
-			if (!$resultClass) {
-				Assert::isNull($resultDto);
-				$result = null;
-				
-			} else {
-				Assert::isInstance($resultDto, 'DTOClass');
-				
-				Assert::isEqual(
-					$resultDto->entityProto()->className(),
-					$resultClass
-				);
-				
-				$form = (new DTOToFormImporter($resultDto->entityProto()))->make($resultDto);
-				
-				Assert::isTrue(
-					!$form->getErrors(),
-					
-					Assert::dumpArgument($resultDto)
-				);
-				
-				$result = $resultDto->makeObject($form);
-				
-				Assert::isInstance($result, 'DTOMessage');
-				
-				Assert::isEqual(get_class($result), $resultClass);
-				
-				Assert::isTrue(
-					$result->entityProto()->
-						validate($result, $form),
-						
-					Assert::dumpArgument($result)
-				);
-			}
-			
-			return $result;
-		}
-		
-		protected function getLastRequestCdata()
-		{
-			return $this->getXmlCdata(
-				$this->getSoapClient()->__getLastRequest()
-			);
-		}
-		
-		protected function getLastResponseCdata()
-		{
-			return $this->getXmlCdata(
-				$this->getSoapClient()->__getLastResponse()
-			);
-		}
-		
-		/**
-		 * 
-		 * The place for calling getLastRequestCdata() and
-		 * getLastResponseCdata().
-		 * 
-		**/
-		protected function logCall()
-		{
-			return $this;
-		}
-		
-		private function getXmlCdata($xml)
-		{
-			return "<![CDATA[\n".$xml."\n]]>";
-		}
-		
-		/**
-		 * ONLY FOR TESTING:
-		 * {{{
-		**/
-		
-		/**
-		 * @return SoapClient
-		**/
-		public function getSoapClient()
-		{
-			return $this->soapClient;
-		}
-		
-		public function __getLastRequestHeaders()
-		{
-			return $this->getSoapClient()->__getLastRequestHeaders();
-		}
-		
-		public function __getLastResponseHeaders()
-		{
-			return $this->getSoapClient()->__getLastResponseHeaders();
-		}
-		
-		public function __getLastResponse()
-		{
-			return $this->getSoapClient()->__getLastResponse();
-		}
-		
-		public function __getLastRequest()
-		{
-			return $this->getSoapClient()->__getLastRequest();
-		}
-		
-		/**
-		 * }}}
-		**/
-	}
+/**
+ * Quick reference:
+ *
+ * 1. extend this class
+ *
+ * 2. redefine wsdlUrl and classMap ('complexType' => 'DtoClass')
+ *
+ * 3. make EntityProtos, Dtos and Business classes for your Xsd objects
+ *    and exception classes for your faults
+ *
+ * 4. implement your methods, corresponding to operations in wsdl, in such
+ *    manner:
+ *
+ *    public function login(LoginRequest $request)
+ *    {
+ *        // preparations...
+ *
+ *        $result = $this->call(
+ *            'login', $request, 'LoginResponse'
+ *        );
+ *
+ *        // additional asserts...
+ *
+ *        return $result;
+ *    }
+ *
+ *    5. implement logCall(), if you need debugging output
+ *
+ **/
+abstract class PrototypedSoapClient
+{
+    protected $wsdlUrl = null;
+    protected $classMap = [];
+
+    protected $soapClient = null;
+
+    public function __construct()
+    {
+        $wsdlUrl = $this->getWsdlUrl();
+
+        Assert::isNotNull($wsdlUrl);
+
+        $this->soapClient = new SoapClient(
+            $wsdlUrl,
+            [
+                'soap_version' => SOAP_1_1,
+                'classmap' => $this->classMap(),
+
+                // TODO:?
+                /*
+                'compression'	=> SOAP_COMPRESSION_ACCEPT
+                    | SOAP_COMPRESSION_GZIP
+                */
+
+                'trace' => true,
+                'exceptions' => true
+            ]
+        );
+    }
+
+    public function getWsdlUrl()
+    {
+        return $this->wsdlUrl;
+    }
+
+    public function classMap()
+    {
+        return $this->classMap;
+    }
+
+    public function __getLastRequestHeaders()
+    {
+        return $this->getSoapClient()->__getLastRequestHeaders();
+    }
+
+    /**
+     * @return SoapClient
+     **/
+    public function getSoapClient()
+    {
+        return $this->soapClient;
+    }
+
+    public function __getLastResponseHeaders()
+    {
+        return $this->getSoapClient()->__getLastResponseHeaders();
+    }
+
+    public function __getLastResponse()
+    {
+        return $this->getSoapClient()->__getLastResponse();
+    }
+
+    public function __getLastRequest()
+    {
+        return $this->getSoapClient()->__getLastRequest();
+    }
+
+    protected function call($method, DTOMessage $request, $resultClass)
+    {
+        $requestDto = $request->makeDto();
+
+        Assert::isInstance($requestDto, 'DTOClass');
+
+        if (defined('__LOCAL_DEBUG__') && !defined('SIMPLE_TEST')) {
+            // self-validation
+
+            $form = (new ObjectToFormConverter($request->entityProto()))->make($request);
+
+            Assert::isTrue(
+                !$form->getErrors()
+                && $request->entityProto()->
+                validate($request, $form),
+
+                Assert::dumpArgument($request)
+            );
+        }
+
+        try {
+            try {
+
+                $resultDto = $this->getSoapClient()->$method($requestDto);
+
+            } catch (BaseException $e) {
+
+                if (get_class($e) == 'BaseException') {
+                    throw new SoapFault(
+                        'Server',
+                        get_class($e) . ': ' . $e->getMessage()
+                    );
+
+                } else {
+                    $this->logCall();
+                    throw $e;
+                }
+            }
+
+        } catch (SoapFault $e) {
+
+            $this->logCall();
+            throw self::convertSoapFault($e);
+        }
+
+        $this->logCall();
+
+        if (!$resultClass) {
+            Assert::isNull($resultDto);
+            $result = null;
+
+        } else {
+            Assert::isInstance($resultDto, 'DTOClass');
+
+            Assert::isEqual(
+                $resultDto->entityProto()->className(),
+                $resultClass
+            );
+
+            $form = (new DTOToFormImporter($resultDto->entityProto()))->make($resultDto);
+
+            Assert::isTrue(
+                !$form->getErrors(),
+
+                Assert::dumpArgument($resultDto)
+            );
+
+            $result = $resultDto->makeObject($form);
+
+            Assert::isInstance($result, 'DTOMessage');
+
+            Assert::isEqual(get_class($result), $resultClass);
+
+            Assert::isTrue(
+                $result->entityProto()->
+                validate($result, $form),
+
+                Assert::dumpArgument($result)
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * ONLY FOR TESTING:
+     * {{{
+     **/
+
+    /**
+     *
+     * The place for calling getLastRequestCdata() and
+     * getLastResponseCdata().
+     *
+     **/
+    protected function logCall()
+    {
+        return $this;
+    }
+
+    final public static function convertSoapFault(SoapFault $e)
+    {
+        $r = new ReflectionObject($e);
+
+        if (!$r->hasProperty('detail') || !($e->detail instanceof stdClass)) {
+            return $e;
+        }
+
+        $r = new ReflectionObject($e->detail);
+
+        if (
+            $r->hasProperty('exception')
+            && $e->detail->exception instanceof SoapVar
+        ) {
+            $exception = $e->detail->exception->enc_value;
+
+            Assert::isInstance($exception, 'BaseException');
+
+            return $exception;
+        }
+
+        return $e;
+    }
+
+    protected function getLastRequestCdata()
+    {
+        return $this->getXmlCdata(
+            $this->getSoapClient()->__getLastRequest()
+        );
+    }
+
+    private function getXmlCdata($xml)
+    {
+        return "<![CDATA[\n" . $xml . "\n]]>";
+    }
+
+    protected function getLastResponseCdata()
+    {
+        return $this->getXmlCdata(
+            $this->getSoapClient()->__getLastResponse()
+        );
+    }
+
+    /**
+     * }}}
+     **/
+}
+
 ?>

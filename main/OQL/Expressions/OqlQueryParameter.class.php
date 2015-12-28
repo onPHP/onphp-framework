@@ -9,91 +9,94 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup OQL
-	**/
-	class OqlQueryParameter
-	{
-		private $value		= null;
-		private $bindable	= false;
-		
-		/**
-		 * @deprecated
-		 *
-		 * @return OqlQueryParameter
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function getValue()
-		{
-			return $this->value;
-		}
-		
-		/**
-		 * @return OqlQueryParameter
-		**/
-		public function setValue($value)
-		{
-			$this->value = $value;
-			
-			return $this;
-		}
-		
-		public function isBindable()
-		{
-			return $this->bindable;
-		}
-		
-		/**
-		 * @return OqlQueryParameter
-		**/
-		public function setBindable($orly = true)
-		{
-			$this->bindable = ($orly === true);
-			
-			return $this;
-		}
-		
-		public function evaluate($values)
-		{
-			if ($this->isBindable()) {
-				Assert::isPositiveInteger(
-					$this->getValue(),
-					'wrong substitution number: $'.$this->getValue()
-				);
-				Assert::isIndexExists(
-					$values,
-					$this->getValue(),
-					'parameter $'.$this->getValue().' is not binded'
-				);
-				
-				$value = $values[$this->getValue()];
-				
-			} else
-				$value = $this->getValue();
-			
-			if ($value instanceof Query) {
-				return $value;
-			
-			} elseif ($value instanceof Identifiable) {
-				return $value->getId();
-			
-			} elseif (is_array($value)) {
-				$list = array();
-				foreach ($value as $key => $parameter) {
-					if ($parameter instanceof OqlQueryParameter)
-						$list[$key] = $parameter->evaluate($values);
-					else
-						$list[$key] = $parameter;
-				}
-				
-				return $list;
-			}
-			
-			return $value;
-		}
-	}
+/**
+ * @ingroup OQL
+ **/
+class OqlQueryParameter
+{
+    private $value = null;
+    private $bindable = false;
+
+    /**
+     * @deprecated
+     *
+     * @return OqlQueryParameter
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    public function evaluate($values)
+    {
+        if ($this->isBindable()) {
+            Assert::isPositiveInteger(
+                $this->getValue(),
+                'wrong substitution number: $' . $this->getValue()
+            );
+            Assert::isIndexExists(
+                $values,
+                $this->getValue(),
+                'parameter $' . $this->getValue() . ' is not binded'
+            );
+
+            $value = $values[$this->getValue()];
+
+        } else {
+            $value = $this->getValue();
+        }
+
+        if ($value instanceof Query) {
+            return $value;
+
+        } elseif ($value instanceof Identifiable) {
+            return $value->getId();
+
+        } elseif (is_array($value)) {
+            $list = [];
+            foreach ($value as $key => $parameter) {
+                if ($parameter instanceof OqlQueryParameter) {
+                    $list[$key] = $parameter->evaluate($values);
+                } else {
+                    $list[$key] = $parameter;
+                }
+            }
+
+            return $list;
+        }
+
+        return $value;
+    }
+
+    public function isBindable()
+    {
+        return $this->bindable;
+    }
+
+    /**
+     * @return OqlQueryParameter
+     **/
+    public function setBindable($orly = true)
+    {
+        $this->bindable = ($orly === true);
+
+        return $this;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @return OqlQueryParameter
+     **/
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+}
+
 ?>

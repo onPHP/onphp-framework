@@ -9,8 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	**/
-	class MailException extends BaseException {/*_*/};
+/**
+ * @ingroup Exceptions
+ **/
+class MailException extends BaseException
+{/*_*/
+}
+
+
 ?>

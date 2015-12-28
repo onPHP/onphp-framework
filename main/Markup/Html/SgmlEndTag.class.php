@@ -9,18 +9,19 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Html
-	 * @ingroup Module
-	**/
-	final class SgmlEndTag extends SgmlTag
-	{
-		/**
-		 * @return SgmlEndTag
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-	}
+/**
+ * @ingroup Html
+ * @ingroup Module
+ **/
+final class SgmlEndTag extends SgmlTag
+{
+    /**
+     * @return SgmlEndTag
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+}
+
 ?>

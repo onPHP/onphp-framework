@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2011 by Alexey Denisov                                  *
  *   alexeydsov@gmail.com                                                  *
@@ -9,10 +10,11 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+interface IServiceLocatorSupport
+{
+    public function setServiceLocator(IServiceLocator $serviceLocator);
 
-	interface IServiceLocatorSupport {
-		public function setServiceLocator(IServiceLocator $serviceLocator);
+    public function getServiceLocator();
+}
 
-		public function getServiceLocator();
-	}
 ?>

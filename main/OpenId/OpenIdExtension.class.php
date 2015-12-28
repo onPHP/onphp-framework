@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OpenId
-	**/
-	interface OpenIdExtension
-	{
-		public function addParamsToModel(Model $model);
-		public function parseResponce(HttpRequest $request, array $params);
-	}
+/**
+ * @ingroup OpenId
+ **/
+interface OpenIdExtension
+{
+    public function addParamsToModel(Model $model);
+
+    public function parseResponce(HttpRequest $request, array $params);
+}
+
 ?>

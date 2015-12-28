@@ -9,30 +9,32 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Containers
-	**/
-	abstract class ManyToManyLinked extends UnifiedContainer
-	{
-		abstract public function getHelperTable();
-		
-		public function getParentTableIdField()
-		{
-			return 'id';
-		}
-		
-		public function __construct(
-			Identifiable $parent, GenericDAO $dao, $lazy = true
-		)
-		{
-			parent::__construct($parent, $dao, $lazy);
-			
-			$worker =
-				$lazy
-					? 'ManyToManyLinkedLazy'
-					: 'ManyToManyLinkedFull';
-			
-			$this->worker = new $worker($this);
-		}
-	}
+/**
+ * @ingroup Containers
+ **/
+abstract class ManyToManyLinked extends UnifiedContainer
+{
+    public function __construct(
+        Identifiable $parent,
+        GenericDAO $dao,
+        $lazy = true
+    ) {
+        parent::__construct($parent, $dao, $lazy);
+
+        $worker =
+            $lazy
+                ? 'ManyToManyLinkedLazy'
+                : 'ManyToManyLinkedFull';
+
+        $this->worker = new $worker($this);
+    }
+
+    abstract public function getHelperTable();
+
+    public function getParentTableIdField()
+    {
+        return 'id';
+    }
+}
+
 ?>

@@ -30,8 +30,9 @@ class CurvedStringDrawer extends TextDrawer
             + (strlen($string) - 1)
             * $this->getSize() / 2;
 
-        if ($turingImage->getWidth() <= $textWidth)
+        if ($turingImage->getWidth() <= $textWidth) {
             return $this->showError();
+        }
 
         $angle =
             mt_rand(
@@ -51,10 +52,11 @@ class CurvedStringDrawer extends TextDrawer
                     CurvedStringDrawer::MAX_ANGLE_CHANGE / 2
                 );
 
-            if ($angle > CurvedStringDrawer::MAX_ANGLE)
+            if ($angle > CurvedStringDrawer::MAX_ANGLE) {
                 $angle = CurvedStringDrawer::MAX_ANGLE;
-            elseif ($angle < -CurvedStringDrawer::MAX_ANGLE)
+            } elseif ($angle < -CurvedStringDrawer::MAX_ANGLE) {
                 $angle = -CurvedStringDrawer::MAX_ANGLE;
+            }
 
             $y +=
                 mt_rand(
@@ -62,11 +64,13 @@ class CurvedStringDrawer extends TextDrawer
                     $turingImage->getHeight() / 2
                 );
 
-            if ($y < ($maxHeight * CurvedStringDrawer::MAX_VERTIVAL_POSITION_CHANGE))
+            if ($y < ($maxHeight * CurvedStringDrawer::MAX_VERTIVAL_POSITION_CHANGE)) {
                 $y = $maxHeight * CurvedStringDrawer::MAX_VERTIVAL_POSITION_CHANGE;
+            }
 
-            if ($y > ($turingImage->getHeight() - $maxHeight))
+            if ($y > ($turingImage->getHeight() - $maxHeight)) {
                 $y = $turingImage->getHeight() - $maxHeight;
+            }
 
             $character = $string[$i];
             $this->drawCraracter($angle, $x, $y, $character);

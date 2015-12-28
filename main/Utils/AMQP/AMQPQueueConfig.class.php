@@ -9,36 +9,37 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @see http://www.rabbitmq.com/amqp-0-9-1-quickref.html#queue.declare
-	**/
-	final class AMQPQueueConfig extends AMQPBaseConfig
-	{
-		protected $exclusive = false;
+/**
+ * @see http://www.rabbitmq.com/amqp-0-9-1-quickref.html#queue.declare
+ **/
+final class AMQPQueueConfig extends AMQPBaseConfig
+{
+    protected $exclusive = false;
 
-		/**
-		 * @return AMQPQueueConfig
-		**/
-		public static function create()
-		{
-			return new self();
-		}
+    /**
+     * @return AMQPQueueConfig
+     **/
+    public static function create()
+    {
+        return new self();
+    }
 
-		public function getExclusive()
-		{
-			return $this->exclusive;
-		}
+    public function getExclusive()
+    {
+        return $this->exclusive;
+    }
 
-		/**
-		 * @param boolean $exclusive
-		 * @return AMQPQueueConfig
-		**/
-		public function setExclusive($exclusive)
-		{
-			$this->exclusive = $exclusive === false;
+    /**
+     * @param boolean $exclusive
+     * @return AMQPQueueConfig
+     **/
+    public function setExclusive($exclusive)
+    {
+        $this->exclusive = $exclusive === false;
 
-			return $this;
-		}
+        return $this;
+    }
 
-	}
+}
+
 ?>

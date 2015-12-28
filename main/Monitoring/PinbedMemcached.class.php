@@ -8,42 +8,43 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-	
-	/**
-	 *
-	**/
-	final class PinbedMemcached extends SocketMemcached
-	{
-		/**
-		 * @return PinbedMemcached 
-		**/
-		public static function create(
-			$host = SocketMemcached::DEFAULT_HOST,
-			$port = SocketMemcached::DEFAULT_PORT,
-			$buffer = SocketMemcached::DEFAULT_BUFFER
-		)
-		{
-			return new self($host, $port, $buffer);
-		}
-		
-		public function __construct(
-			$host = SocketMemcached::DEFAULT_HOST,
-			$port = SocketMemcached::DEFAULT_PORT,
-			$buffer = SocketMemcached::DEFAULT_BUFFER
-		)
-		{
-			if (PinbaClient::isEnabled())
-				PinbaClient::me()->timerStart(
-					'memcached_'.$host.'_'.$port.'_connect',
-					array('memcached_connect' => $host.'_'.$port)
-				);
-			
-			parent::__construct($host, $port, $buffer);
-			
-			if (PinbaClient::isEnabled())
-				PinbaClient::me()->timerStop(
-					'memcached_'.$host.'_'.$port.'_connect'
-				);
-		}
-	}
+
+/**
+ *
+ **/
+final class PinbedMemcached extends SocketMemcached
+{
+    public function __construct(
+        $host = SocketMemcached::DEFAULT_HOST,
+        $port = SocketMemcached::DEFAULT_PORT,
+        $buffer = SocketMemcached::DEFAULT_BUFFER
+    ) {
+        if (PinbaClient::isEnabled()) {
+            PinbaClient::me()->timerStart(
+                'memcached_' . $host . '_' . $port . '_connect',
+                ['memcached_connect' => $host . '_' . $port]
+            );
+        }
+
+        parent::__construct($host, $port, $buffer);
+
+        if (PinbaClient::isEnabled()) {
+            PinbaClient::me()->timerStop(
+                'memcached_' . $host . '_' . $port . '_connect'
+            );
+        }
+    }
+
+    /**
+     * @return PinbedMemcached
+     **/
+    public static function create(
+        $host = SocketMemcached::DEFAULT_HOST,
+        $port = SocketMemcached::DEFAULT_PORT,
+        $buffer = SocketMemcached::DEFAULT_BUFFER
+    ) {
+        return new self($host, $port, $buffer);
+    }
+}
+
 ?>

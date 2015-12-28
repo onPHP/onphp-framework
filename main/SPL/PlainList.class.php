@@ -9,31 +9,32 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Ordered unindexed list of Identifiable objects.
-	 * 
-	 * @ingroup onSPL
-	**/
-	final class PlainList extends AbstractList
-	{
-		/**
-		 * @return PlainList
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return PlainList
-		**/
-		public function offsetSet($offset, $value)
-		{
-			Assert::isTrue($value instanceof Identifiable);
-			
-			$this->list[] = $value;
-			
-			return $this;
-		}
-	}
+/**
+ * Ordered unindexed list of Identifiable objects.
+ *
+ * @ingroup onSPL
+ **/
+final class PlainList extends AbstractList
+{
+    /**
+     * @return PlainList
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return PlainList
+     **/
+    public function offsetSet($offset, $value)
+    {
+        Assert::isTrue($value instanceof Identifiable);
+
+        $this->list[] = $value;
+
+        return $this;
+    }
+}
+
 ?>

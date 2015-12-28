@@ -9,19 +9,24 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup onSPL
-	**/
-	interface SimplifiedArrayAccess
-	{
-		public function clean();
-		public function isEmpty();
-		
-		public function getList();
-		
-		public function set($name, $var);
-		public function get($name);
-		public function has($name);
-		public function drop($name);
-	}
+/**
+ * @ingroup onSPL
+ **/
+interface SimplifiedArrayAccess
+{
+    public function clean();
+
+    public function isEmpty();
+
+    public function getList();
+
+    public function set($name, $var);
+
+    public function get($name);
+
+    public function has($name);
+
+    public function drop($name);
+}
+
 ?>

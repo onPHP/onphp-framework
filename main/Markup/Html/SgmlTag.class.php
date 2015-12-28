@@ -9,27 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Html
-	 * @ingroup Module
-	**/
-	abstract class SgmlTag extends SgmlToken
-	{
-		private $id = null;
-		
-		/**
-		 * @return SgmlTag
-		**/
-		public function setId($id)
-		{
-			$this->id = $id;
-			
-			return $this;
-		}
-		
-		public function getId()
-		{
-			return $this->id;
-		}
-	}
+/**
+ * @ingroup Html
+ * @ingroup Module
+ **/
+abstract class SgmlTag extends SgmlToken
+{
+    private $id = null;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return SgmlTag
+     **/
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+}
+
 ?>

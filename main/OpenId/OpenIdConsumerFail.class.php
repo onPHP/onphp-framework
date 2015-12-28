@@ -9,14 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OpenId
-	**/
-	final class OpenIdConsumerFail implements OpenIdConsumerResult
-	{
-		public function isOk()
-		{
-			return false;
-		}
-	}
+/**
+ * @ingroup OpenId
+ **/
+final class OpenIdConsumerFail implements OpenIdConsumerResult
+{
+    public function isOk()
+    {
+        return false;
+    }
+}
+
 ?>

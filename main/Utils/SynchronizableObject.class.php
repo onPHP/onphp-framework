@@ -9,15 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Utils
-	**/
-	interface SynchronizableObject
-	{
-		public static function createFromMasterObject($masterObject);
-		
-		public function isEqualTo($anotherObject);
-		
-		public function __toString();
-	}
+/**
+ * @ingroup Utils
+ **/
+interface SynchronizableObject
+{
+    public static function createFromMasterObject($masterObject);
+
+    public function isEqualTo($anotherObject);
+
+    public function __toString();
+}
+
 ?>

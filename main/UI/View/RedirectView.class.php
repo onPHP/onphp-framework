@@ -59,7 +59,7 @@ class RedirectView extends CleanRedirectView
         $postfix = null;
 
         if ($model && $model->getList()) {
-            $qs = array();
+            $qs = [];
 
             foreach ($model->getList() as $key => $val) {
                 if (
@@ -70,29 +70,32 @@ class RedirectView extends CleanRedirectView
                 } elseif (is_array($val)) {
                     if ($this->buildArrays) {
                         $qs[] = http_build_query(
-                            array($key => $val), null, '&'
+                            [$key => $val], null, '&'
                         );
                     }
 
                     continue;
 
                 } elseif (is_bool($val)) {
-                    if ($this->isFalseAsUnset() && (false === $val))
+                    if ($this->isFalseAsUnset() && (false === $val)) {
                         continue;
+                    }
 
-                    $val = (int)$val;
+                    $val = (int) $val;
                 }
 
                 $qs[] = $key . '=' . urlencode($val);
             }
 
-            if (strpos($this->getUrl(), '?') === false)
+            if (strpos($this->getUrl(), '?') === false) {
                 $first = '?';
-            else
+            } else {
                 $first = '&';
+            }
 
-            if ($qs)
+            if ($qs) {
                 $postfix = $first . implode('&', $qs);
+            }
         }
 
         return $this->getUrl() . $postfix;

@@ -9,72 +9,73 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Html
-	**/
-	final class SgmlIgnoredTag extends SgmlTag
-	{
-		private $cdata		= null;
-		private $endMark	= null;
-		
-		/**
-		 * @deprecated
-		 * @return SgmlIgnoredTag
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return SgmlIgnoredTag
-		**/
-		public static function comment()
-		{
-			return (new self())->setId('!--')->setEndMark('--');
-		}
-		
-		/**
-		 * @return SgmlIgnoredTag
-		**/
-		public function setCdata(Cdata $cdata)
-		{
-			$this->cdata = $cdata;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return Cdata
-		**/
-		public function getCdata()
-		{
-			return $this->cdata;
-		}
-		
-		/**
-		 * @return SgmlIgnoredTag
-		**/
-		public function setEndMark($endMark)
-		{
-			$this->endMark = $endMark;
-			
-			return $this;
-		}
-		
-		public function getEndMark()
-		{
-			return $this->endMark;
-		}
-		
-		public function isComment()
-		{
-			return $this->id == '!--';
-		}
-		
-		public function isExternal()
-		{
-			return ($this->id && $this->id[0] == '?');
-		}
-	}
+/**
+ * @ingroup Html
+ **/
+final class SgmlIgnoredTag extends SgmlTag
+{
+    private $cdata = null;
+    private $endMark = null;
+
+    /**
+     * @deprecated
+     * @return SgmlIgnoredTag
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return SgmlIgnoredTag
+     **/
+    public static function comment()
+    {
+        return (new self())->setId('!--')->setEndMark('--');
+    }
+
+    /**
+     * @return Cdata
+     **/
+    public function getCdata()
+    {
+        return $this->cdata;
+    }
+
+    /**
+     * @return SgmlIgnoredTag
+     **/
+    public function setCdata(Cdata $cdata)
+    {
+        $this->cdata = $cdata;
+
+        return $this;
+    }
+
+    public function getEndMark()
+    {
+        return $this->endMark;
+    }
+
+    /**
+     * @return SgmlIgnoredTag
+     **/
+    public function setEndMark($endMark)
+    {
+        $this->endMark = $endMark;
+
+        return $this;
+    }
+
+    public function isComment()
+    {
+        return $this->getId() == '!--';
+    }
+
+    public function isExternal()
+    {
+        return ($this->getId() && $this->getId()[0] == '?');
+    }
+}
+
 ?>

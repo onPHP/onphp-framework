@@ -9,33 +9,34 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup OQL
-	**/
-	final class OqlOrderByClause extends OqlQueryListedClause
-	{
-		/**
-		 * @deprecated
-		 * @return OqlOrderByClause
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return OrderChain
-		**/
-		public function toOrder()
-		{
-			$order = new OrderChain();
-			foreach ($this->list as $property) {
-				$order->add(
-					$property->evaluate($this->parameters)
-				);
-			}
-			
-			return $order;
-		}
-	}
+/**
+ * @ingroup OQL
+ **/
+final class OqlOrderByClause extends OqlQueryListedClause
+{
+    /**
+     * @deprecated
+     * @return OqlOrderByClause
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return OrderChain
+     **/
+    public function toOrder()
+    {
+        $order = new OrderChain();
+        foreach ($this->list as $property) {
+            $order->add(
+                $property->evaluate($this->parameters)
+            );
+        }
+
+        return $order;
+    }
+}
+
 ?>

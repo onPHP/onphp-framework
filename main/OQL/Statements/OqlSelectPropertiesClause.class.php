@@ -9,35 +9,36 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup OQL
-	**/
-	final class OqlSelectPropertiesClause extends OqlProjectionClause
-	{
-		private $distinct = false;
-		
-		/**
-		 * @deprecated
-		 * @return OqlSelectPropertiesClause
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function isDistinct()
-		{
-			return $this->distinct;
-		}
-		
-		/**
-		 * @return OqlSelectPropertiesClause
-		**/
-		public function setDistinct($orly = true)
-		{
-			$this->distinct = ($orly === true);
-			
-			return $this;
-		}
-	}
+/**
+ * @ingroup OQL
+ **/
+final class OqlSelectPropertiesClause extends OqlProjectionClause
+{
+    private $distinct = false;
+
+    /**
+     * @deprecated
+     * @return OqlSelectPropertiesClause
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    public function isDistinct()
+    {
+        return $this->distinct;
+    }
+
+    /**
+     * @return OqlSelectPropertiesClause
+     **/
+    public function setDistinct($orly = true)
+    {
+        $this->distinct = ($orly === true);
+
+        return $this;
+    }
+}
+
 ?>

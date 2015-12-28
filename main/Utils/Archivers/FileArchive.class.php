@@ -9,66 +9,71 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Utils
-	**/
-	abstract class FileArchive
-	{
-		protected $cmdBinPath	= null;
-		protected $sourceFile	= null;
+/**
+ * @ingroup Utils
+ **/
+abstract class FileArchive
+{
+    protected $cmdBinPath = null;
+    protected $sourceFile = null;
 
-		abstract public function readFile($fileName);
+    public function __construct($cmdBinPath = null)
+    {
+        if ($cmdBinPath !== null) {
+            if (!is_executable($cmdBinPath)) {
+                throw new WrongStateException(
+                    'cannot find executable ' . $cmdBinPath
+                );
+            }
 
-		public function __construct($cmdBinPath = null)
-		{
-			if ($cmdBinPath !== null) {
-				if (!is_executable($cmdBinPath))
-					throw new WrongStateException(
-						'cannot find executable '.$cmdBinPath
-					);
+            $this->cmdBinPath = $cmdBinPath;
+        }
+    }
 
-				$this->cmdBinPath = $cmdBinPath;
-			}
-		}
-		
-		/**
-		 * @return FileArchive
-		**/
-		public function open($sourceFile)
-		{
-			if (!is_readable($sourceFile))
-				throw new WrongStateException(
-					'cannot open file '.$sourceFile
-				);
-			
-			$this->sourceFile = $sourceFile;
+    abstract public function readFile($fileName);
 
-			return $this;
-		}
+    /**
+     * @return FileArchive
+     **/
+    public function open($sourceFile)
+    {
+        if (!is_readable($sourceFile)) {
+            throw new WrongStateException(
+                'cannot open file ' . $sourceFile
+            );
+        }
 
-		protected function execStdoutOptions($options)
-		{
-			if (!$this->cmdBinPath)
-				throw new WrongStateException(
-					'nothing to exec'
-				);
+        $this->sourceFile = $sourceFile;
 
-			$cmd = escapeshellcmd($this->cmdBinPath.' '.$options);
+        return $this;
+    }
 
-			ob_start();
-			
-			$exitStatus = null;
-			
-			passthru($cmd.' 2>/dev/null', $exitStatus);
-			
-			$output = ob_get_clean();
+    protected function execStdoutOptions($options)
+    {
+        if (!$this->cmdBinPath) {
+            throw new WrongStateException(
+                'nothing to exec'
+            );
+        }
 
-			if ($exitStatus != 0)
-				throw new ArchiverException(
-					$this->cmdBinPath.' failed with error code = '.$exitStatus
-				);
+        $cmd = escapeshellcmd($this->cmdBinPath . ' ' . $options);
 
-			return $output;
-		}
-	}
+        ob_start();
+
+        $exitStatus = null;
+
+        passthru($cmd . ' 2>/dev/null', $exitStatus);
+
+        $output = ob_get_clean();
+
+        if ($exitStatus != 0) {
+            throw new ArchiverException(
+                $this->cmdBinPath . ' failed with error code = ' . $exitStatus
+            );
+        }
+
+        return $output;
+    }
+}
+
 ?>

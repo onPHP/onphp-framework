@@ -153,8 +153,8 @@ class JsonView implements View, Stringable
      * @return JsonView
      **/
     public function render(/* Model */
-        $model = null)
-    {
+        $model = null
+    ) {
         echo $this->toString($model);
 
         return $this;
@@ -165,13 +165,13 @@ class JsonView implements View, Stringable
      * @return string
      */
     public function toString(/* Model */
-        $model = null)
-    {
+        $model = null
+    ) {
         Assert::isTrue($model === null || $model instanceof Model);
         if ($this->options) {
-            return json_encode($model ? $model->getList() : array(), $this->options);
+            return json_encode($model ? $model->getList() : [], $this->options);
         } else {
-            return json_encode($model ? $model->getList() : array());
+            return json_encode($model ? $model->getList() : []);
         }
     }
 }

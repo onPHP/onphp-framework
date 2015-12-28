@@ -9,8 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OpenId
-	**/
-	class OpenIdException extends BaseException {}
+/**
+ * @ingroup OpenId
+ **/
+class OpenIdException extends BaseException
+{
+}
+
 ?>

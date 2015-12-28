@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2011 by Sergey S. Sergeev                               *
  *                                                                         *
@@ -8,6 +9,8 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+class AMQPQueueConsumer extends AMQPDefaultConsumer
+{/**/
+}
 
-	class AMQPQueueConsumer extends AMQPDefaultConsumer {/**/}
 ?>

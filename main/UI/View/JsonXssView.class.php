@@ -48,8 +48,9 @@ class JsonXssView extends JsonPView
      */
     public function setPrefix($value)
     {
-        if (!preg_match(static::CALLBACK_PATTERN, $value))
+        if (!preg_match(static::CALLBACK_PATTERN, $value)) {
             throw new WrongArgumentException('invalid prefix name, you should set valid javascript function name! gived "' . $value . '"');
+        }
 
         $this->prefix = $value;
 
@@ -61,8 +62,8 @@ class JsonXssView extends JsonPView
      * @return string
      */
     public function toString(/* Model */
-        $model = null)
-    {
+        $model = null
+    ) {
         /*
          * Escaping warning datas
          */
@@ -74,8 +75,8 @@ class JsonXssView extends JsonPView
         $json = JsonView::toString($model);
 
         $json = str_ireplace(
-            array('u0022', 'u0027'),
-            array('\u0022', '\u0027'),
+            ['u0022', 'u0027'],
+            ['\u0022', '\u0027'],
             $json
         );
 

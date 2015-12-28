@@ -1,4 +1,5 @@
 <?php
+
 /****************************************************************************
  *   Copyright (C) 2009 by Vladlen Y. Koshelev                              *
  *                                                                          *
@@ -8,41 +9,42 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
+final class OqlHavingParser extends OqlParser
+{
+    const CLASS_NAME = 'HavingProjection';
 
-	final class OqlHavingParser extends OqlParser
-	{
-		const CLASS_NAME = 'HavingProjection';
-		
-		/**
-		 * @deprecated
-		 * @return OqlHavingParser
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return OqlHavingClause
-		**/
-		protected function makeOqlObject()
-		{
-			return new OqlHavingClause();
-		}
-		
-		protected function handleState()
-		{
-			if ($this->state == self::INITIAL_STATE) {
-				if ($argument = $this->getLogicExpression()) {
-					$this->oqlObject->setExpression(
-						$this->makeQueryExpression(self::CLASS_NAME, $argument)
-					);
-				
-				} else
-					$this->error("expecting 'having' expression");
-			}
-			
-			return self::FINAL_STATE;
-		}
-	}
+    /**
+     * @deprecated
+     * @return OqlHavingParser
+     **/
+    public static function create()
+    {
+        return new self;
+    }
+
+    /**
+     * @return OqlHavingClause
+     **/
+    protected function makeOqlObject()
+    {
+        return new OqlHavingClause();
+    }
+
+    protected function handleState()
+    {
+        if ($this->state == self::INITIAL_STATE) {
+            if ($argument = $this->getLogicExpression()) {
+                $this->oqlObject->setExpression(
+                    $this->makeQueryExpression(self::CLASS_NAME, $argument)
+                );
+
+            } else {
+                $this->error("expecting 'having' expression");
+            }
+        }
+
+        return self::FINAL_STATE;
+    }
+}
+
 ?>

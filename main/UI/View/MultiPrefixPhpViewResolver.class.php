@@ -19,10 +19,10 @@
  **/
 class MultiPrefixPhpViewResolver implements ViewResolver
 {
-    private $prefixes = array();
+    private $prefixes = [];
     private $lastAlias = null;
 
-    private $disabled = array();
+    private $disabled = [];
 
     private $postfix = EXT_TPL;
     private $viewClassName = 'SimplePhpView';
@@ -51,8 +51,9 @@ class MultiPrefixPhpViewResolver implements ViewResolver
      **/
     public function addPrefix($prefix, $alias = null)
     {
-        if (!$alias)
+        if (!$alias) {
             $alias = $this->getAutoAlias($prefix);
+        }
 
         Assert::isFalse(
             isset($this->prefixes[$alias]),
@@ -81,7 +82,7 @@ class MultiPrefixPhpViewResolver implements ViewResolver
      **/
     public function dropPrefixes()
     {
-        $this->prefixes = array();
+        $this->prefixes = [];
         return $this;
     }
 
@@ -106,8 +107,9 @@ class MultiPrefixPhpViewResolver implements ViewResolver
      **/
     public function disablePrefix($alias = null, $disabled = true)
     {
-        if (!$alias)
+        if (!$alias) {
             $alias = $this->lastAlias;
+        }
 
         Assert::isNotNull($alias, 'nothing to disable');
         Assert::isIndexExists(
@@ -141,17 +143,19 @@ class MultiPrefixPhpViewResolver implements ViewResolver
     public function resolveViewName($viewName)
     {
         Assert::isFalse(
-            ($this->prefixes === array()),
+            ($this->prefixes === []),
             'specify at least one prefix'
         );
 
-        if ($prefix = $this->findPrefix($viewName))
+        if ($prefix = $this->findPrefix($viewName)) {
             return $this->makeView($prefix, $viewName);
+        }
 
-        if (!$this->findPrefix($viewName, false))
+        if (!$this->findPrefix($viewName, false)) {
             throw new WrongArgumentException(
                 'can not resolve view: ' . $viewName
             );
+        }
 
         return new EmptyView();
     }
@@ -163,11 +167,13 @@ class MultiPrefixPhpViewResolver implements ViewResolver
                 $checkDisabled
                 && isset($this->disabled[$alias])
                 && $this->disabled[$alias]
-            )
+            ) {
                 continue;
+            }
 
-            if (file_exists($prefix . $viewName . $this->postfix))
+            if (file_exists($prefix . $viewName . $this->postfix)) {
                 return $prefix;
+            }
         }
 
         return null;

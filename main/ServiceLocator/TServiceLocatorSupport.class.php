@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2011 by Alexey Denisov                                  *
  *   alexeydsov@gmail.com                                                  *
@@ -9,25 +10,28 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+trait TServiceLocatorSupport
+{
 
-	trait TServiceLocatorSupport {
-		
-		/**
-		 * @var ServiceLocator
-		 */
-		protected $serviceLocator = null;
-		
-		/**
-		 * @param IServiceLocator $serviceLocator
-		 * @return TServiceLocatorSupport
-		 */
-		public function setServiceLocator(IServiceLocator $serviceLocator) {
-			$this->serviceLocator = $serviceLocator;
-			return $this;
-		}
+    /**
+     * @var ServiceLocator
+     */
+    protected $serviceLocator = null;
 
-		public function getServiceLocator() {
-			return $this->serviceLocator;
-		}
-	}
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
+    }
+
+    /**
+     * @param IServiceLocator $serviceLocator
+     * @return TServiceLocatorSupport
+     */
+    public function setServiceLocator(IServiceLocator $serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
+        return $this;
+    }
+}
+
 ?>

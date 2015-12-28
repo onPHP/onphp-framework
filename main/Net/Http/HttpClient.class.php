@@ -9,64 +9,70 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Http
-	**/
-	interface HttpClient
-	{
-		/**
-		 * @param $timeout int in seconds
-		**/
-		public function setTimeout($timeout);
-		public function getTimeout();
-		
-		/**
-		 * whether to follow header Location or not
-		**/
-		public function setFollowLocation(/* boolean */ $really);
-		public function isFollowLocation();
-		
-		/**
-		 * maximum number of header Location followed
-		**/
-		public function setMaxRedirects($maxRedirects);
-		public function getMaxRedirects();
-		
-		/**
-		 * @param $request HttpRequest
-		 * @return HttpResponse
-		**/
-		public function send(HttpRequest $request);
+/**
+ * @ingroup Http
+ **/
+interface HttpClient
+{
+    /**
+     * @param $timeout int in seconds
+     **/
+    public function setTimeout($timeout);
 
-		/**
-		 * @param $key string
-		 * @param $value string
-		 * @return CurlHttpClient
-		**/
-		public function setOption($key, $value);
+    public function getTimeout();
 
-		/**
-		 * @param $key string
-		 * @return CurlHttpClient
-		**/
-		public function dropOption($key);
+    /**
+     * whether to follow header Location or not
+     **/
+    public function setFollowLocation(/* boolean */
+        $really
+    );
 
-		public function getOption($key);
+    public function isFollowLocation();
 
-		/**
-		 * @param $really boolean
-		 * @return CurlHttpClient
-		**/
-		public function setNoBody($really);
+    /**
+     * maximum number of header Location followed
+     **/
+    public function setMaxRedirects($maxRedirects);
 
-		public function hasNoBody();
+    public function getMaxRedirects();
 
-		/**
-		 * @param $maxFileSize int
-		 * @return CurlHttpClient
-		**/
-		public function setMaxFileSize($maxFileSize);
+    /**
+     * @param $request HttpRequest
+     * @return HttpResponse
+     **/
+    public function send(HttpRequest $request);
 
-		public function getMaxFileSize();
-	}
+    /**
+     * @param $key string
+     * @param $value string
+     * @return CurlHttpClient
+     **/
+    public function setOption($key, $value);
+
+    /**
+     * @param $key string
+     * @return CurlHttpClient
+     **/
+    public function dropOption($key);
+
+    public function getOption($key);
+
+    /**
+     * @param $really boolean
+     * @return CurlHttpClient
+     **/
+    public function setNoBody($really);
+
+    public function hasNoBody();
+
+    /**
+     * @param $maxFileSize int
+     * @return CurlHttpClient
+     **/
+    public function setMaxFileSize($maxFileSize);
+
+    public function getMaxFileSize();
+}
+
 ?>

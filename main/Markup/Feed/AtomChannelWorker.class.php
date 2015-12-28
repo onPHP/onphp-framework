@@ -9,38 +9,43 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Feed
-	**/
-	final class AtomChannelWorker extends Singleton implements FeedChannelWorker
-	{
-		/**
-		 * @return AtomChannelWorker
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		/**
-		 * @return FeedChannel
-		**/
-		public function makeChannel(SimpleXMLElement $xmlFeed)
-		{
-			$feedChannel = new FeedChannel((string) $xmlFeed->title);
-			
-			if (isset($xmlFeed->link))
-				if (is_array($xmlFeed->link))
-					$feedChannel->setLink((string) $xmlFeed->link[0]);
-				else
-					$feedChannel->setLink((string) $xmlFeed->link);
-			
-			return $feedChannel;
-		}
-		
-		public function toXml(FeedChannel $channel, $itemsXml)
-		{
-			throw new UnimplementedFeatureException('implement me!');
-		}
-	}
+/**
+ * @ingroup Feed
+ **/
+final class AtomChannelWorker extends Singleton implements FeedChannelWorker
+{
+    /**
+     *
+     *
+     * @return AtomChannelWorker
+     **/
+    public static function me()
+    {
+        return Singleton::getInstance(__CLASS__);
+    }
+
+    /**
+     * @return FeedChannel
+     **/
+    public function makeChannel(SimpleXMLElement $xmlFeed)
+    {
+        $feedChannel = new FeedChannel((string) $xmlFeed->title);
+
+        if (isset($xmlFeed->link)) {
+            if (is_array($xmlFeed->link)) {
+                $feedChannel->setLink((string) $xmlFeed->link[0]);
+            } else {
+                $feedChannel->setLink((string) $xmlFeed->link);
+            }
+        }
+
+        return $feedChannel;
+    }
+
+    public function toXml(FeedChannel $channel, $itemsXml)
+    {
+        throw new UnimplementedFeatureException('implement me!');
+    }
+}
+
 ?>

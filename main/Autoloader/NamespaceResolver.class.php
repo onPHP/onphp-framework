@@ -20,8 +20,9 @@ interface NamespaceResolver
     public function addPath($path, $namespace = null);
 
     /**
-     * @param array $path
-     * @return NamespaceResolverOnPHP
+     * @param array $pathList
+     * @param null $namespace
+     * @return mixed
      */
     public function addPaths(array $pathList, $namespace = null);
 

@@ -38,12 +38,14 @@ class SimplePhpView extends EmptyView
     /**
      * @return SimplePhpView
      **/
-    public function render(/* Model */$model = null)
-    {
+    public function render(/* Model */
+        $model = null
+    ) {
         Assert::isTrue($model === null || $model instanceof Model);
 
-        if ($model)
+        if ($model) {
             extract($model->getList());
+        }
 
         $partViewer = new PartViewer($this->partViewResolver, $model);
 

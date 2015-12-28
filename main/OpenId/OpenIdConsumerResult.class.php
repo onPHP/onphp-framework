@@ -9,14 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OpenId
-	**/
-	interface OpenIdConsumerResult
-	{
-		/**
-		 * @return bool
-		**/
-		public function isOk();
-	}
+/**
+ * @ingroup OpenId
+ **/
+interface OpenIdConsumerResult
+{
+    /**
+     * @return bool
+     **/
+    public function isOk();
+}
+
 ?>

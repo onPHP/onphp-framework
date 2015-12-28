@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2011 by Sergey S. Sergeev                               *
  *                                                                         *
@@ -8,26 +9,30 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-	
-	abstract class AMQPPeclBaseBitmask implements AMQPBitmaskResolver
-	{
-		public function getBitmask($config)
-		{
-			$bitmask = 0;
+abstract class AMQPPeclBaseBitmask implements AMQPBitmaskResolver
+{
+    public function getBitmask($config)
+    {
+        $bitmask = 0;
 
-			if ($config->getPassive())
-				$bitmask = $bitmask | AMQP_PASSIVE;
+        if ($config->getPassive()) {
+            $bitmask = $bitmask | AMQP_PASSIVE;
+        }
 
-			if ($config->getDurable())
-				$bitmask = $bitmask | AMQP_DURABLE;
+        if ($config->getDurable()) {
+            $bitmask = $bitmask | AMQP_DURABLE;
+        }
 
-			if ($config->getAutodelete())
-				$bitmask = $bitmask | AMQP_AUTODELETE;
+        if ($config->getAutodelete()) {
+            $bitmask = $bitmask | AMQP_AUTODELETE;
+        }
 
-			if ($config->getNowait())
-				throw new UnimplementedFeatureException();
+        if ($config->getNowait()) {
+            throw new UnimplementedFeatureException();
+        }
 
-			return $bitmask;
-		}
-	}
+        return $bitmask;
+    }
+}
+
 ?>

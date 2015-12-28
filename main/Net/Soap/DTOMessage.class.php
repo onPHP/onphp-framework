@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
  *                                                                         *
@@ -8,12 +9,12 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+abstract class DTOMessage implements PrototypedEntity
+{
+    final public function makeDto()
+    {
+        return (new ObjectToDTOConverter($this->entityProto()))->make($this);
+    }
+}
 
-	abstract class DTOMessage implements PrototypedEntity
-	{
-		final public function makeDto()
-		{
-			return (new ObjectToDTOConverter($this->entityProto()))->make($this);
-		}
-	}
 ?>

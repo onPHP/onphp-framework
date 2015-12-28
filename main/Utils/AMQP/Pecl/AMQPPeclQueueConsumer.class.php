@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2012 by Evgeniya Tekalin                                *
  *                                                                         *
@@ -8,59 +9,60 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+abstract class AMQPPeclQueueConsumer extends AMQPDefaultConsumer
+{
+    protected $cancel = false;
+    protected $count = 0;
+    protected $limit = 0;
 
-	abstract class AMQPPeclQueueConsumer extends AMQPDefaultConsumer
-	{
-		protected $cancel = false;
-		protected $count = 0;
-		protected $limit = 0;
+    /**
+     * @param int $limit
+     * @return AMQPPeclQueueConsumer
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
 
-		/**
-		 * @param type $cancel
-		 * @return AMQPPeclQueueConsumer
-		 */
-		public function setCancel($cancel)
-		{
-			$this->cancel = ($cancel === true);
-			return $this;
-		}
+    /**
+     * @return int
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
 
-		/**
-		 * @param int $limit
-		 * @return AMQPPeclQueueConsumer
-		 */
-		public function setLimit($limit)
-		{
-			$this->limit = $limit;
-			return $this;
-		}
+    public function handlePeclDelivery(AMQPEnvelope $delivery, AMQPQueue $queue = null)
+    {
+        $this->count++;
 
-		/**
-		 * @return int
-		 */
-		public function getCount()
-		{
-			return $this->count;
-		}
+        if ($this->limit && $this->count >= $this->limit) {
+            $this->setCancel(true);
+        }
 
-		public function handlePeclDelivery(AMQPEnvelope $delivery, AMQPQueue $queue = null)
-		{
-			$this->count++;
+        return $this->handleDelivery(
+            AMQPPeclIncomingMessageAdapter::convert($delivery)
+        );
+    }
 
-			if ($this->limit && $this->count >= $this->limit)
-				$this->setCancel(true);
+    /**
+     * @param type $cancel
+     * @return AMQPPeclQueueConsumer
+     */
+    public function setCancel($cancel)
+    {
+        $this->cancel = ($cancel === true);
+        return $this;
+    }
 
-			return $this->handleDelivery(
-				AMQPPeclIncomingMessageAdapter::convert($delivery)
-			);
-		}
+    public function handleDelivery(AMQPIncomingMessage $delivery)
+    {
+        if ($this->cancel) {
+            $this->handleCancelOk('');
+            return false;
+        }
+    }
+}
 
-		public function handleDelivery(AMQPIncomingMessage $delivery)
-		{
-			if ($this->cancel) {
-				$this->handleCancelOk('');
-				return false;
-			}
-		}
-	}
 ?>

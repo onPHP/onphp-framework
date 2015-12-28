@@ -37,8 +37,8 @@ class TuringImage
     private $backgroundDrawer = null;
 
     private $code = null;
-    
-    
+
+
     /**
      * @param $width
      * @param $height
@@ -48,7 +48,7 @@ class TuringImage
         $this->width = $width;
         $this->height = $height;
     }
-    
+
     /**
      * @param $width
      * @param $height
@@ -58,7 +58,7 @@ class TuringImage
     {
         return new self($width, $height);
     }
-    
+
     /**
      * @return TuringImage
      **/
@@ -146,8 +146,9 @@ class TuringImage
      */
     public function getOneCharacterColor()
     {
-        if (!$this->textColors instanceof ColorArray)
+        if (!$this->textColors instanceof ColorArray) {
             throw new MissingElementException('Please set the textColors');
+        }
 
         $textColor = $this->textColors->getRandomTextColor();
 
@@ -168,7 +169,7 @@ class TuringImage
                 $color->getBlue()
             );
 
-        if ($colorId === -1)
+        if ($colorId === -1) {
             $colorId =
                 imagecolorallocate(
                     $this->imageId,
@@ -176,6 +177,7 @@ class TuringImage
                     $color->getGreen(),
                     $color->getBlue()
                 );
+        }
 
         return $colorId;
     }
@@ -188,8 +190,9 @@ class TuringImage
      */
     public function toImage(ImageType $imageType)
     {
-        if ($this->drawer === null)
+        if ($this->drawer === null) {
             throw new WrongStateException('drawer must present');
+        }
 
         $this->init();
 
@@ -216,25 +219,26 @@ class TuringImage
 
         return $this;
     }
-    
+
     public function getWidth()
     {
         return $this->width;
     }
-    
+
     public function getHeight()
     {
         return $this->height;
     }
-    
+
     /**
      * @return $this
      * @throws MissingElementException
      */
     private function drawBackGround()
     {
-        if (!$this->getBackgroundColors() instanceof ColorArray)
+        if (!$this->getBackgroundColors() instanceof ColorArray) {
             throw new MissingElementException('Please set the backgroundColors');
+        }
 
         $backgroundColor = $this->backgroundColors->getRandomTextColor();
         $backgroundColorId = $this->getColorIdentifier($backgroundColor);
@@ -248,17 +252,18 @@ class TuringImage
             $backgroundColorId
         );
 
-        if ($this->backgroundDrawer !== null)
+        if ($this->backgroundDrawer !== null) {
             $this->backgroundDrawer->draw();
+        }
 
         return $this;
     }
-    
+
     public function getBackgroundColors()
     {
         return $this->backgroundColors;
     }
-    
+
     /**
      * @param ColorArray $backgroundColors
      * @return $this
@@ -274,8 +279,9 @@ class TuringImage
      */
     public function getGeneratedCode()
     {
-        if (!$this->code)
+        if (!$this->code) {
             $this->code = $this->generator->generate();
+        }
 
         return $this->code;
     }

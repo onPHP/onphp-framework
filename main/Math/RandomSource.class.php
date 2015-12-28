@@ -9,11 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Math
-	**/
-	interface RandomSource
-	{
-		public function getBytes($numberOfBytes);
-	}
+/**
+ * @ingroup Math
+ **/
+interface RandomSource
+{
+    public function getBytes($numberOfBytes);
+}
+
 ?>

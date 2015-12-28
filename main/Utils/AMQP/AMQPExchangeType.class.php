@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2011 by Sergey S. Sergeev                               *
  *                                                                         *
@@ -8,44 +9,44 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+final class AMQPExchangeType extends Enumeration
+{
+    const DIRECT = 1;
+    const FANOUT = 2;
+    const TOPIC = 3;
+    const HEADER = 4;
 
-	final class AMQPExchangeType extends Enumeration
-	{
-		const DIRECT = 1;
-		const FANOUT = 2;
-		const TOPIC = 3;
-		const HEADER = 4;
+    protected $names = [
+        self::DIRECT => "direct",
+        self::FANOUT => "fanout",
+        self::TOPIC => "topic",
+        self::HEADER => "header"
+    ];
 
-		protected $names = array(
-			self::DIRECT => "direct",
-			self::FANOUT => "fanout",
-			self::TOPIC => "topic",
-			self::HEADER => "header"
-		);
+    public function getDefault()
+    {
+        return self::DIRECT;
+    }
 
-		public function getDefault()
-		{
-			return self::DIRECT;
-		}
+    public function isDirect()
+    {
+        return $this->id == self::DIRECT;
+    }
 
-		public function isDirect()
-		{
-			return $this->id == self::DIRECT;
-		}
+    public function isFanout()
+    {
+        return $this->id == self::FANOUT;
+    }
 
-		public function isFanout()
-		{
-			return $this->id == self::FANOUT;
-		}
+    public function isTopic()
+    {
+        return $this->id == self::TOPIC;
+    }
 
-		public function isTopic()
-		{
-			return $this->id == self::TOPIC;
-		}
+    public function isHeader()
+    {
+        return $this->id == self::HEADER;
+    }
+}
 
-		public function isHeader()
-		{
-			return $this->id == self::HEADER;
-		}
-	}
 ?>
