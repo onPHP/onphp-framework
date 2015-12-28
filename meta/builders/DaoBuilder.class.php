@@ -49,7 +49,7 @@ final class DaoBuilder extends OnceBuilder
         $out .= <<<EOT
 {$abstract}class {$class->getName()}DAO extends Auto{$class->getName()}DAO
 {
-	// {$notes}
+// {$notes}
 }
 
 EOT;

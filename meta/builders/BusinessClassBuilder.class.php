@@ -34,13 +34,13 @@ final class BusinessClassBuilder extends OnceBuilder
 
             $daoName = $class->getName() . 'DAO';
             $dao = <<<EOT
-    /**
-     * @return {$daoName}
-    **/
-    public static function dao()
-    {
-        return Singleton::getInstance('{$daoName}');
-    }
+/**
+* @return {$daoName}
+**/
+public static function dao()
+{
+    return Singleton::getInstance('{$daoName}');
+}
 
 EOT;
         } else {
@@ -95,25 +95,25 @@ EOT;
 
                 $out .= <<<EOT
 
-    /**
-     * @return {$class->getName()}
-    **/
-    public static function create({$declaration})
-    {
-        return new self({$declaration});
-    }
+/**
+* @return {$class->getName()}
+**/
+public static function create({$declaration})
+{
+    return new self({$declaration});
+}
 
 EOT;
             } else {
                 $out .= <<<EOT
 
-    /**
-     * @return {$class->getName()}
-    **/
-    public static function create()
-    {
-        return new self;
-    }
+/**
+* @return {$class->getName()}
+**/
+public static function create()
+{
+    return new self;
+}
 
 EOT;
             }
@@ -123,13 +123,13 @@ EOT;
             $out .= <<<EOT
 
 {$dao}
-    /**
-    * @return {$protoName}
-    **/
-    public static function proto()
-    {
-        return Singleton::getInstance('{$protoName}');
-    }
+/**
+* @return {$protoName}
+**/
+public static function proto()
+{
+    return Singleton::getInstance('{$protoName}');
+}
 
 EOT;
 

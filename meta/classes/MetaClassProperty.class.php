@@ -277,34 +277,31 @@ class MetaClassProperty
 
         $column = <<<EOT
 addColumn(
-	DBColumn::create(
-		{$this->type->toColumnType($this->size)}
+                (new DBColumn(
+                    {$this->type->toColumnType($this->size)}
 EOT;
 
         if ($this->required) {
             $column .= <<<EOT
-->
-setNull(false)
+\n                        ->setNull(false)
 EOT;
         }
 
         if ($this->size) {
             $column .= <<<EOT
-->
-setSize({$this->size})
+\n                      ->setSize({$this->size})
 EOT;
         }
 
         if ($this->type instanceof NumericType) {
             $column .= <<<EOT
-->
-setPrecision({$this->type->getPrecision()})
+\n                      ->setPrecision({$this->type->getPrecision()})
 EOT;
         }
 
         $column .= <<<EOT
-,
-'{$columnName}'
+, '{$columnName}'
+    )
 )
 EOT;
 

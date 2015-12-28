@@ -21,6 +21,7 @@ final class Format extends StaticFactory
 
         $indent = 0;
         $chain = 1;
+        $spaces = 4;
         $first = true; // for schema.php-like files
 
         foreach (explode("\n", $data) as $string) {
@@ -44,8 +45,8 @@ final class Format extends StaticFactory
             }
 
             if ($string <> "\n") {
-                if ($indent > 0) {
-                    $out .= str_pad(null, $indent, "\t", STR_PAD_LEFT) . $string;
+                if ($indent > 1) {
+                    $out .= str_pad(null, $spaces) . $string;
                 } else {
                     $out .= $string;
                 }
@@ -85,8 +86,8 @@ final class Format extends StaticFactory
             }
 
             if ($string == "\n") {
-                if (!$first && ($indent > 0)) {
-                    $out .= str_pad(null, $indent, "\t", STR_PAD_LEFT) . $string;
+                if (!$first && ($indent > 1)) {
+                    $out .= str_pad(null, $spaces) . $string;
                 } else {
                     $out .= $string;
                     $first = false;

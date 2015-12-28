@@ -28,7 +28,7 @@ final class EnumClassBuilder extends OnceBuilder
 {$type}class {$class->getName()} extends Enum
 {
     // implement me!
-    protected static \$names = array();
+protected static \$names = array();
 }
 
 EOT;

@@ -47,17 +47,17 @@ EOT;
         $propertyList = $class->getWithInternalProperties();
 
         $out = <<<EOT
-    protected function makePropertyList()
-    {
+protected function makePropertyList()
+{
 
 EOT;
 
         if ($class->hasBuildableParent()) {
             $out .= <<<EOT
-        return
-            array_merge(
-                parent::makePropertyList(),
-                array(
+return
+    array_merge(
+        parent::makePropertyList(),
+            array(
 
 EOT;
             if ($class->getIdentifier()) {
@@ -66,7 +66,7 @@ EOT;
             }
         } else {
             $out .= <<<EOT
-        return array(
+return array(
 
 EOT;
         }
@@ -87,8 +87,8 @@ EOT;
 
         $out .= <<<EOT
 
-        );
-    }
+);
+}
 EOT;
         return $out;
     }

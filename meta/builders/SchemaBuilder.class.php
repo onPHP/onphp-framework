@@ -19,10 +19,9 @@ final class SchemaBuilder extends BaseBuilder
         $out = <<<EOT
 \$schema->
     addTable(
-        DBTable::create('{$tableName}')->
-
+        (new DBTable('{$tableName}'))
+            ->
 EOT;
-
         $columns = [];
 
         foreach ($propertyList as $property) {
@@ -42,7 +41,7 @@ EOT;
             }
         }
 
-        $out .= implode("->\n", $columns);
+        $out .= implode("\n->", $columns);
 
         return $out . "\n);\n\n";
     }
@@ -110,13 +109,13 @@ EOT;
                     }
 
                     $out .= <<<EOT
-\$schema->
-    addTable(
-        DBTable::create('{$tableName}')->
-        {$property->toColumn()}->
-        {$foreignPropery->toColumn()}->
-        addUniques('{$property->getRelationColumnName()}', '{$foreignPropery->getColumnName()}')
-    );
+\$schema
+->addTable(
+    (new DBTable('{$tableName}'))
+        ->{$property->toColumn()}
+        ->{$foreignPropery->toColumn()}
+        ->addUniques('{$property->getRelationColumnName()}', '{$foreignPropery->getColumnName()}')
+);
 
 
 EOT;
@@ -129,16 +128,16 @@ EOT;
 
                     $out .= <<<EOT
 // {$sourceTable}.{$sourceColumn} -> {$targetTable}.{$targetColumn}
-\$schema->
-    getTableByName('{$sourceTable}')->
-        getColumnByName('{$sourceColumn}')->
-            setReference(
-                \$schema->
-                    getTableByName('{$targetTable}')->
-                    getColumnByName('{$targetColumn}'),
-                ForeignChangeAction::restrict(),
-                ForeignChangeAction::cascade()
-            );
+\$schema
+    ->getTableByName('{$sourceTable}')
+    ->getColumnByName('{$sourceColumn}')
+    ->setReference(
+        \$schema
+            ->getTableByName('{$targetTable}')
+            ->getColumnByName('{$targetColumn}'),
+        ForeignChangeAction::restrict(),
+        ForeignChangeAction::cascade()
+);
 
 
 EOT;
