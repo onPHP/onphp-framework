@@ -1275,8 +1275,8 @@ class HtmlTokenizer
         $content = $this->getComment();
 
         $this->tag =
-            SgmlIgnoredTag::comment()->
-            setCdata(
+            SgmlIgnoredTag::comment()
+                ->setCdata(
                 (new Cdata())->setData($content)
             );
 

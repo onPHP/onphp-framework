@@ -48,12 +48,12 @@ class OqlToken
      **/
     public static function make($value, $rawValue, $type, $line, $position)
     {
-        return (new OqlToken())->
-        setValue($value)->
-        setRawValue($rawValue)->
-        setType($type)->
-        setLine($line)->
-        setPosition($position);
+        return (new OqlToken())
+            ->setValue($value)
+            ->setRawValue($rawValue)
+            ->setType($type)
+            ->setLine($line)
+            ->setPosition($position);
     }
 
     public function getValue()

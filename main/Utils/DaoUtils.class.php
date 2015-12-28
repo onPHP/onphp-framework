@@ -93,8 +93,9 @@ class DaoUtils extends StaticFactory
             $updateQuery = $query;
         } else {
             $updateQuery =
-                OSQL::update()->setTable($objectDao->getTable())->
-                where(Expression::eqId('id', $object));
+                OSQL::update()
+                    ->setTable($objectDao->getTable())
+                    ->where(Expression::eqId('id', $object));
         }
 
         $mapping = $objectDao->getProtoClass()->getMapping();

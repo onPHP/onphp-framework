@@ -60,8 +60,9 @@ class SmartDaoWorker extends TransparentDaoWorker
         if ($pool->get($semKey)) {
             $this->syncMap($key);
 
-            Cache::me()->mark($this->className)->
-            add($key, $object, $expires);
+            Cache::me()
+                ->mark($this->className)
+                ->add($key, $object, $expires);
 
             $pool->free($semKey);
         }
@@ -86,11 +87,13 @@ class SmartDaoWorker extends TransparentDaoWorker
         $map[$objectKey] = true;
 
         if ($mapExists) {
-            $cache->mark($this->className)->
-            replace($this->indexKey, $map, Cache::EXPIRES_FOREVER);
+            $cache
+                ->mark($this->className)
+                ->replace($this->indexKey, $map, Cache::EXPIRES_FOREVER);
         } else {
-            $cache->mark($this->className)->
-            set($this->indexKey, $map, Cache::EXPIRES_FOREVER);
+            $cache
+                ->mark($this->className)
+                ->set($this->indexKey, $map, Cache::EXPIRES_FOREVER);
         }
 
         return true;

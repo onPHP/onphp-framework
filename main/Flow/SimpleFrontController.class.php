@@ -57,9 +57,9 @@ class SimpleFrontController implements Controller
         $this->prepareResponseFormat($request);
 
         $this->handleMav(
-            $this->
-            makeControllerChain()->
-            handleRequest($request)
+            $this
+                ->makeControllerChain()
+                ->handleRequest($request)
         );
     }
 

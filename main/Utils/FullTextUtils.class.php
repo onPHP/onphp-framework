@@ -55,13 +55,14 @@ class FullTextUtils extends StaticFactory
         }
 
         return
-            $criteria->toSelectQuery()->
-            andWhere(
-                Expression::fullTextOr($field, $array)
-            )->
-            prependOrderBy(
-                Expression::fullTextRankAnd($field, $array)
-            )->desc();
+            $criteria->toSelectQuery()
+                ->andWhere(
+                    Expression::fullTextOr($field, $array)
+                )
+                ->prependOrderBy(
+                    Expression::fullTextRankAnd($field, $array)
+                )
+                ->desc();
     }
 
     public static function prepareSearchString($string)

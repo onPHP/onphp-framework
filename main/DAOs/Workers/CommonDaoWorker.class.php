@@ -36,17 +36,17 @@ class CommonDaoWorker extends BaseDaoWorker
             return $this->dao->completeObject($object);
         } else {
             $query =
-                $this->dao->
-                makeSelectHead()->
-                andWhere(
-                    Expression::eq(
-                        new DBField(
-                            $this->dao->getIdName(),
-                            $this->dao->getTable()
-                        ),
-                        $id
-                    )
-                );
+                $this->dao
+                    ->makeSelectHead()
+                    ->andWhere(
+                        Expression::eq(
+                            new DBField(
+                                $this->dao->getIdName(),
+                                $this->dao->getTable()
+                            ),
+                            $id
+                        )
+                    );
 
             if ($expires === Cache::DO_NOT_CACHE) {
                 $object = $this->fetchObject($query);
@@ -61,8 +61,7 @@ class CommonDaoWorker extends BaseDaoWorker
                     "there is no such object for '" . $this->dao->getObjectName()
                     . "' with query == "
                     . $query->toDialectString(
-                        DBPool::me()->getByDao($this->dao)->
-                        getDialect()
+                        DBPool::me()->getByDao($this->dao)->getDialect()
                     )
                 );
             }
@@ -109,8 +108,8 @@ class CommonDaoWorker extends BaseDaoWorker
                         ?
                         "' with query == "
                         . $query->toDialectString(
-                            DBPool::me()->getByDao($this->dao)->
-                            getDialect()
+                            DBPool::me()->getByDao($this->dao)
+                                ->getDialect()
                         )
                         : null
                     )
@@ -238,8 +237,8 @@ class CommonDaoWorker extends BaseDaoWorker
                     ?
                     " for such query - "
                     . $query->toDialectString(
-                        DBPool::me()->getByDao($this->dao)->
-                        getDialect()
+                        DBPool::me()->getByDao($this->dao)
+                            ->getDialect()
                     )
                     : null
                 )
@@ -255,12 +254,12 @@ class CommonDaoWorker extends BaseDaoWorker
     ) {
         if ($expires !== Cache::DO_NOT_CACHE) {
 
-            Cache::me()->mark($this->className)->
-            add(
-                $this->makeQueryKey($query, self::SUFFIX_QUERY),
-                $object,
-                $expires
-            );
+            Cache::me()->mark($this->className)
+                ->add(
+                    $this->makeQueryKey($query, self::SUFFIX_QUERY),
+                    $object,
+                    $expires
+                );
         }
 
         return $object;
@@ -322,8 +321,9 @@ class CommonDaoWorker extends BaseDaoWorker
                     ?
                     "for query == "
                     . $query->toDialectString(
-                        DBPool::me()->getByDao($this->dao)->
-                        getDialect()
+                        DBPool::me()
+                            ->getByDao($this->dao)
+                            ->getDialect()
                     )
                     : null
                 )
@@ -358,8 +358,9 @@ class CommonDaoWorker extends BaseDaoWorker
                     ?
                     " for such query - "
                     . $query->toDialectString(
-                        DBPool::me()->getByDao($this->dao)->
-                        getDialect()
+                        DBPool::me()
+                            ->getByDao($this->dao)
+                            ->getDialect()
                     )
                     : null
                 )
@@ -404,8 +405,9 @@ class CommonDaoWorker extends BaseDaoWorker
                     ?
                     " for such query - "
                     . $query->toDialectString(
-                        DBPool::me()->getByDao($this->dao)->
-                        getDialect()
+                        DBPool::me()
+                            ->getByDao($this->dao)
+                            ->getDialect()
                     )
                     : null
                 )
@@ -433,8 +435,14 @@ class CommonDaoWorker extends BaseDaoWorker
 
             $count =
                 DBPool::getByDao($this->dao)->queryRow(
-                    $count->dropFields()->dropOrder()->limit(null, null)->
-                    get((new SQLFunction('COUNT', '*'))->setAlias('count'))
+                    $count
+                        ->dropFields()
+                        ->dropOrder()
+                        ->limit(null, null)
+                        ->get(
+                            (new SQLFunction('COUNT', '*'))
+                                ->setAlias('count')
+                        )
                 );
 
             return
@@ -510,12 +518,13 @@ class CommonDaoWorker extends BaseDaoWorker
     ) {
         if ($expires !== Cache::DO_NOT_CACHE) {
 
-            Cache::me()->mark($this->className)->
-            add(
-                $this->makeIdKey($object->getId()),
-                $object,
-                $expires
-            );
+            Cache::me()
+                ->mark($this->className)
+                ->add(
+                    $this->makeIdKey($object->getId()),
+                    $object,
+                    $expires
+                );
         }
 
         return $object;

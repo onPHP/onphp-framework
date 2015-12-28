@@ -49,16 +49,18 @@ class ManyToManyLinkedLazy extends ManyToManyLinkedWorker
         $uc = $this->container;
 
         return
-            $this->joinHelperTable(
-                $this->makeSelectQuery()->
-                dropFields()->
-                get(
-                    new DBField(
-                        $uc->getChildIdField(),
-                        $uc->getHelperTable()
-                    )
-                )
-            );
+            $this
+                ->joinHelperTable(
+                    $this
+                        ->makeSelectQuery()
+                        ->dropFields()
+                        ->get(
+                            new DBField(
+                                $uc->getChildIdField(),
+                                $uc->getHelperTable()
+                            )
+                        )
+                );
     }
 }
 

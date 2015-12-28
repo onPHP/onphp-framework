@@ -20,9 +20,9 @@ class OqlOrderByExpression extends OqlQueryExpression
 
     public function __construct(OqlQueryParameter $parameter, $direction)
     {
-        $this->
-        setClassName(self::CLASS_NAME)->
-        addParameter($parameter);
+        $this
+            ->setClassName(self::CLASS_NAME)
+            ->addParameter($parameter);
 
         $this->direction = $direction;
     }

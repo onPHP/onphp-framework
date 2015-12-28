@@ -65,13 +65,13 @@ abstract class UnifiedContainerWorker
             $countFunction = new SQLFunction('count', new DBValue('*'));
         }
 
-        return $query->
-        dropFields()->
-        dropOrder()->
-        dropLimit()->
-        get(
-            $countFunction->setAlias('count')
-        );
+        return $query
+            ->dropFields()
+            ->dropOrder()
+            ->dropLimit()
+            ->get(
+                $countFunction->setAlias('count')
+            );
     }
 
     abstract public function makeFetchQuery();
@@ -81,13 +81,14 @@ abstract class UnifiedContainerWorker
         $dao = $this->container->getDao();
 
         DBPool::getByDao($dao)->queryNull(
-            OSQL::delete()->from($this->container->getHelperTable())->
-            where(
-                Expression::eq(
-                    $this->container->getParentIdField(),
-                    $this->container->getParentObject()->getId()
+            OSQL::delete()
+                ->from($this->container->getHelperTable())
+                ->where(
+                    Expression::eq(
+                        $this->container->getParentIdField(),
+                        $this->container->getParentObject()->getId()
+                    )
                 )
-            )
         );
 
         $dao->uncacheLists();

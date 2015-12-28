@@ -49,8 +49,7 @@ class DaoSynchronizer extends CustomizableDaoSynchronizer
         $changed = [];
 
         foreach (
-            $this->slave->getProtoClass()->
-            getPropertyList() as $property
+            $this->slave->getProtoClass()->getPropertyList() as $property
         ) {
             $getter = $property->getGetter();
 

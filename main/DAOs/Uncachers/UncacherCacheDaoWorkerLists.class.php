@@ -70,9 +70,7 @@ class UncacherCacheDaoWorkerLists implements UncacherBase
     private function uncacheClassName($className)
     {
         if (
-        !Cache::me()->
-        mark($className)->
-        increment($className, 1)
+        !Cache::me()->mark($className)->increment($className, 1)
         )
             Cache::me()->mark($className)->delete($className);
     }

@@ -318,9 +318,9 @@ class OqlSelectQuery extends OqlQuery
         );
         foreach ($projections as $clause) {
             $criteria->addProjection(
-                $clause->
-                bindAll($this->parameters)->
-                toProjection()
+                $clause
+                    ->bindAll($this->parameters)
+                    ->toProjection()
             );
         }
 
@@ -329,17 +329,17 @@ class OqlSelectQuery extends OqlQuery
                 $clause = reset($this->where);
 
                 $criteria->add(
-                    $clause->
-                    bindAll($this->parameters)->
-                    toLogic()
+                    $clause
+                        ->bindAll($this->parameters)
+                        ->toLogic()
                 );
 
             } else {
                 $logic = Expression::chain();
                 foreach ($this->where as $key => $clause) {
-                    $expression = $clause->
-                    bindAll($this->parameters)->
-                    toLogic();
+                    $expression = $clause
+                        ->bindAll($this->parameters)
+                        ->toLogic();
 
                     if (
                         $this->whereLogic[$key]
@@ -357,9 +357,7 @@ class OqlSelectQuery extends OqlQuery
 
         foreach ($this->orderChain as $clause) {
             $criteria->addOrder(
-                $clause->
-                bindAll($this->parameters)->
-                toOrder()
+                $clause->bindAll($this->parameters)->toOrder()
             );
         }
 

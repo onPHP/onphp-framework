@@ -96,9 +96,9 @@ class DaoIterator implements Iterator
             $criteria->setProjection($this->projection);
         }
 
-        $criteria->
-        addOrder($this->keyProperty)->
-        setLimit($this->chunkSize);
+        $criteria
+            ->addOrder($this->keyProperty)
+            ->setLimit($this->chunkSize);
 
         if ($id !== null) {
             $criteria->add(

@@ -22,12 +22,13 @@ abstract class ManyToManyLinkedWorker extends UnifiedContainerWorker
         $uc = $this->container;
 
         return
-            OSQL::insert()->into($uc->getHelperTable())->
-            set(
-                $uc->getParentIdField(),
-                $uc->getParentObject()->getId()
-            )->
-            set($uc->getChildIdField(), $childId);
+            OSQL::insert()
+                ->into($uc->getHelperTable())
+                ->set(
+                    $uc->getParentIdField(),
+                    $uc->getParentObject()->getId()
+                )
+                ->set($uc->getChildIdField(), $childId);
     }
 
     /**
@@ -40,19 +41,20 @@ abstract class ManyToManyLinkedWorker extends UnifiedContainerWorker
         $uc = $this->container;
 
         return
-            OSQL::delete()->from($uc->getHelperTable())->
-            where(
-                Expression::eq(
-                    new DBField($uc->getParentIdField()),
-                    new DBValue($uc->getParentObject()->getId())
+            OSQL::delete()
+                ->from($uc->getHelperTable())
+                ->where(
+                    Expression::eq(
+                        new DBField($uc->getParentIdField()),
+                        new DBValue($uc->getParentObject()->getId())
+                    )
                 )
-            )->
-            andWhere(
-                Expression::in(
-                    $uc->getChildIdField(),
-                    $delete
-                )
-            );
+                ->andWhere(
+                    Expression::in(
+                        $uc->getChildIdField(),
+                        $delete
+                    )
+                );
     }
 
     /**
@@ -63,31 +65,33 @@ abstract class ManyToManyLinkedWorker extends UnifiedContainerWorker
         $uc = $this->container;
 
         if (!$query->hasJoinedTable($uc->getHelperTable())) {
-            $query->
-            join(
-                $uc->getHelperTable(),
-                Expression::eq(
-                    new DBField(
-                        $uc->getParentTableIdField(),
-                        $uc->getDao()->getTable()
-                    ),
-                    new DBField(
-                        $uc->getChildIdField(),
-                        $uc->getHelperTable()
+            $query
+                ->join(
+                    $uc->getHelperTable(),
+                    Expression::eq(
+                        new DBField(
+                            $uc->getParentTableIdField(),
+                            $uc->getDao()->getTable()
+                        ),
+                        new DBField(
+                            $uc->getChildIdField(),
+                            $uc->getHelperTable()
+                        )
                     )
-                )
-            );
+                );
         }
 
         return
-            $query->
-            andWhere(
+            $query
+                ->andWhere(
                 Expression::eq(
                     new DBField(
                         $uc->getParentIdField(),
                         $uc->getHelperTable()
                     ),
-                    new DBValue($uc->getParentObject()->getId())
+                    new DBValue(
+                        $uc->getParentObject()->getId()
+                    )
                 )
             );
     }

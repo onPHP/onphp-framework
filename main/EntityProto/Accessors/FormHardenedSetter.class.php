@@ -24,8 +24,9 @@ class FormHardenedSetter extends FormMutator
             ? 'dropValue'
             : 'setValue';
 
-        $this->object->get($primitive->getName())->
-        $method($value);
+        $this->object
+            ->get($primitive->getName())
+            ->$method($value);
 
         return $this;
     }

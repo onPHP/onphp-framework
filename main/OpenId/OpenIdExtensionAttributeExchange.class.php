@@ -44,30 +44,30 @@ class OpenIdExtensionAttributeExchange implements OpenIdExtension
      **/
     public function addParamsToModel(Model $model)
     {
-        $model->
-        set('openid.ns.ax', self::NAMESPACE_1_0)->
-        set('openid.ax.mode', 'fetch_request')->
-        set('openid.ax.required', implode(',', $this->params))->
-        set(
-            'openid.ax.type.country',
-            'http://axschema.org/contact/country/home'
-        )->
-        set(
-            'openid.ax.type.email',
-            'http://axschema.org/contact/email'
-        )->
-        set(
-            'openid.ax.type.firstname',
-            'http://axschema.org/namePerson/first'
-        )->
-        set(
-            'openid.ax.type.lastname',
-            'http://axschema.org/namePerson/last'
-        )->
-        set(
-            'openid.ax.type.language',
-            'http://axschema.org/pref/language'
-        );
+        $model
+            ->set('openid.ns.ax', self::NAMESPACE_1_0)
+            ->set('openid.ax.mode', 'fetch_request')
+            ->set('openid.ax.required', implode(',', $this->params))
+            ->set(
+                'openid.ax.type.country',
+                'http://axschema.org/contact/country/home'
+            )
+            ->set(
+                'openid.ax.type.email',
+                'http://axschema.org/contact/email'
+            )
+            ->set(
+                'openid.ax.type.firstname',
+                'http://axschema.org/namePerson/first'
+            )
+            ->set(
+                'openid.ax.type.lastname',
+                'http://axschema.org/namePerson/last'
+            )
+            ->set(
+                'openid.ax.type.language',
+                'http://axschema.org/pref/language'
+            );
     }
 
     /**

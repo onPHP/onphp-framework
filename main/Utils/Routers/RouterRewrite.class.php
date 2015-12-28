@@ -246,12 +246,10 @@ class RouterRewrite extends Singleton implements Router, Instantiatable
      **/
     public function resetAll()
     {
-        return $this->
-        resetBaseUrl()->
-        resetRequest()->
-        resetRoutes();
-
-        return $this;
+        return $this
+            ->resetBaseUrl()
+            ->resetRequest()
+            ->resetRoutes();
     }
 
     /**

@@ -53,9 +53,9 @@ abstract class TransparentDaoWorker extends CommonDaoWorker
 
     public function getListByIds(array $ids)
     {
-        $list = array();
-        $toFetch = array();
-        $prefixed = array();
+        $list = [];
+        $toFetch = [];
+        $prefixed = [];
 
         $proto = $this->dao->getProtoClass();
 
@@ -64,8 +64,9 @@ abstract class TransparentDaoWorker extends CommonDaoWorker
         // dupes, if any, will be resolved later @ ArrayUtils::regularizeList
         $ids = array_unique($ids);
 
-        foreach ($ids as $id)
+        foreach ($ids as $id) {
             $prefixed[$id] = $this->makeIdKey($id);
+        }
 
         if (
         $cachedList
@@ -83,7 +84,7 @@ abstract class TransparentDaoWorker extends CommonDaoWorker
         $toFetch += array_keys($prefixed);
 
         if ($toFetch) {
-            $remainList = array();
+            $remainList = [];
 
             foreach ($toFetch as $id) {
                 try {
@@ -119,12 +120,13 @@ abstract class TransparentDaoWorker extends CommonDaoWorker
     protected function cacheNullById($id)
     {
         return
-            Cache::me()->mark($this->className)->
-            add(
-                $this->makeIdKey($id),
-                Cache::NOT_FOUND,
-                Cache::EXPIRES_FOREVER
-            );
+            Cache::me()
+                ->mark($this->className)
+                ->add(
+                    $this->makeIdKey($id),
+                    Cache::NOT_FOUND,
+                    Cache::EXPIRES_FOREVER
+                );
     }
 
     public function getListByQuery(SelectQuery $query)
@@ -132,14 +134,15 @@ abstract class TransparentDaoWorker extends CommonDaoWorker
         $list = $this->getCachedList($query);
 
         if ($list) {
-            if ($list === Cache::NOT_FOUND)
+            if ($list === Cache::NOT_FOUND) {
                 throw new ObjectNotFoundException();
-            else
+            } else {
                 return $list;
+            }
         } else {
-            if ($list = $this->fetchList($query))
+            if ($list = $this->fetchList($query)) {
                 return $this->cacheListByQuery($query, $list);
-            else {
+            } else {
                 $this->cacheListByQuery($query, Cache::NOT_FOUND);
                 throw new ObjectNotFoundException();
             }
@@ -215,14 +218,15 @@ abstract class TransparentDaoWorker extends CommonDaoWorker
 
     protected function cacheById(
         Identifiable $object,
-        $expires = Cache::EXPIRES_FOREVER)
-    {
-        Cache::me()->mark($this->className)->
-        add(
-            $this->makeIdKey($object->getId()),
-            $object,
-            $expires
-        );
+        $expires = Cache::EXPIRES_FOREVER
+    ) {
+        Cache::me()
+            ->mark($this->className)
+            ->add(
+                $this->makeIdKey($object->getId()),
+                $object,
+                $expires
+            );
 
         return $object;
     }

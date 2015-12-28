@@ -21,12 +21,13 @@ abstract class FeedFormat extends Singleton
         $this->checkWorkers();
 
         return
-            $this->getChannelWorker()->
-            makeChannel($xmlFeed)->
-            setFeedItems(
-                $this->getItemWorker()->
-                makeItems($xmlFeed)
-            );
+            $this->getChannelWorker()
+                ->makeChannel($xmlFeed)
+                ->setFeedItems(
+                    $this
+                        ->getItemWorker()
+                        ->makeItems($xmlFeed)
+                );
     }
 
     private function checkWorkers()

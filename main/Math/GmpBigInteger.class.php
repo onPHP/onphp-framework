@@ -43,9 +43,9 @@ class GmpBigInteger implements BigInteger
 
 		$length = strlen($binary);
 		for ($i = 0; $i < $length; ++$i) {
-			$number = $number->
-			mul(self::make(256))->
-			add(self::make(ord($binary)));
+			$number = $number
+				->mul(self::make(256))
+				->add(self::make(ord($binary)));
 
 			$binary = substr($binary, 1);
 		}

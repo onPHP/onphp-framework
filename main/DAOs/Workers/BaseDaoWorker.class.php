@@ -56,9 +56,10 @@ abstract class BaseDaoWorker implements BaseDAO
     public function dropById($id)
     {
         $result =
-            DBPool::getByDao($this->dao)->queryCount(
-                OSQL::delete()->from($this->dao->getTable())->
-                where(Expression::eq($this->dao->getIdName(), $id))
+            DBPool::getByDao($this->dao)
+                ->queryCount(
+                    OSQL::delete()->from($this->dao->getTable())
+                        ->where(Expression::eq($this->dao->getIdName(), $id))
             );
 
         $this->dao->uncacheById($id);
@@ -70,8 +71,9 @@ abstract class BaseDaoWorker implements BaseDAO
     {
         $result =
             DBPool::getByDao($this->dao)->queryCount(
-                OSQL::delete()->from($this->dao->getTable())->
-                where(Expression::in($this->dao->getIdName(), $ids))
+                OSQL::delete()
+                    ->from($this->dao->getTable())
+                    ->where(Expression::in($this->dao->getIdName(), $ids))
             );
 
         $this->dao->uncacheByIds($ids);
@@ -139,15 +141,16 @@ abstract class BaseDaoWorker implements BaseDAO
     public function getCachedById($id)
     {
         return
-            Cache::me()->mark($this->className)->
-            get($this->makeIdKey($id));
+            Cache::me()
+                ->mark($this->className)
+                ->get($this->makeIdKey($id));
     }
 
     protected function getCachedByQuery(SelectQuery $query)
     {
         return
-            Cache::me()->mark($this->className)->
-            get($this->makeQueryKey($query, self::SUFFIX_QUERY));
+            Cache::me()->mark($this->className)
+                ->get($this->makeQueryKey($query, self::SUFFIX_QUERY));
     }
 
     protected function fetchObject(SelectQuery $query)

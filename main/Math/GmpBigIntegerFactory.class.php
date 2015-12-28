@@ -41,8 +41,7 @@ class GmpBigIntegerFactory extends BigNumberFactory
         $numBytes = ceil(log($stop->floatValue(), 2) / 8);
 
         return $this->
-        makeFromBinary("\x00" . $source->getBytes($numBytes))->
-        mod($stop);
+        makeFromBinary("\x00" . $source->getBytes($numBytes))->mod($stop);
     }
 
     /**

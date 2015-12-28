@@ -20,9 +20,10 @@ class OneToManyLinkedLazy extends OneToManyLinkedWorker
     public function makeFetchQuery()
     {
         $query =
-            $this->makeSelectQuery()->
-            dropFields()->
-            get($this->container->getChildIdField());
+            $this
+                ->makeSelectQuery()
+                ->dropFields()
+                ->get($this->container->getChildIdField());
 
         return $this->targetize($query);
     }
@@ -51,13 +52,14 @@ class OneToManyLinkedLazy extends OneToManyLinkedWorker
                 $db->queryNull($this->makeMassUpdateQuery($delete))
                 :
                 $db->queryNull(
-                    OSQL::delete()->from($dao->getTable())->
-                    where(
-                        Expression::in(
-                            $uc->getChildIdField(),
-                            $delete
+                    OSQL::delete()
+                        ->from($dao->getTable())
+                        ->where(
+                            Expression::in(
+                                $uc->getChildIdField(),
+                                $delete
+                            )
                         )
-                    )
                 );
 
             $dao->uncacheByIds($delete);
@@ -74,14 +76,14 @@ class OneToManyLinkedLazy extends OneToManyLinkedWorker
         $uc = $this->container;
 
         return
-            OSQL::update($uc->getDao()->getTable())->
-            set($uc->getParentIdField(), null)->
-            where(
-                Expression::in(
-                    $uc->getChildIdField(),
-                    $ids
-                )
-            );
+            OSQL::update($uc->getDao()->getTable())
+                ->set($uc->getParentIdField(), null)
+                ->where(
+                    Expression::in(
+                        $uc->getChildIdField(),
+                        $ids
+                    )
+                );
     }
 }
 

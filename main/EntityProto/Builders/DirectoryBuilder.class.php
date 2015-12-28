@@ -64,10 +64,10 @@ abstract class DirectoryBuilder extends PrototypedBuilder
 
         $result = parent::cloneInnerBuilder($property);
 
-        $result->
-        setDirectory($this->directory . '/' . $property)->
-        setPermissions($this->permissions)->
-        setIdentityMap($this->identityMap);
+        $result
+            ->setDirectory($this->directory . '/' . $property)
+            ->setPermissions($this->permissions)
+            ->setIdentityMap($this->identityMap);
 
         return $result;
     }
@@ -91,9 +91,10 @@ abstract class DirectoryBuilder extends PrototypedBuilder
                 'cannot build list of items without identity'
             );
 
-        return $this->cloneBuilder($this->proto)->
-        setPermissions($this->permissions)->
-        setDirectory($this->directory . '/' . $object->getId());
+        return $this
+            ->cloneBuilder($this->proto)
+            ->setPermissions($this->permissions)
+            ->setDirectory($this->directory . '/' . $object->getId());
     }
 
     /**
@@ -103,10 +104,10 @@ abstract class DirectoryBuilder extends PrototypedBuilder
     {
         $result = parent::cloneBuilder($proto);
 
-        $result->
-        setDirectory($this->directory)->
-        setPermissions($this->permissions)->
-        setIdentityMap($this->identityMap);
+        $result
+            ->setDirectory($this->directory)
+            ->setPermissions($this->permissions)
+            ->setIdentityMap($this->identityMap);
 
         return $result;
     }

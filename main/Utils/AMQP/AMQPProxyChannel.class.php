@@ -56,9 +56,9 @@ class AMQPProxyChannel implements AMQPChannelInterface
         try {
             return $this->channel->exchangeDeclare($name, $conf);
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            exchangeDeclare($name, $conf);
+            return $this
+                ->transportReconnect($e)
+                ->exchangeDeclare($name, $conf);
         }
     }
 
@@ -79,8 +79,7 @@ class AMQPProxyChannel implements AMQPChannelInterface
     private function markAlive($alive = false)
     {
         try {
-            $this->channel->getTransport()->
-            setAlive($alive);
+            $this->channel->getTransport()->setAlive($alive);
         } catch (WrongArgumentException $e) {/*no_connection*/
         }
 
@@ -94,8 +93,7 @@ class AMQPProxyChannel implements AMQPChannelInterface
     private function reconnect(Exception $amqpException)
     {
         try {
-            $this->channel->getTransport()->
-            setCurrent(
+            $this->channel->getTransport()->setCurrent(
                 $this->channel->getTransport()->getAlive()
             );
         } catch (WrongArgumentException $e) {
@@ -132,13 +130,13 @@ class AMQPProxyChannel implements AMQPChannelInterface
                 $routingKey
             );
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            exchangeBind(
-                $destinationName,
-                $sourceName,
-                $routingKey
-            );
+            return $this
+                ->transportReconnect($e)
+                ->exchangeBind(
+                    $destinationName,
+                    $sourceName,
+                    $routingKey
+                );
         }
     }
 
@@ -154,13 +152,13 @@ class AMQPProxyChannel implements AMQPChannelInterface
                 $routingKey
             );
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            exchangeUnbind(
-                $destinationName,
-                $sourceName,
-                $routingKey
-            );
+            return $this
+                ->transportReconnect($e)
+                ->exchangeUnbind(
+                    $destinationName,
+                    $sourceName,
+                    $routingKey
+                );
         }
     }
 
@@ -172,9 +170,9 @@ class AMQPProxyChannel implements AMQPChannelInterface
         try {
             return $this->channel->queueDeclare($name, $conf);
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            queueDeclare($name, $conf);
+            return $this
+                ->transportReconnect($e)
+                ->queueDeclare($name, $conf);
         }
     }
 
@@ -190,13 +188,13 @@ class AMQPProxyChannel implements AMQPChannelInterface
                 $routingKey
             );
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            queueBind(
-                $name,
-                $exchange,
-                $routingKey
-            );
+            return $this
+                ->transportReconnect($e)
+                ->queueBind(
+                    $name,
+                    $exchange,
+                    $routingKey
+                );
         }
     }
 
@@ -212,13 +210,13 @@ class AMQPProxyChannel implements AMQPChannelInterface
                 $routingKey
             );
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            queueUnbind(
-                $name,
-                $exchange,
-                $routingKey
-            );
+            return $this
+                ->transportReconnect($e)
+                ->queueUnbind(
+                    $name,
+                    $exchange,
+                    $routingKey
+                );
         }
     }
 
@@ -230,9 +228,9 @@ class AMQPProxyChannel implements AMQPChannelInterface
         try {
             return $this->channel->queuePurge($name);
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            queuePurge($name);
+            return $this
+                ->transportReconnect($e)
+                ->queuePurge($name);
         }
     }
 
@@ -244,9 +242,10 @@ class AMQPProxyChannel implements AMQPChannelInterface
         try {
             return $this->channel->queueDelete($name);
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            queueDelete($name);
+            return
+                $this
+                    ->transportReconnect($e)
+                    ->queueDelete($name);
         }
     }
 
@@ -262,9 +261,10 @@ class AMQPProxyChannel implements AMQPChannelInterface
                 $msg
             );
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            basicPublish($exchange, $routingKey, $msg);
+            return
+                $this
+                    ->transportReconnect($e)
+                    ->basicPublish($exchange, $routingKey, $msg);
         }
     }
 
@@ -276,9 +276,9 @@ class AMQPProxyChannel implements AMQPChannelInterface
         try {
             return $this->channel->basicQos($prefetchSize, $prefetchCount);
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            basicQos($prefetchSize, $prefetchCount);
+            return $this
+                ->transportReconnect($e)
+                ->basicQos($prefetchSize, $prefetchCount);
         }
     }
 
@@ -290,9 +290,9 @@ class AMQPProxyChannel implements AMQPChannelInterface
         try {
             return $this->channel->basicGet($queue, $autoAck);
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            basicGet($queue, $autoAck);
+            return $this
+                ->transportReconnect($e)
+                ->basicGet($queue, $autoAck);
         }
     }
 
@@ -304,9 +304,9 @@ class AMQPProxyChannel implements AMQPChannelInterface
         try {
             return $this->channel->basicAck($deliveryTag, $multiple);
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            basicAck($deliveryTag, $multiple);
+            return $this
+                ->transportReconnect($e)
+                ->basicAck($deliveryTag, $multiple);
         }
     }
 
@@ -318,9 +318,9 @@ class AMQPProxyChannel implements AMQPChannelInterface
         try {
             return $this->channel->basicConsume($queue, $autoAck, $callback);
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            basicConsume($queue, $autoAck, $callback);
+            return $this
+                ->transportReconnect($e)
+                ->basicConsume($queue, $autoAck, $callback);
         }
     }
 
@@ -332,9 +332,9 @@ class AMQPProxyChannel implements AMQPChannelInterface
         try {
             return $this->channel->basicCancel($consumerTag);
         } catch (AMQPServerException $e) {
-            return $this->
-            transportReconnect($e)->
-            basicCancel($consumerTag);
+            return $this
+                ->transportReconnect($e)
+                ->basicCancel($consumerTag);
         }
     }
 }

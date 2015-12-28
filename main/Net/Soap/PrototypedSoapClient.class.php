@@ -120,9 +120,7 @@ abstract class PrototypedSoapClient
 
             Assert::isTrue(
                 !$form->getErrors()
-                && $request->entityProto()->
-                validate($request, $form),
-
+                && $request->entityProto()->validate($request, $form),
                 Assert::dumpArgument($request)
             );
         }
@@ -181,10 +179,7 @@ abstract class PrototypedSoapClient
             Assert::isEqual(get_class($result), $resultClass);
 
             Assert::isTrue(
-                $result->entityProto()->
-                validate($result, $form),
-
-                Assert::dumpArgument($result)
+                $result->entityProto()->validate($result, $form), Assert::dumpArgument($result)
             );
         }
 

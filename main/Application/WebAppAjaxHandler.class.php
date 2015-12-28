@@ -38,9 +38,9 @@ class WebAppAjaxHandler implements InterceptingChainHandler
 
         $chain->setVar('isPjax', $isPjaxRequest);
         $chain->setVar('isAjax', $isAjaxRequest);
-        $chain->getServiceLocator()->
-        set('isPjax', $isPjaxRequest)->
-        set('isAjax', $isAjaxRequest);
+        $chain->getServiceLocator()
+            ->set('isPjax', $isPjaxRequest)
+            ->set('isAjax', $isAjaxRequest);
 
         $chain->next();
 

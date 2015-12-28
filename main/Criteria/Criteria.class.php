@@ -28,16 +28,17 @@ class Criteria extends QueryIdentification
     private $limit = null;
     private $offset = null;
 
-    private $collections = array();
+    private $collections = [];
 
     // dao-like behaviour: will throw ObjectNotFoundException when 'false'
     private $silent = true;
 
     public function __construct(/* ProtoDAO */
-        $dao = null)
-    {
-        if ($dao)
+        $dao = null
+    ) {
+        if ($dao) {
             Assert::isTrue($dao instanceof ProtoDAO);
+        }
 
         $this->dao = $dao;
         $this->logic = Expression::andBlock();
@@ -51,8 +52,8 @@ class Criteria extends QueryIdentification
      * @return Criteria
      **/
     public static function create(/* ProtoDAO */
-        $dao = null)
-    {
+        $dao = null
+    ) {
         return new self($dao);
     }
 
@@ -96,8 +97,9 @@ class Criteria extends QueryIdentification
 
     public function __wakeup()
     {
-        if ($this->daoClass)
+        if ($this->daoClass) {
             $this->dao = Singleton::getInstance($this->daoClass);
+        }
     }
 
     /**
@@ -130,10 +132,11 @@ class Criteria extends QueryIdentification
      * @return Criteria
      **/
     public function addOrder(/* MapableObject */
-        $order)
-    {
-        if (!$order instanceof MappableObject)
+        $order
+    ) {
+        if (!$order instanceof MappableObject) {
             $order = new OrderBy($order);
+        }
 
         $this->order->add($order);
 
@@ -144,10 +147,11 @@ class Criteria extends QueryIdentification
      * @return Criteria
      **/
     public function prependOrder(/* MapableObject */
-        $order)
-    {
-        if (!$order instanceof MappableObject)
+        $order
+    ) {
+        if (!$order instanceof MappableObject) {
             $order = new OrderBy($order);
+        }
 
         $this->order->prepend($order);
 
@@ -212,8 +216,9 @@ class Criteria extends QueryIdentification
         if (
             !$projection instanceof ProjectionChain
             || !$projection->isEmpty()
-        )
+        ) {
             $this->projection->add($projection);
+        }
 
         return $this;
     }
@@ -251,8 +256,7 @@ class Criteria extends QueryIdentification
         $lazy = false, // fetching mode
         /* Criteria */
         $criteria = null
-    )
-    {
+    ) {
         Assert::isBoolean($lazy);
         Assert::isTrue(
             ($criteria === null)
@@ -272,8 +276,9 @@ class Criteria extends QueryIdentification
 
     public function checkAndGetDao()
     {
-        if (!$this->dao)
+        if (!$this->dao) {
             throw new WrongStateException('You forgot to set dao');
+        }
 
         return $this->dao;
     }
@@ -281,23 +286,23 @@ class Criteria extends QueryIdentification
     public function get()
     {
         try {
-            $list = array(
-                $this->checkAndGetDao()->
-                getByQuery($this->toSelectQuery())
-            );
+            $list = [
+                $this->checkAndGetDao()->getByQuery($this->toSelectQuery())
+            ];
         } catch (ObjectNotFoundException $e) {
-            if (!$this->isSilent())
+            if (!$this->isSilent()) {
                 throw $e;
+            }
 
             return null;
         }
 
-        if (!$this->collections || !$list)
+        if (!$this->collections || !$list) {
             return reset($list);
+        }
 
         $list =
-            $this->checkAndGetDao()->
-            fetchCollections($this->collections, $list);
+            $this->checkAndGetDao()->fetchCollections($this->collections, $list);
 
         return reset($list);
     }
@@ -311,14 +316,15 @@ class Criteria extends QueryIdentification
             $query =
                 $this->getProjection()->process(
                     $this,
-                    $this->checkAndGetDao()->makeSelectHead()->
-                    dropFields()
+                    $this->checkAndGetDao()->makeSelectHead()->dropFields()
                 );
-        } else
+        } else {
             $query = $this->checkAndGetDao()->makeSelectHead();
+        }
 
-        if ($this->distinct)
+        if ($this->distinct) {
             $query->distinct();
+        }
 
         return $this->fillSelectQuery($query);
     }
@@ -336,10 +342,11 @@ class Criteria extends QueryIdentification
      **/
     public function setProjection(ObjectProjection $chain)
     {
-        if ($chain instanceof ProjectionChain)
+        if ($chain instanceof ProjectionChain) {
             $this->projection = $chain;
-        else
+        } else {
             $this->projection = Projection::chain()->add($chain);
+        }
 
         return $this;
     }
@@ -352,32 +359,36 @@ class Criteria extends QueryIdentification
         $query
             ->limit($this->limit, $this->offset);
 
-        if ($this->distinct)
+        if ($this->distinct) {
             $query->distinct();
+        }
 
-        if ($this->logic->getSize())
+        if ($this->logic->getSize()) {
             $query
                 ->andWhere(
                     $this->logic->toMapped($this->checkAndGetDao(), $query)
                 );
+        }
 
-        if ($this->order)
+        if ($this->order) {
             $query->setOrderChain(
                 $this->order->toMapped($this->checkAndGetDao(), $query)
             );
+        }
 
         if (
             $this->projection->isEmpty()
             && (
                 $this->strategy->getId() <> FetchStrategy::CASCADE
             )
-        )
+        ) {
             $this->joinProperties(
                 $query,
                 $this->checkAndGetDao(),
                 $this->checkAndGetDao()->getTable(),
                 true
             );
+        }
 
         return $query;
     }
@@ -388,9 +399,8 @@ class Criteria extends QueryIdentification
         $parentTable,
         $parentRequired,
         $prefix = null
-    )
-    {
-        $proto = call_user_func(array($parentDao->getObjectName(), 'proto'));
+    ) {
+        $proto = call_user_func([$parentDao->getObjectName(), 'proto']);
 
         foreach ($proto->getPropertyList() as $property) {
             if (
@@ -424,27 +434,29 @@ class Criteria extends QueryIdentification
                     continue;
                 } elseif ($property->isInner()) {
                     $proto = call_user_func(
-                        array($property->getClassName(), 'proto')
+                        [$property->getClassName(), 'proto']
                     );
 
-                    foreach ($proto->getPropertyList() as $innerProperty)
+                    foreach ($proto->getPropertyList() as $innerProperty) {
                         $query->get(
                             new DBField(
                                 $innerProperty->getColumnName(),
                                 $parentTable
                             )
                         );
+                    }
 
                     continue;
                 }
 
                 $propertyDao = call_user_func(
-                    array($property->getClassName(), 'dao')
+                    [$property->getClassName(), 'dao']
                 );
 
                 // add's custom dao's injection possibility
-                if (!$propertyDao instanceof ProtoDAO)
+                if (!$propertyDao instanceof ProtoDAO) {
                     continue;
+                }
 
                 $tableAlias = $propertyDao->getJoinName(
                     $property->getColumnName(),
@@ -456,14 +468,15 @@ class Criteria extends QueryIdentification
                 if (!$query->hasJoinedTable($tableAlias)) {
                     $logic =
                         Expression::eq(
-                            new DBField( $property->getColumnName(), $parentTable),
+                            new DBField($property->getColumnName(), $parentTable),
                             new DBField($propertyDao->getIdName(), $tableAlias)
                         );
 
-                    if ($property->isRequired() && $parentRequired)
+                    if ($property->isRequired() && $parentRequired) {
                         $query->join($propertyDao->getTable(), $logic, $tableAlias);
-                    else
+                    } else {
                         $query->leftJoin($propertyDao->getTable(), $logic, $tableAlias);
+                    }
                 }
 
                 foreach ($fields as $field) {
@@ -518,14 +531,16 @@ class Criteria extends QueryIdentification
                     ->getListByQuery($this->toSelectQuery());
 
         } catch (ObjectNotFoundException $e) {
-            if (!$this->isSilent())
+            if (!$this->isSilent()) {
                 throw $e;
+            }
 
-            return array();
+            return [];
         }
 
-        if (!$this->collections || !$list)
+        if (!$this->collections || !$list) {
             return $list;
+        }
 
         return
             $this->checkAndGetDao()
@@ -541,8 +556,9 @@ class Criteria extends QueryIdentification
             $this->checkAndGetDao()
                 ->getQueryResult($this->toSelectQuery());
 
-        if (!$this->collections || !$result->getCount())
+        if (!$this->collections || !$result->getCount()) {
             return $result;
+        }
 
         return $result->setList(
             $this->checkAndGetDao()
@@ -560,8 +576,9 @@ class Criteria extends QueryIdentification
                 $this->checkAndGetDao()->getCustom($this->toSelectQuery());
 
             if ($index) {
-                if (array_key_exists($index, $result))
+                if (array_key_exists($index, $result)) {
                     return $result[$index];
+                }
 
                 throw new MissingElementException(
                     'No such key: "' . $index . '" in result set.'
@@ -570,8 +587,9 @@ class Criteria extends QueryIdentification
 
             return $result;
         } catch (ObjectNotFoundException $e) {
-            if (!$this->isSilent())
+            if (!$this->isSilent()) {
                 throw $e;
+            }
 
             return null;
         }
@@ -585,10 +603,11 @@ class Criteria extends QueryIdentification
                     ->getCustomList($this->toSelectQuery());
 
         } catch (ObjectNotFoundException $e) {
-            if (!$this->isSilent())
+            if (!$this->isSilent()) {
                 throw $e;
+            }
 
-            return array();
+            return [];
         }
     }
 
@@ -600,10 +619,11 @@ class Criteria extends QueryIdentification
                     ->getCustomRowList($this->toSelectQuery());
 
         } catch (ObjectNotFoundException $e) {
-            if (!$this->isSilent())
+            if (!$this->isSilent()) {
                 throw $e;
+            }
 
-            return array();
+            return [];
         }
     }
 
@@ -628,8 +648,8 @@ class Criteria extends QueryIdentification
      * @return Criteria
      **/
     public function dropProjectionByType(/* array */
-        $dropTypes)
-    {
+        $dropTypes
+    ) {
         Assert::isInstance($this->projection, 'ProjectionChain');
 
         $this->projection->dropByType($dropTypes);
@@ -644,12 +664,12 @@ class Criteria extends QueryIdentification
     {
         return
             call_user_func(
-                array(
+                [
                     $this
                         ->checkAndGetDao()
                         ->getObjectName(),
                     'proto'
-                )
+                ]
             );
     }
 }

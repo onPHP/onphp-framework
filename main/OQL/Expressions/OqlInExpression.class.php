@@ -21,9 +21,9 @@ class OqlInExpression extends OqlQueryExpression
         OqlQueryParameter $right,
         $logic
     ) {
-        $this->
-        addParameter($left)->
-        addParameter($right);
+        $this
+            ->addParameter($left)
+            ->addParameter($right);
 
         $this->logic = $logic;
     }

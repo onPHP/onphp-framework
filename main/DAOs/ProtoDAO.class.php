@@ -25,9 +25,9 @@ abstract class ProtoDAO extends GenericDAO
     }
 
     public function fetchCollections(
-        array $collections, array $list
-    )
-    {
+        array $collections,
+        array $list
+    ) {
         Assert::isNotEmptyArray($list);
 
         $ids = ArrayUtils::getIdsArray($list);
@@ -74,7 +74,7 @@ abstract class ProtoDAO extends GenericDAO
             $table = $dao->getJoinName($property->getColumnName());
 
             $id = $this->getIdName();
-            $collection = array();
+            $collection = [];
 
             if ($lazy) {
                 if ($property->getRelationId() == MetaRelation::MANY_TO_MANY) {
@@ -85,22 +85,25 @@ abstract class ProtoDAO extends GenericDAO
 
                 $alias = 'cid'; // childId, collectionId, whatever
 
-                $field = DBField::create(
+                $field = new DBField(
                     $childId,
                     $self->$getter()->getHelperTable()
                 );
 
                 $query->get($field, $alias);
 
-                if (!$property->isRequired())
+                if (!$property->isRequired()) {
                     $query->andWhere(Expression::notNull($field));
+                }
 
                 try {
                     $rows = $dao->getCustomList($query);
 
-                    foreach ($rows as $row)
-                        if (!empty($row[$alias]))
+                    foreach ($rows as $row) {
+                        if (!empty($row[$alias])) {
                             $collection[$row[$id]][] = $row[$alias];
+                        }
+                    }
 
                 } catch (ObjectNotFoundException $e) {/*_*/
                 }
@@ -150,10 +153,11 @@ abstract class ProtoDAO extends GenericDAO
             );
 
             foreach ($list as $object) {
-                if (!empty($collection[$object->getId()]))
+                if (!empty($collection[$object->getId()])) {
                     $object->$fillMethod($collection[$object->getId()], $lazy);
-                else
-                    $object->$getMethod()->mergeList(array());
+                } else {
+                    $object->$getMethod()->mergeList([]);
+                }
             }
         }
 
@@ -167,8 +171,7 @@ abstract class ProtoDAO extends GenericDAO
         $table,
         $parentRequired = true,
         $prefix = null
-    )
-    {
+    ) {
         $path = explode('.', $probablyPath);
 
         try {
@@ -211,7 +214,7 @@ abstract class ProtoDAO extends GenericDAO
             }
         } else {
             $propertyDao = call_user_func(
-                array($property->getClassName(), 'dao')
+                [$property->getClassName(), 'dao']
             );
 
             Assert::isNotNull(
@@ -234,7 +237,7 @@ abstract class ProtoDAO extends GenericDAO
             $selfName = $this->getObjectName();
             $self = new $selfName;
             $getter = $property->getGetter();
-            $dao = call_user_func(array($remoteName, 'dao'));
+            $dao = call_user_func([$remoteName, 'dao']);
 
             if ($property->getRelationId() == MetaRelation::MANY_TO_MANY) {
                 $helperTable = $self->$getter()->getHelperTable();
@@ -254,10 +257,11 @@ abstract class ProtoDAO extends GenericDAO
                             )
                         );
 
-                    if ($property->isRequired())
+                    if ($property->isRequired()) {
                         $query->join($helperTable, $logic, $helperAlias);
-                    else
+                    } else {
                         $query->leftJoin($helperTable, $logic, $helperAlias);
+                    }
                 }
 
                 $logic =
@@ -288,10 +292,11 @@ abstract class ProtoDAO extends GenericDAO
             }
 
             if (!$query->hasJoinedTable($alias)) {
-                if ($property->isRequired() && $parentRequired)
+                if ($property->isRequired() && $parentRequired) {
                     $query->join($dao->getTable(), $logic, $alias);
-                else
+                } else {
                     $query->leftJoin($dao->getTable(), $logic, $alias);
+                }
             }
         } else { // OneToOne, lazy OneToOne
 
@@ -300,12 +305,13 @@ abstract class ProtoDAO extends GenericDAO
                 isset($path[1])
                 && (count($path) == 1)
                 && ($path[1] == $propertyDao->getIdName())
-            )
+            ) {
                 return
                     new DBField(
                         $property->getColumnName(),
                         $table
                     );
+            }
 
             if (!$query->hasJoinedTable($alias)) {
                 $logic =
@@ -321,10 +327,11 @@ abstract class ProtoDAO extends GenericDAO
                         )
                     );
 
-                if ($property->isRequired() && $parentRequired)
+                if ($property->isRequired() && $parentRequired) {
                     $query->join($propertyDao->getTable(), $logic, $alias);
-                else
+                } else {
                     $query->leftJoin($propertyDao->getTable(), $logic, $alias);
+                }
             }
         }
 
@@ -347,17 +354,17 @@ abstract class ProtoDAO extends GenericDAO
         $table = null,
         $parentRequired = true,
         $prefix = null
-    )
-    {
-        if ($table === null)
+    ) {
+        if ($table === null) {
             $table = $this->getTable();
+        }
 
         if (is_string($atom)) {
             if (strpos($atom, '.') !== false) {
                 return
                     $this->processPath(
                         call_user_func(
-                            array($this->getObjectName(), 'proto')
+                            [$this->getObjectName(), 'proto']
                         ),
                         $atom,
                         $query,
@@ -378,9 +385,9 @@ abstract class ProtoDAO extends GenericDAO
             ) {
                 return new DBField($atom);
             }
-        } elseif ($atom instanceof MappableObject)
+        } elseif ($atom instanceof MappableObject) {
             return $atom->toMapped($this, $query);
-        elseif (
+        } elseif (
             ($atom instanceof DBValue)
             || ($atom instanceof DBField)
             || ($atom instanceof DialectString)

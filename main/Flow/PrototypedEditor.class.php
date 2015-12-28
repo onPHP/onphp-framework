@@ -28,12 +28,12 @@ abstract class PrototypedEditor extends MethodMappedController
                 ->addSource('id', RequestType::get())
                 ->setDefaultType(RequestType::post());
 
-        $this->
-        setMethodMapping('drop', 'doDrop')->
-        setMethodMapping('take', 'doTake')->
-        setMethodMapping('save', 'doSave')->
-        setMethodMapping('edit', 'doEdit')->
-        setMethodMapping('add', 'doAdd');
+        $this
+            ->setMethodMapping('drop', 'doDrop')
+            ->setMethodMapping('take', 'doTake')
+            ->setMethodMapping('save', 'doSave')
+            ->setMethodMapping('edit', 'doEdit')
+            ->setMethodMapping('add', 'doAdd');
 
         $this->setDefaultAction('edit');
     }

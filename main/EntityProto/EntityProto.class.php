@@ -72,8 +72,8 @@ class EntityProto extends Singleton
             Assert::isInstance($previousObject, $this->className());
 
         if ($this->baseProto())
-            $this->baseProto()->
-            validate($object, $form, $previousObject);
+            $this->baseProto()
+                ->validate($object, $form, $previousObject);
 
         return $this->validateSelf($object, $form, $previousObject);
     }

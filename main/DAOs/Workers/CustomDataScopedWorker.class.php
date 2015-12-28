@@ -25,23 +25,24 @@ class CustomDataScopedWorker extends CacheDaoWorker
 
         $this->className = $dao->getObjectName();
 
-        if (($cache = Cache::me()) instanceof WatermarkedPeer)
+        if (($cache = Cache::me()) instanceof WatermarkedPeer) {
             $this->watermark =
                 $cache->mark($this->className)->getActualWatermark();
+        }
     }
 
     public function cacheData(
         $key,
         $data,
         $expires = Cache::EXPIRES_FOREVER
-    )
-    {
-        Cache::me()->mark($this->className)->
-        add(
-            $this->makeDataKey($key, self::SUFFIX_QUERY),
-            $data,
-            $expires
-        );
+    ) {
+        Cache::me()
+            ->mark($this->className)
+            ->add(
+                $this->makeDataKey($key, self::SUFFIX_QUERY),
+                $data,
+                $expires
+            );
 
         return $data;
     }
@@ -59,7 +60,8 @@ class CustomDataScopedWorker extends CacheDaoWorker
     public function getCachedData($key)
     {
         return
-            Cache::me()->mark($this->className)->
-            get($this->makeDataKey($key, self::SUFFIX_QUERY));
+            Cache::me()
+                ->mark($this->className)
+                ->get($this->makeDataKey($key, self::SUFFIX_QUERY));
     }
 }

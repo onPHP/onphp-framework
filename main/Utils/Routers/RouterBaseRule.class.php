@@ -20,9 +20,9 @@ abstract class RouterBaseRule implements RouterRule
     {
         $chain = new RouterChainRule();
 
-        $chain->
-        chain($this)->
-        chain($route, $separator);
+        $chain
+            ->chain($this)
+            ->chain($route, $separator);
 
         return $chain;
     }
@@ -58,10 +58,9 @@ abstract class RouterBaseRule implements RouterRule
     {
         if ($request->hasServerVar('REQUEST_URI')) {
             $path =
-                $this->
-                getPath(
-                    (new HttpUrl())->
-                    parse($request->getServerVar('REQUEST_URI'))
+                $this->getPath(
+                    (new HttpUrl())
+                        ->parse($request->getServerVar('REQUEST_URI'))
                 );
         } else {
             throw new RouterException('Cannot resolve path');
@@ -84,9 +83,9 @@ abstract class RouterBaseRule implements RouterRule
         }
 
         if (!$base->getScheme()) {
-            $reducedUrl->
-            setScheme(null)->
-            setAuthority(null);
+            $reducedUrl
+                ->setScheme(null)
+                ->setAuthority(null);
         }
 
         $reducedUrl->setQuery(null);

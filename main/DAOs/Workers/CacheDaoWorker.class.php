@@ -37,14 +37,13 @@ class CacheDaoWorker extends TransparentDaoWorker
         /* Identifiable */
         $object,
         $expires = Cache::EXPIRES_FOREVER
-    )
-    {
-        Cache::me()->mark($this->className)->
-        add(
-            $this->makeQueryKey($query, self::SUFFIX_QUERY),
-            $object,
-            $expires
-        );
+    ) {
+        Cache::me()->mark($this->className)
+            ->add(
+                $this->makeQueryKey($query, self::SUFFIX_QUERY),
+                $object,
+                $expires
+            );
 
         return $object;
     }
@@ -70,13 +69,13 @@ class CacheDaoWorker extends TransparentDaoWorker
         ) {
             $result = mt_rand(1, self::MAX_RANDOM_ID);
 
-            Cache::me()->
-            mark($this->className)->
-            set(
-                $this->className,
-                $result,
-                Cache::EXPIRES_FOREVER
-            );
+            Cache::me()
+                ->mark($this->className)
+                ->set(
+                    $this->className,
+                    $result,
+                    Cache::EXPIRES_FOREVER
+                );
         }
 
         return '@' . $result;
@@ -86,15 +85,15 @@ class CacheDaoWorker extends TransparentDaoWorker
         SelectQuery $query,
         /* array || Cache::NOT_FOUND */
         $array
-    )
-    {
+    ) {
         if ($array !== Cache::NOT_FOUND) {
             Assert::isArray($array);
             Assert::isTrue(current($array) instanceof Identifiable);
         }
 
-        Cache::me()->mark($this->className)->
-        add(
+        Cache::me()
+            ->mark($this->className)
+            ->add(
             $this->makeQueryKey($query, self::SUFFIX_LIST),
             $array,
             Cache::EXPIRES_FOREVER

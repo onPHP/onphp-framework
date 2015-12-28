@@ -162,41 +162,41 @@ class GenericUri implements Stringable
             $class = get_class($reference);
             $result = new $class;
 
-            $result->
-            setScheme($reference->getScheme())->
-            setUserInfo($reference->getUserInfo())->
-            setHost($reference->getHost())->
-            setPort($reference->getPort())->
-            setPath(self::removeDotSegments($reference->getPath()))->
-            setQuery($reference->getQuery());
+            $result
+                ->setScheme($reference->getScheme())
+                ->setUserInfo($reference->getUserInfo())
+                ->setHost($reference->getHost())
+                ->setPort($reference->getPort())
+                ->setPath(self::removeDotSegments($reference->getPath()))
+                ->setQuery($reference->getQuery());
         } else {
             $result = new $this;
 
             $result->setScheme($this->getScheme());
 
             if ($reference->getAuthority() !== null) {
-                $result->
-                setUserInfo($reference->getUserInfo())->
-                setHost($reference->getHost())->
-                setPort($reference->getPort())->
-                setPath(self::removeDotSegments($reference->getPath()))->
-                setQuery($reference->getQuery());
+                $result
+                    ->setUserInfo($reference->getUserInfo())
+                    ->setHost($reference->getHost())
+                    ->setPort($reference->getPort())
+                    ->setPath(self::removeDotSegments($reference->getPath()))
+                    ->setQuery($reference->getQuery());
             } else {
-                $result->
-                setUserInfo($this->getUserInfo())->
-                setHost($this->getHost())->
-                setPort($this->getPort());
+                $result
+                    ->setUserInfo($this->getUserInfo())
+                    ->setHost($this->getHost())
+                    ->setPort($this->getPort());
 
                 $path = $reference->getPath();
 
                 if (!$path) {
-                    $result->
-                    setPath($this->getPath())->
-                    setQuery(
-                        $reference->getQuery() !== null
-                            ? $reference->getQuery()
-                            : $this->getQuery()
-                    );
+                    $result
+                        ->setPath($this->getPath())
+                        ->setQuery(
+                            $reference->getQuery() !== null
+                                ? $reference->getQuery()
+                                : $this->getQuery()
+                        );
                 } else {
                     $result->setQuery($reference->getQuery());
 
@@ -730,37 +730,37 @@ class GenericUri implements Stringable
         }
 
         // 2. percent-encoded
-        $this->
-        setHost(
-            $this->normalizePercentEncoded(
-                $this->getHost(), $this->hostNameCharPattern(false)
-            )
-        )->
-        setUserInfo(
-            $this->normalizePercentEncoded(
-                $this->getUserInfo(), $this->userInfoCharPattern(false)
-            )
-        )->
-        setPath(
-            self::removeDotSegments(
+        $this
+            ->setHost(
                 $this->normalizePercentEncoded(
-                    $this->getPath(),
-                    '\/' . $this->segmentCharPattern(false)
+                    $this->getHost(), $this->hostNameCharPattern(false)
                 )
             )
-        )->
-        setQuery(
-            $this->normalizePercentEncoded(
-                $this->getQuery(),
-                $this->fragmentOrQueryCharPattern(false)
+            ->setUserInfo(
+                $this->normalizePercentEncoded(
+                    $this->getUserInfo(), $this->userInfoCharPattern(false)
+                )
             )
-        )->
-        setFragment(
-            $this->normalizePercentEncoded(
-                $this->getFragment(),
-                $this->fragmentOrQueryCharPattern(false)
+            ->setPath(
+                self::removeDotSegments(
+                    $this->normalizePercentEncoded(
+                        $this->getPath(),
+                        '\/' . $this->segmentCharPattern(false)
+                    )
+                )
             )
-        );
+            ->setQuery(
+                $this->normalizePercentEncoded(
+                    $this->getQuery(),
+                    $this->fragmentOrQueryCharPattern(false)
+                )
+            )
+            ->setFragment(
+                $this->normalizePercentEncoded(
+                    $this->getFragment(),
+                    $this->fragmentOrQueryCharPattern(false)
+                )
+            );
 
         // 3. and case again
         if ($this->getHost() !== null) {

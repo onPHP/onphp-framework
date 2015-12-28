@@ -21,8 +21,8 @@ class RouterUrlHelper extends StaticFactory
         $encode = true
     ) {
         return
-            RouterRewrite::me()->
-            assembly($urlOptions, $name, $reset, $encode);
+            RouterRewrite::me()
+                ->assembly($urlOptions, $name, $reset, $encode);
     }
 }
 

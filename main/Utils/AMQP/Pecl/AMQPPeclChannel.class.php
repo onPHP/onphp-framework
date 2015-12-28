@@ -200,9 +200,7 @@ class AMQPPeclChannel extends AMQPBaseChannel
         Assert::isInstance($callback, 'AMQPPeclQueueConsumer');
 
         try {
-            $this->consumer = $callback->
-            setQueueName($queue)->
-            setAutoAcknowledge($autoAck === true);
+            $this->consumer = $callback->setQueueName($queue)->setAutoAcknowledge($autoAck === true);
 
             $obj = $this->lookupQueue($queue);
 

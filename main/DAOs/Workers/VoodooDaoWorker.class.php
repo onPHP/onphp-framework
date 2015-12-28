@@ -41,10 +41,11 @@ class VoodooDaoWorker extends TransparentDaoWorker
     {
         parent::__construct($dao);
 
-        if (($cache = Cache::me()) instanceof WatermarkedPeer)
+        if (($cache = Cache::me()) instanceof WatermarkedPeer) {
             $watermark = $cache->mark($this->className)->getActualWatermark();
-        else
+        } else {
             $watermark = null;
+        }
 
         $this->classKey = $this->keyToInt($watermark . $this->className);
 
@@ -73,8 +74,9 @@ class VoodooDaoWorker extends TransparentDaoWorker
             $handlerName = self::$defaultHandler;
         }
 
-        if (!self::$defaultHandler)
+        if (!self::$defaultHandler) {
             self::$defaultHandler = $handlerName;
+        }
 
         return new self::$defaultHandler($classKey);
     }
@@ -105,13 +107,14 @@ class VoodooDaoWorker extends TransparentDaoWorker
         /* Identifiable */
         $object,
         $expires = Cache::EXPIRES_FOREVER
-    )
-    {
+    ) {
         $key = $this->makeQueryKey($query, self::SUFFIX_QUERY);
 
-        if ($this->handler->touch($this->keyToInt($key)))
-            Cache::me()->mark($this->className)->
-            add($key, $object, $expires);
+        if ($this->handler->touch($this->keyToInt($key))) {
+            Cache::me()
+                ->mark($this->className)
+                ->add($key, $object, $expires);
+        }
 
         return $object;
     }
@@ -124,8 +127,7 @@ class VoodooDaoWorker extends TransparentDaoWorker
         SelectQuery $query,
         /* array || Cache::NOT_FOUND */
         $array
-    )
-    {
+    ) {
         if ($array !== Cache::NOT_FOUND) {
             Assert::isArray($array);
             Assert::isTrue(current($array) instanceof Identifiable);
@@ -136,8 +138,8 @@ class VoodooDaoWorker extends TransparentDaoWorker
         $key = $this->makeQueryKey($query, self::SUFFIX_LIST);
 
         if ($this->handler->touch($this->keyToInt($key))) {
-            $cache->mark($this->className)->
-            add($key, $array, Cache::EXPIRES_FOREVER);
+            $cache->mark($this->className)
+                ->add($key, $array, Cache::EXPIRES_FOREVER);
         }
 
         return $array;
@@ -145,9 +147,9 @@ class VoodooDaoWorker extends TransparentDaoWorker
 
     protected function gentlyGetByKey($key)
     {
-        if ($this->handler->ping($this->keyToInt($key)))
+        if ($this->handler->ping($this->keyToInt($key))) {
             return Cache::me()->mark($this->className)->get($key);
-        else {
+        } else {
             Cache::me()->mark($this->className)->delete($key);
             return null;
         }

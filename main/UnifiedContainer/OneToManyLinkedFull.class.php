@@ -31,21 +31,24 @@ class OneToManyLinkedFull extends OneToManyLinkedWorker
         $dao = $uc->getDao();
 
         if ($delete) {
-            DBPool::getByDao($dao)->queryNull(
-                OSQL::delete()->from($dao->getTable())->
-                where(
-                    Expression::eq(
-                        new DBField($uc->getParentIdField()),
-                        $uc->getParentObject()->getId()
-                    )
-                )->
-                andWhere(
-                    Expression::in(
-                        $uc->getChildIdField(),
-                        ArrayUtils::getIdsArray($delete)
-                    )
-                )
-            );
+            DBPool::getByDao($dao)
+                ->queryNull(
+                    OSQL::delete()
+                        ->from($dao->getTable())
+                        ->where(
+                            Expression::eq(
+                                new DBField($uc->getParentIdField()),
+                                $uc->getParentObject()->getId()
+                            )
+                        )
+                        ->
+                        andWhere(
+                            Expression::in(
+                                $uc->getChildIdField(),
+                                ArrayUtils::getIdsArray($delete)
+                            )
+                        )
+                );
 
             $dao->uncacheByIds(ArrayUtils::getIdsArray($delete));
         }

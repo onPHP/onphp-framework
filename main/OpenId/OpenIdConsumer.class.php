@@ -137,13 +137,13 @@ class OpenIdConsumer
         ) {
             $secret =
                 sha1(
-                    $keyPair->
-                    makeSharedKey(
-                        $this->numberFactory->makeFromBinary(
-                            base64_decode($result['dh_server_public'])
+                    $keyPair
+                        ->makeSharedKey(
+                            $this->numberFactory->makeFromBinary(
+                                base64_decode($result['dh_server_public'])
+                            )
                         )
-                    )->
-                    toBinary(),
+                        ->toBinary(),
                     true
                 )
                 ^ base64_decode($result['enc_mac_key']);
@@ -203,8 +203,7 @@ class OpenIdConsumer
             $association
         );
 
-        $mav->getModel()->
-        set('openid.mode', 'checkid_immediate');
+        $mav->getModel()->set('openid.mode', 'checkid_immediate');
 
         return $mav;
     }
@@ -260,15 +259,15 @@ class OpenIdConsumer
                 && $trustRoot->isValid()
             );
 
-            $model->
-            set(
-                'openid.trust_root',
-                $trustRoot->toString()
-            )->
-            set(
-                'openid.realm',
-                $trustRoot->toString()
-            );
+            $model
+                ->set(
+                    'openid.trust_root',
+                    $trustRoot->toString()
+                )
+                ->set(
+                    'openid.realm',
+                    $trustRoot->toString()
+                );
         }
 
         return (new ModelAndView())->setModel($model)->setView($view);
@@ -453,20 +452,20 @@ class OpenIdConsumer
             $request->setPostVar($key, $parameters[$key]);
         }
 
-        $request->
-        setPostVar('openid.mode', 'check_authentication')->
-        setPostVar(
-            'openid.assoc_handle',
-            $parameters['openid.assoc_handle']
-        )->
-        setPostVar(
-            'openid.sig',
-            $parameters['openid.sig']
-        )->
-        setPostVar(
-            'openid.signed',
-            $parameters['openid.signed']
-        );
+        $request
+            ->setPostVar('openid.mode', 'check_authentication')
+            ->setPostVar(
+                'openid.assoc_handle',
+                $parameters['openid.assoc_handle']
+            )
+            ->setPostVar(
+                'openid.sig',
+                $parameters['openid.sig']
+            )
+            ->setPostVar(
+                'openid.signed',
+                $parameters['openid.signed']
+            );
 
         $response = $this->httpClient->send($request);
         if ($response->getStatus()->getId() != HttpStatus::CODE_200) {

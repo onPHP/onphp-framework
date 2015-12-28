@@ -92,8 +92,9 @@ abstract class PrototypedBuilder
 
                 $proto = $objectProto;
 
-                return $this->cloneBuilder($proto)->
-                make($object);
+                return $this
+                    ->cloneBuilder($proto)
+                    ->make($object);
             }
         }
 
@@ -149,8 +150,9 @@ abstract class PrototypedBuilder
     public function upperMake($object, &$result)
     {
         if ($this->proto->baseProto()) {
-            $this->cloneBuilder($this->proto->baseProto())->
-            upperMake($object, $result);
+            $this
+                ->cloneBuilder($this->proto->baseProto())
+                ->upperMake($object, $result);
         }
 
         return $this->fillOwn($object, $result);
@@ -172,8 +174,7 @@ abstract class PrototypedBuilder
 
                 $setter->set(
                     $id,
-                    $this->cloneInnerBuilder($id)->
-                    makeList($value)
+                    $this->cloneInnerBuilder($id)->makeList($value)
                 );
 
             } elseif ($primitive instanceof PrimitiveForm) {
@@ -183,15 +184,15 @@ abstract class PrototypedBuilder
                     && ($previousValue = $setter->getGetter()->get($id))
                 ) {
 
-                    $this->cloneInnerBuilder($id)->
-                    upperFill($value, $previousValue);
+                    $this
+                        ->cloneInnerBuilder($id)
+                        ->upperFill($value, $previousValue);
 
                 } elseif ($value !== null || $primitive->isRequired()) {
 
                     $setter->set(
                         $id,
-                        $this->cloneInnerBuilder($id)->
-                        make($value)
+                        $this->cloneInnerBuilder($id)->make($value)
                     );
                 }
 
@@ -269,8 +270,9 @@ abstract class PrototypedBuilder
     public function upperFill($object, &$result)
     {
         if ($this->proto->baseProto()) {
-            $this->cloneBuilder($this->proto->baseProto())->
-            upperFill($object, $result);
+            $this
+                ->cloneBuilder($this->proto->baseProto())
+                ->upperFill($object, $result);
         }
 
         return $this->fillOwn($object, $result);

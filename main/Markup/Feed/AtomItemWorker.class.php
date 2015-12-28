@@ -64,7 +64,7 @@ class AtomItemWorker extends Singleton implements FeedItemWorker
 
     private function makeFeedItemContent($content)
     {
-        $feedItemContent = FeedItemContent::create();
+        $feedItemContent =  new FeedItemContent();
 
         if (isset($content->attributes()->type)) {
             switch ((string) $content->attributes()->type) {

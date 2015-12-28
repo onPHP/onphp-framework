@@ -62,8 +62,7 @@ abstract class BaseEditor implements Controller
 
             $mav->setView(new RedirectToView(get_class($this)));
 
-            $mav->getModel()->
-            drop('id');
+            $mav->getModel()->drop('id');
 
         } else {
             $mav->setView(get_class($this));
