@@ -12,7 +12,7 @@
 /**
  * @ingroup OpenId
  **/
-final class OpenIdCredentials
+class OpenIdCredentials
 {
     const HEADER_CONT_TYPE = 'application/xrds+xml';
     const HEADER_XRDS_LOCATION = 'x-xrds-location';

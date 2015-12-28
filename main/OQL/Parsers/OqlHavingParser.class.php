@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-final class OqlHavingParser extends OqlParser
+class OqlHavingParser extends OqlParser
 {
     const CLASS_NAME = 'HavingProjection';
 

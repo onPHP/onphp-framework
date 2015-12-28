@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class DaoIterator implements Iterator
+class DaoIterator implements Iterator
 {
     private $dao = null;
     private $projection = null;

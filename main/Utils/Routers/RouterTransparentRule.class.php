@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class RouterTransparentRule extends RouterBaseRule
+class RouterTransparentRule extends RouterBaseRule
 {
     protected $urlVariable = ':';
     protected $urlDelimiter = '/';

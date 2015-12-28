@@ -12,7 +12,7 @@
 /**
  * @see http://www.php.net/manual/en/amqp.constants.php
  **/
-final class AMQPPeclOutgoingMessageBitmask implements AMQPBitmaskResolver
+class AMQPPeclOutgoingMessageBitmask implements AMQPBitmaskResolver
 {
     public function getBitmask($config)
     {

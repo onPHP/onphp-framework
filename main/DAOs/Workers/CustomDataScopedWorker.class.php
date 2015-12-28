@@ -17,7 +17,7 @@
  *
  * @ingroup DAOs
  **/
-final class CustomDataScopedWorker extends CacheDaoWorker
+class CustomDataScopedWorker extends CacheDaoWorker
 {
     public function __construct($dao)
     {

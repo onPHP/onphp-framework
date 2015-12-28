@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class UrlParamsUtils extends StaticFactory
+class UrlParamsUtils extends StaticFactory
 {
     /**
      * @deprecated to support old convert method in CurlHttpClient

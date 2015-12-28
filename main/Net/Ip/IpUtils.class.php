@@ -12,7 +12,7 @@
 /**
  * @ingroup Ip
  **/
-final class IpUtils extends StaticFactory
+class IpUtils extends StaticFactory
 {
     public static function makeRanges(array $ips)
     {

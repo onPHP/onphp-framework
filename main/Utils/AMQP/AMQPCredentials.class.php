@@ -9,7 +9,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-final class AMQPCredentials
+class AMQPCredentials
 {
     const DEFAULT_HOST = 'localhost';
     const DEFAULT_PORT = '5672';

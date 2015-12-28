@@ -12,7 +12,7 @@
 /**
  * @ingroup Containers
  **/
-final class OneToManyLinkedLazy extends OneToManyLinkedWorker
+class OneToManyLinkedLazy extends OneToManyLinkedWorker
 {
     /**
      * @return SelectQuery

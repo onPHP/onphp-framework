@@ -12,7 +12,7 @@
 /**
  * @ingroup OQL
  **/
-final class OqlOrderByExpression extends OqlQueryExpression
+class OqlOrderByExpression extends OqlQueryExpression
 {
     const CLASS_NAME = 'OrderBy';
 

@@ -14,7 +14,7 @@
  *
  * @ingroup Utils
  **/
-final class FullTextUtils extends StaticFactory
+class FullTextUtils extends StaticFactory
 {
     public static function lookup(
         FullTextDAO $dao,

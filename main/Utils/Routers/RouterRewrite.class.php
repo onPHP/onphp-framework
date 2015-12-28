@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class RouterRewrite extends Singleton implements Router, Instantiatable
+class RouterRewrite extends Singleton implements Router, Instantiatable
 {
     protected $routes = [];
     protected $currentRoute = null;

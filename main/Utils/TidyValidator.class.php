@@ -14,7 +14,7 @@
  *
  * @ingroup Utils
  **/
-final class TidyValidator
+class TidyValidator
 {
     private $content = null;
     private $messages = null;

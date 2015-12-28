@@ -12,7 +12,7 @@
 /**
  * @ingroup Math
  **/
-final class GmpBigIntegerFactory extends BigNumberFactory
+class GmpBigIntegerFactory extends BigNumberFactory
 {
     /**
      * @return GmpBigIntegerFactory

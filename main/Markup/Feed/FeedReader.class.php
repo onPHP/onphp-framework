@@ -12,7 +12,7 @@
 /**
  * @ingroup Feed
  **/
-final class FeedReader
+class FeedReader
 {
     private $xml = null;
     private $formats = [];

@@ -12,7 +12,7 @@
 /**
  * @ingroup Feed
  **/
-final class YandexRssItemWorker extends Singleton implements FeedItemWorker
+class YandexRssItemWorker extends Singleton implements FeedItemWorker
 {
     /**
      * @return YandexRssItemWorker

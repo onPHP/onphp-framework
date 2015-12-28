@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class StringReader extends Reader
+class StringReader extends Reader
 {
     private $string = null;
     private $length = null;

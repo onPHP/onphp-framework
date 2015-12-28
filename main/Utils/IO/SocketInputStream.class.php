@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class SocketInputStream extends InputStream
+class SocketInputStream extends InputStream
 {
     /**
      * NOTE: if socket timeout is 1 second, we can block here

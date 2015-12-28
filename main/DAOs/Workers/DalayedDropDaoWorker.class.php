@@ -17,7 +17,7 @@
  *
  * @ingroup DAOs
  **/
-final class DalayedDropDaoWorker extends NullDaoWorker
+class DalayedDropDaoWorker extends NullDaoWorker
 {
     private $modifiedIds = array();
 

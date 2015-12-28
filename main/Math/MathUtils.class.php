@@ -12,7 +12,7 @@
 /**
  * @ingroup Math
  **/
-final class MathUtils extends StaticFactory
+class MathUtils extends StaticFactory
 {
     const DEFAULT_PRECISION = 0.00001;
 

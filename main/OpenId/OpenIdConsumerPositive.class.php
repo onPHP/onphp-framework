@@ -12,7 +12,7 @@
 /**
  * @ingroup OpenId
  **/
-final class OpenIdConsumerPositive implements OpenIdConsumerResult
+class OpenIdConsumerPositive implements OpenIdConsumerResult
 {
     private $identity = null;
 

@@ -14,7 +14,7 @@
  *
  * @ingroup Utils
  **/
-final class FileUtils extends StaticFactory
+class FileUtils extends StaticFactory
 {
     /**
      * Recursively walks through $dir and converts line

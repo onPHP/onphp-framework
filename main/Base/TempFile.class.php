@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class TempFile
+class TempFile
 {
     private $path = null;
 

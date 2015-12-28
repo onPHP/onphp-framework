@@ -16,7 +16,7 @@
  *
  * @see javax.mail.internet.InternetAddress
  **/
-final class MailAddress
+class MailAddress
 {
     const RFC_MAX_ENCODED_WORD_LENGTH = 75;
 

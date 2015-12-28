@@ -16,7 +16,7 @@
  *
  * @ingroup Http
  **/
-final class CookieCollection extends AbstractCollection
+class CookieCollection extends AbstractCollection
 {
     /**
      * @deprecated

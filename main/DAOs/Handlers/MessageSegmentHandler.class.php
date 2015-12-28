@@ -12,7 +12,7 @@
 /**
  * @ingroup DAOs
  **/
-final class MessageSegmentHandler implements SegmentHandler
+class MessageSegmentHandler implements SegmentHandler
 {
     private $id = null;
 

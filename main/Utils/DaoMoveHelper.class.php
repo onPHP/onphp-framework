@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class DaoMoveHelper extends StaticFactory
+class DaoMoveHelper extends StaticFactory
 {
     private static $nullValue = 0;
     private static $property = 'position';

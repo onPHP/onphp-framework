@@ -14,7 +14,7 @@
  *
  * @ingroup onSPL
  **/
-final class PlainList extends AbstractList
+class PlainList extends AbstractList
 {
     /**
      * @return PlainList

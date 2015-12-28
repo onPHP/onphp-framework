@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class TextFileQueueBrowser implements MessageQueueBrowser
+class TextFileQueueBrowser implements MessageQueueBrowser
 {
     private $queue = null;
 

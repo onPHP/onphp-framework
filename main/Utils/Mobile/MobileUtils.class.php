@@ -12,7 +12,7 @@
 /**
  * @ingroup Mobile
  **/
-final class MobileUtils extends StaticFactory
+class MobileUtils extends StaticFactory
 {
     public static function extractIp(array $headers)
     {

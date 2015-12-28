@@ -12,7 +12,7 @@
 /**
  * @ingroup Feed
  **/
-final class AtomItemWorker extends Singleton implements FeedItemWorker
+class AtomItemWorker extends Singleton implements FeedItemWorker
 {
     /**
      * @return AtomItemWorker

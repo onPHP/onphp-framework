@@ -13,7 +13,7 @@
  * @ingroup Html
  * @ingroup Module
  **/
-final class SgmlEndTag extends SgmlTag
+class SgmlEndTag extends SgmlTag
 {
     /**
      * @return SgmlEndTag

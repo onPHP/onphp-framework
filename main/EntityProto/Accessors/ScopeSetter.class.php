@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class ScopeSetter extends PrototypedSetter
+class ScopeSetter extends PrototypedSetter
 {
     private $getter = null;
 

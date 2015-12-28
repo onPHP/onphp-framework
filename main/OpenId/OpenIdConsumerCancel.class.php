@@ -12,7 +12,7 @@
 /**
  * @ingroup OpenId
  **/
-final class OpenIdConsumerCancel implements OpenIdConsumerResult
+class OpenIdConsumerCancel implements OpenIdConsumerResult
 {
     public function isOk()
     {

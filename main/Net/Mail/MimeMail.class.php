@@ -14,7 +14,7 @@
 /**
  * @ingroup Mail
  **/
-final class MimeMail implements MailBuilder
+class MimeMail implements MailBuilder
 {
     private $parts = [];
 

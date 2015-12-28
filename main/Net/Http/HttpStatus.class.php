@@ -14,7 +14,7 @@
  *
  * @ingroup Http
  **/
-final class HttpStatus extends Enumeration
+class HttpStatus extends Enumeration
 {
     const CODE_100 = 100;
     const CODE_101 = 101;

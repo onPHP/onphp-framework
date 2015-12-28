@@ -12,7 +12,7 @@
 /**
  * @ingroup Math
  **/
-final class GmpBigInteger implements BigInteger
+class GmpBigInteger implements BigInteger
 {
 	private $resource = null;
 

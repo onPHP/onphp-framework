@@ -13,7 +13,7 @@
  * Simple wrapper to pinba php extention
  * @see http://pinba.org/
  */
-final class PinbaClient extends Singleton
+class PinbaClient extends Singleton
 {
     private static $enabled = null;
     private $timers = [];

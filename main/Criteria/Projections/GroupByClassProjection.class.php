@@ -12,7 +12,7 @@
 /**
  * @ingroup Projections
  **/
-final class GroupByClassProjection extends ClassProjection
+class GroupByClassProjection extends ClassProjection
 {
     /**
      * @return GroupByClassProjection

@@ -12,7 +12,7 @@
 /**
  * @ingroup DAOs
  **/
-final class SharedMemorySegmentHandler implements SegmentHandler
+class SharedMemorySegmentHandler implements SegmentHandler
 {
     const SEGMENT_SIZE = 2097152; // 2 ^ 21
 

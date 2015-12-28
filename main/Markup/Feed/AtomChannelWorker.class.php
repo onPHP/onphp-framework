@@ -12,7 +12,7 @@
 /**
  * @ingroup Feed
  **/
-final class AtomChannelWorker extends Singleton implements FeedChannelWorker
+class AtomChannelWorker extends Singleton implements FeedChannelWorker
 {
     /**
      *

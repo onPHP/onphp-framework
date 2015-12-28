@@ -16,7 +16,7 @@
  * setSendmailAdditionalArgs('-f from.addr@example.com').
  * See 'man sendmail' for details.
  **/
-final class Mail
+class Mail
 {
     private $to = null;
     private $cc = null;

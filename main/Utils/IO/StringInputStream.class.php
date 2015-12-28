@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class StringInputStream extends InputStream
+class StringInputStream extends InputStream
 {
     private $string = null;
     private $length = null;

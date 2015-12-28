@@ -12,7 +12,7 @@
 /**
  * @ingroup OQL
  **/
-final class OqlInExpression extends OqlQueryExpression
+class OqlInExpression extends OqlQueryExpression
 {
     private $logic = null;
 

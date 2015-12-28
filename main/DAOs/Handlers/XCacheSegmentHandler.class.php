@@ -14,7 +14,7 @@
  *
  * @ingroup DAOs
  **/
-final class XCacheSegmentHandler extends OptimizerSegmentHandler
+class XCacheSegmentHandler extends OptimizerSegmentHandler
 {
     public function __construct($segmentId)
     {

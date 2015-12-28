@@ -14,7 +14,7 @@
  *
  * @ingroup Net
  **/
-final class Urn extends GenericUri
+class Urn extends GenericUri
 {
     protected static $knownSubSchemes = [
         'urn' => 'Urn',

@@ -16,7 +16,7 @@
  *
  * @ingroup Utils
  **/
-final class InfoZipArchive extends FileArchive
+class InfoZipArchive extends FileArchive
 {
     private $zipArchive = null;
 

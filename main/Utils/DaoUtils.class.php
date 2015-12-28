@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class DaoUtils extends StaticFactory
+class DaoUtils extends StaticFactory
 {
     private static $nullValue = 0;
 

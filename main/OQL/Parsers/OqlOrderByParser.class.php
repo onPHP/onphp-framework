@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-final class OqlOrderByParser extends OqlParser
+class OqlOrderByParser extends OqlParser
 {
     /**
      * @deprecated

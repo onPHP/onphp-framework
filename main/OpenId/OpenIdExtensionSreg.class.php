@@ -15,7 +15,7 @@
  * @see http://openid.net/specs/openid-simple-registration-extension-1_0.html
  *
  **/
-final class OpenIdExtensionSreg implements OpenIdExtension
+class OpenIdExtensionSreg implements OpenIdExtension
 {
     const NAMESPACE_1_1 = "http://openid.net/extensions/sreg/1.1";
 

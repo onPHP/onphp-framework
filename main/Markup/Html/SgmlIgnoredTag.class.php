@@ -12,7 +12,7 @@
 /**
  * @ingroup Html
  **/
-final class SgmlIgnoredTag extends SgmlTag
+class SgmlIgnoredTag extends SgmlTag
 {
     private $cdata = null;
     private $endMark = null;

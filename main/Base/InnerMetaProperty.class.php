@@ -14,7 +14,7 @@
  *
  * @ingroup Helpers
  **/
-final class InnerMetaProperty extends LightMetaProperty
+class InnerMetaProperty extends LightMetaProperty
 {
     /**
      * @deprecated

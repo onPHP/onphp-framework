@@ -14,7 +14,7 @@
  *
  * @ingroup Utils
  **/
-final class DateUtils extends StaticFactory
+class DateUtils extends StaticFactory
 {
     public static function getAgeByBirthDate(
         Date $birthDate, /* Date*/

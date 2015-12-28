@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class RouterHostnameRule extends RouterBaseRule
+class RouterHostnameRule extends RouterBaseRule
 {
     const SCHEME_HTTP = 'http';
     const SCHEME_HTTPS = 'https';

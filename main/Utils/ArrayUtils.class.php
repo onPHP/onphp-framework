@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class ArrayUtils extends StaticFactory
+class ArrayUtils extends StaticFactory
 {
     /// orders $objects list by $ids order
     public static function regularizeList($ids, $objects)

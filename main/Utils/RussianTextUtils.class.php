@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class RussianTextUtils extends StaticFactory
+class RussianTextUtils extends StaticFactory
 {
     const MALE = 0;
     const FEMALE = 1;

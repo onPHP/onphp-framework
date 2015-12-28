@@ -12,7 +12,7 @@
 /**
  * @ingroup OQL
  **/
-final class OqlHavingClause extends OqlQueryExpressionClause
+class OqlHavingClause extends OqlQueryExpressionClause
 {
     /**
      * @deprecated

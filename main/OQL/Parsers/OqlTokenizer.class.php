@@ -12,7 +12,7 @@
 /**
  * @ingroup OQL
  **/
-final class OqlTokenizer
+class OqlTokenizer
 {
     private static $masks = [
         OqlToken::NEW_LINE =>

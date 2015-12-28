@@ -12,7 +12,7 @@
 /**
  * @see http://www.php.net/manual/en/book.amqp.php
  **/
-final class AMQPPecl extends AMQP
+class AMQPPecl extends AMQP
 {
     public function __construct(AMQPCredentials $credentials)
     {

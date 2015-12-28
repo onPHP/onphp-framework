@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class ContentTypeHeader
+class ContentTypeHeader
 {
     private $mediaType = null;
     private $parameters = [];

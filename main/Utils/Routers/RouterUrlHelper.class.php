@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class RouterUrlHelper extends StaticFactory
+class RouterUrlHelper extends StaticFactory
 {
     /**
      * @return string

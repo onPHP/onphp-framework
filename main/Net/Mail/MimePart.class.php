@@ -14,7 +14,7 @@
 /**
  * @ingroup Mail
  **/
-final class MimePart implements MailBuilder
+class MimePart implements MailBuilder
 {
     private $contentId = null;
     private $contentType = null;

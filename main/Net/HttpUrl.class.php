@@ -12,7 +12,7 @@
 /**
  * @ingroup Net
  **/
-final class HttpUrl extends Url
+class HttpUrl extends Url
 {
     protected static $knownSubSchemes = [];
 

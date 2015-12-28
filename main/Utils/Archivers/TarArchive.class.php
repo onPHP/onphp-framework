@@ -16,7 +16,7 @@
  *
  * @ingroup Utils
  **/
-final class TarArchive extends FileArchive
+class TarArchive extends FileArchive
 {
     public function __construct($cmdBinPath = '/bin/tar')
     {

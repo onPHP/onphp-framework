@@ -12,7 +12,7 @@
 /**
  * @ingroup Containers
  **/
-final class OneToManyLinkedFull extends OneToManyLinkedWorker
+class OneToManyLinkedFull extends OneToManyLinkedWorker
 {
     /**
      * @return SelectQuery

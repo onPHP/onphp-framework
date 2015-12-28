@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class AMQPPeclIncomingMessageAdapter extends StaticFactory
+class AMQPPeclIncomingMessageAdapter extends StaticFactory
 {
     /**
      * @param AMQPEnvelope $incoming

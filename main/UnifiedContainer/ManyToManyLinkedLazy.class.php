@@ -12,7 +12,7 @@
 /**
  * @ingroup Containers
  **/
-final class ManyToManyLinkedLazy extends ManyToManyLinkedWorker
+class ManyToManyLinkedLazy extends ManyToManyLinkedWorker
 {
     /**
      * @throws WrongArgumentException

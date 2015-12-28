@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class ClassUtils extends StaticFactory
+class ClassUtils extends StaticFactory
 {
     const CLASS_NAME_PATTERN = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*';
 

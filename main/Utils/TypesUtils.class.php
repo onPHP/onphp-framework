@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class TypesUtils extends StaticFactory
+class TypesUtils extends StaticFactory
 {
     const SIGNED_MAX = 2147483647;
     const UNSIGNED_MAX = 4294967295;

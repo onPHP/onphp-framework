@@ -12,7 +12,7 @@
 /**
  * @ingroup OQL
  **/
-final class OqlOrderByClause extends OqlQueryListedClause
+class OqlOrderByClause extends OqlQueryListedClause
 {
     /**
      * @deprecated

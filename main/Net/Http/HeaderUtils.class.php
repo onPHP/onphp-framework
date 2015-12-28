@@ -14,7 +14,7 @@
  *
  * @ingroup Http
  **/
-final class HeaderUtils extends StaticFactory
+class HeaderUtils extends StaticFactory
 {
     private static $headerSent = false;
     private static $redirectSent = false;

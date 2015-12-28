@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-final class OqlWhereParser extends OqlParser
+class OqlWhereParser extends OqlParser
 {
     /**
      * @deprecated

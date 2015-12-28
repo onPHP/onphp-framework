@@ -12,7 +12,7 @@
 /**
  * @ingroup Projections
  **/
-final class MinimalNumberProjection extends AggregateProjection
+class MinimalNumberProjection extends AggregateProjection
 {
     public function getFunctionName()
     {

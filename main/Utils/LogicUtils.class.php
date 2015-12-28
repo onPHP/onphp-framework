@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class LogicUtils extends StaticFactory
+class LogicUtils extends StaticFactory
 {
     /**
      * @throws WrongArgumentException

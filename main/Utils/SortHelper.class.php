@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class SortHelper extends Singleton implements Instantiatable
+class SortHelper extends Singleton implements Instantiatable
 {
     const ASC = 0x1;
     const DESC = 0x2;

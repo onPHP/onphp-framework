@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class FormSetter extends FormMutator
+class FormSetter extends FormMutator
 {
     public function set($name, $value)
     {

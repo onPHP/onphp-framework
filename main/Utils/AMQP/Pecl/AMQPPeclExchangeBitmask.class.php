@@ -12,7 +12,7 @@
 /**
  * @see http://www.php.net/manual/en/amqp.constants.php
  **/
-final class AMQPPeclExchangeBitmask extends AMQPPeclBaseBitmask
+class AMQPPeclExchangeBitmask extends AMQPPeclBaseBitmask
 {
     public function getBitmask($config)
     {

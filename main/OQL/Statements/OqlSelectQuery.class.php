@@ -12,7 +12,7 @@
 /**
  * @ingroup OQL
  **/
-final class OqlSelectQuery extends OqlQuery
+class OqlSelectQuery extends OqlQuery
 {
     private $distinct = false;
     private $properties = [];

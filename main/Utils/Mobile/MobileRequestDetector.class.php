@@ -14,7 +14,7 @@
  *
  * @ingroup Utils
  **/
-final class MobileRequestDetector
+class MobileRequestDetector
 {
     static private $headers = [
         'HTTP_X_WAP_PROFILE',

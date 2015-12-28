@@ -794,7 +794,7 @@ class GenericUri implements Stringable
 /**
  * @ingroup Net
  **/
-final class PercentEncodingNormalizator
+class PercentEncodingNormalizator
 {
     private $unreservedPartChars = null;
 

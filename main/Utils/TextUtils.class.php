@@ -16,7 +16,7 @@
 /**
  * @ingroup Utils
  **/
-final class TextUtils extends StaticFactory
+class TextUtils extends StaticFactory
 {
     public static function friendlyFileSize(
         $size,

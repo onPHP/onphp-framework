@@ -12,7 +12,7 @@
 /**
  * @ingroup Math
  **/
-final class FileRandomSource implements RandomSource
+class FileRandomSource implements RandomSource
 {
     private $handle = null;
 

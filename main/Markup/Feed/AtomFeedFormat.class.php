@@ -12,7 +12,7 @@
 /**
  * @ingroup Feed
  **/
-final class AtomFeedFormat extends FeedFormat
+class AtomFeedFormat extends FeedFormat
 {
     /**
      * @return AtomFeedFormat

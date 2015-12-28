@@ -12,7 +12,7 @@
 /**
  * @ingroup OQL
  **/
-final class OqlSelectPropertiesClause extends OqlProjectionClause
+class OqlSelectPropertiesClause extends OqlProjectionClause
 {
     private $distinct = false;
 

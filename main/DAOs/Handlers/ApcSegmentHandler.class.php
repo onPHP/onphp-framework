@@ -14,7 +14,7 @@
  *
  * @ingroup DAOs
  **/
-final class ApcSegmentHandler extends OptimizerSegmentHandler
+class ApcSegmentHandler extends OptimizerSegmentHandler
 {
     public function __construct($segmentId)
     {

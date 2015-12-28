@@ -12,7 +12,7 @@
 /**
  * @ingroup OpenId
  **/
-final class OpenIdConsumerSetupRequired implements OpenIdConsumerResult
+class OpenIdConsumerSetupRequired implements OpenIdConsumerResult
 {
     private $url = null;
 

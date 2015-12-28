@@ -14,7 +14,7 @@
  *
  * @ingroup Math
  **/
-final class MtRandomSource extends Singleton implements RandomSource
+class MtRandomSource extends Singleton implements RandomSource
 {
     /**
      * @return MtRandomSource

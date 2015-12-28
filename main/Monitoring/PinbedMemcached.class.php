@@ -12,7 +12,7 @@
 /**
  *
  **/
-final class PinbedMemcached extends SocketMemcached
+class PinbedMemcached extends SocketMemcached
 {
     public function __construct(
         $host = SocketMemcached::DEFAULT_HOST,

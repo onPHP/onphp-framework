@@ -12,7 +12,7 @@
 /**
  * @ingroup Feed
  **/
-final class FeedChannel
+class FeedChannel
 {
     private $title = null;
     private $link = null;

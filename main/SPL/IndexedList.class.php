@@ -14,7 +14,7 @@
  *
  * @ingroup onSPL
  **/
-final class IndexedList extends AbstractList
+class IndexedList extends AbstractList
 {
     /**
      * @return IndexedList

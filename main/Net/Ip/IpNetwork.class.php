@@ -13,7 +13,7 @@
  * @ingroup Ip
  * @deprecated use IpRange instead
  **/
-final class IpNetwork implements SingleRange
+class IpNetwork implements SingleRange
 {
     const MASK_MAX_SIZE = 31;
 

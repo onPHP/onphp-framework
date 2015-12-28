@@ -13,7 +13,7 @@
 /**
  * @ingroup Http
  **/
-final class Cookie extends CollectionItem
+class Cookie extends CollectionItem
 {
     private $name = null;
     private $value = null;

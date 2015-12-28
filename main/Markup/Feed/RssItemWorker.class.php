@@ -12,7 +12,7 @@
 /**
  * @ingroup Feed
  **/
-final class RssItemWorker extends Singleton implements FeedItemWorker
+class RssItemWorker extends Singleton implements FeedItemWorker
 {
     /**
      * @return RssItemWorker

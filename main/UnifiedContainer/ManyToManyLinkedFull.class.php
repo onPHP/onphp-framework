@@ -12,7 +12,7 @@
 /**
  * @ingroup Containers
  **/
-final class ManyToManyLinkedFull extends ManyToManyLinkedWorker
+class ManyToManyLinkedFull extends ManyToManyLinkedWorker
 {
     /**
      * @return ManyToManyLinkedFull

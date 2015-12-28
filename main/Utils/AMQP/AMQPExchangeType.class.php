@@ -9,7 +9,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-final class AMQPExchangeType extends Enumeration
+class AMQPExchangeType extends Enumeration
 {
     const DIRECT = 1;
     const FANOUT = 2;

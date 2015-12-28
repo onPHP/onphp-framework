@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class ArgumentParser extends Singleton
+class ArgumentParser extends Singleton
 {
     private $form = null;
     private $result = null;

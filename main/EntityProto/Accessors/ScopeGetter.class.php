@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class ScopeGetter extends PrototypedGetter
+class ScopeGetter extends PrototypedGetter
 {
     public function get($name)
     {

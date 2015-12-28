@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class DirectoryGetter extends PrototypedGetter
+class DirectoryGetter extends PrototypedGetter
 {
     public function get($name)
     {

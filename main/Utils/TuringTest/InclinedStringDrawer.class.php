@@ -12,7 +12,7 @@
 /**
  * @ingroup Turing
  **/
-final class InclinedStringDrawer extends TextDrawer
+class InclinedStringDrawer extends TextDrawer
 {
     const MAX_ANGLE = 70;
 

@@ -1,6 +1,6 @@
 <?php
 
-final class WebMoneyUtils extends StaticFactory
+class WebMoneyUtils extends StaticFactory
 {
     // order does matter!
     static private $firstFields = [

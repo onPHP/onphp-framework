@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class BufferedInputStream extends InputStream
+class BufferedInputStream extends InputStream
 {
     private $runAheadBytes = 0;
 

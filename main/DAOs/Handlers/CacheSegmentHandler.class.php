@@ -12,7 +12,7 @@
 /**
  * @ingroup DAOs
  **/
-final class CacheSegmentHandler implements SegmentHandler
+class CacheSegmentHandler implements SegmentHandler
 {
     private $index = null;
 

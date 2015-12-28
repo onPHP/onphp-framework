@@ -9,7 +9,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-final class AMQPIncomingMessage extends AMQPBaseMessage
+class AMQPIncomingMessage extends AMQPBaseMessage
 {
     const COUNT = 'count';
     const ROUTING_KEY = 'routing_key';

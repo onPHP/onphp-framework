@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class RouterStaticRule extends RouterBaseRule
+class RouterStaticRule extends RouterBaseRule
 {
     protected $route = null;
 

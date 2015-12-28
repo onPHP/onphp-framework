@@ -12,7 +12,7 @@
 /**
  * @ingroup Feed
  **/
-final class FeedItemContentType extends Enumeration
+class FeedItemContentType extends Enumeration
 {
 	const TEXT = 1;
 	const HTML = 2;

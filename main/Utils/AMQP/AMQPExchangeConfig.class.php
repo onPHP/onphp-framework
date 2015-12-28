@@ -12,7 +12,7 @@
 /**
  * @see http://www.rabbitmq.com/amqp-0-9-1-quickref.html#exchange.declare
  **/
-final class AMQPExchangeConfig extends AMQPBaseConfig
+class AMQPExchangeConfig extends AMQPBaseConfig
 {
     protected $internal = null;
 

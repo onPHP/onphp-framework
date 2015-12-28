@@ -12,7 +12,7 @@
 /**
  * @ingroup DAOs
  **/
-final class FileSystemSegmentHandler implements SegmentHandler
+class FileSystemSegmentHandler implements SegmentHandler
 {
     private $path = null;
 

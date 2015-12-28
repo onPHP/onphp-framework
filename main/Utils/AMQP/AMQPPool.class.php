@@ -12,7 +12,7 @@
 /**
  * @todo BasePool implementations
  **/
-final class AMQPPool extends Singleton implements Instantiatable
+class AMQPPool extends Singleton implements Instantiatable
 {
     private $default = null;
     private $pool = [];

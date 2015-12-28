@@ -12,7 +12,7 @@
 /**
  * @ingroup Feed
  **/
-final class YandexRssFeedItem extends FeedItem
+class YandexRssFeedItem extends FeedItem
 {
     private $fullText = null;
 

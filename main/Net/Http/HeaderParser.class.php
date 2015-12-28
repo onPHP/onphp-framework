@@ -12,7 +12,7 @@
 /**
  * @ingroup Http
  **/
-final class HeaderParser
+class HeaderParser
 {
     private $headers = [];
     private $currentHeader = null;

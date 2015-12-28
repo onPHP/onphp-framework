@@ -12,7 +12,7 @@
 /**
  * @see http://www.rabbitmq.com/amqp-0-9-1-quickref.html#queue.declare
  **/
-final class AMQPQueueConfig extends AMQPBaseConfig
+class AMQPQueueConfig extends AMQPBaseConfig
 {
     protected $exclusive = false;
 

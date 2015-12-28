@@ -12,7 +12,7 @@
 /**
  *
  **/
-final class PinbedPeclMemcached extends PeclMemcached
+class PinbedPeclMemcached extends PeclMemcached
 {
     /**
      * @return PinbedPeclMemcached

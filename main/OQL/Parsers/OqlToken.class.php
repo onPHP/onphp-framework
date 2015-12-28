@@ -12,7 +12,7 @@
 /**
  * @ingroup OQL
  **/
-final class OqlToken
+class OqlToken
 {
     const NEW_LINE = 1;
     const STRING = 2;

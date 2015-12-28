@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class ObjectSetter extends PrototypedSetter
+class ObjectSetter extends PrototypedSetter
 {
     private $getter = null;
 

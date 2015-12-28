@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class AMQPSelective implements AMQPInterface
+class AMQPSelective implements AMQPInterface
 {
     /**
      * @var string

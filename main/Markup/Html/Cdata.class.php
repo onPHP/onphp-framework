@@ -13,7 +13,7 @@
  * @ingroup Html
  * @ingroup Module
  **/
-final class Cdata extends SgmlToken
+class Cdata extends SgmlToken
 {
     private $data = null;
 

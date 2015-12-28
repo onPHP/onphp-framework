@@ -15,7 +15,7 @@
  * @see http://openid.net/specs/openid-attribute-exchange-1_0.html
  * @see http://code.google.com/intl/ru/apis/accounts/docs/OpenID.html
  **/
-final class OpenIdExtensionAttributeExchange implements OpenIdExtension
+class OpenIdExtensionAttributeExchange implements OpenIdExtension
 {
     const NAMESPACE_1_0 = 'http://openid.net/srv/ax/1.0';
     const PARAM_EMAIL = 'email';

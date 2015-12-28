@@ -12,7 +12,7 @@
 /**
  * @ingroup Projections
  **/
-final class ProjectionChain implements ObjectProjection
+class ProjectionChain implements ObjectProjection
 {
     private $list = array();
 

@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class DebugUtils extends StaticFactory
+class DebugUtils extends StaticFactory
 {
     private static $memoryAccumulator = 0;
     private static $currentMemory = null;

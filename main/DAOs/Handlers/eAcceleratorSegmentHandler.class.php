@@ -14,7 +14,7 @@
  *
  * @ingroup DAOs
  **/
-final class eAcceleratorSegmentHandler extends OptimizerSegmentHandler
+class eAcceleratorSegmentHandler extends OptimizerSegmentHandler
 {
     public function __construct($segmentId)
     {

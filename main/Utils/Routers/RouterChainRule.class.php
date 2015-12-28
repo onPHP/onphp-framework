@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class RouterChainRule extends RouterBaseRule
+class RouterChainRule extends RouterBaseRule
 {
     protected $routes = [];
     protected $separators = [];

@@ -9,7 +9,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-final class AMQPPeclChannel extends AMQPBaseChannel
+class AMQPPeclChannel extends AMQPBaseChannel
 {
     const NIL = 'nil';
     const AMQP_NONE = AMQP_NOPARAM;

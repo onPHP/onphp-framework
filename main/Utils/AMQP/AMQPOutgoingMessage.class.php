@@ -9,7 +9,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-final class AMQPOutgoingMessage extends AMQPBaseMessage
+class AMQPOutgoingMessage extends AMQPBaseMessage
 {
     protected $mandatory = false;
     protected $immediate = false;

@@ -12,7 +12,7 @@
 /**
  * @ingroup Feed
  **/
-final class RssChannelWorker extends Singleton implements FeedChannelWorker
+class RssChannelWorker extends Singleton implements FeedChannelWorker
 {
     /**
      * @return RssChannelWorker

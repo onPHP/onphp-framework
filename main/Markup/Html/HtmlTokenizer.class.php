@@ -12,7 +12,7 @@
 /**
  * @ingroup Html
  **/
-final class HtmlTokenizer
+class HtmlTokenizer
 {
     const INITIAL_STATE = 1;
     const START_TAG_STATE = 2;

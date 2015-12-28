@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class RouterException extends BaseException
+class RouterException extends BaseException
 {/*_*/
 }
 

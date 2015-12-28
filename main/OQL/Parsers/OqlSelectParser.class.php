@@ -29,7 +29,7 @@
  *
  * @ingroup OQL
  **/
-final class OqlSelectParser extends OqlParser
+class OqlSelectParser extends OqlParser
 {
     // states
     const PROPERTY_STATE = 1;

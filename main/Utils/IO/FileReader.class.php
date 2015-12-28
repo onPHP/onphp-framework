@@ -12,7 +12,7 @@
 /**
  * @ingroup Utils
  **/
-final class FileReader extends Reader
+class FileReader extends Reader
 {
     private $fd = null;
 

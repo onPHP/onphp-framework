@@ -12,7 +12,7 @@
 /**
  * @ingroup Mail
  **/
-final class MailEncoding extends Enumeration
+class MailEncoding extends Enumeration
 {
     const SEVEN_BITS = 0x01;
     const EIGHT_BITS = 0x02;

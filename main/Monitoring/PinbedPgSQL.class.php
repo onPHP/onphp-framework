@@ -12,7 +12,7 @@
 /**
  * @ingroup DB
  **/
-final class PinbedPgSQL extends PgSQL
+class PinbedPgSQL extends PgSQL
 {
     public function connect()
     {

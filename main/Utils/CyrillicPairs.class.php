@@ -15,7 +15,7 @@
  *
  * @ingroup Utils
  **/
-final class CyrillicPairs extends StaticFactory
+class CyrillicPairs extends StaticFactory
 {
     private static $table = [
         'ст' => 21815, 'ен' => 19276, 'на' => 16528, 'ов' => 15172,

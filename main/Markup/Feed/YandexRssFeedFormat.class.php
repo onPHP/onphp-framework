@@ -13,7 +13,7 @@
  * @ingroup Feed
  * @see http://partner.news.yandex.ru/tech.pdf
  **/
-final class YandexRssFeedFormat extends FeedFormat
+class YandexRssFeedFormat extends FeedFormat
 {
     const  YANDEX_NAMESPACE_URI = 'http://news.yandex.ru';
     const  YANDEX_NAMESPACE_PREFIX = 'yandex';

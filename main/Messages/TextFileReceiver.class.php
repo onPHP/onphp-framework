@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class TextFileReceiver implements MessageQueueReceiver
+class TextFileReceiver implements MessageQueueReceiver
 {
     private $queue = null;
     private $stream = null;

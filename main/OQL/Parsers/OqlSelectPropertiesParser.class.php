@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
-final class OqlSelectPropertiesParser extends OqlParser
+class OqlSelectPropertiesParser extends OqlParser
 {
     // class map
     const SUM_PROJECTION = 'sum';

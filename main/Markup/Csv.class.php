@@ -14,7 +14,7 @@
  * @see http://tools.ietf.org/html/rfc4180
  * @todo implement parse
  **/
-final class Csv
+class Csv
 {
     const SEPARATOR = "\x2C";
     const QUOTE = "\x22";

@@ -9,7 +9,7 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-final class TransparentFile
+class TransparentFile
 {
     private $path = null;
     private $rawData = null;
