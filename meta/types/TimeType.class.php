@@ -9,24 +9,25 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class TimeType extends ObjectType
-	{
-		public function getPrimitiveName()
-		{
-			return 'time';
-		}
+/**
+ * @ingroup Types
+ **/
+final class TimeType extends ObjectType
+{
+    public function getPrimitiveName()
+    {
+        return 'time';
+    }
 
-		public function isGeneric()
-		{
-			return true;
-		}
+    public function isGeneric()
+    {
+        return true;
+    }
 
-		public function toColumnType()
-		{
-			return 'new DataType(DataType::TIME)';
-		}
-	}
+    public function toColumnType()
+    {
+        return 'new DataType(DataType::TIME)';
+    }
+}
+
 ?>

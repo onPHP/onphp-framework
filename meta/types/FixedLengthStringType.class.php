@@ -9,14 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class FixedLengthStringType extends StringType
-	{
-		public function toColumnType($length = null)
-		{
-			return 'new DataType(DataType::CHAR)';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+final class FixedLengthStringType extends StringType
+{
+    public function toColumnType($length = null)
+    {
+        return 'new DataType(DataType::CHAR)';
+    }
+}
+
 ?>

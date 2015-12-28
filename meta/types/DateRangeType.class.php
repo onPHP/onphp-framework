@@ -9,14 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class DateRangeType extends RangeType
-	{
-		public function getPrimitiveName()
-		{
-			return 'dateRange';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+class DateRangeType extends RangeType
+{
+    public function getPrimitiveName()
+    {
+        return 'dateRange';
+    }
+}
+
 ?>

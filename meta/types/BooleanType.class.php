@@ -9,69 +9,70 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class BooleanType extends BasePropertyType
-	{
-		public function getPrimitiveName()
-		{
-			return 'boolean';
-		}
-		
-		/**
-		 * @throws WrongArgumentException
-		 * @return BooleanType
-		**/
-		public function setDefault($default)
-		{
-			static $boolean = array('true' => true, 'false' => false);
+/**
+ * @ingroup Types
+ **/
+class BooleanType extends BasePropertyType
+{
+    public function getPrimitiveName()
+    {
+        return 'boolean';
+    }
 
-			if (!isset($boolean[$default]))
-				throw new WrongArgumentException(
-					"strange default value given - '{$default}'"
-				);
+    /**
+     * @throws WrongArgumentException
+     * @return BooleanType
+     **/
+    public function setDefault($default)
+    {
+        static $boolean = ['true' => true, 'false' => false];
 
-			$this->default = $boolean[$default];
+        if (!isset($boolean[$default])) {
+            throw new WrongArgumentException(
+                "strange default value given - '{$default}'"
+            );
+        }
 
-			return $this;
-		}
+        $this->default = $boolean[$default];
 
-		public function getDeclaration()
-		{
-			if ($this->hasDefault())
-				return
-					$this->default
-						? 'true'
-						: 'false';
+        return $this;
+    }
 
-			return 'null';
-		}
+    public function getDeclaration()
+    {
+        if ($this->hasDefault()) {
+            return
+                $this->default
+                    ? 'true'
+                    : 'false';
+        }
 
-		public function isMeasurable()
-		{
-			return false;
-		}
+        return 'null';
+    }
 
-		public function toColumnType()
-		{
-			return 'new DataType(DataType::BOOLEAN)';
-		}
+    public function isMeasurable()
+    {
+        return false;
+    }
 
-		public function toGetter(
-			MetaClass $class,
-			MetaClassProperty $property,
-			MetaClassProperty $holder = null
-		)
-		{
-			$name = $property->getName();
-			$camelName = ucfirst($name);
+    public function toColumnType()
+    {
+        return 'new DataType(DataType::BOOLEAN)';
+    }
 
-			$methodName = "is{$camelName}";
-			$compatName = "get{$camelName}";
-			
-			if ($holder) {
-				return <<<EOT
+    public function toGetter(
+        MetaClass $class,
+        MetaClassProperty $property,
+        MetaClassProperty $holder = null
+    ) {
+        $name = $property->getName();
+        $camelName = ucfirst($name);
+
+        $methodName = "is{$camelName}";
+        $compatName = "get{$camelName}";
+
+        if ($holder) {
+            return <<<EOT
 
 public function {$compatName}()
 {
@@ -84,8 +85,8 @@ public function {$methodName}()
 }
 
 EOT;
-			} else {
-				return <<<EOT
+        } else {
+            return <<<EOT
 
 public function {$compatName}()
 {
@@ -98,22 +99,21 @@ public function {$methodName}()
 }
 
 EOT;
-			}
-			
-			Assert::isUnreachable();
-		}
+        }
 
-		public function toSetter(
-			MetaClass $class,
-			MetaClassProperty $property,
-			MetaClassProperty $holder = null
-		)
-		{
-			$name = $property->getName();
-			$methodName = 'set'.ucfirst($name);
-			
-			if ($holder) {
-				return <<<EOT
+        Assert::isUnreachable();
+    }
+
+    public function toSetter(
+        MetaClass $class,
+        MetaClassProperty $property,
+        MetaClassProperty $holder = null
+    ) {
+        $name = $property->getName();
+        $methodName = 'set' . ucfirst($name);
+
+        if ($holder) {
+            return <<<EOT
 
 /**
  * @return {$holder->getClass()->getName()}
@@ -126,9 +126,9 @@ public function {$methodName}(\${$name})
 }
 
 EOT;
-			} else {
-				if ($property->isRequired()) {
-					$method = <<<EOT
+        } else {
+            if ($property->isRequired()) {
+                $method = <<<EOT
 
 /**
  * @return {$class->getName()}
@@ -141,8 +141,8 @@ public function {$methodName}(\${$name} = false)
 }
 
 EOT;
-				} else {
-					$method = <<<EOT
+            } else {
+                $method = <<<EOT
 
 /**
  * @return {$class->getName()}
@@ -157,10 +157,11 @@ public function {$methodName}(\${$name} = null)
 }
 
 EOT;
-				}
-			}
-			
-			return $method;
-		}
-	}
+            }
+        }
+
+        return $method;
+    }
+}
+
 ?>

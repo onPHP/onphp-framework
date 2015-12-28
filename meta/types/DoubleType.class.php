@@ -9,14 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class DoubleType extends FloatType
-	{
-		public function toColumnType()
-		{
-			return 'new DataType(DataType::DOUBLE)';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+final class DoubleType extends FloatType
+{
+    public function toColumnType()
+    {
+        return 'new DataType(DataType::DOUBLE)';
+    }
+}
+
 ?>

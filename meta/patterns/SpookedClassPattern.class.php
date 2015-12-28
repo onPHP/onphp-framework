@@ -9,24 +9,25 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	final class SpookedClassPattern extends Singleton implements GenerationPattern
-	{
-		public function build(MetaClass $class)
-		{
-			return $this;
-		}
-		
-		public function daoExists()
-		{
-			return false;
-		}
-		
-		public function tableExists()
-		{
-			return false;
-		}
-	}
+/**
+ * @ingroup Patterns
+ **/
+final class SpookedClassPattern extends Singleton implements GenerationPattern
+{
+    public function build(MetaClass $class)
+    {
+        return $this;
+    }
+
+    public function daoExists()
+    {
+        return false;
+    }
+
+    public function tableExists()
+    {
+        return false;
+    }
+}
+
 ?>

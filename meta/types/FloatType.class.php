@@ -9,57 +9,58 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class FloatType extends IntegerType
-	{
-		protected $precision = 0;
-		
-		public function getPrimitiveName()
-		{
-			return 'float';
-		}
-		
-		/**
-		 * @throws WrongArgumentException
-		 * @return FloatType
-		**/
-		public function setDefault($default)
-		{
-			Assert::isFloat(
-				$default,
-				"strange default value given - '{$default}'"
-			);
+/**
+ * @ingroup Types
+ **/
+class FloatType extends IntegerType
+{
+    protected $precision = 0;
 
-			$this->default = $default;
+    public function getPrimitiveName()
+    {
+        return 'float';
+    }
 
-			return $this;
-		}
+    /**
+     * @throws WrongArgumentException
+     * @return FloatType
+     **/
+    public function setDefault($default)
+    {
+        Assert::isFloat(
+            $default,
+            "strange default value given - '{$default}'"
+        );
 
-		/**
-		 * @return NumericType
-		**/
-		public function setPrecision($precision)
-		{
-			$this->precision = $precision;
-			
-			return $this;
-		}
-		
-		public function getPrecision()
-		{
-			return $this->precision;
-		}
-		
-		public function isMeasurable()
-		{
-			return true;
-		}
-		
-		public function toColumnType()
-		{
-			return 'new DataType(DataType::REAL)';
-		}
-	}
+        $this->default = $default;
+
+        return $this;
+    }
+
+    public function getPrecision()
+    {
+        return $this->precision;
+    }
+
+    /**
+     * @return NumericType
+     **/
+    public function setPrecision($precision)
+    {
+        $this->precision = $precision;
+
+        return $this;
+    }
+
+    public function isMeasurable()
+    {
+        return true;
+    }
+
+    public function toColumnType()
+    {
+        return 'new DataType(DataType::REAL)';
+    }
+}
+
 ?>

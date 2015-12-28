@@ -9,41 +9,43 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup MetaBase
-	**/
-	final class MetaRelation extends Enumeration
-	{
-		const ONE_TO_ONE		= 1;
-		const ONE_TO_MANY		= 2;
-		const MANY_TO_MANY		= 3;
-		
-		protected $names = array(
-			self::ONE_TO_ONE		=> 'OneToOne',
-			self::ONE_TO_MANY		=> 'OneToMany',
-			self::MANY_TO_MANY		=> 'ManyToMany'
-		);
-		
-		/**
-		 * @return MetaRelation
-		**/
-		public static function create($id)
-		{
-			return new self($id);
-		}
-		
-		/**
-		 * @return MetaRelation
-		**/
-		public static function makeFromName($name)
-		{
-			$self = new self(self::getAnyId());
-			$id = array_search($name, $self->getNameList());
-			
-			if ($id)
-				return $self->setId($id);
-			
-			throw new WrongArgumentException();
-		}
-	}
+/**
+ * @ingroup MetaBase
+ **/
+final class MetaRelation extends Enumeration
+{
+    const ONE_TO_ONE = 1;
+    const ONE_TO_MANY = 2;
+    const MANY_TO_MANY = 3;
+
+    protected $names = [
+        self::ONE_TO_ONE => 'OneToOne',
+        self::ONE_TO_MANY => 'OneToMany',
+        self::MANY_TO_MANY => 'ManyToMany'
+    ];
+
+    /**
+     * @return MetaRelation
+     **/
+    public static function create($id)
+    {
+        return new self($id);
+    }
+
+    /**
+     * @return MetaRelation
+     **/
+    public static function makeFromName($name)
+    {
+        $self = new self(self::getAnyId());
+        $id = array_search($name, $self->getNameList());
+
+        if ($id) {
+            return $self->setId($id);
+        }
+
+        throw new WrongArgumentException();
+    }
+}
+
 ?>

@@ -9,82 +9,133 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class ObjectType extends BasePropertyType
-	{
-		private $className = null;
-		
-		public function getPrimitiveName()
-		{
-			return 'identifier';
-		}
-		
-		public function __construct($className)
-		{
-			$this->className = $className;
-		}
-		
-		/**
-		 * @return MetaClass
-		**/
-		public function getClass()
-		{
-			return MetaConfiguration::me()->getClassByName($this->className);
-		}
-		
-		public function getClassName()
-		{
-			return $this->className;
-		}
-		
-		public function getDeclaration()
-		{
-			return 'null';
-		}
-		
-		public function isGeneric()
-		{
-			return false;
-		}
-		
-		public function isMeasurable()
-		{
-			return false;
-		}
-		
-		public function toMethods(
-			MetaClass $class,
-			MetaClassProperty $property,
-			MetaClassProperty $holder = null
-		)
-		{
-			return
-				parent::toMethods($class, $property, $holder)
-				.$this->toDropper($class, $property, $holder);
-		}
-		
-		public function toGetter(
-			MetaClass $class,
-			MetaClassProperty $property,
-			MetaClassProperty $holder = null
-		)
-		{
-			$name = $property->getName();
-			
-			$methodName = 'get'.ucfirst($property->getName());
-			
-			$classHint = $property->getType()->getHint();
-			
-			if ($holder) {
-				if ($property->getType() instanceof ObjectType) {
-					$class = $property->getType()->getClassName();
-				} else {
-					$class = null;
-				}
-				
-				return <<<EOT
+/**
+ * @ingroup Types
+ **/
+class ObjectType extends BasePropertyType
+{
+    private $className = null;
+
+    public function __construct($className)
+    {
+        $this->className = $className;
+    }
+
+    public function getPrimitiveName()
+    {
+        return 'identifier';
+    }
+
+    public function getDeclaration()
+    {
+        return 'null';
+    }
+
+    public function isGeneric()
+    {
+        return false;
+    }
+
+    public function isMeasurable()
+    {
+        return false;
+    }
+
+    public function toMethods(
+        MetaClass $class,
+        MetaClassProperty $property,
+        MetaClassProperty $holder = null
+    ) {
+        return
+            parent::toMethods($class, $property, $holder)
+            . $this->toDropper($class, $property, $holder);
+    }
+
+    public function toDropper(
+        MetaClass $class,
+        MetaClassProperty $property,
+        MetaClassProperty $holder = null
+    ) {
+        if (
+            $property->getRelationId() == MetaRelation::ONE_TO_MANY
+            || $property->getRelationId() == MetaRelation::MANY_TO_MANY
+        ) {
+            // we don't need dropper in such cases
+            return null;
+        }
+
+        $name = $property->getName();
+        $methodName = 'drop' . ucfirst($name);
+
+        if ($holder) {
+            $method = <<<EOT
+
+/**
+ * @return {$holder->getClass()->getName()}
+**/
+public function {$methodName}()
+{
+	\$this->{$holder->getName()}->{$methodName}();
+
+	return \$this;
+}
+
+EOT;
+        } else {
+            if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
+                $method = <<<EOT
+
+/**
+ * @return {$class->getName()}
+**/
+public function {$methodName}()
+{
+	\$this->{$name} = null;
+	\$this->{$name}Id = null;
+
+	return \$this;
+}
+
+EOT;
+            } else {
+                $method = <<<EOT
+
+/**
+ * @return {$class->getName()}
+**/
+public function {$methodName}()
+{
+	\$this->{$name} = null;
+
+	return \$this;
+}
+
+EOT;
+            }
+        }
+
+        return $method;
+    }
+
+    public function toGetter(
+        MetaClass $class,
+        MetaClassProperty $property,
+        MetaClassProperty $holder = null
+    ) {
+        $name = $property->getName();
+
+        $methodName = 'get' . ucfirst($property->getName());
+
+        $classHint = $property->getType()->getHint();
+
+        if ($holder) {
+            if ($property->getType() instanceof ObjectType) {
+                $class = $property->getType()->getClassName();
+            } else {
+                $class = null;
+            }
+
+            return <<<EOT
 
 /**
  * @return {$class}
@@ -95,21 +146,21 @@ public function {$methodName}()
 }
 
 EOT;
-			} else {
-				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
-					$className = $property->getType()->getClassName();
-					
-					$isEnumeration =
-						(
-							$property->getType()->getClass()->getPattern() instanceof EnumerationClassPattern
-							|| $property->getType()->getClass()->getPattern() instanceof EnumClassPattern
-						);
-					
-					$fetchObjectString = $isEnumeration
-						? "new {$className}(\$this->{$name}Id)"
-						: "{$className}::dao()->getById(\$this->{$name}Id)";
-					
-					$method = <<<EOT
+        } else {
+            if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
+                $className = $property->getType()->getClassName();
+
+                $isEnumeration =
+                    (
+                        $property->getType()->getClass()->getPattern() instanceof EnumerationClassPattern
+                        || $property->getType()->getClass()->getPattern() instanceof EnumClassPattern
+                    );
+
+                $fetchObjectString = $isEnumeration
+                    ? "new {$className}(\$this->{$name}Id)"
+                    : "{$className}::dao()->getById(\$this->{$name}Id)";
+
+                $method = <<<EOT
 
 {$classHint}
 public function {$methodName}()
@@ -117,7 +168,7 @@ public function {$methodName}()
 	if (!\$this->{$name} && \$this->{$name}Id) {
 		\$this->{$name} = {$fetchObjectString};
 	}
-	
+
 	return \$this->{$name};
 }
 
@@ -129,17 +180,17 @@ public function {$methodName}Id()
 }
 
 EOT;
-				} elseif (
-					$property->getRelationId() == MetaRelation::ONE_TO_MANY
-					|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
-				) {
-						$name = $property->getName();
-						$methodName = ucfirst($name);
-						$remoteName = ucfirst($property->getName());
-						
-						$containerName = $class->getName().$remoteName.'DAO';
-						
-						$method = <<<EOT
+            } elseif (
+                $property->getRelationId() == MetaRelation::ONE_TO_MANY
+                || $property->getRelationId() == MetaRelation::MANY_TO_MANY
+            ) {
+                $name = $property->getName();
+                $methodName = ucfirst($name);
+                $remoteName = ucfirst($property->getName());
+
+                $containerName = $class->getName() . $remoteName . 'DAO';
+
+                $method = <<<EOT
 
 /**
  * @return {$containerName}
@@ -149,7 +200,7 @@ public function get{$methodName}(\$lazy = false)
 	if (!\$this->{$name} || (\$this->{$name}->isLazy() != \$lazy)) {
 		\$this->{$name} = new {$containerName}(\$this, \$lazy);
 	}
-	
+
 	return \$this->{$name};
 }
 
@@ -159,21 +210,21 @@ public function get{$methodName}(\$lazy = false)
 public function fill{$methodName}(\$collection, \$lazy = false)
 {
 	\$this->{$name} = new {$containerName}(\$this, \$lazy);
-	
+
 	if (!\$this->id) {
 		throw new WrongStateException(
 			'i do not know which object i belong to'
 		);
 	}
-	
+
 	\$this->{$name}->mergeList(\$collection);
-	
+
 	return \$this;
 }
 
 EOT;
-				} else {
-					$method = <<<EOT
+            } else {
+                $method = <<<EOT
 
 {$classHint}
 public function {$methodName}()
@@ -182,31 +233,30 @@ public function {$methodName}()
 }
 
 EOT;
-				}
-			}
-			
-			return $method;
-		}
-		
-		public function toSetter(
-			MetaClass $class,
-			MetaClassProperty $property,
-			MetaClassProperty $holder = null
-		)
-		{
-			if (
-				$property->getRelationId() == MetaRelation::ONE_TO_MANY
-				|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
-			) {
-				// we don't need setter in such cases
-				return null;
-			}
-			
-			$name = $property->getName();
-			$methodName = 'set'.ucfirst($name);
-			
-			if ($holder) {
-				return <<<EOT
+            }
+        }
+
+        return $method;
+    }
+
+    public function toSetter(
+        MetaClass $class,
+        MetaClassProperty $property,
+        MetaClassProperty $holder = null
+    ) {
+        if (
+            $property->getRelationId() == MetaRelation::ONE_TO_MANY
+            || $property->getRelationId() == MetaRelation::MANY_TO_MANY
+        ) {
+            // we don't need setter in such cases
+            return null;
+        }
+
+        $name = $property->getName();
+        $methodName = 'set' . ucfirst($name);
+
+        if ($holder) {
+            return <<<EOT
 
 /**
  * @return {$holder->getClass()->getName()}
@@ -214,16 +264,16 @@ EOT;
 public function {$methodName}({$property->getType()->getClassName()} \${$name})
 {
 	\$this->{$holder->getName()}->{$methodName}(\${$name});
-	
+
 	return \$this;
 }
 
 EOT;
-			} else {
-				$defaultValue = $property->isOptional() ? ' = null' : '';
+        } else {
+            $defaultValue = $property->isOptional() ? ' = null' : '';
 
-				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
-					$method = <<<EOT
+            if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
+                $method = <<<EOT
 
 /**
  * @return {$property->getClass()->getName()}
@@ -248,8 +298,8 @@ public function {$methodName}Id(\$id{$defaultValue})
 }
 
 EOT;
-				} else {
-					$method = <<<EOT
+            } else {
+                $method = <<<EOT
 
 /**
  * @return {$property->getClass()->getName()}
@@ -262,91 +312,38 @@ public function {$methodName}({$this->className} \${$name}{$defaultValue})
 }
 
 EOT;
-				}
-			}
-			
-			return $method;
-		}
-		
-		public function toDropper(
-			MetaClass $class,
-			MetaClassProperty $property,
-			MetaClassProperty $holder = null
-		)
-		{
-			if (
-				$property->getRelationId() == MetaRelation::ONE_TO_MANY
-				|| $property->getRelationId() == MetaRelation::MANY_TO_MANY
-			) {
-				// we don't need dropper in such cases
-				return null;
-			}
-			
-			$name = $property->getName();
-			$methodName = 'drop'.ucfirst($name);
-			
-			if ($holder) {
-					$method = <<<EOT
+            }
+        }
 
-/**
- * @return {$holder->getClass()->getName()}
-**/
-public function {$methodName}()
-{
-	\$this->{$holder->getName()}->{$methodName}();
+        return $method;
+    }
 
-	return \$this;
-}
+    public function toColumnType()
+    {
+        return $this->getClass()->getIdentifier()->getType()->toColumnType();
+    }
 
-EOT;
-			} else {
-				if ($property->getFetchStrategyId() == FetchStrategy::LAZY) {
-					$method = <<<EOT
+    /**
+     * @return MetaClass
+     **/
+    public function getClass()
+    {
+        return MetaConfiguration::me()->getClassByName($this->className);
+    }
 
-/**
- * @return {$class->getName()}
-**/
-public function {$methodName}()
-{
-	\$this->{$name} = null;
-	\$this->{$name}Id = null;
-
-	return \$this;
-}
-
-EOT;
-				} else {
-					$method = <<<EOT
-
-/**
- * @return {$class->getName()}
-**/
-public function {$methodName}()
-{
-	\$this->{$name} = null;
-
-	return \$this;
-}
-
-EOT;
-				}
-			}
-			
-			return $method;
-		}
-		
-		public function toColumnType()
-		{
-			return $this->getClass()->getIdentifier()->getType()->toColumnType();
-		}
-		
-		public function getHint()
-		{
-			return <<<EOT
+    public function getHint()
+    {
+        return <<<EOT
 /**
  * @return {$this->getClassName()}
 **/
 EOT;
-		}
-	}
+    }
+
+    public function getClassName()
+    {
+        return $this->className;
+    }
+}
+
 ?>

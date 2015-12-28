@@ -9,14 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	final class DictionaryClassPattern extends BasePattern
-	{
-		public function daoExists()
-		{
-			return true;
-		}
-	}
+/**
+ * @ingroup Patterns
+ **/
+final class DictionaryClassPattern extends BasePattern
+{
+    public function daoExists()
+    {
+        return true;
+    }
+}
+
 ?>

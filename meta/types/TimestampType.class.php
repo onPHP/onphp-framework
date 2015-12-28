@@ -9,19 +9,20 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class TimestampType extends DateType
-	{
-		public function getPrimitiveName()
-		{
-			return 'timestamp';
-		}
-		
-		public function toColumnType()
-		{
-			return 'new DataType(DataType::TIMESTAMP)';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+final class TimestampType extends DateType
+{
+    public function getPrimitiveName()
+    {
+        return 'timestamp';
+    }
+
+    public function toColumnType()
+    {
+        return 'new DataType(DataType::TIMESTAMP)';
+    }
+}
+
 ?>

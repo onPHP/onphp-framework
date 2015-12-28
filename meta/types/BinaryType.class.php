@@ -9,29 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class BinaryType extends BasePropertyType
-	{
-		public function getPrimitiveName()
-		{
-			return 'binary';
-		}
-		
-		public function getDeclaration()
-		{
-			return 'null';
-		}
-		
-		public function toColumnType($length = null)
-		{
-			return 'new DataType(DataType::BINARY)';
-		}
-		
-		public function isMeasurable()
-		{
-			return false;
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+final class BinaryType extends BasePropertyType
+{
+    public function getPrimitiveName()
+    {
+        return 'binary';
+    }
+
+    public function getDeclaration()
+    {
+        return 'null';
+    }
+
+    public function toColumnType($length = null)
+    {
+        return 'new DataType(DataType::BINARY)';
+    }
+
+    public function isMeasurable()
+    {
+        return false;
+    }
+}
+
 ?>

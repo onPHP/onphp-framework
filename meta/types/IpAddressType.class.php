@@ -9,29 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class IpAddressType extends ObjectType
-	{
-		public function getPrimitiveName()
-		{
-			return 'ipAddress';
-		}
-		
-		public function isGeneric()
-		{
-			return true;
-		}
-		
-		public function isMeasurable()
-		{
-			return true;
-		}
-		
-		public function toColumnType()
-		{
-			return 'new DataType(DataType::IP)';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+class IpAddressType extends ObjectType
+{
+    public function getPrimitiveName()
+    {
+        return 'ipAddress';
+    }
+
+    public function isGeneric()
+    {
+        return true;
+    }
+
+    public function isMeasurable()
+    {
+        return true;
+    }
+
+    public function toColumnType()
+    {
+        return 'new DataType(DataType::IP)';
+    }
+}
+
 ?>

@@ -9,22 +9,22 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class UnsignedSmallIntegerType extends SmallIntegerType
-	{
-		public function getSize()
-		{
-			return 2 & LightMetaProperty::UNSIGNED_FLAG;
-		}
-		
-		public function toColumnType()
-		{
-			return
-				parent::toColumnType()
-				."->\n"
-				.'setUnsigned(true)';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+final class UnsignedSmallIntegerType extends SmallIntegerType
+{
+    public function getSize()
+    {
+        return 2 & LightMetaProperty::UNSIGNED_FLAG;
+    }
+
+    public function toColumnType()
+    {
+        return
+            parent::toColumnType()
+            .'->setUnsigned(true)';
+    }
+}
+
 ?>

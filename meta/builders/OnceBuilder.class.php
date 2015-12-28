@@ -9,20 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Builders
-	**/
-	abstract class OnceBuilder extends BaseBuilder
-	{
-		protected static function getHead()
-		{
-			$head = self::startCap();
-			
-			$head .=
-				' *   This file will never be generated again -'
-				.' feel free to edit.            *';
+/**
+ * @ingroup Builders
+ **/
+abstract class OnceBuilder extends BaseBuilder
+{
+    protected static function getHead()
+    {
+        $head = self::startCap();
 
-			return $head."\n".self::endCap();
-		}
-	}
+        $head .=
+            ' *   This file will never be generated again -'
+            . ' feel free to edit.            *';
+
+        return $head . "\n" . self::endCap();
+    }
+}
+
 ?>

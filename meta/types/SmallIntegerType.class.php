@@ -9,19 +9,20 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class SmallIntegerType extends IntegerType
-	{
-		public function getSize()
-		{
-			return 2;
-		}
-		
-		public function toColumnType()
-		{
-			return 'new DataType(DataType::SMALLINT)';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+class SmallIntegerType extends IntegerType
+{
+    public function getSize()
+    {
+        return 2;
+    }
+
+    public function toColumnType()
+    {
+        return 'new DataType(DataType::SMALLINT)';
+    }
+}
+
 ?>

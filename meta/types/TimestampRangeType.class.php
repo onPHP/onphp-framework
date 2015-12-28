@@ -9,14 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class TimestampRangeType extends DateRangeType
-	{
-		public function toPrimitive()
-		{
-			return 'Primitive::timestampRange';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+class TimestampRangeType extends DateRangeType
+{
+    public function toPrimitive()
+    {
+        return 'Primitive::timestampRange';
+    }
+}
+
 ?>

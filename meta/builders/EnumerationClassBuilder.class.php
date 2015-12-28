@@ -9,29 +9,31 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Builders
-	**/
-	final class EnumerationClassBuilder extends OnceBuilder
-	{
-		public static function build(MetaClass $class)
-		{
-			$out = self::getHead();
-			
-			if ($type = $class->getType())
-				$type = "{$type->getName()} ";
-			else
-				$type = null;
-			
-			$out .= <<<EOT
+/**
+ * @ingroup Builders
+ **/
+final class EnumerationClassBuilder extends OnceBuilder
+{
+    public static function build(MetaClass $class)
+    {
+        $out = self::getHead();
+
+        if ($type = $class->getType()) {
+            $type = "{$type->getName()} ";
+        } else {
+            $type = null;
+        }
+
+        $out .= <<<EOT
 {$type}class {$class->getName()} extends Enumeration
 {
-	// implement me!
+    // implement me!
 }
 
 EOT;
-			
-			return $out.self::getHeel();
-		}
-	}
+
+        return $out . self::getHeel();
+    }
+}
+
 ?>

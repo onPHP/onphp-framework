@@ -9,30 +9,32 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Builders
-	**/
-	final class EnumClassBuilder extends OnceBuilder
-	{
-		public static function build(MetaClass $class)
-		{
-			$out = self::getHead();
-			
-			if ($type = $class->getType())
-				$type = "{$type->getName()} ";
-			else
-				$type = null;
-			
-			$out .= <<<EOT
+/**
+ * @ingroup Builders
+ **/
+final class EnumClassBuilder extends OnceBuilder
+{
+    public static function build(MetaClass $class)
+    {
+        $out = self::getHead();
+
+        if ($type = $class->getType()) {
+            $type = "{$type->getName()} ";
+        } else {
+            $type = null;
+        }
+
+        $out .= <<<EOT
 {$type}class {$class->getName()} extends Enum
 {
-	// implement me!
-	protected static \$names = array();
+    // implement me!
+    protected static \$names = array();
 }
 
 EOT;
-			
-			return $out.self::getHeel();
-		}
-	}
+
+        return $out . self::getHeel();
+    }
+}
+
 ?>

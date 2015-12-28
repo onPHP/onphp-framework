@@ -9,19 +9,20 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class RangeType extends InternalType
-	{
-		public function getPrimitiveName()
-		{
-			return 'range';
-		}
-		
-		public function toColumnType()
-		{
-			return null;
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+class RangeType extends InternalType
+{
+    public function getPrimitiveName()
+    {
+        return 'range';
+    }
+
+    public function toColumnType()
+    {
+        return null;
+    }
+}
+
 ?>

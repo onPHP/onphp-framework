@@ -9,38 +9,40 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	class EnumerationClassPattern extends BasePattern
-	{
-		public function daoExists()
-		{
-			return false;
-		}
-		
-		public function tableExists()
-		{
-			return false;
-		}
-		
-		/**
-		 * @return EnumerationClassPattern
-		**/
-		public function build(MetaClass $class)
-		{
-			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
-			
-			if (
-				MetaConfiguration::me()->isForcedGeneration()
-				|| !file_exists($userFile)
-			)
-				$this->dumpFile(
-					$userFile,
-					Format::indentize(EnumerationClassBuilder::build($class))
-				);
-			
-			return $this;
-		}
-	}
+/**
+ * @ingroup Patterns
+ **/
+class EnumerationClassPattern extends BasePattern
+{
+    public function daoExists()
+    {
+        return false;
+    }
+
+    public function tableExists()
+    {
+        return false;
+    }
+
+    /**
+     * @return EnumerationClassPattern
+     **/
+    public function build(MetaClass $class)
+    {
+        $userFile = ONPHP_META_BUSINESS_DIR . $class->getName() . EXT_CLASS;
+
+        if (
+            MetaConfiguration::me()->isForcedGeneration()
+            || !file_exists($userFile)
+        ) {
+            $this->dumpFile(
+                $userFile,
+                Format::indentize(EnumerationClassBuilder::build($class))
+            );
+        }
+
+        return $this;
+    }
+}
+
 ?>

@@ -9,51 +9,53 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class StringType extends BasePropertyType
-	{
-		public function getPrimitiveName()
-		{
-			return 'string';
-		}
-		
-		/**
-		 * @throws WrongArgumentException
-		 * @return StringType
-		**/
-		public function setDefault($default)
-		{
-			Assert::isString(
-				$default,
-				"strange default value given - '{$default}'"
-			);
-			
-			$this->default = $default;
-			
-			return $this;
-		}
-		
-		public function getDeclaration()
-		{
-			if ($this->hasDefault())
-				return "'{$this->default}'";
-			
-			return 'null';
-		}
-		
-		public function isMeasurable()
-		{
-			return true;
-		}
-		
-		public function toColumnType($length = null)
-		{
-			return
-				$length
-					? 'new DateType(DataType::VARCHAR)'
-					: 'new DataType(DataType::TEXT)';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+class StringType extends BasePropertyType
+{
+    public function getPrimitiveName()
+    {
+        return 'string';
+    }
+
+    /**
+     * @throws WrongArgumentException
+     * @return StringType
+     **/
+    public function setDefault($default)
+    {
+        Assert::isString(
+            $default,
+            "strange default value given - '{$default}'"
+        );
+
+        $this->default = $default;
+
+        return $this;
+    }
+
+    public function getDeclaration()
+    {
+        if ($this->hasDefault()) {
+            return "'{$this->default}'";
+        }
+
+        return 'null';
+    }
+
+    public function isMeasurable()
+    {
+        return true;
+    }
+
+    public function toColumnType($length = null)
+    {
+        return
+            $length
+                ? 'new DateType(DataType::VARCHAR)'
+                : 'new DataType(DataType::TEXT)';
+    }
+}
+
 ?>

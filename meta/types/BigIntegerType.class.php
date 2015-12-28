@@ -9,19 +9,20 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class BigIntegerType extends IntegerType
-	{
-		public function getSize()
-		{
-			return 8;
-		}
-		
-		public function toColumnType()
-		{
-			return 'new DataType(DataType::BIGINT)';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+class BigIntegerType extends IntegerType
+{
+    public function getSize()
+    {
+        return 8;
+    }
+
+    public function toColumnType()
+    {
+        return 'new DataType(DataType::BIGINT)';
+    }
+}
+
 ?>

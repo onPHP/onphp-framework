@@ -9,29 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	final class InternalClassPattern
-		extends BasePattern
-		implements GenerationPattern
-	{
-		/**
-		 * @return InternalClassPattern
-		**/
-		public function build(MetaClass $class)
-		{
-			return $this;
-		}
-		
-		public function tableExists()
-		{
-			return false;
-		}
-		
-		public function daoExists()
-		{
-			return true;
-		}
-	}
+/**
+ * @ingroup Patterns
+ **/
+final class InternalClassPattern
+    extends BasePattern
+    implements GenerationPattern
+{
+    /**
+     * @return InternalClassPattern
+     **/
+    public function build(MetaClass $class)
+    {
+        return $this;
+    }
+
+    public function tableExists()
+    {
+        return false;
+    }
+
+    public function daoExists()
+    {
+        return true;
+    }
+}
+
 ?>

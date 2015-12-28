@@ -9,24 +9,25 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	final class ValueObjectPattern extends BasePattern
-	{
-		public function tableExists()
-		{
-			return false;
-		}
-		
-		/**
-		 * @return ValueObjectPattern
-		**/
-		protected function fullBuild(MetaClass $class)
-		{
-			return $this->
-				buildBusiness($class)->
-				buildProto($class);
-		}
-	}
+/**
+ * @ingroup Patterns
+ **/
+final class ValueObjectPattern extends BasePattern
+{
+    public function tableExists()
+    {
+        return false;
+    }
+
+    /**
+     * @return ValueObjectPattern
+     **/
+    protected function fullBuild(MetaClass $class)
+    {
+        return $this->
+        buildBusiness($class)->
+        buildProto($class);
+    }
+}
+
 ?>

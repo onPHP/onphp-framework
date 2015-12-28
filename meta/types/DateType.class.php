@@ -9,24 +9,25 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class DateType extends ObjectType
-	{
-		public function getPrimitiveName()
-		{
-			return 'date';
-		}
-		
-		public function isGeneric()
-		{
-			return true;
-		}
-		
-		public function toColumnType()
-		{
-			return 'new DataType(DataType::DATE)';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+class DateType extends ObjectType
+{
+    public function getPrimitiveName()
+    {
+        return 'date';
+    }
+
+    public function isGeneric()
+    {
+        return true;
+    }
+
+    public function toColumnType()
+    {
+        return 'new DataType(DataType::DATE)';
+    }
+}
+
 ?>

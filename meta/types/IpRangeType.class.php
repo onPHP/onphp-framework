@@ -9,29 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class IpRangeType extends ObjectType
-	{
-		public function getPrimitiveName()
-		{
-			return 'ipRange';
-		}
-		
-		public function isGeneric()
-		{
-			return true;
-		}
-		
-		public function isMeasurable()
-		{
-			return true;
-		}
-		
-		public function toColumnType()
-		{
-			return 'new DataType(DataType::IP_RANGE)';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+class IpRangeType extends ObjectType
+{
+    public function getPrimitiveName()
+    {
+        return 'ipRange';
+    }
+
+    public function isGeneric()
+    {
+        return true;
+    }
+
+    public function isMeasurable()
+    {
+        return true;
+    }
+
+    public function toColumnType()
+    {
+        return 'new DataType(DataType::IP_RANGE)';
+    }
+}
+
 ?>

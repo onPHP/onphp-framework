@@ -9,87 +9,89 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Builders
-	**/
-	final class AutoProtoClassBuilder extends BaseBuilder
-	{
-		public static function build(MetaClass $class)
-		{
-			$out = self::getHead();
-			
-			$parent = $class->getParent();
-			
-			if ($class->hasBuildableParent())
-				$parentName = 'Proto'.$parent->getName();
-			else
-				$parentName = 'AbstractProtoClass';
-			
-			$out .= <<<EOT
+/**
+ * @ingroup Builders
+ **/
+final class AutoProtoClassBuilder extends BaseBuilder
+{
+    public static function build(MetaClass $class)
+    {
+        $out = self::getHead();
+
+        $parent = $class->getParent();
+
+        if ($class->hasBuildableParent()) {
+            $parentName = 'Proto' . $parent->getName();
+        } else {
+            $parentName = 'AbstractProtoClass';
+        }
+
+        $out .= <<<EOT
 abstract class AutoProto{$class->getName()} extends {$parentName}
 {
 EOT;
-			$classDump = self::dumpMetaClass($class);
-			
-			$out .= <<<EOT
+        $classDump = self::dumpMetaClass($class);
+
+        $out .= <<<EOT
 
 {$classDump}
 }
 
 EOT;
 
-			return $out.self::getHeel();
-		}
-		
-		private static function dumpMetaClass(MetaClass $class)
-		{
-			$propertyList = $class->getWithInternalProperties();
-			
-			$out = <<<EOT
-	protected function makePropertyList()
-	{
+        return $out . self::getHeel();
+    }
+
+    private static function dumpMetaClass(MetaClass $class)
+    {
+        $propertyList = $class->getWithInternalProperties();
+
+        $out = <<<EOT
+    protected function makePropertyList()
+    {
 
 EOT;
 
-			if ($class->hasBuildableParent()) {
-				$out .= <<<EOT
-		return
-			array_merge(
-				parent::makePropertyList(),
-				array(
+        if ($class->hasBuildableParent()) {
+            $out .= <<<EOT
+        return
+            array_merge(
+                parent::makePropertyList(),
+                array(
 
 EOT;
-				if ($class->getIdentifier()) {
-					$propertyList[$class->getIdentifier()->getName()] =
-						$class->getIdentifier();
-				}
-			} else {
-				$out .= <<<EOT
-		return array(
+            if ($class->getIdentifier()) {
+                $propertyList[$class->getIdentifier()->getName()] =
+                    $class->getIdentifier();
+            }
+        } else {
+            $out .= <<<EOT
+        return array(
 
 EOT;
-			}
-			
-			$list = array();
-			
-			foreach ($propertyList as $property) {
-				$list[] =
-					"'{$property->getName()}' => "
-					.$property->toLightProperty($class)->toString();
-			}
-			
-			$out .= implode(",\n", $list);
-			
-			if ($class->hasBuildableParent()) {
-				$out .= "\n)";
-			}
-			
-			$out .= <<<EOT
+        }
 
-		);
-	}
+        $list = [];
+
+        foreach ($propertyList as $property) {
+            $list[] =
+                "'{$property->getName()}' => "
+                . $property->toLightProperty($class)->toString();
+        }
+
+        $out .= implode(",\n", $list);
+
+        if ($class->hasBuildableParent()) {
+            $out .= "\n)";
+        }
+
+        $out .= <<<EOT
+
+        );
+    }
 EOT;
-			return $out;
-		}
-	}
+        return $out;
+    }
+}
+
 ?>

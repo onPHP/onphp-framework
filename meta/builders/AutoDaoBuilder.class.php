@@ -9,38 +9,40 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Builders
-	**/
-	final class AutoDaoBuilder extends BaseBuilder
-	{
-		public static function build(MetaClass $class)
-		{
-			if (!$class->hasBuildableParent())
-				return DictionaryDaoBuilder::build($class);
-			else
-				$parent = $class->getParent();
-			
-			if (
-				$class->getParent()->getPattern()
-					instanceof InternalClassPattern
-			) {
-				$parentName = 'StorableDAO';
-			} else {
-				$parentName = $parent->getName().'DAO';
-			}
-			
-			$out = self::getHead();
-			
-			$out .= <<<EOT
+/**
+ * @ingroup Builders
+ **/
+final class AutoDaoBuilder extends BaseBuilder
+{
+    public static function build(MetaClass $class)
+    {
+        if (!$class->hasBuildableParent()) {
+            return DictionaryDaoBuilder::build($class);
+        } else {
+            $parent = $class->getParent();
+        }
+
+        if (
+            $class->getParent()->getPattern()
+            instanceof InternalClassPattern
+        ) {
+            $parentName = 'StorableDAO';
+        } else {
+            $parentName = $parent->getName() . 'DAO';
+        }
+
+        $out = self::getHead();
+
+        $out .= <<<EOT
 abstract class Auto{$class->getName()}DAO extends {$parentName}
 {
 
 EOT;
-			
-			$out .= self::buildPointers($class)."\n}\n";
-			
-			return $out.self::getHeel();
-		}
-	}
+
+        $out .= self::buildPointers($class) . "\n}\n";
+
+        return $out . self::getHeel();
+    }
+}
+
 ?>

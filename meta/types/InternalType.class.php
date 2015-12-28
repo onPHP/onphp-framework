@@ -9,14 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	abstract class InternalType extends ObjectType
-	{
-		public function isGeneric()
-		{
-			return true;
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+abstract class InternalType extends ObjectType
+{
+    public function isGeneric()
+    {
+        return true;
+    }
+}
+
 ?>

@@ -9,14 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	final class AbstractClassPattern extends BasePattern
-	{
-		public function tableExists()
-		{
-			return false;
-		}
-	}
+/**
+ * @ingroup Patterns
+ **/
+final class AbstractClassPattern extends BasePattern
+{
+    public function tableExists()
+    {
+        return false;
+    }
+}
+
 ?>

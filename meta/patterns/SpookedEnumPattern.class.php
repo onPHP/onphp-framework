@@ -9,22 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	final class SpookedEnumPattern extends EnumClassPattern
-	{
-		/**
-		 * @return SpookedEnumPattern
-		**/
-		public function build(MetaClass $class)
-		{
-			return $this;
-		}
-		
-		public function daoExists()
-		{
-			return false;
-		}
-	}
+/**
+ * @ingroup Patterns
+ **/
+final class SpookedEnumPattern extends EnumClassPattern
+{
+    /**
+     * @return SpookedEnumPattern
+     **/
+    public function build(MetaClass $class)
+    {
+        return $this;
+    }
+
+    public function daoExists()
+    {
+        return false;
+    }
+}
+
 ?>

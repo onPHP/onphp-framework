@@ -9,14 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class NumericType extends FloatType
-	{
-		public function toColumnType()
-		{
-			return 'new DataType(DataType::NUMERIC)';
-		}
-	}
+/**
+ * @ingroup Types
+ **/
+final class NumericType extends FloatType
+{
+    public function toColumnType()
+    {
+        return 'new DataType(DataType::NUMERIC)';
+    }
+}
+
 ?>

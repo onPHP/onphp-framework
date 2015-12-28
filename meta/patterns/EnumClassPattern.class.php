@@ -9,38 +9,40 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	class EnumClassPattern extends BasePattern
-	{
-		public function daoExists()
-		{
-			return false;
-		}
-		
-		public function tableExists()
-		{
-			return false;
-		}
-		
-		/**
-		 * @return EnumClassPattern
-		**/
-		public function build(MetaClass $class)
-		{
-			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
-			
-			if (
-				MetaConfiguration::me()->isForcedGeneration()
-				|| !file_exists($userFile)
-			)
-				$this->dumpFile(
-					$userFile,
-					Format::indentize(EnumClassBuilder::build($class))
-				);
-			
-			return $this;
-		}
-	}
+/**
+ * @ingroup Patterns
+ **/
+class EnumClassPattern extends BasePattern
+{
+    public function daoExists()
+    {
+        return false;
+    }
+
+    public function tableExists()
+    {
+        return false;
+    }
+
+    /**
+     * @return EnumClassPattern
+     **/
+    public function build(MetaClass $class)
+    {
+        $userFile = ONPHP_META_BUSINESS_DIR . $class->getName() . EXT_CLASS;
+
+        if (
+            MetaConfiguration::me()->isForcedGeneration()
+            || !file_exists($userFile)
+        ) {
+            $this->dumpFile(
+                $userFile,
+                Format::indentize(EnumClassBuilder::build($class))
+            );
+        }
+
+        return $this;
+    }
+}
+
 ?>

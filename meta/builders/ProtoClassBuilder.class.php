@@ -9,26 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Builders
-	**/
-	final class ProtoClassBuilder extends OnceBuilder
-	{
-		public static function build(MetaClass $class)
-		{
-			$out = self::getHead();
-			
-			if ($type = $class->getType())
-				$typeName = $type->toString().' ';
-			else
-				$typeName = null;
-			
-			$out .= <<<EOT
+/**
+ * @ingroup Builders
+ **/
+final class ProtoClassBuilder extends OnceBuilder
+{
+    public static function build(MetaClass $class)
+    {
+        $out = self::getHead();
+
+        if ($type = $class->getType()) {
+            $typeName = $type->toString() . ' ';
+        } else {
+            $typeName = null;
+        }
+
+        $out .= <<<EOT
 {$typeName}class Proto{$class->getName()} extends AutoProto{$class->getName()} {/*_*/}
 
 EOT;
-			
-			return $out.self::getHeel();
-		}
-	}
+
+        return $out . self::getHeel();
+    }
+}
+
 ?>
