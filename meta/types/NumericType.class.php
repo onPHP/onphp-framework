@@ -16,7 +16,7 @@ final class NumericType extends FloatType
 {
     public function toColumnType()
     {
-        return 'new DataType(DataType::NUMERIC)';
+        return '(new DataType(DataType::NUMERIC))';
     }
 }
 

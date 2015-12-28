@@ -24,7 +24,7 @@ final class MetaClassType extends Enumeration
         self::CLASS_SPOOKED => self::CLASS_SPOOKED
     ];
 
-    public static function getAnyId()
+    public static function getAnyId() : int
     {
         return self::CLASS_SPOOKED;
     }

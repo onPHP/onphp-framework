@@ -31,7 +31,7 @@ class IpAddressType extends ObjectType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::IP)';
+        return '(new DataType(DataType::IP))';
     }
 }
 

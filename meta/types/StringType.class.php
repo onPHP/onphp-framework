@@ -53,8 +53,8 @@ class StringType extends BasePropertyType
     {
         return
             $length
-                ? 'new DateType(DataType::VARCHAR)'
-                : 'new DataType(DataType::TEXT)';
+                ? '(new DateType(DataType::VARCHAR))'
+                : '(new DataType(DataType::TEXT))';
     }
 }
 

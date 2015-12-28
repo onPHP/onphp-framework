@@ -56,7 +56,7 @@ class IntegerType extends BasePropertyType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::INTEGER)';
+        return '(new DataType(DataType::INTEGER))';
     }
 }
 

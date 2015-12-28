@@ -135,7 +135,7 @@ abstract class Enum extends NamedObject
     /**
      * @return string
      */
-    public function toString()
+    public function toString() : string
     {
         return $this->name;
     }

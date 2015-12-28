@@ -59,7 +59,7 @@ class FloatType extends IntegerType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::REAL)';
+        return '(new DataType(DataType::REAL))';
     }
 }
 

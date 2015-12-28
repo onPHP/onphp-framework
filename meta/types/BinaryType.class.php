@@ -26,7 +26,7 @@ final class BinaryType extends BasePropertyType
 
     public function toColumnType($length = null)
     {
-        return 'new DataType(DataType::BINARY)';
+        return '(new DataType(DataType::BINARY))';
     }
 
     public function isMeasurable()

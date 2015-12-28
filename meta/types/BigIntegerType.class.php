@@ -21,7 +21,7 @@ class BigIntegerType extends IntegerType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::BIGINT)';
+        return '(new DataType(DataType::BIGINT))';
     }
 }
 

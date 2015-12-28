@@ -31,7 +31,7 @@ final class HttpUrlType extends ObjectType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::VARCHAR)';
+        return '(new DataType(DataType::VARCHAR))';
     }
 }
 

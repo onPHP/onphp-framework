@@ -26,7 +26,7 @@ class DateType extends ObjectType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::DATE)';
+        return '(new DataType(DataType::DATE))';
     }
 }
 

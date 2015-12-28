@@ -16,7 +16,7 @@ final class DoubleType extends FloatType
 {
     public function toColumnType()
     {
-        return 'new DataType(DataType::DOUBLE)';
+        return '(new DataType(DataType::DOUBLE))';
     }
 }
 

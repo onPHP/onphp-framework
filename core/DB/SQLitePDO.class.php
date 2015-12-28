@@ -174,7 +174,7 @@ class SQLitePDO extends Sequenceless
     /**
      * @return bool
      */
-    public function hasQueue()
+    public function hasQueue() : bool
     {
         return false;
     }

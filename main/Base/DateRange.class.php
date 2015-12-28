@@ -274,7 +274,7 @@ class DateRange implements Stringable, SingleRange
         return null;
     }
 
-    public function toString($delimiter = ' - ')
+    public function toString($delimiter = ' - ') : string
     {
         if ($this->start && $this->end)
             return

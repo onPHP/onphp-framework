@@ -41,7 +41,7 @@ final class HstoreType extends ObjectType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::TEXT)';
+        return '(new DataType(DataType::TEXT))';
     }
 }
 

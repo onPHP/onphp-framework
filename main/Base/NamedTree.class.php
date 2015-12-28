@@ -64,7 +64,7 @@ abstract class NamedTree extends NamedObject
         return $this;
     }
 
-    public function toString($delimiter = ' :: ')
+    public function toString($delimiter = ' :: ') : string
     {
         $name = array($this->getName());
 

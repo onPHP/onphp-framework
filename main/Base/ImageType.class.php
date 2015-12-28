@@ -120,7 +120,7 @@ class ImageType extends Enumeration
         );
     }
 
-    public static function getAnyId()
+    public static function getAnyId() : int
     {
         return self::GIF;
     }

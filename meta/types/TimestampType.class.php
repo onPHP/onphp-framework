@@ -21,7 +21,7 @@ final class TimestampType extends DateType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::TIMESTAMP)';
+        return '(new DataType(DataType::TIMESTAMP))';
     }
 }
 

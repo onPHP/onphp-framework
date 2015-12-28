@@ -21,7 +21,7 @@ class SmallIntegerType extends IntegerType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::SMALLINT)';
+        return '(new DataType(DataType::SMALLINT))';
     }
 }
 

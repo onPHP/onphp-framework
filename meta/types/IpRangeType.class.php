@@ -31,7 +31,7 @@ class IpRangeType extends ObjectType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::IP_RANGE)';
+        return '(new DataType(DataType::IP_RANGE))';
     }
 }
 

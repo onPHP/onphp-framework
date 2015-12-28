@@ -57,7 +57,7 @@ class BooleanType extends BasePropertyType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::BOOLEAN)';
+        return '(new DataType(DataType::BOOLEAN))';
     }
 
     public function toGetter(

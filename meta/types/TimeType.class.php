@@ -26,7 +26,7 @@ final class TimeType extends ObjectType
 
     public function toColumnType()
     {
-        return 'new DataType(DataType::TIME)';
+        return '(new DataType(DataType::TIME))';
     }
 }
 
