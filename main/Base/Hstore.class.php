@@ -17,6 +17,7 @@ class Hstore implements Stringable
     protected $properties = array();
 
     /**
+     * @deprecated
      * Create Hstore by raw string.
      *
      * @return Hstore
@@ -86,7 +87,7 @@ class Hstore implements Stringable
 
     public function isExists($key)
     {
-        return key_exists($key, $this->properties);
+        return array_key_exists($key, $this->properties);
     }
 
     /**
@@ -109,7 +110,7 @@ class Hstore implements Stringable
         return $this;
     }
 
-    public function toString()
+    public function toString() : string
     {
         if (empty($this->properties))
             return null;

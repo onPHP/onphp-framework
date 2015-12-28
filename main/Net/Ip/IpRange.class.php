@@ -172,7 +172,7 @@ class IpRange implements SingleRange, DialectString, Stringable
         return $dialect->quoteValue($this->toString());
     }
 
-    public function toString()
+    public function toString() : string
     {
         return $this->startIp->toString() . '-' . $this->endIp->toString();
     }

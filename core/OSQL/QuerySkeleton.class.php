@@ -56,7 +56,7 @@ abstract class QuerySkeleton extends QueryIdentification
      * @return QuerySkeleton
      * @throws WrongArgumentException
      */
-    public function where(LogicalObject $exp, $logic = null) : QuerySkeleton
+    public function where(LogicalObject $exp, $logic = null)
     {
         if ($this->where && !$logic) {
             throw new WrongArgumentException(
@@ -79,7 +79,7 @@ abstract class QuerySkeleton extends QueryIdentification
      * @return QuerySkeleton
      * @throws WrongArgumentException
      */
-    public function orWhere(LogicalObject $exp) : QuerySkeleton
+    public function orWhere(LogicalObject $exp)
     {
         return $this->where($exp, 'OR');
     }
@@ -90,7 +90,7 @@ abstract class QuerySkeleton extends QueryIdentification
      * @return QuerySkeleton
      * @throws WrongArgumentException
      */
-    public function returning($field, $alias = null) : QuerySkeleton
+    public function returning($field, $alias = null)
     {
         $this->returning[] =
             $this->resolveSelectField(

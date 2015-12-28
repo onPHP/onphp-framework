@@ -189,7 +189,7 @@ class DBColumn implements SQLTableName
     /**
      * @return bool
      */
-    public function isAutoincrement() : bool
+    public function isAutoincrement()
     {
         return $this->sequenced;
     }

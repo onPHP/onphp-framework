@@ -66,7 +66,7 @@ class IpAddress implements Stringable, DialectString
         return $dialect->quoteValue($this->toString());
     }
 
-    public function toString()
+    public function toString() : string
     {
         return long2ip($this->longIp);
     }

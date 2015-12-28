@@ -26,7 +26,7 @@ abstract class QueryIdentification implements Query
     /**
      * @return mixed
      */
-    public function toString()
+    public function toString(): string
     {
         return $this->toDialectString(ImaginaryDialect::me());
     }

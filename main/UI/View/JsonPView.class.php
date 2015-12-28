@@ -65,9 +65,8 @@ class JsonPView extends JsonView
      * @param Model $model
      * @return string
      */
-    public function toString(/* Model */
-        $model = null
-    ) {
+    public function toString($model = null) : string
+    {
         Assert::isNotEmpty($this->callback, 'callback can not be empty!');
 
         $json = parent::toString($model);

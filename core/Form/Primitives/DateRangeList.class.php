@@ -196,7 +196,7 @@ class DateRangeList extends BasePrimitive implements Stringable
     /**
      * @return null|string
      */
-    public function toString()
+    public function toString() : string
     {
         if ($this->value) {
             $out = [];

@@ -552,7 +552,7 @@ class PostgresError extends Enumeration
         'XX002' => 'INDEX CORRUPTED'
     ];
 
-    public static function getAnyId()
+    public static function getAnyId() : int
     {
         return self::SUCCESSFUL_COMPLETION;
     }

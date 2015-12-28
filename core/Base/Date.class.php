@@ -279,7 +279,7 @@ class Date implements Stringable, DialectString
      * @see sleep
      * @return array
      */
-    public function __sleep() : array
+    public function __sleep()
     {
         return ['dateTime'];
     }

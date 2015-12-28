@@ -137,7 +137,7 @@ abstract class InsertOrUpdateQuery extends QuerySkeleton implements SQLTableName
      * @return null|string
      * @throws UnimplementedFeatureException
      */
-    public function toDialectString(Dialect $dialect) : string
+    public function toDialectString(Dialect $dialect)
     {
         $this->checkReturning($dialect);
 

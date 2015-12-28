@@ -61,9 +61,8 @@ class JsonXssView extends JsonPView
      * @param Model $model
      * @return string
      */
-    public function toString(/* Model */
-        $model = null
-    ) {
+    public function toString($model = null) : string
+    {
         /*
          * Escaping warning datas
          */

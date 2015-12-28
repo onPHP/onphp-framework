@@ -43,7 +43,7 @@ class BaseRange implements Stringable
         $b = $c;
     }
 
-    public function toString($from = 'от', $to = 'до')
+    public function toString($from = 'от', $to = 'до') : string
     {
         $out = null;
 

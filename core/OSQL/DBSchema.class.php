@@ -60,7 +60,7 @@ class DBSchema extends QueryIdentification
      * @return mixed
      * @throws MissingElementException
      */
-    public function getTableByName($name) : DBSchema
+    public function getTableByName($name)
     {
         if (!isset($this->tables[$name])) {
             throw new MissingElementException(

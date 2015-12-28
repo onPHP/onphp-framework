@@ -88,7 +88,7 @@ class DataType extends Enumeration implements DialectString
     /**
      * @return int
      */
-    public static function getAnyId()
+    public static function getAnyId(): int
     {
         return self::BOOLEAN;
     }

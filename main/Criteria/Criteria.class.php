@@ -630,7 +630,7 @@ class Criteria extends QueryIdentification
     /**
      * @return null|string
      */
-    public function toString()
+    public function toString() : string
     {
         return $this->toDialectString(
             $this->dao

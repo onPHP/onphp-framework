@@ -102,12 +102,12 @@ class HttpStatus extends Enumeration
         self::CODE_510 => 'Not Extended'
     ];
 
-    public static function getAnyId()
+    public static function getAnyId() : int
     {
         return 200;
     }
 
-    public function toString()
+    public function toString() : string
     {
         return 'HTTP/1.1 ' . $this->id . ' ' . $this->name;
     }

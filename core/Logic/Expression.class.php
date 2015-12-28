@@ -390,9 +390,9 @@ class Expression extends StaticFactory
 
     /**
      * @param array ...$args
-     * @return BinaryExpression
+     * @return LogicalChain
      */
-    public static function andBlock(...$args) : BinaryExpression
+    public static function andBlock(...$args) : LogicalChain
     {
         return self::block(
             $args,

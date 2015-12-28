@@ -164,9 +164,8 @@ class JsonView implements View, Stringable
      * @param Model $model
      * @return string
      */
-    public function toString(/* Model */
-        $model = null
-    ) {
+    public function toString($model = null) : string
+    {
         Assert::isTrue($model === null || $model instanceof Model);
         if ($this->options) {
             return json_encode($model ? $model->getList() : [], $this->options);

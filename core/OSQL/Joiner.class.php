@@ -124,7 +124,7 @@ class Joiner implements DialectString
      * @param Dialect $dialect
      * @return null|string
      */
-    public function toDialectString(Dialect $dialect) : string
+    public function toDialectString(Dialect $dialect)
     {
         $fromString = null;
 
