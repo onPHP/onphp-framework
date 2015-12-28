@@ -56,6 +56,8 @@ class SocketMemcached extends CachePeer
     }
 
     /**
+     * @deprecated
+     *
      * @param string $host
      * @param int $port
      * @param int $buffer
