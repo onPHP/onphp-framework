@@ -37,4 +37,3 @@ abstract class ManyToManyLinked extends UnifiedContainer
     }
 }
 
-?>

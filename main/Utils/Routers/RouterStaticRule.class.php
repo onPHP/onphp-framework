@@ -48,4 +48,3 @@ final class RouterStaticRule extends RouterBaseRule
     }
 }
 
-?>

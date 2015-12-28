@@ -46,4 +46,3 @@ interface OpenIdConsumerAssociationManager
     public function purgeByHandle($handle);
 }
 
-?>

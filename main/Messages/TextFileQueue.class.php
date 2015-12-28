@@ -44,4 +44,4 @@ class TextFileQueue implements MessageQueue
     }
 }
 
-?>
+

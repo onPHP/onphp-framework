@@ -19,4 +19,3 @@ interface OpenIdExtension
     public function parseResponce(HttpRequest $request, array $params);
 }
 
-?>

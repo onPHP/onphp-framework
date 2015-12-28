@@ -66,4 +66,3 @@ interface BigInteger extends Stringable
     public function floatValue();
 }
 
-?>

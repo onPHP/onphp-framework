@@ -32,4 +32,4 @@ class ImmutableObjectComparator extends Singleton
     }
 }
 
-?>
+

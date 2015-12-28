@@ -96,4 +96,3 @@ final class HeaderParser
     }
 }
 
-?>

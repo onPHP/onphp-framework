@@ -56,4 +56,3 @@ final class YandexRssFeedFormat extends FeedFormat
     }
 }
 
-?>

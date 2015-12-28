@@ -22,4 +22,3 @@ interface MessageQueueSender
     public function getQueue();
 }
 
-?>

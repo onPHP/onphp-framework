@@ -35,4 +35,3 @@ abstract class OqlQuery extends OqlQueryClause
     }
 }
 
-?>

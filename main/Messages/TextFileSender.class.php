@@ -62,4 +62,3 @@ final class TextFileSender implements MessageQueueSender
     }
 }
 
-?>

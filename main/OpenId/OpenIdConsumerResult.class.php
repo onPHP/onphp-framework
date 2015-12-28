@@ -20,4 +20,3 @@ interface OpenIdConsumerResult
     public function isOk();
 }
 
-?>

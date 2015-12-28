@@ -73,4 +73,3 @@ class NamespaceResolverPSR0 extends NamespaceResolverOnPHP
     }
 }
 
-?>

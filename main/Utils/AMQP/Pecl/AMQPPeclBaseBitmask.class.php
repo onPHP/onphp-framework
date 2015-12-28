@@ -35,4 +35,3 @@ abstract class AMQPPeclBaseBitmask implements AMQPBitmaskResolver
     }
 }
 
-?>

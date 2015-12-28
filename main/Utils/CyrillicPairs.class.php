@@ -180,4 +180,3 @@ final class CyrillicPairs extends StaticFactory
     }
 }
 
-?>

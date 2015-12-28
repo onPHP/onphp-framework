@@ -511,4 +511,3 @@ final class OpenIdConsumer
     }
 }
 
-?>

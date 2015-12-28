@@ -75,4 +75,3 @@ interface HttpClient
     public function getMaxFileSize();
 }
 
-?>

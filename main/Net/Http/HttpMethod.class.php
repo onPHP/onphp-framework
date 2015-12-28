@@ -78,4 +78,3 @@ final class HttpMethod extends Enumeration
     }
 }
 
-?>

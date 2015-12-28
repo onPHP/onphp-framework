@@ -84,4 +84,3 @@ final class ArgumentParser extends Singleton
     }
 }
 
-?>

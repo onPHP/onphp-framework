@@ -42,4 +42,3 @@ final class AMQPQueueConfig extends AMQPBaseConfig
 
 }
 
-?>

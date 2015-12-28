@@ -47,4 +47,3 @@ final class OqlHavingParser extends OqlParser
     }
 }
 
-?>

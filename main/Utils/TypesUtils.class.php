@@ -36,4 +36,3 @@ final class TypesUtils extends StaticFactory
     }
 }
 
-?>

@@ -86,4 +86,3 @@ interface AMQPConsumer
     public function getNextDelivery();
 }
 
-?>

@@ -35,4 +35,3 @@ final class OpenIdConsumerPositive implements OpenIdConsumerResult
     }
 }
 
-?>

@@ -85,4 +85,3 @@ final class InfoZipArchive extends FileArchive
     }
 }
 
-?>

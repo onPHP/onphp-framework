@@ -258,4 +258,3 @@ final class OqlSelectParser extends OqlParser
     }
 }
 
-?>

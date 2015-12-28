@@ -127,4 +127,4 @@ final class AMQPPecl extends AMQP
     }
 }
 
-?>
+

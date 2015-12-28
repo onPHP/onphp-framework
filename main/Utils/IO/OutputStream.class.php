@@ -50,4 +50,3 @@ abstract class OutputStream
     }
 }
 
-?>

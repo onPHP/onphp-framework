@@ -159,4 +159,3 @@ final class OpenIdExtensionSreg implements OpenIdExtension
     }
 }
 
-?>

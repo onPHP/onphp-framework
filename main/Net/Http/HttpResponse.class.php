@@ -33,4 +33,3 @@ interface HttpResponse
     public function getBody();
 }
 
-?>

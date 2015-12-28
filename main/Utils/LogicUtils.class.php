@@ -134,4 +134,3 @@ final class LogicUtils extends StaticFactory
     }
 }
 
-?>

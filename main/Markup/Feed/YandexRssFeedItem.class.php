@@ -41,4 +41,3 @@ final class YandexRssFeedItem extends FeedItem
     }
 }
 
-?>

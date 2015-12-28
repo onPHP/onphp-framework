@@ -47,4 +47,3 @@ final class TarArchive extends FileArchive
     }
 }
 
-?>

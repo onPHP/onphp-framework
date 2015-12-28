@@ -206,4 +206,3 @@ final class TextUtils extends StaticFactory
     }
 }
 
-?>

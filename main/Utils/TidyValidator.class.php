@@ -291,4 +291,3 @@ final class TidyValidator
     }
 }
 
-?>

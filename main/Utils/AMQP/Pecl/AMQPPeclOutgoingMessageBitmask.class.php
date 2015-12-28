@@ -32,4 +32,3 @@ final class AMQPPeclOutgoingMessageBitmask implements AMQPBitmaskResolver
     }
 }
 
-?>

@@ -85,4 +85,3 @@ class DaoSynchronizer extends CustomizableDaoSynchronizer
     }
 }
 
-?>

@@ -122,4 +122,4 @@ abstract class AMQPDefaultConsumer implements AMQPConsumer
     }
 }
 
-?>
+

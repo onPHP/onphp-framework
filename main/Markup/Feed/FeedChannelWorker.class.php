@@ -19,4 +19,3 @@ interface FeedChannelWorker
     public function toXml(FeedChannel $channel, $itemsXml);
 }
 
-?>

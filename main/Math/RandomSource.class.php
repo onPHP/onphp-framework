@@ -17,4 +17,3 @@ interface RandomSource
     public function getBytes($numberOfBytes);
 }
 
-?>

@@ -379,4 +379,3 @@ final class OqlSelectQuery extends OqlQuery
     }
 }
 
-?>

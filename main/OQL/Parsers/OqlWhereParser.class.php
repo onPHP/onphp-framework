@@ -43,4 +43,3 @@ final class OqlWhereParser extends OqlParser
     }
 }
 
-?>

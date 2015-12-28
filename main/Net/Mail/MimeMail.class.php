@@ -98,4 +98,3 @@ final class MimeMail implements MailBuilder
     }
 }
 
-?>

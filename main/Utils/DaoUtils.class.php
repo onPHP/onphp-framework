@@ -125,4 +125,3 @@ final class DaoUtils extends StaticFactory
     }
 }
 
-?>

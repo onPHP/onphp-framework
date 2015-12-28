@@ -150,4 +150,3 @@ final class PinbaClient extends Singleton
     }
 }
 
-?>

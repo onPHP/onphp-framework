@@ -21,4 +21,3 @@ interface MailBuilder
     public function getHeaders();
 }
 
-?>

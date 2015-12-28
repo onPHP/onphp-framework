@@ -128,4 +128,3 @@ final class StringReader extends Reader
     }
 }
 
-?>

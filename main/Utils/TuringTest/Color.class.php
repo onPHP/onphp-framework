@@ -120,4 +120,3 @@ class Color implements Stringable
     }
 }
 
-?>

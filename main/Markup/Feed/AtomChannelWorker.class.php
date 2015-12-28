@@ -48,4 +48,3 @@ final class AtomChannelWorker extends Singleton implements FeedChannelWorker
     }
 }
 
-?>

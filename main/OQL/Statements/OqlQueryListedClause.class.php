@@ -52,4 +52,3 @@ abstract class OqlQueryListedClause extends OqlQueryClause
     }
 }
 
-?>

@@ -13,4 +13,3 @@ class AMQPServerException extends BaseException
 {/**/
 }
 
-?>

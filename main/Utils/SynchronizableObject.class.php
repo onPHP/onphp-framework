@@ -21,4 +21,3 @@ interface SynchronizableObject
     public function __toString();
 }
 
-?>

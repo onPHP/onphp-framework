@@ -211,4 +211,3 @@ class MultiPrefixPhpViewResolver implements ViewResolver
     }
 }
 
-?>

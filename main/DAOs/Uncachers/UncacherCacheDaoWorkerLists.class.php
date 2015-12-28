@@ -78,4 +78,3 @@ class UncacherCacheDaoWorkerLists implements UncacherBase
     }
 }
 
-?>

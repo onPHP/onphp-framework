@@ -19,4 +19,3 @@ interface FeedItemWorker extends Instantiatable
     public function toXml(FeedItem $item);
 }
 
-?>

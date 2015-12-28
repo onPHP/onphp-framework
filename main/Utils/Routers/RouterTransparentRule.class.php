@@ -292,4 +292,3 @@ final class RouterTransparentRule extends RouterBaseRule
     }
 }
 
-?>

@@ -17,4 +17,3 @@ abstract class DTOMessage implements PrototypedEntity
     }
 }
 
-?>

@@ -13,4 +13,4 @@ interface MessageQueue
 { /* nop */
 }
 
-?>
+

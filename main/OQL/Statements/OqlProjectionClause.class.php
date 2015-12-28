@@ -39,4 +39,3 @@ class OqlProjectionClause extends OqlQueryListedClause
     }
 }
 
-?>

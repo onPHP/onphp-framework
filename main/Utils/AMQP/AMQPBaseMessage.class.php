@@ -287,4 +287,3 @@ abstract class AMQPBaseMessage
     }
 }
 
-?>

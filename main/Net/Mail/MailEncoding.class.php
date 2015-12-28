@@ -59,4 +59,3 @@ final class MailEncoding extends Enumeration
     }
 }
 
-?>

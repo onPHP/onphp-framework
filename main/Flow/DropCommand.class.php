@@ -48,4 +48,3 @@ class DropCommand implements EditorCommand
     }
 }
 
-?>

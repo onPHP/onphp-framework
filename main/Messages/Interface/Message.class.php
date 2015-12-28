@@ -17,4 +17,3 @@ interface Message
     public function getTimestamp();
 }
 
-?>

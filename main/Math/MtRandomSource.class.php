@@ -37,4 +37,3 @@ final class MtRandomSource extends Singleton implements RandomSource
     }
 }
 
-?>

@@ -71,4 +71,3 @@ final class RssChannelWorker extends Singleton implements FeedChannelWorker
     }
 }
 
-?>

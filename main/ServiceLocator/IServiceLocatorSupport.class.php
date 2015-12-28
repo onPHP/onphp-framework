@@ -17,4 +17,3 @@ interface IServiceLocatorSupport
     public function getServiceLocator();
 }
 
-?>

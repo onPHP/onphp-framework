@@ -110,4 +110,3 @@ class CacheDaoWorker extends TransparentDaoWorker
     //@}
 }
 
-?>

@@ -85,4 +85,3 @@ final class SortHelper extends Singleton implements Instantiatable
     }
 }
 
-?>

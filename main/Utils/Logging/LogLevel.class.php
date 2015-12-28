@@ -113,4 +113,3 @@ final class LogLevel extends Enumeration
     }
 }
 
-?>

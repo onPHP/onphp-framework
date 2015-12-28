@@ -45,4 +45,3 @@ final class IndexedList extends AbstractList
     }
 }
 
-?>

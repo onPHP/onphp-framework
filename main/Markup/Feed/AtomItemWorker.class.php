@@ -113,4 +113,3 @@ final class AtomItemWorker extends Singleton implements FeedItemWorker
     }
 }
 
-?>

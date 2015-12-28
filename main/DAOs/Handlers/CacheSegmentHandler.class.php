@@ -64,4 +64,3 @@ final class CacheSegmentHandler implements SegmentHandler
     }
 }
 
-?>

@@ -97,4 +97,3 @@ final class RssItemWorker extends Singleton implements FeedItemWorker
     }
 }
 
-?>

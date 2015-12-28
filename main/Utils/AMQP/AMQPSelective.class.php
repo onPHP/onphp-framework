@@ -305,4 +305,3 @@ final class AMQPSelective implements AMQPInterface
     }
 }
 
-?>

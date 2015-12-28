@@ -344,4 +344,3 @@ final class RussianTextUtils extends StaticFactory
     }
 }
 
-?>

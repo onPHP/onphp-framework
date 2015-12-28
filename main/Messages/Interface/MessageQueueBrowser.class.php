@@ -17,4 +17,3 @@ interface MessageQueueBrowser
     public function getNextMessage();
 }
 
-?>

@@ -64,4 +64,3 @@ final class OqlOrderByParser extends OqlParser
     }
 }
 
-?>

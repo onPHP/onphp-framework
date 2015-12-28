@@ -65,4 +65,3 @@ final class AMQPExchangeConfig extends AMQPBaseConfig
     }
 }
 
-?>

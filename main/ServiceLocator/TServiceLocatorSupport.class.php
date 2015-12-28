@@ -34,4 +34,3 @@ trait TServiceLocatorSupport
     }
 }
 
-?>

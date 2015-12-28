@@ -286,4 +286,3 @@ final class RouterRewrite extends Singleton implements Router, Instantiatable
     }
 }
 
-?>

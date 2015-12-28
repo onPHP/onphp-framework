@@ -105,4 +105,3 @@ class OqlQueryExpression extends OqlQueryParameter
     }
 }
 
-?>

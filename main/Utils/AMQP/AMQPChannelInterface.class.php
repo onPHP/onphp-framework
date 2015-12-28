@@ -113,4 +113,3 @@ interface AMQPChannelInterface
     public function basicCancel($consumerTag);
 }
 
-?>

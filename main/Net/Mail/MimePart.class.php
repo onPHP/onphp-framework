@@ -300,4 +300,3 @@ final class MimePart implements MailBuilder
     }
 }
 
-?>

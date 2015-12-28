@@ -49,4 +49,3 @@ final class AMQPExchangeType extends Enumeration
     }
 }
 
-?>

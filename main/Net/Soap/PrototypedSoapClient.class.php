@@ -255,4 +255,3 @@ abstract class PrototypedSoapClient
      **/
 }
 
-?>

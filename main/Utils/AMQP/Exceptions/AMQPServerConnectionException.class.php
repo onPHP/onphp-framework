@@ -13,4 +13,3 @@ class AMQPServerConnectionException extends AMQPServerException
 {/**/
 }
 
-?>

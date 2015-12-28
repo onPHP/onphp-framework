@@ -176,4 +176,3 @@ class JsonView implements View, Stringable
     }
 }
 
-?>

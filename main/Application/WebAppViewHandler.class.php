@@ -100,4 +100,3 @@ class WebAppViewHandler implements InterceptingChainHandler
     }
 }
 
-?>

@@ -31,4 +31,3 @@ interface OpenIdConsumerAssociation
     public function getServer();
 }
 
-?>

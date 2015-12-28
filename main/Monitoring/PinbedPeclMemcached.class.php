@@ -141,4 +141,3 @@ final class PinbedPeclMemcached extends PeclMemcached
     }
 }
 
-?>

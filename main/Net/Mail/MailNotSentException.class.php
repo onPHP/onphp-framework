@@ -17,4 +17,3 @@ class MailNotSentException extends MailException
 }
 
 ;
-?>

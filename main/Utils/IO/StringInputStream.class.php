@@ -96,4 +96,3 @@ final class StringInputStream extends InputStream
     }
 }
 
-?>

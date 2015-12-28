@@ -37,4 +37,3 @@ final class OqlHavingClause extends OqlQueryExpressionClause
     }
 }
 
-?>

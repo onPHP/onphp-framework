@@ -23,4 +23,3 @@ interface UncacherBase
     public function uncache();
 }
 
-?>

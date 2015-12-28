@@ -96,4 +96,3 @@ final class DaoMoveHelper extends StaticFactory
     }
 }
 
-?>

@@ -60,4 +60,3 @@ abstract class Reader
     }
 }
 
-?>

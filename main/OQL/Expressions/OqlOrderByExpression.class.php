@@ -37,4 +37,3 @@ final class OqlOrderByExpression extends OqlQueryExpression
     }
 }
 
-?>

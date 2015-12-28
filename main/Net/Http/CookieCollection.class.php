@@ -37,4 +37,3 @@ final class CookieCollection extends AbstractCollection
     }
 }
 
-?>

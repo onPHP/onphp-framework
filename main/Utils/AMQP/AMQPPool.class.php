@@ -159,4 +159,3 @@ final class AMQPPool extends Singleton implements Instantiatable
     }
 }
 
-?>

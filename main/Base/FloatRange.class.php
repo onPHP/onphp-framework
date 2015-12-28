@@ -59,4 +59,3 @@ class FloatRange extends BaseRange
     }
 }
 
-?>

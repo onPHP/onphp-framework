@@ -47,4 +47,3 @@ abstract class OqlQueryExpressionClause extends OqlQueryClause
     }
 }
 
-?>

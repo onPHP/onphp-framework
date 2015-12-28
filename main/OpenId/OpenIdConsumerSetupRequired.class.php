@@ -35,4 +35,3 @@ final class OpenIdConsumerSetupRequired implements OpenIdConsumerResult
     }
 }
 
-?>

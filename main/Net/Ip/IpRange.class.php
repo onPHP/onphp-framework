@@ -178,4 +178,3 @@ class IpRange implements SingleRange, DialectString, Stringable
     }
 }
 
-?>

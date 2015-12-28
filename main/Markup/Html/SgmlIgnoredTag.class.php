@@ -78,4 +78,3 @@ final class SgmlIgnoredTag extends SgmlTag
     }
 }
 
-?>

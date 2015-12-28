@@ -130,4 +130,3 @@ final class CurlHttpResponse implements HttpResponse
     }
 }
 
-?>

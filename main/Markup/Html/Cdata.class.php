@@ -70,4 +70,3 @@ final class Cdata extends SgmlToken
     }
 }
 
-?>

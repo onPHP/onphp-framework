@@ -339,4 +339,3 @@ class AMQPProxyChannel implements AMQPChannelInterface
     }
 }
 
-?>

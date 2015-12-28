@@ -120,4 +120,3 @@ final class YandexRssItemWorker extends Singleton implements FeedItemWorker
     }
 }
 
-?>

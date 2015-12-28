@@ -13,4 +13,3 @@ class AMQPQueueConsumer extends AMQPDefaultConsumer
 {/**/
 }
 
-?>

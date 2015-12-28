@@ -46,4 +46,3 @@ final class AMQPPeclIncomingMessageAdapter extends StaticFactory
 
 }
 
-?>

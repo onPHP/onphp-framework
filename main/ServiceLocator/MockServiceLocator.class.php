@@ -78,4 +78,3 @@ class MockServiceLocator extends ServiceLocator
     }
 }
 
-?>

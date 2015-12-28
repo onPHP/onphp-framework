@@ -24,4 +24,3 @@ final class SgmlEndTag extends SgmlTag
     }
 }
 
-?>

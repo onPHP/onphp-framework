@@ -1293,7 +1293,7 @@ final class HtmlTokenizer
 
         $this->mark();
 
-        $content = $this->getContentToSubstring('?>');
+        $content = $this->getContentToSubstring('');
 
         if (!$this->substringFound) {
             $this->reset();
@@ -1368,4 +1368,3 @@ final class HtmlTokenizer
     }
 }
 
-?>

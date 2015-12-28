@@ -148,4 +148,3 @@ abstract class BaseLogger
     }
 }
 
-?>

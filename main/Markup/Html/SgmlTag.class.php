@@ -33,4 +33,3 @@ abstract class SgmlTag extends SgmlToken
     }
 }
 
-?>

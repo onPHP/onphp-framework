@@ -26,4 +26,3 @@ abstract class DTOClass implements PrototypedEntity
     }
 }
 
-?>

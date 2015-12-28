@@ -32,4 +32,3 @@ abstract class BigNumberFactory extends Singleton
     abstract public function makeRandom($stop, RandomSource $source);
 }
 
-?>

@@ -59,4 +59,3 @@ final class AMQPOutgoingMessage extends AMQPBaseMessage
     }
 }
 
-?>

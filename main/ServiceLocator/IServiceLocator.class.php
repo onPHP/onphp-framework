@@ -49,4 +49,3 @@ interface IServiceLocator
     public function getList();
 }
 
-?>

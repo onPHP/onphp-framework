@@ -803,4 +803,3 @@ abstract class OqlParser
     }
 }
 
-?>

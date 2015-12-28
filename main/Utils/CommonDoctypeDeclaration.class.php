@@ -171,4 +171,3 @@ final class CommonDoctypeDeclaration extends DoctypeDeclaration
     }
 }
 
-?>

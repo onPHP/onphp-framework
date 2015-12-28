@@ -14,4 +14,3 @@ interface AMQPBitmaskResolver
     public function getBitmask($config);
 }
 
-?>

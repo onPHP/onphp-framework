@@ -85,4 +85,3 @@ final class IpNetwork implements SingleRange
     }
 }
 
-?>

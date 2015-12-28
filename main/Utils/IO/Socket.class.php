@@ -412,4 +412,3 @@ final class Socket
     }
 }
 
-?>

@@ -20,4 +20,3 @@ final class OpenIdConsumerCancel implements OpenIdConsumerResult
     }
 }
 
-?>

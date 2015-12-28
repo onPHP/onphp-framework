@@ -88,4 +88,3 @@ final class SocketInputStream extends InputStream
     }
 }
 
-?>

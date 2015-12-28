@@ -41,4 +41,3 @@ final class OqlSelectPropertiesClause extends OqlProjectionClause
     }
 }
 
-?>

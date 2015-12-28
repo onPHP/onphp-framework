@@ -62,4 +62,3 @@ final class GmpBigIntegerFactory extends BigNumberFactory
     }
 }
 
-?>

@@ -55,4 +55,3 @@ final class FormToArgumentsConverter extends StaticFactory
     }
 }
 
-?>

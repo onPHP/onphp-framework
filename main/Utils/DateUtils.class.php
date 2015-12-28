@@ -100,4 +100,3 @@ final class DateUtils extends StaticFactory
     }
 }
 
-?>

@@ -82,4 +82,3 @@ class IsoCurrency extends Enumeration
     }
 }
 
-?>

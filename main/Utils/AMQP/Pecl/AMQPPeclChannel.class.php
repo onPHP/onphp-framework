@@ -651,4 +651,3 @@ final class AMQPPeclChannel extends AMQPBaseChannel
     }
 }
 
-?>

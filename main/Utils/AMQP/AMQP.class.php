@@ -179,4 +179,3 @@ abstract class AMQP implements AMQPInterface
 
 }
 
-?>

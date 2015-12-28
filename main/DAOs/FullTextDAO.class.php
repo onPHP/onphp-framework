@@ -21,4 +21,3 @@ interface FullTextDAO extends BaseDAO
     public function getIndexField();
 }
 
-?>

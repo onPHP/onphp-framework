@@ -98,4 +98,3 @@ final class FullTextUtils extends StaticFactory
     }
 }
 
-?>

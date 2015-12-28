@@ -654,4 +654,3 @@ class Criteria extends QueryIdentification
     }
 }
 
-?>

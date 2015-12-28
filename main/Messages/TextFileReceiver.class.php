@@ -93,4 +93,3 @@ final class TextFileReceiver implements MessageQueueReceiver
     }
 }
 
-?>

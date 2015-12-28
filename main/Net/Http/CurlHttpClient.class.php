@@ -461,4 +461,3 @@ final class CurlHttpClient implements HttpClient
     }
 }
 
-?>

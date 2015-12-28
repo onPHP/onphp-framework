@@ -16,4 +16,3 @@ class OpenIdException extends BaseException
 {
 }
 
-?>

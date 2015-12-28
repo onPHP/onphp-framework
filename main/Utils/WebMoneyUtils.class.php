@@ -55,4 +55,4 @@ final class WebMoneyUtils extends StaticFactory
     }
 }
 
-?>
+

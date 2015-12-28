@@ -87,4 +87,3 @@ interface AMQPInterface
     //public function setAlive($alive);
 }
 
-?>

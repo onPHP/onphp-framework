@@ -29,4 +29,3 @@ interface SimplifiedArrayAccess
     public function drop($name);
 }
 
-?>

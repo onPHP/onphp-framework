@@ -113,4 +113,3 @@ class ServiceLocator implements IServiceLocator
     }
 }
 
-?>

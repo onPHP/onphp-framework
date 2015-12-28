@@ -54,4 +54,4 @@ final class TextMessage implements Message
     }
 }
 
-?>
+

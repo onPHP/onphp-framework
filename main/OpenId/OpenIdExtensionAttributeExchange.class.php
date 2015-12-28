@@ -145,4 +145,3 @@ final class OpenIdExtensionAttributeExchange implements OpenIdExtension
     }
 }
 
-?>
