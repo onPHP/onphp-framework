@@ -277,44 +277,41 @@ class MetaClassProperty
 
         $column = <<<EOT
 addColumn(
-                (new DBColumn(
-                    {$this->type->toColumnType($this->size)}
+            (new DBColumn(
+                {$this->type->toColumnType($this->size)}
 EOT;
 
         if ($this->required) {
             $column .= <<<EOT
-\n                        ->setNull(false)
+\n                    ->setNull(false)
 EOT;
         }
 
         if ($this->size) {
             $column .= <<<EOT
-\n                      ->setSize({$this->size})
+\n                    ->setSize({$this->size})
 EOT;
         }
 
         if ($this->type instanceof NumericType) {
             $column .= <<<EOT
-\n                      ->setPrecision({$this->type->getPrecision()})
+\n                    ->setPrecision({$this->type->getPrecision()})
 EOT;
         }
 
         $column .= <<<EOT
 , '{$columnName}'
-    )
-)
+            ))
 EOT;
 
         if ($this->identifier) {
             $column .= <<<EOT
-->
-setPrimaryKey(true)
+\n                ->setPrimaryKey(true)
 EOT;
 
             if ($this->getType() instanceof IntegerType) {
                 $column .= <<<EOT
-->
-setAutoincrement(true)
+\n                ->setAutoincrement(true)\n
 EOT;
             }
         }
@@ -333,14 +330,13 @@ EOT;
             }
 
             $column .= <<<EOT
-->
-setDefault({$default})
+\n                ->setDefault({$default})\n
 EOT;
         }
 
         $column .= <<<EOT
 
-)
+        )
 EOT;
 
         return $column;

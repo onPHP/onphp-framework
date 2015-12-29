@@ -17,10 +17,10 @@ final class SchemaBuilder extends BaseBuilder
     public static function buildTable($tableName, array $propertyList)
     {
         $out = <<<EOT
-\$schema->
-    addTable(
-        (new DBTable('{$tableName}'))
-            ->
+\$schema
+    ->addTable(
+    (new DBTable('{$tableName}'))
+        ->
 EOT;
         $columns = [];
 
@@ -41,7 +41,7 @@ EOT;
             }
         }
 
-        $out .= implode("\n->", $columns);
+        $out .= implode("\n        ->", $columns);
 
         return $out . "\n);\n\n";
     }

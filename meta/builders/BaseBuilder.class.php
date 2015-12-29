@@ -131,7 +131,7 @@ EOT;
 
     protected static function getHeel()
     {
-        return '?>';
+        return '';
     }
 }
 

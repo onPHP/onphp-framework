@@ -12,8 +12,12 @@
 /**
  * @ingroup Builders
  **/
-final class AutoProtoClassBuilder extends BaseBuilder
+class AutoProtoClassBuilder extends BaseBuilder
 {
+    /**
+     * @param MetaClass $class
+     * @return string
+     */
     public static function build(MetaClass $class)
     {
         $out = self::getHead();
@@ -42,7 +46,11 @@ EOT;
         return $out . self::getHeel();
     }
 
-    private static function dumpMetaClass(MetaClass $class)
+    /**
+     * @param MetaClass $class
+     * @return string
+     */
+    private static function dumpMetaClass(MetaClass $class) : string
     {
         $propertyList = $class->getWithInternalProperties();
 
@@ -54,10 +62,9 @@ EOT;
 
         if ($class->hasBuildableParent()) {
             $out .= <<<EOT
-return
-    array_merge(
+    return array_merge(
         parent::makePropertyList(),
-            array(
+        [
 
 EOT;
             if ($class->getIdentifier()) {
@@ -66,7 +73,8 @@ EOT;
             }
         } else {
             $out .= <<<EOT
-return array(
+    return
+        [
 
 EOT;
         }
@@ -75,23 +83,27 @@ EOT;
 
         foreach ($propertyList as $property) {
             $list[] =
-                "'{$property->getName()}' => "
+                "            '{$property->getName()}' => "
                 . $property->toLightProperty($class)->toString();
         }
 
         $out .= implode(",\n", $list);
 
         if ($class->hasBuildableParent()) {
-            $out .= "\n)";
-        }
-
-        $out .= <<<EOT
-
-);
-}
+            $out .= <<<EOT
+\n        ]
+\n    );
+\n}
 EOT;
+
+        } else {
+
+            $out .= <<<EOT
+
+        ];
+\n}
+EOT;
+        }
         return $out;
     }
 }
-
-?>

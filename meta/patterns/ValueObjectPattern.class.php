@@ -24,9 +24,9 @@ final class ValueObjectPattern extends BasePattern
      **/
     protected function fullBuild(MetaClass $class)
     {
-        return $this->
-        buildBusiness($class)->
-        buildProto($class);
+        return $this
+            ->buildBusiness($class)
+            ->buildProto($class);
     }
 }
 

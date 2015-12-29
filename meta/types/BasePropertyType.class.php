@@ -56,7 +56,7 @@ abstract class BasePropertyType
 
 public function {$methodName}()
 {
-	return \$this->{$name};
+    return \$this->{$name};
 }
 
 EOT;
@@ -78,9 +78,9 @@ EOT;
 **/
 public function {$methodName}(\${$name})
 {
-	\$this->{$holder->getName()}->{$methodName}(\${$name});
+    \$this->{$holder->getName()}->{$methodName}(\${$name});
 
-	return \$this;
+    return \$this;
 }
 
 EOT;
@@ -92,9 +92,9 @@ EOT;
 **/
 public function {$methodName}(\${$name})
 {
-	\$this->{$name} = \${$name};
+    \$this->{$name} = \${$name};
 
-	return \$this;
+    return \$this;
 }
 
 EOT;

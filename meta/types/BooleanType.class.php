@@ -76,12 +76,12 @@ class BooleanType extends BasePropertyType
 
 public function {$compatName}()
 {
-	return \$this->{$holder->getName()}->{$compatName}();
+    return \$this->{$holder->getName()}->{$compatName}();
 }
 
 public function {$methodName}()
 {
-	return \$this->{$holder->getName()}->{$methodName}();
+    return \$this->{$holder->getName()}->{$methodName}();
 }
 
 EOT;
@@ -90,12 +90,12 @@ EOT;
 
 public function {$compatName}()
 {
-	return \$this->{$name};
+    return \$this->{$name};
 }
 
 public function {$methodName}()
 {
-	return \$this->{$name};
+    return \$this->{$name};
 }
 
 EOT;
@@ -120,9 +120,9 @@ EOT;
 **/
 public function {$methodName}(\${$name})
 {
-	\$this->{$holder->getName()}->{$methodName}(\${$name});
+    \$this->{$holder->getName()}->{$methodName}(\${$name});
 
-	return \$this;
+    return \$this;
 }
 
 EOT;
@@ -135,9 +135,9 @@ EOT;
 **/
 public function {$methodName}(\${$name} = false)
 {
-	\$this->{$name} = (\${$name} === true);
+    \$this->{$name} = (\${$name} === true);
 
-	return \$this;
+    return \$this;
 }
 
 EOT;
@@ -149,11 +149,11 @@ EOT;
 **/
 public function {$methodName}(\${$name} = null)
 {
-	Assert::isTernaryBase(\${$name});
-	
-	\$this->{$name} = \${$name};
+    Assert::isTernaryBase(\${$name});
 
-	return \$this;
+    \$this->{$name} = \${$name};
+
+    return \$this;
 }
 
 EOT;

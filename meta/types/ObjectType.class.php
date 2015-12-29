@@ -75,9 +75,9 @@ class ObjectType extends BasePropertyType
 **/
 public function {$methodName}()
 {
-	\$this->{$holder->getName()}->{$methodName}();
+    \$this->{$holder->getName()}->{$methodName}();
 
-	return \$this;
+    return \$this;
 }
 
 EOT;
@@ -90,10 +90,10 @@ EOT;
 **/
 public function {$methodName}()
 {
-	\$this->{$name} = null;
-	\$this->{$name}Id = null;
+    \$this->{$name} = null;
+    \$this->{$name}Id = null;
 
-	return \$this;
+    return \$this;
 }
 
 EOT;
@@ -105,9 +105,9 @@ EOT;
 **/
 public function {$methodName}()
 {
-	\$this->{$name} = null;
+    \$this->{$name} = null;
 
-	return \$this;
+    return \$this;
 }
 
 EOT;
@@ -142,7 +142,7 @@ EOT;
 **/
 public function {$methodName}()
 {
-	return \$this->{$holder->getName()}->{$methodName}();
+    return \$this->{$holder->getName()}->{$methodName}();
 }
 
 EOT;
@@ -165,18 +165,18 @@ EOT;
 {$classHint}
 public function {$methodName}()
 {
-	if (!\$this->{$name} && \$this->{$name}Id) {
-		\$this->{$name} = {$fetchObjectString};
-	}
+    if (!\$this->{$name} && \$this->{$name}Id) {
+        \$this->{$name} = {$fetchObjectString};
+    }
 
-	return \$this->{$name};
+    return \$this->{$name};
 }
 
 public function {$methodName}Id()
 {
-	return \$this->{$name}
-		? \$this->{$name}->getId()
-		: \$this->{$name}Id;
+    return \$this->{$name}
+        ? \$this->{$name}->getId()
+        : \$this->{$name}Id;
 }
 
 EOT;
@@ -197,11 +197,11 @@ EOT;
 **/
 public function get{$methodName}(\$lazy = false)
 {
-	if (!\$this->{$name} || (\$this->{$name}->isLazy() != \$lazy)) {
-		\$this->{$name} = new {$containerName}(\$this, \$lazy);
-	}
+    if (!\$this->{$name} || (\$this->{$name}->isLazy() != \$lazy)) {
+        \$this->{$name} = new {$containerName}(\$this, \$lazy);
+    }
 
-	return \$this->{$name};
+    return \$this->{$name};
 }
 
 /**
@@ -209,17 +209,17 @@ public function get{$methodName}(\$lazy = false)
 **/
 public function fill{$methodName}(\$collection, \$lazy = false)
 {
-	\$this->{$name} = new {$containerName}(\$this, \$lazy);
+    \$this->{$name} = new {$containerName}(\$this, \$lazy);
 
-	if (!\$this->id) {
-		throw new WrongStateException(
-			'i do not know which object i belong to'
-		);
-	}
+    if (!\$this->id) {
+        throw new WrongStateException(
+            'i do not know which object i belong to'
+        );
+    }
 
-	\$this->{$name}->mergeList(\$collection);
+    \$this->{$name}->mergeList(\$collection);
 
-	return \$this;
+    return \$this;
 }
 
 EOT;
@@ -229,7 +229,7 @@ EOT;
 {$classHint}
 public function {$methodName}()
 {
-	return \$this->{$name};
+    return \$this->{$name};
 }
 
 EOT;
@@ -263,9 +263,9 @@ EOT;
 **/
 public function {$methodName}({$property->getType()->getClassName()} \${$name})
 {
-	\$this->{$holder->getName()}->{$methodName}(\${$name});
+    \$this->{$holder->getName()}->{$methodName}(\${$name});
 
-	return \$this;
+    return \$this;
 }
 
 EOT;
@@ -280,10 +280,10 @@ EOT;
 **/
 public function {$methodName}({$this->className} \${$name}{$defaultValue})
 {
-	\$this->{$name} = \${$name};
-	\$this->{$name}Id = \${$name} ? \${$name}->getId() : null;
+    \$this->{$name} = \${$name};
+    \$this->{$name}Id = \${$name} ? \${$name}->getId() : null;
 
-	return \$this;
+    return \$this;
 }
 
 /**
@@ -291,10 +291,10 @@ public function {$methodName}({$this->className} \${$name}{$defaultValue})
 **/
 public function {$methodName}Id(\$id{$defaultValue})
 {
-	\$this->{$name} = null;
-	\$this->{$name}Id = \$id;
+    \$this->{$name} = null;
+    \$this->{$name}Id = \$id;
 
-	return \$this;
+    return \$this;
 }
 
 EOT;
@@ -306,9 +306,9 @@ EOT;
 **/
 public function {$methodName}({$this->className} \${$name}{$defaultValue})
 {
-	\$this->{$name} = \${$name};
+    \$this->{$name} = \${$name};
 
-	return \$this;
+    return \$this;
 }
 
 EOT;

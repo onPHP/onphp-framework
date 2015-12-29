@@ -77,7 +77,7 @@ public function __construct()
 
 EOT;
             foreach ($valueObjects as $propertyName => $className) {
-                $out .= "\$this->{$propertyName} = new {$className}();\n";
+                $out .= "    \$this->{$propertyName} = new {$className}();\n";
             }
 
             $out .= "}\n";

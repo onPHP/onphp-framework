@@ -502,7 +502,7 @@ final class MetaConfiguration extends Singleton implements Instantiatable
                                 == MetaRelation::ONE_TO_ONE,
 
                                 'fetch mode can be specified
-									only for OneToOne relations'
+                                    only for OneToOne relations'
                             );
 
                             if ($fetch == 'lazy') {
@@ -850,9 +850,9 @@ final class MetaConfiguration extends Singleton implements Instantiatable
     public function buildSchemaChanges()
     {
         $out = $this->getOutput();
-        $out->
-        newLine()->
-        infoLine('Suggested DB-schema changes: ');
+        $out
+            ->newLine()
+            ->infoLine('Suggested DB-schema changes: ');
 
         require ONPHP_META_AUTO_DIR . 'schema.php';
 
@@ -1000,13 +1000,14 @@ final class MetaConfiguration extends Singleton implements Instantiatable
      **/
     public function checkIntegrity()
     {
-        $out = $this->getOutput()->
-        newLine()->
-        infoLine('Checking sanity of generated files: ')->
-        newLine();
+        $out = $this
+            ->getOutput()
+            ->newLine()
+            ->infoLine('Checking sanity of generated files: ')
+            ->newLine();
 
-        AutoloaderPool::get('onPHP')->
-        addPaths([
+        AutoloaderPool::get('onPHP')
+            ->addPaths([
             ONPHP_META_BUSINESS_DIR,
             ONPHP_META_DAO_DIR,
             ONPHP_META_PROTO_DIR,
@@ -1344,14 +1345,15 @@ final class MetaConfiguration extends Singleton implements Instantiatable
      **/
     public function checkForStaleFiles($drop = false)
     {
-        $this->getOutput()->
-        newLine()->
-        infoLine('Checking for stale files: ');
+        $this
+            ->getOutput()
+            ->newLine()
+            ->infoLine('Checking for stale files: ');
 
-        return $this->
-        checkDirectory(ONPHP_META_AUTO_BUSINESS_DIR, 'Auto', null, $drop)->
-        checkDirectory(ONPHP_META_AUTO_DAO_DIR, 'Auto', 'DAO', $drop)->
-        checkDirectory(ONPHP_META_AUTO_PROTO_DIR, 'AutoProto', null, $drop);
+        return $this
+            ->checkDirectory(ONPHP_META_AUTO_BUSINESS_DIR, 'Auto', null, $drop)
+            ->checkDirectory(ONPHP_META_AUTO_DAO_DIR, 'Auto', 'DAO', $drop)
+            ->checkDirectory(ONPHP_META_AUTO_PROTO_DIR, 'AutoProto', null, $drop);
     }
 
     /**
