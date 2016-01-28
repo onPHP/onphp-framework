@@ -74,6 +74,10 @@ class SQLStringConcat extends Castable implements MappableObject, Aliased
 			$mapped->setAlias($this->alias);
 		}
 
+		if ($this->cast) {
+			$mapped->castTo($this->cast);
+		}
+
 		return $mapped;
 	}
 
@@ -92,6 +96,10 @@ class SQLStringConcat extends Castable implements MappableObject, Aliased
 
 		if ($this->alias) {
 			$sql .=  ' AS ' . $dialect->quoteTable($this->alias);
+		}
+
+		if ($this->cast) {
+			$sql = $dialect->toCasted($sql, $this->cast);
 		}
 
 		return $sql;
