@@ -7,6 +7,8 @@
 class ArrayOfPrimitive extends FiltrablePrimitive {
     /** @var BasePrimitive */
     protected $primitive;
+    /** @var bool */
+    protected $keepKeys = false;
 
     public function setPrimitive(BasePrimitive $primitive)
     {
@@ -20,6 +22,17 @@ class ArrayOfPrimitive extends FiltrablePrimitive {
         return $this->primitive;
     }
 
+    public function setKeepKeys($bool)
+    {
+        $this->keepKeys = $bool;
+        return $this;
+    }
+
+    public function isKeepKeys()
+    {
+        return $this->keepKeys;
+    }
+
     public function import($scope)
     {
         if (!BasePrimitive::import($scope))
@@ -29,13 +42,18 @@ class ArrayOfPrimitive extends FiltrablePrimitive {
         $this->customError = null;
         $this->value = [];
 
-        foreach ($this->raw as $element) {
+        foreach ($this->raw as $key => $element) {
             $this->primitive->clean();
             if (!$this->primitive->importValue($element)) {
                 $this->imported = false;
             }
             $this->customError = $this->customError ?: $this->primitive->getCustomError();
-            $this->value[] = $this->primitive->value;
+            $value = $this->primitive->value;
+            if ($this->isKeepKeys()) {
+                $this->value[$key] = $value;
+            } else {
+                $this->value []= $value;
+            }
         }
 
         if (!$this->imported) {
