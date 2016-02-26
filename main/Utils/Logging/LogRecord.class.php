@@ -19,21 +19,18 @@ class LogRecord
 
     private $date = null;
 
+    /**
+     * LogRecord constructor.
+     */
     public function __construct()
     {
         $this->date = Timestamp::makeNow();
     }
 
-    /**
-     * @deprecated
-     *
-     * @return LogRecord
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
+    /**
+     * @return null
+     */
     public function getMessage()
     {
         return $this->message;

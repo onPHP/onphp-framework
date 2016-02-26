@@ -12,15 +12,6 @@
 class OqlOrderByParser extends OqlParser
 {
     /**
-     * @deprecated
-     * @return OqlOrderByParser
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return OqlOrderByClause
      **/
     protected function makeOqlObject()

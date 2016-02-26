@@ -23,9 +23,8 @@ class IpRange implements SingleRange, DialectString, Stringable
     private $startIp = null;
     private $endIp = null;
 
-    public function __construct(/**/)
+    public function __construct(... $args)
     {
-        $args = func_get_args();
 
         if (count($args) == 1 && is_array($args[0])) {
             $args = $args[0];
@@ -107,17 +106,6 @@ class IpRange implements SingleRange, DialectString, Stringable
         }
 
         return $this;
-    }
-
-    /**
-     * @return IpRange
-     **/
-    public static function create(/**/)
-    {
-        /**
-         * @todo WTF? here need use ReflectionClass::newInstanceArgs
-         */
-        return new self(func_get_args());
     }
 
     /**

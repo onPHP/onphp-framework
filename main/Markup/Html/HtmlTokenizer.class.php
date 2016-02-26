@@ -101,15 +101,10 @@ class HtmlTokenizer
     }
 
     /**
-     * @deprecated
-     * @return HtmlTokenizer
-     **/
-    public static function create(InputStream $stream)
-    {
-        return new self($stream);
-    }
-
-    public static function isIdChar($char)
+     * @param $char
+     * @return bool
+     */
+    public static function isIdChar($char) : bool
     {
         return (preg_match('/' . self::ID_CHAR_MASK . '/', $char) > 0);
     }
@@ -151,8 +146,9 @@ class HtmlTokenizer
     }
 
     /**
-     * @return SgmlToken
-     **/
+     * @return null
+     * @throws WrongStateException
+     */
     public function nextToken()
     {
         if ($this->state == self::FINAL_STATE) {
@@ -174,6 +170,10 @@ class HtmlTokenizer
         return $this->completeTag;
     }
 
+    /**
+     * @return int
+     * @throws WrongStateException
+     */
     private function handleState()
     {
         switch ($this->state) {
@@ -222,11 +222,19 @@ class HtmlTokenizer
         throw new WrongStateException('state machine is broken');
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function isInlineTag($id)
     {
         return in_array($id, $this->inlineTags);
     }
 
+    /**
+     * @return int
+     * @throws WrongArgumentException
+     */
     private function inlineTagState()
     {
         // <script ...>X<-- we are here
@@ -307,6 +315,9 @@ class HtmlTokenizer
         return $this;
     }
 
+    /**
+     * @return string
+     */
     private function getTextualPosition()
     {
         return
@@ -318,6 +329,11 @@ class HtmlTokenizer
             );
     }
 
+    /**
+     * @param $string
+     * @param bool|false $skipSpaces
+     * @return bool
+     */
     private function skipString($string, $skipSpaces = false)
     {
         $this->mark();
@@ -357,11 +373,19 @@ class HtmlTokenizer
         return $this;
     }
 
+    /**
+     * @param $char
+     * @return bool
+     */
     public static function isSpacerChar($char)
     {
         return (preg_match('/' . self::SPACER_MASK . '/', $char) > 0);
     }
 
+    /**
+     * @param $count
+     * @return null|string
+     */
     private function getChars($count)
     {
         $result = null;
@@ -394,6 +418,9 @@ class HtmlTokenizer
         return $this;
     }
 
+    /**
+     * @return string
+     */
     private function getComment()
     {
         $this->mark();
@@ -489,6 +516,11 @@ class HtmlTokenizer
         }
     }
 
+    /**
+     * @param $string
+     * @param $ignoreCase
+     * @return string
+     */
     private static function optionalLowercase($string, $ignoreCase)
     {
         if (!$ignoreCase) {
@@ -539,6 +571,10 @@ class HtmlTokenizer
         return $this;
     }
 
+    /**
+     * @param Cdata $cdata
+     * @return Cdata|null
+     */
     public static function removeWhitespaces(Cdata $cdata)
     {
         $string = $cdata->getData();
@@ -564,6 +600,10 @@ class HtmlTokenizer
         return $cdata;
     }
 
+    /**
+     * @return int
+     * @throws WrongArgumentException
+     */
     private function outsideTagState()
     {
         Assert::isNull($this->tag);
@@ -637,13 +677,21 @@ class HtmlTokenizer
         return self::FINAL_STATE;
     }
 
-    public static function isIdFirstChar($char)
+
+    /**
+     * @param $char
+     * @return bool
+     */
+    public static function isIdFirstChar($char) : bool
     {
         return (preg_match('/' . self::ID_FIRST_CHAR_MASK . '/', $char) > 0);
     }
 
     // INITIAL_STATE
 
+    /**
+     * @return null
+     */
     private function checkSpecialTagState()
     {
         if ($this->char != '!') {
@@ -678,6 +726,10 @@ class HtmlTokenizer
 
     // START_TAG_STATE
 
+    /**
+     * @return int
+     * @throws WrongArgumentException
+     */
     private function startTagState()
     {
         Assert::isNull($this->tag);
@@ -893,6 +945,10 @@ class HtmlTokenizer
 
     // WAITING_EQUAL_SIGN_STATE
 
+    /**
+     * @return int
+     * @throws WrongArgumentException
+     */
     private function insideTagState()
     {
         Assert::isNull($this->tagId);
@@ -967,6 +1023,10 @@ class HtmlTokenizer
 
     // ATTR_VALUE_STATE
 
+    /**
+     * @return int
+     * @throws WrongArgumentException
+     */
     private function attrNameState()
     {
         Assert::isNotNull($this->tag);
@@ -1074,8 +1134,11 @@ class HtmlTokenizer
     }
 
     // CDATA_STATE
-
-    private function waitingEqualSignState()
+    /**
+     * @return int
+     * @throws WrongArgumentException
+     */
+    private function waitingEqualSignState() : integer
     {
         Assert::isNotNull($this->tag);
         Assert::isTrue($this->tag instanceof SgmlOpenTag);
@@ -1122,7 +1185,11 @@ class HtmlTokenizer
         return self::FINAL_STATE;
     }
 
-    private function attrValueState()
+    /**
+     * @return int
+     * @throws WrongArgumentException
+     */
+    private function attrValueState() : integer
     {
         Assert::isNull($this->tagId);
 
@@ -1241,7 +1308,11 @@ class HtmlTokenizer
 
     // COMMENT_STATE
 
-    private function cdataState()
+    /**
+     * @return int
+     * @throws WrongArgumentException
+     */
+    private function cdataState() : integer
     {
         Assert::isNull($this->tag);
         Assert::isNull($this->tagId);
@@ -1267,7 +1338,11 @@ class HtmlTokenizer
 
     // EXTERNAL_TAG_STATE:
 
-    private function commentState()
+    /**
+     * @return int
+     * @throws WrongArgumentException
+     */
+    private function commentState() : integer
     {
         Assert::isNull($this->tag);
         Assert::isNull($this->tagId);
@@ -1287,7 +1362,11 @@ class HtmlTokenizer
 
     // DOCTYPE_TAG_STATE:
 
-    private function externalTagState()
+    /**
+     * @return int
+     * @throws WrongArgumentException
+     */
+    private function externalTagState() : integer
     {
         Assert::isTrue($this->tag instanceof SgmlIgnoredTag);
 
@@ -1320,7 +1399,11 @@ class HtmlTokenizer
         return self::INITIAL_STATE;
     }
 
-    private function doctypeTagState()
+    /**
+     * @return int
+     * @throws WrongArgumentException
+     */
+    private function doctypeTagState() : integer
     {
         // TODO: use DoctypeTag and parse it correctly as Opera does and
         // Firefox does not.
@@ -1339,6 +1422,9 @@ class HtmlTokenizer
         return self::INITIAL_STATE;
     }
 
+    /**
+     * @return array
+     */
     public function getErrors()
     {
         return $this->errors;
@@ -1356,6 +1442,11 @@ class HtmlTokenizer
         return $this;
     }
 
+    /**
+     * @param $count
+     * @return mixed
+     * @throws IOException
+     */
     private function lookAhead($count)
     {
         $this->stream->mark();

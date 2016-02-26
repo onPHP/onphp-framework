@@ -71,6 +71,10 @@ class PartViewer
         return $this;
     }
 
+    /**
+     * @param $partName
+     * @return mixed
+     */
     public function partExists($partName)
     {
         return $this->viewResolver->viewExists($partName);

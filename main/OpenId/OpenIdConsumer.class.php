@@ -12,6 +12,8 @@
 /**
  * openId consumer library entry point
  *
+ * @deprecated Class new OAuth2 and OpenID2
+ *
  * @see http://openid.net/specs/openid-authentication-1_1.html
  * @todo use nonce to limit time frame of replay attacks
  *
@@ -42,17 +44,6 @@ class OpenIdConsumer
         $this->randomSource = $randomSource;
         $this->numberFactory = $numberFactory;
         $this->httpClient = $httpClient;
-    }
-
-    /**
-     * @return OpenIdConsumer
-     **/
-    public static function create(
-        RandomSource $randomSource,
-        BigNumberFactory $numberFactory,
-        HttpClient $httpClient
-    ) {
-        return new self($randomSource, $numberFactory, $httpClient);
     }
 
     /**

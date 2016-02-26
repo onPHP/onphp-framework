@@ -14,14 +14,6 @@ class TextFileQueueBrowser implements MessageQueueBrowser
     private $queue = null;
 
     /**
-     * @return TextFileQueueBrowser
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return MessageQueue
      **/
     public function getQueue()

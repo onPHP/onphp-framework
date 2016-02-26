@@ -34,21 +34,6 @@ class PeclMemcached extends CachePeer
     private $instance = null;
 
     /**
-     * @param string $host
-     * @param int $port
-     * @param int $connectTimeout
-     * @return PeclMemcached
-     */
-    public static function create(
-        $host = self::DEFAULT_HOST,
-        $port = self::DEFAULT_PORT,
-        $connectTimeout = self::DEFAULT_TIMEOUT
-    )
-    {
-        return new self($host, $port, $connectTimeout);
-    }
-
-    /**
      * PeclMemcached constructor.
      * @param string $host
      * @param int $port

@@ -17,13 +17,8 @@ class AMQPQueueConfig extends AMQPBaseConfig
     protected $exclusive = false;
 
     /**
-     * @return AMQPQueueConfig
-     **/
-    public static function create()
-    {
-        return new self();
-    }
-
+     * @return bool
+     */
     public function getExclusive()
     {
         return $this->exclusive;
@@ -39,6 +34,5 @@ class AMQPQueueConfig extends AMQPBaseConfig
 
         return $this;
     }
-
 }
 

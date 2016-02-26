@@ -27,15 +27,6 @@ class CurlHttpResponse implements HttpResponse
     }
 
     /**
-     * @deprecated
-     * @return CurlHttpResponse
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * internal use only, callback for curl client
      **/
     public function writeHeader($resource, $line)

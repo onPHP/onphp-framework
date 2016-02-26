@@ -20,15 +20,6 @@ class CropFilter implements Filtrator
     private $length = 0;
 
     /**
-     * @deprecated
-     * @return CropFilter
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @param $start
      * @return CropFilter
      * @throws WrongArgumentException

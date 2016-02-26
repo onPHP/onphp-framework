@@ -16,14 +16,13 @@
  *
  * @see http://onphp.org/examples.OSQL.en.html
  **/
-class OSQL extends StaticFactory
+class OSQL
 {
     /**
-     * @deprecated
      *
      * @return SelectQuery
      **/
-    public static function select()
+    public function select()
     {
         return new SelectQuery();
     }
@@ -31,7 +30,7 @@ class OSQL extends StaticFactory
     /**
      * @return InsertQuery
      **/
-    public static function insert()
+    public function insert()
     {
         return new InsertQuery();
     }
@@ -40,7 +39,7 @@ class OSQL extends StaticFactory
      * @param null $table
      * @return UpdateQuery
      */
-    public static function update($table = null)
+    public function update($table = null)
     {
         return new UpdateQuery($table);
     }
@@ -48,7 +47,7 @@ class OSQL extends StaticFactory
     /**
      * @return DeleteQuery
      */
-    public static function delete()
+    public function delete()
     {
         return new DeleteQuery();
     }
@@ -57,7 +56,7 @@ class OSQL extends StaticFactory
      * @param null $whom
      * @return TruncateQuery
      */
-    public static function truncate($whom = null)
+    public function truncate($whom = null)
     {
         return new TruncateQuery($whom);
     }
@@ -66,7 +65,7 @@ class OSQL extends StaticFactory
      * @param DBTable $table
      * @return CreateTableQuery
      */
-    public static function createTable(DBTable $table)
+    public function createTable(DBTable $table)
     {
         return new CreateTableQuery($table);
     }
@@ -76,7 +75,7 @@ class OSQL extends StaticFactory
      * @param bool $cascade
      * @return DropTableQuery
      */
-    public static function dropTable($name, $cascade = false)
+    public function dropTable($name, $cascade = false)
     {
         return new DropTableQuery($name, $cascade);
     }

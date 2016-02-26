@@ -31,13 +31,8 @@ class CommonDoctypeDeclaration extends DoctypeDeclaration
     private $language = null;
 
     /**
-     * @return CommonDoctypeDeclaration
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
+     * @return null
+     */
     public function getOrganization()
     {
         return $this->organization;
@@ -53,6 +48,9 @@ class CommonDoctypeDeclaration extends DoctypeDeclaration
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getType()
     {
         return $this->type;
@@ -68,6 +66,9 @@ class CommonDoctypeDeclaration extends DoctypeDeclaration
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getSubtype()
     {
         return $this->subtype;
@@ -83,6 +84,9 @@ class CommonDoctypeDeclaration extends DoctypeDeclaration
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getVersion()
     {
         return $this->version;
@@ -98,6 +102,9 @@ class CommonDoctypeDeclaration extends DoctypeDeclaration
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getVariant()
     {
         return $this->variant;
@@ -156,6 +163,9 @@ class CommonDoctypeDeclaration extends DoctypeDeclaration
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getFpi()
     {
         if (!$this->organization) {

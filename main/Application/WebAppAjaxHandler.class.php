@@ -18,24 +18,18 @@ class WebAppAjaxHandler implements InterceptingChainHandler
     private static $pjaxRequestVar = 'HTTP_X_PJAX';
 
     /**
-     * @deprecated
-     *
-     * @return WebAppAjaxHandler
-     */
-    public static function create()
-    {
-        return new self();
-    }
-
-    /**
      * @return WebAppAjaxHandler
      */
     public function run(InterceptingChain $chain)
     {
-        /* @var $chain WebApplication */
+
+        /** @var boolean $isPjaxRequest */
         $isPjaxRequest = $this->isPjaxRequest($chain->getRequest());
+
+        /** @var boolean $isAjaxRequest */
         $isAjaxRequest = !$isPjaxRequest && $this->isAjaxRequest($chain->getRequest());
 
+        /* @var $chain WebApplication */
         $chain->setVar('isPjax', $isPjaxRequest);
         $chain->setVar('isAjax', $isAjaxRequest);
         $chain->getServiceLocator()
@@ -54,10 +48,10 @@ class WebAppAjaxHandler implements InterceptingChainHandler
     {
         $form = (new Form())
             ->add(
-                Primitive::boolean(self::$pjaxRequestVar)
+                (new Primitive())->boolean(self::$pjaxRequestVar)
             )
             ->add(
-                Primitive::boolean('_isPjax')
+                (new Primitive())->boolean('_isPjax')
             )
             ->import($request->getServer())
             ->importOneMore('_isPjax', $request->getGet());
@@ -75,11 +69,12 @@ class WebAppAjaxHandler implements InterceptingChainHandler
     {
         $form = (new Form())
             ->add(
-                Primitive::plainChoice(self::$ajaxRequestVar)
+                (new Primitive())
+                    ->plainChoice(self::$ajaxRequestVar)
                     ->setList(self::$ajaxRequestValueList)
             )
             ->add(
-                Primitive::boolean('_isAjax')
+                (new Primitive())->boolean('_isAjax')
             )
             ->import($request->getServer())
             ->importOneMore('_isAjax', $request->getGet());

@@ -15,15 +15,6 @@
 class EditCommand implements EditorCommand
 {
     /**
-     * @deprecated
-     * @return EditCommand
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return ModelAndView
      **/
     public function run(Prototyped $subject, Form $form, HttpRequest $request)

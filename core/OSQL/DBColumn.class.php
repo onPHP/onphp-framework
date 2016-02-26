@@ -47,14 +47,6 @@ class DBColumn implements SQLTableName
         $this->name = $name;
     }
 
-    /**
-     * @deprecated
-     * @return DBColumn
-     **/
-    public static function create(DataType $type, $name)
-    {
-        return new self($type, $name);
-    }
 
     /**
      * @return DataType|null

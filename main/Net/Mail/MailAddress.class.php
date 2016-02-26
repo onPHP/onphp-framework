@@ -24,11 +24,6 @@ class MailAddress
     private $person = null;
     private $charset = 'UTF-8';
 
-    public static function create()
-    {
-        return new self;
-    }
-
     public function getAddress()
     {
         return $this->address;

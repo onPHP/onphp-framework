@@ -72,6 +72,9 @@ class HttpMethod extends Enumeration
         return self::get();
     }
 
+    /**
+     * @return HttpMethod
+     */
     public static function get()
     {
         return new self(self::GET);

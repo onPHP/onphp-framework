@@ -16,14 +16,6 @@ class WebAppSessionHandler implements InterceptingChainHandler
     protected $cookieDomain = null;
     protected $cookieTime = 0;
 
-    /**
-     * @deprecated
-     * @return WebAppSessionHandler
-     */
-    public static function create()
-    {
-        return new self();
-    }
 
     /**
      * @return WebAppSessionHandler

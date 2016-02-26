@@ -14,12 +14,9 @@
  **/
 class GroupByClassProjection extends ClassProjection
 {
-    /**
-     * @return GroupByClassProjection
-     **/
-    public static function create($class)
+    function __construct($class)
     {
-        return new self($class);
+        parent::__construct($class);
     }
 
     /* void */
@@ -27,6 +24,7 @@ class GroupByClassProjection extends ClassProjection
         JoinCapableQuery $query, DBField $field
     )
     {
+        /**@var SelectQuery|UpdateQuery $query */
         $query
             ->groupBy($field);
     }

@@ -13,21 +13,13 @@ class FloatRange extends BaseRange
 {
     public function __construct($min = null, $max = null)
     {
-        if ($min !== null)
+        if (!is_null($min))
             Assert::isFloat($min);
 
-        if ($max !== null)
+        if (!is_null($max))
             Assert::isFloat($max);
 
         parent::__construct($min, $max);
-    }
-
-    /**
-     * @return FloatRange
-     **/
-    public static function create($min = null, $max = null)
-    {
-        return new self($min, $max);
     }
 
     /**

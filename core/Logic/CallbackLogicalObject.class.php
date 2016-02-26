@@ -21,15 +21,6 @@ class CallbackLogicalObject implements LogicalObject
      */
     private $callback = null;
 
-    /**
-     * @static
-     * @param Closure $callback
-     * @return CallbackLogicalObject
-     */
-    static public function create($callback)
-    {
-        return new static($callback);
-    }
 
     /**
      * @param Closure $callback

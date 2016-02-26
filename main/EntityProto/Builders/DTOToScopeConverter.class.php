@@ -11,17 +11,14 @@
  ***************************************************************************/
 class DTOToScopeConverter extends PrototypedBuilder
 {
-    /**
-     * @return DTOToScopeConverter
-     **/
-    public static function create(EntityProto $proto)
+    function __construct(EntityProto $proto)
     {
-        return new self($proto);
+        parent::__construct($proto);
     }
 
     protected function createEmpty()
     {
-        return array();
+        return [];
     }
 
     /**

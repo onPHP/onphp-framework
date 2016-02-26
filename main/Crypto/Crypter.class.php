@@ -34,11 +34,6 @@ class Crypter
         $this->keySize = mcrypt_enc_get_key_size($this->crResource);
     }
 
-    public static function create($algorithm, $mode)
-    {
-        return new self($algorithm, $mode);
-    }
-
     public function  __destruct()
     {
         mcrypt_generic_deinit($this->crResource);

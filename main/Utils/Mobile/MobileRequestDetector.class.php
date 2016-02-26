@@ -58,16 +58,12 @@ class MobileRequestDetector
         'HTTP_BEARER_INDICATION'
     ];
 
-    /**
-     * @deprecated
-     *
-     * @return MobileRequestDetector
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
+    /**
+     * @param array $source
+     * @param bool|false $checkAccept
+     * @return bool
+     */
     public function isMobile(array $source, $checkAccept = false)
     {
         if ($this->isOperaMini($source)) {
@@ -91,12 +87,20 @@ class MobileRequestDetector
         return false;
     }
 
+    /**
+     * @param array $source
+     * @return bool
+     */
     public function isOperaMini(array $source)
     {
         // mandatory opera mini header
         return isset($source['HTTP_X_OPERAMINI_FEATURES']);
     }
 
+    /**
+     * @param array $source
+     * @return bool
+     */
     public function isIphone(array $source)
     {
         return (
@@ -109,6 +113,10 @@ class MobileRequestDetector
         );
     }
 
+    /**
+     * @param array $source
+     * @return bool
+     */
     public function isMobileByHttpAccept(array $source)
     {
         return (

@@ -42,25 +42,24 @@ class TidyValidator
     private $encoding = 'utf8';
 
     /**
-     * @deprecated
-     *
-     * @return TidyValidator
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
+     * @return null
+     */
     public function getMessages()
     {
         return $this->messages;
     }
 
+    /**
+     * @return null
+     */
     public function getErrorCount()
     {
         return $this->errorCount;
     }
 
+    /**
+     * @return null
+     */
     public function getWarningCount()
     {
         return $this->warningCount;

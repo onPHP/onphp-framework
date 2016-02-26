@@ -41,8 +41,10 @@ abstract class ProtoDAO extends GenericDAO
             $lazy = $info['lazy'];
 
             $query =
-                OSQL::select()->get($mainId)->
-                from($this->getTable());
+                (new OSQL())
+                    ->select()
+                    ->get($mainId)
+                    ->from($this->getTable());
 
             $proto = reset($list)->proto();
 

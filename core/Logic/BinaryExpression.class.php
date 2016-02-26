@@ -48,19 +48,6 @@ class BinaryExpression implements LogicalObject, MappableObject
     private $brackets = true;
 
     /**
-     * @deprecated
-     *
-     * @param $left
-     * @param $right
-     * @param $logic
-     * @return BinaryExpression
-     */
-    public static function create($left, $right, $logic)
-    {
-        return new self($left, $right, $logic);
-    }
-
-    /**
      * BinaryExpression constructor.
      * @param $left
      * @param $right

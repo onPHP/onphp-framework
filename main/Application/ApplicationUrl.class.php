@@ -28,15 +28,6 @@ class ApplicationUrl
 
     protected $absolute = false;
 
-    /**
-     * @deprecated
-     *
-     * @return ApplicationUrl
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return HttpUrl
@@ -134,8 +125,12 @@ class ApplicationUrl
     }
 
     /**
+     * @param $requestUri
+     * @param bool|true $normalize
      * @return ApplicationUrl
-     **/
+     * @throws WrongArgumentException
+     * @throws WrongStateException
+     */
     public function setPathByRequestUri($requestUri, $normalize = true)
     {
         if (!$this->base)

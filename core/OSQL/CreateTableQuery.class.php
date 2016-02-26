@@ -34,6 +34,7 @@ class CreateTableQuery extends QueryIdentification
 
         $order = $this->table->getOrder();
 
+        /** @var DBColumn $column */
         foreach ($order as $column) {
 
             if ($column->isAutoincrement()) {

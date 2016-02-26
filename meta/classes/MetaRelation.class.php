@@ -24,17 +24,17 @@ final class MetaRelation extends Enumeration
         self::MANY_TO_MANY => 'ManyToMany'
     ];
 
-    /**
-     * @return MetaRelation
-     **/
-    public static function create($id)
+    function __construct($id)
     {
-        return new self($id);
+        parent::__construct($id);
     }
 
     /**
-     * @return MetaRelation
-     **/
+     * @param $name
+     * @return $this
+     * @throws MissingElementException
+     * @throws WrongArgumentException
+     */
     public static function makeFromName($name)
     {
         $self = new self(self::getAnyId());

@@ -85,6 +85,11 @@ class AMQPIncomingMessage extends AMQPBaseMessage
         return $this;
     }
 
+    /**
+     * @param array $assoc
+     * @return $this
+     * @throws WrongArgumentException
+     */
     protected function checkMandatory(array $assoc)
     {
         foreach (self::$mandatoryFields as $field) {
@@ -96,14 +101,10 @@ class AMQPIncomingMessage extends AMQPBaseMessage
         return $this;
     }
 
-    /**
-     * @return AMQPIncomingMessage
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
+    /**
+     * @return null
+     */
     public function getRedelivered()
     {
         return $this->redelivered;
@@ -119,6 +120,10 @@ class AMQPIncomingMessage extends AMQPBaseMessage
         return $this;
     }
 
+
+    /**
+     * @return null
+     */
     public function getConsumerTag()
     {
         return $this->consumerTag;
@@ -134,6 +139,9 @@ class AMQPIncomingMessage extends AMQPBaseMessage
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getCount()
     {
         return $this->count;
@@ -149,6 +157,9 @@ class AMQPIncomingMessage extends AMQPBaseMessage
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getRoutingKey()
     {
         return $this->routingKey;
@@ -164,6 +175,9 @@ class AMQPIncomingMessage extends AMQPBaseMessage
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getExchange()
     {
         return $this->exchange;
@@ -179,6 +193,9 @@ class AMQPIncomingMessage extends AMQPBaseMessage
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getDeliveryTag()
     {
         return $this->deliveryTag;
@@ -194,6 +211,9 @@ class AMQPIncomingMessage extends AMQPBaseMessage
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isEmptyQueue()
     {
         return $this->count == -1;

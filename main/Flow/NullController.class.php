@@ -22,16 +22,6 @@ class NullController implements Controller
     }
 
     /**
-     * @deprecated
-     *
-     * @return NullController
-     **/
-    public static function create(Model $model = null)
-    {
-        return new self($model);
-    }
-
-    /**
      * @return ModelAndView
      **/
     public function handleRequest(HttpRequest $request)

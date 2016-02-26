@@ -15,16 +15,11 @@ class TextFileReceiver implements MessageQueueReceiver
     private $stream = null;
 
     /**
-     * @return TextFileReceiver
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
-     * @return Message
-     **/
+     * @param null $uTimeout
+     * @return $this|null
+     * @throws WrongArgumentException
+     * @throws WrongStateException
+     */
     public function receive($uTimeout = null)
     {
         if (!$this->queue) {

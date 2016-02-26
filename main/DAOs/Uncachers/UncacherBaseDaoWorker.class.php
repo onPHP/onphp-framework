@@ -14,20 +14,11 @@
  **/
 class UncacherBaseDaoWorker implements UncacherBase
 {
-    private $classNameMap = array();
+    private $classNameMap = [];
 
     public function __construct($className, $idKey)
     {
-        $this->classNameMap[$className] = array($idKey);
-    }
-
-    /**
-     * @deprecated
-     * @return UncacherBaseDaoWorker
-     */
-    public static function create($className, $idKey)
-    {
-        return new self($className, $idKey);
+        $this->classNameMap[$className] = [$idKey];
     }
 
     /**
@@ -60,11 +51,17 @@ class UncacherBaseDaoWorker implements UncacherBase
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getClassNameMap()
     {
         return $this->classNameMap;
     }
 
+    /**
+     *
+     */
     public function uncache()
     {
         foreach ($this->classNameMap as $className => $idKeys) {
@@ -74,6 +71,10 @@ class UncacherBaseDaoWorker implements UncacherBase
         }
     }
 
+    /**
+     * @param $className
+     * @param $idKeys
+     */
     protected function uncacheClassName($className, $idKeys)
     {
         foreach ($idKeys as $key)

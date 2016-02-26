@@ -16,14 +16,6 @@ class OqlSelectPropertiesClause extends OqlProjectionClause
 {
     private $distinct = false;
 
-    /**
-     * @deprecated
-     * @return OqlSelectPropertiesClause
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     public function isDistinct()
     {

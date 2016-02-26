@@ -32,16 +32,6 @@ class JsonXssView extends JsonPView
     protected $callback = 'name';
 
     /**
-     * @deprecated
-     * @static
-     * @return JsonXssView
-     */
-    public static function create()
-    {
-        return new self();
-    }
-
-    /**
      * @param $value
      * @return JsonXssView
      * @throws WrongArgumentException

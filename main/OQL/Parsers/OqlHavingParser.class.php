@@ -13,14 +13,6 @@ class OqlHavingParser extends OqlParser
 {
     const CLASS_NAME = 'HavingProjection';
 
-    /**
-     * @deprecated
-     * @return OqlHavingParser
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return OqlHavingClause

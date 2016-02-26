@@ -28,15 +28,6 @@ class TimeIntervalsGenerator extends QueryIdentification
     /** @var string */
     private $field = 'time';
 
-    /**
-     * @deprecated
-     *
-     * @return TimeIntervalsGenerator
-     */
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return DateRange
@@ -135,25 +126,25 @@ class TimeIntervalsGenerator extends QueryIdentification
      */
     public function toSelectQuery() : SelectQuery
     {
-        if (!$this->range || !$this->interval) {
+        if (!$this->getRange() || !$this->getInterval()) {
             throw new WrongStateException(
                 'define time range and interval units first'
             );
         }
 
-        if (!$this->range->getStart() || !$this->range->getEnd()) {
+        if (!$this->getRange()->getStart() || !$this->getRange()->getEnd()) {
             throw new WrongArgumentException(
                 'cannot operate with unlimited range'
             );
         }
 
         $firstIntervalStart =
-            $this->interval->truncate(
-                $this->range->getStart(), !$this->overlapped
+            $this->getInterval()->truncate(
+                $this->getRange()->getStart(), !$this->overlapped
             );
 
         $maxIntervals =
-            $this->interval->countInRange(
+            $this->getInterval()->countInRange(
                 $this->range, $this->overlapped
             ) - 1;
 
@@ -170,7 +161,7 @@ class TimeIntervalsGenerator extends QueryIdentification
                         ),
 
                     Expression::mul(
-                        (new DBValue("1 {$this->interval->getName()}"))
+                        (new DBValue("1 {$this->getInterval()->getName()}"))
                             ->castTo(
                                 (new DataType(DataType::INTERVAL))
                                     ->getName()

@@ -13,14 +13,6 @@ class OqlGroupByParser extends OqlParser
 {
     const CLASS_NAME = 'GroupByPropertyProjection';
 
-    /**
-     * @deprecated
-     * @return OqlGroupByParser
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return OqlProjectionClause

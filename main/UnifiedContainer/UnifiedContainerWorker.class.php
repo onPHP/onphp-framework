@@ -81,7 +81,8 @@ abstract class UnifiedContainerWorker
         $dao = $this->container->getDao();
 
         DBPool::getByDao($dao)->queryNull(
-            OSQL::delete()
+            (new OSQL())
+                ->delete()
                 ->from($this->container->getHelperTable())
                 ->where(
                     Expression::eq(

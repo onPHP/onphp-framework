@@ -16,14 +16,6 @@ class JsonView implements View, Stringable
 {
     protected $options = 0;
 
-    /**
-     * @deprecated
-     * @return JsonView
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @param bool $flag

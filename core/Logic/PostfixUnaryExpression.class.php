@@ -40,18 +40,6 @@ class PostfixUnaryExpression implements LogicalObject, MappableObject
     }
 
     /**
-     * @deprecated
-     *
-     * @param $subject
-     * @param $logic
-     * @return PostfixUnaryExpression
-     */
-    public static function create($subject, $logic)
-    {
-        return new self($subject, $logic);
-    }
-
-    /**
      * @param Dialect $dialect
      * @return string
      */

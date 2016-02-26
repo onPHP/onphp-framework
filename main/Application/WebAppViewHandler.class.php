@@ -20,16 +20,8 @@ class WebAppViewHandler implements InterceptingChainHandler
     /**
      * @var array
      */
-    private $headers = array();
+    private $headers = [];
 
-    /**
-     * @deprecated
-     * @return WebAppViewHandler
-     */
-    public static function create()
-    {
-        return new self();
-    }
 
     /**
      * @param InterceptingChain $chain

@@ -20,13 +20,10 @@ class RouterStaticRule extends RouterBaseRule
     }
 
     /**
-     * @return RouterStaticRule
-     **/
-    public static function create($route)
-    {
-        return new self($route);
-    }
-
+     * @param HttpRequest $request
+     * @return array|bool
+     * @throws RouterException
+     */
     public function match(HttpRequest $request)
     {
         $path = $this->processPath($request)->toString();
@@ -39,6 +36,12 @@ class RouterStaticRule extends RouterBaseRule
         return false;
     }
 
+    /**
+     * @param array $data
+     * @param bool|false $reset
+     * @param bool|false $encode
+     * @return null|string
+     */
     public function assembly(
         array $data = [],
         $reset = false,

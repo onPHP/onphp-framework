@@ -114,8 +114,7 @@ abstract class GenericDAO extends Singleton implements BaseDAO
             $table = $this->getTable();
 
             $object =
-                OSQL::select()->
-                from($table);
+                (new OSQL())->select()->from($table);
 
             foreach ($this->getFields() as $field) {
                 $object->get(new DBField($field, $table));

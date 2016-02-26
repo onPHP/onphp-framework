@@ -17,16 +17,15 @@
  **/
 class TimestampRange extends DateRange
 {
-    /**
-     * @deprecated
-     *
-     * @return TimestampRange
-     **/
-    public static function create($start = null, $end = null)
+
+    function __construct($start, $end)
     {
-        return new self($start, $end);
+        parent::__construct($start, $end);
     }
 
+    /**
+     * @return int|null
+     */
     public function getStartStamp() // null if start is null
     {
         if ($start = $this->getStart()) {
@@ -36,6 +35,9 @@ class TimestampRange extends DateRange
         return null;
     }
 
+    /**
+     * @return int|null
+     */
     public function getEndStamp() // null if end is null
     {
         if ($end = $this->getEnd()) {
@@ -53,6 +55,9 @@ class TimestampRange extends DateRange
         return $this;
     }
 
+    /**
+     * @return string
+     */
     protected function getObjectName()
     {
         return 'Timestamp';

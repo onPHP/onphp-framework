@@ -15,23 +15,18 @@
 class EmptyView implements View, Stringable
 {
     /**
-     * @deprecated
-     * @return EmptyView
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
-     * @return EmptyView
-     **/
+     * @param null $model
+     * @return $this
+     */
     public function render(/* Model */
         $model = null
     ) {
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function toString() : string
     {
         return '';

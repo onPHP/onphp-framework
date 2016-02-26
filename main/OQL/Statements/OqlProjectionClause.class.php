@@ -14,14 +14,6 @@
  **/
 class OqlProjectionClause extends OqlQueryListedClause
 {
-    /**
-     * @deprecated
-     * @return OqlProjectionClause
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return ProjectionChain

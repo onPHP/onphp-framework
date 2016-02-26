@@ -14,23 +14,17 @@
  **/
 class UncacherGenericDAO implements UncacherBase
 {
-    private $daoMap = array();
-
-    public function __construct(GenericDAO $dao, $id, UncacherBase $workerUncacher)
-    {
-        $this->daoMap[get_class($dao)] = array(array($id), $workerUncacher);
-    }
+    private $daoMap = [];
 
     /**
-     * @deprecated
+     * UncacherGenericDAO constructor.
      * @param GenericDAO $dao
      * @param $id
      * @param UncacherBase $workerUncacher
-     * @return UncacherGenericDAO
      */
-    public static function create(GenericDAO $dao, $id, UncacherBase $workerUncacher)
+    public function __construct(GenericDAO $dao, $id, UncacherBase $workerUncacher)
     {
-        return new self($dao, $id, $workerUncacher);
+        $this->daoMap[get_class($dao)] = [[$id], $workerUncacher];
     }
 
     /**
@@ -62,11 +56,17 @@ class UncacherGenericDAO implements UncacherBase
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getDaoMap()
     {
         return $this->daoMap;
     }
 
+    /**
+     *
+     */
     public function uncache()
     {
         foreach ($this->daoMap as $daoClass => $uncacheData) {

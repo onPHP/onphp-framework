@@ -42,16 +42,6 @@ class OqlSelectParser extends OqlParser
     const OFFSET_STATE = 8;
 
     /**
-     * @deprecated
-     *
-     * @return OqlSelectParser
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return OqlSelectQuery
      **/
     protected function makeOqlObject()

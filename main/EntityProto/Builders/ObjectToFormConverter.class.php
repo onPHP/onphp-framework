@@ -11,13 +11,10 @@
  ***************************************************************************/
 class ObjectToFormConverter extends FormBuilder
 {
-    /**
-     * @deprecated
-     * @return ObjectToFormConverter
-     **/
-    public static function create(EntityProto $proto)
+
+    function __construct(EntityProto $proto)
     {
-        return new self($proto);
+        parent::__construct($proto);
     }
 
     /**

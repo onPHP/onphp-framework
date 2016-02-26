@@ -20,15 +20,6 @@ class Identifier implements Identifiable
     private $id = null;
     private $final = false;
 
-    /**
-     * @deprecated
-     *
-     * @return Identifier
-     */
-    public static function create() : Identifier
-    {
-        return new self;
-    }
 
     /**
      * @param $id

@@ -23,15 +23,6 @@ class Queue implements Query
     private $queue = [];
 
     /**
-     * @deprecated
-     * @return Queue
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return string
      */
     public function getId() : string

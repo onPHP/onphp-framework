@@ -30,17 +30,12 @@ class Mail
 
     private $sendmailAdditionalArgs = null;
 
-    /**
-     * @return Mail
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
-     * @return Mail
-     **/
+     * @return $this
+     * @throws MailNotSentException
+     * @throws WrongArgumentException
+     */
     public function send()
     {
         if ($this->to == null) {

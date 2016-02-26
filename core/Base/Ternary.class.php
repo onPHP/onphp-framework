@@ -46,15 +46,6 @@ class Ternary implements Stringable
     }
 
     /**
-     * @param null $boolean
-     * @return Ternary
-     */
-    public static function create($boolean = null) : Ternary
-    {
-        return new self($boolean);
-    }
-
-    /**
      * @param $value
      * @param $true
      * @param $false

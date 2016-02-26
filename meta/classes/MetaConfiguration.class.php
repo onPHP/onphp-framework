@@ -1307,8 +1307,10 @@ final class MetaConfiguration extends Singleton implements Instantiatable
 
         $rows =
             $db->querySet(
-                OSQL::select()->from($tableName)->
-                multiGet('id', 'name')
+                (new OSQL())
+                    ->select()
+                    ->from($tableName)
+                    ->multiGet('id', 'name')
             );
 
         echo "\n";
@@ -1321,10 +1323,11 @@ final class MetaConfiguration extends Singleton implements Instantiatable
                     echo "Class '{$class}',id: {$row['id']} sync names. \n";
 
                     $updateQueries .=
-                        OSQL::update($tableName)->
-                        set('name', $ids[$row['id']])->
-                        where(Expression::eq('id', $row['id']))->
-                        toDialectString($db->getDialect()) . ";\n";
+                        (new OSQL())
+                            ->update($tableName)
+                            ->set('name', $ids[$row['id']])
+                            ->where(Expression::eq('id', $row['id']))
+                            ->toDialectString($db->getDialect()) . ";\n";
                 }
 
                 unset($ids[$row['id']]);

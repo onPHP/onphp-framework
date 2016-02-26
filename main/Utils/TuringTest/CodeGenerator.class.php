@@ -22,14 +22,8 @@ class CodeGenerator
     private $similarAllowed = true;
 
     /**
-     * @deprecated
-     * @return CodeGenerator
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
+     * @return null|string
+     */
     public function generate()
     {
         $code = null;
@@ -41,6 +35,10 @@ class CodeGenerator
         return $code;
     }
 
+    /**
+     * @return mixed
+     * @throws WrongArgumentException
+     */
     private function generateOneSymbol()
     {
         $variants = [];

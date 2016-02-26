@@ -12,15 +12,6 @@ class ApplicationToken
     protected $tokenParam = 'token';
     protected $imported = false;
 
-    /**
-     * @deprecated
-     *
-     * @return ApplicationToken
-     */
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return ISessionWrapper

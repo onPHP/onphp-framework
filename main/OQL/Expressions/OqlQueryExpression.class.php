@@ -19,14 +19,6 @@ class OqlQueryExpression extends OqlQueryParameter
     private $className = null;
     private $parameters = [];
 
-    /**
-     * @deprecated
-     * @return OqlQueryExpression
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     public function getParameters()
     {

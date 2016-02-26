@@ -40,18 +40,6 @@ class DebugCachePeer extends SelectivePeer
     }
 
     /**
-     * @param CachePeer $peer
-     * @param $logfile
-     * @param bool $isWeb
-     * @param bool $appendFile
-     * @return DebugCachePeer
-     */
-    public static function create(CachePeer $peer, $logfile, $isWeb = true, $appendFile = true) : DebugCachePeer
-    {
-        return new self($peer, $logfile, $isWeb, $appendFile);
-    }
-
-    /**
      * @param $actions
      * @return DebugCachePeer
      * @throws WrongStateException

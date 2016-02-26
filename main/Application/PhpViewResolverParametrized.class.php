@@ -13,11 +13,16 @@
 class PhpViewResolverParametrized implements ViewResolver
 {
 
-    protected $params = array();
+    protected $params = [];
 
     private $prefix = null;
     private $postfix = null;
 
+    /**
+     * PhpViewResolverParametrized constructor.
+     * @param null $prefix
+     * @param null $postfix
+     */
     public function __construct($prefix = null, $postfix = null)
     {
         $this->prefix = $prefix;
@@ -25,13 +30,8 @@ class PhpViewResolverParametrized implements ViewResolver
     }
 
     /**
-     * @return PhpViewResolverParametrized
-     **/
-    public static function create($prefix = null, $postfix = null)
-    {
-        return new self($prefix, $postfix);
-    }
-
+     * @return null
+     */
     public function getPrefix()
     {
         return $this->prefix;
@@ -47,14 +47,18 @@ class PhpViewResolverParametrized implements ViewResolver
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getPostfix()
     {
         return $this->postfix;
     }
 
     /**
-     * @return PhpViewResolverParametrized
-     **/
+     * @param $postfix
+     * @return $this
+     */
     public function setPostfix($postfix)
     {
         $this->postfix = $postfix;
@@ -76,8 +80,9 @@ class PhpViewResolverParametrized implements ViewResolver
     }
 
     /**
-     * @param type $name
-     * @return boolean
+     * @param $name
+     * @return bool
+     * @throws WrongArgumentException
      */
     public function has($name)
     {
@@ -115,9 +120,10 @@ class PhpViewResolverParametrized implements ViewResolver
     }
 
     /**
+     * @param string $viewName
      * @return SimplePhpViewParametrized
-     **/
-    public function resolveViewName($viewName)
+     */
+    public function resolveViewName($viewName) : SimplePhpViewParametrized
     {
         $view = new SimplePhpViewParametrized(
             $this->prefix . $viewName . $this->postfix,
@@ -133,7 +139,7 @@ class PhpViewResolverParametrized implements ViewResolver
      * @param $viewName
      * @return bool
      */
-    public function viewExists($viewName)
+    public function viewExists($viewName) : bool
     {
         return is_readable($this->prefix . $viewName . $this->postfix);
     }

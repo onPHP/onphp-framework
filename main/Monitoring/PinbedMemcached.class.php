@@ -34,16 +34,5 @@ class PinbedMemcached extends SocketMemcached
             );
         }
     }
-
-    /**
-     * @return PinbedMemcached
-     **/
-    public static function create(
-        $host = SocketMemcached::DEFAULT_HOST,
-        $port = SocketMemcached::DEFAULT_PORT,
-        $buffer = SocketMemcached::DEFAULT_BUFFER
-    ) {
-        return new self($host, $port, $buffer);
-    }
 }
 

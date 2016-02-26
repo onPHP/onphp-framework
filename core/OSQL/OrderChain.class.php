@@ -17,15 +17,6 @@ class OrderChain implements DialectString, MappableObject
     /** @var array  */
     private $chain = [];
 
-    /**
-     * @deprecated
-     *
-     * @return OrderChain
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @param $order

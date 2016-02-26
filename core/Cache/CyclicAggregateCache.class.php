@@ -20,15 +20,6 @@ class CyclicAggregateCache extends BaseAggregateCache
     private $summaryWeight = self::DEFAULT_SUMMARY_WEIGHT;
     private $sorted = false;
 
-    /**
-     * @deprecated
-     *
-     * @return CyclicAggregateCache
-     **/
-    public static function create() : CyclicAggregateCache
-    {
-        return new self();
-    }
 
     /**
      * @param array $first

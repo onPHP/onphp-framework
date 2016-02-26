@@ -26,16 +26,6 @@ class JsonPView extends JsonView
     protected $callback = null;
 
     /**
-     * @deprecated
-     * @static
-     * @return JsonPView
-     */
-    public static function create()
-    {
-        return new self();
-    }
-
-    /**
      * @param $callback
      * @return $this
      * @throws WrongArgumentException

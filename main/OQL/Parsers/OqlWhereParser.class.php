@@ -11,14 +11,6 @@
  ****************************************************************************/
 class OqlWhereParser extends OqlParser
 {
-    /**
-     * @deprecated
-     * @return OqlWhereParser
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return OqlWhereClause

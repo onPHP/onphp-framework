@@ -35,14 +35,9 @@ class RouterHostnameRule extends RouterBaseRule
     }
 
     /**
-     * @return RouterHostnameRule
-     **/
-    public static function create($route)
-    {
-        return new self($route);
-    }
-
-    public function getRequirements()
+     * @return array
+     */
+    public function getRequirements() : array
     {
         return $this->requirements;
     }
@@ -67,6 +62,9 @@ class RouterHostnameRule extends RouterBaseRule
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getScheme()
     {
         return $this->scheme;
@@ -82,6 +80,11 @@ class RouterHostnameRule extends RouterBaseRule
         return $this;
     }
 
+    /**
+     * @param HttpRequest $request
+     * @return array
+     * @throws RouterException
+     */
     public function match(HttpRequest $request)
     {
         $this->processRoute();
@@ -205,7 +208,11 @@ class RouterHostnameRule extends RouterBaseRule
         return $this;
     }
 
-    protected function isSecureRequest(HttpRequest $request)
+    /**
+     * @param HttpRequest $request
+     * @return bool
+     */
+    protected function isSecureRequest(HttpRequest $request) : bool
     {
         return (
             $request->hasServerVar('HTTPS')
@@ -216,11 +223,21 @@ class RouterHostnameRule extends RouterBaseRule
         );
     }
 
-    public function isSecure()
+    /**
+     * @return bool
+     */
+    public function isSecure() : bool
     {
         return $this->scheme == self::SCHEME_HTTPS;
     }
 
+    /**
+     * @param array $data
+     * @param bool|false $reset
+     * @param bool|false $encode
+     * @return string
+     * @throws RouterException
+     */
     public function assembly(
         array $data = [],
         $reset = false,
@@ -292,6 +309,10 @@ class RouterHostnameRule extends RouterBaseRule
 
     }
 
+    /**
+     * @return null|string
+     * @throws RouterException
+     */
     protected function resolveSchema()
     {
         $base = RouterRewrite::me()->getBaseUrl();
@@ -308,6 +329,9 @@ class RouterHostnameRule extends RouterBaseRule
         }
     }
 
+    /**
+     * @return string
+     */
     protected function resolvePath()
     {
         if (

@@ -56,23 +56,6 @@ class SocketMemcached extends CachePeer
     }
 
     /**
-     * @deprecated
-     *
-     * @param string $host
-     * @param int $port
-     * @param int $buffer
-     * @return SocketMemcached
-     */
-    public static function create(
-        $host = self::DEFAULT_HOST,
-        $port = self::DEFAULT_PORT,
-        $buffer = self::DEFAULT_BUFFER
-    ) : SocketMemcached
-    {
-        return new self($host, $port, $buffer);
-    }
-
-    /**
      * @see __destruct
      */
     public function __destruct()

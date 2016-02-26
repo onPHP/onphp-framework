@@ -34,14 +34,6 @@ class DBTable implements DialectString
         $this->name = $name;
     }
 
-    /**
-     * @deprecated
-     * @return DBTable
-     **/
-    public static function create($name)
-    {
-        return new self($name);
-    }
 
     /**
      * @param Dialect $dialect
@@ -260,6 +252,6 @@ class DBTable implements DialectString
      */
     public function toDialectString(Dialect $dialect)
     {
-        return OSQL::createTable($this)->toDialectString($dialect);
+        return (new CreateTableQuery($this))->toDialectString($dialect);
     }
 }

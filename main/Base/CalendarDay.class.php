@@ -19,14 +19,10 @@ class CalendarDay extends Date
     private $selected = null;
     private $outside = null;
 
-    /**
-     * @deprecated
-     *
-     * @return CalendarDay
-     **/
-    public static function create($timestamp)
+
+    function __construct($date)
     {
-        return new self($timestamp);
+        parent::__construct($date);
     }
 
     public function  __sleep()
@@ -37,14 +33,18 @@ class CalendarDay extends Date
         return $sleep;
     }
 
-    public function isSelected()
+    /**
+     * @return bool
+     */
+    public function isSelected() : bool
     {
         return $this->selected === true;
     }
 
     /**
-     * @return CalendarDay
-     **/
+     * @param $selected
+     * @return $this
+     */
     public function setSelected($selected)
     {
         $this->selected = $selected === true;
@@ -52,6 +52,9 @@ class CalendarDay extends Date
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function isOutside()
     {
         return $this->outside;

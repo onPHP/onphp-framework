@@ -20,14 +20,6 @@ class WordSplitterFilter implements Filtrator
     /** @var string  */
     private $delimer = '&#x200B;';
 
-    /**
-     * @deprecated
-     * @return WordSplitterFilter
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @param $value

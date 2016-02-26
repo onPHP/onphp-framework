@@ -14,11 +14,6 @@ class TextFileSender implements MessageQueueSender
     private $queue = null;
     private $stream = null;
 
-    public static function create()
-    {
-        return new self;
-    }
-
     /**
      * @return MessageQueue
      **/

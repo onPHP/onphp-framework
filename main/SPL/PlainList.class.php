@@ -19,14 +19,6 @@ class PlainList extends AbstractList
     /**
      * @return PlainList
      **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
-     * @return PlainList
-     **/
     public function offsetSet($offset, $value)
     {
         Assert::isTrue($value instanceof Identifiable);

@@ -23,15 +23,6 @@ class AMQPCredentials
     protected $login = null;
     protected $password = null;
 
-    /**
-     * @deprecated
-     *
-     * @return AMQPCredentials
-     **/
-    public static function create()
-    {
-        return new self();
-    }
 
     /**
      * @return AMQPCredentials
@@ -47,6 +38,9 @@ class AMQPCredentials
                 ->setVirtualHost(self::DEFAULT_VHOST);
     }
 
+    /**
+     * @return null
+     */
     public function getHost()
     {
         return $this->host;
@@ -62,6 +56,9 @@ class AMQPCredentials
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getPort()
     {
         return $this->port;
@@ -77,6 +74,9 @@ class AMQPCredentials
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getVirtualHost()
     {
         return $this->virtualHost;
@@ -92,6 +92,9 @@ class AMQPCredentials
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getLogin()
     {
         return $this->login;
@@ -107,6 +110,9 @@ class AMQPCredentials
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getPassword()
     {
         return $this->password;

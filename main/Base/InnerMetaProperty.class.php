@@ -16,15 +16,6 @@
  **/
 class InnerMetaProperty extends LightMetaProperty
 {
-    /**
-     * @deprecated
-     *
-     * @return InnerMetaProperty
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     public function isBuildable($array, $prefix = null)
     {

@@ -18,15 +18,6 @@ class FeedItemContent
     private $body = null;
 
     /**
-     * @deprecated
-     * @return FeedItemContent
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return FeedItemContentType
      **/
     public function getType()

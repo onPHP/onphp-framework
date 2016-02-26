@@ -30,14 +30,6 @@ class OqlSelectPropertiesParser extends OqlParser
         self::PROPERTY_PROJECTION => 'PropertyProjection'
     ];
 
-    /**
-     * @deprecated
-     * @return OqlSelectPropertiesParser
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return OqlSelectPropertiesClause

@@ -16,12 +16,10 @@
  **/
 class IntegerSet extends Range
 {
-    public static function create(
-        $min = PrimitiveInteger::SIGNED_MIN,
-        $max = PrimitiveInteger::SIGNED_MAX
-    )
+
+    function __construct($min, $max)
     {
-        return new IntegerSet($min, $max);
+        parent::__construct($min, $max);
     }
 
     public function contains($value)

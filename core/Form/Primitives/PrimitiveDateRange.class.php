@@ -16,13 +16,6 @@ class PrimitiveDateRange extends FiltrablePrimitive
 {
     private $className = null;
 
-    /**
-     * @return PrimitiveDateRange
-     **/
-    public static function create($name)
-    {
-        return new self($name);
-    }
 
     /**
      * @throws WrongArgumentException

@@ -27,15 +27,6 @@ class StringReader extends Reader
     }
 
     /**
-     * @deprecated
-     * @return StringReader
-     **/
-    public static function create($string)
-    {
-        return new self($string);
-    }
-
-    /**
      * @return StringReader
      **/
     public function close()
@@ -57,6 +48,9 @@ class StringReader extends Reader
         return $this;
     }
 
+    /**
+     * @throws IOException
+     */
     private function ensureOpen()
     {
         if ($this->string === null) {
@@ -64,6 +58,9 @@ class StringReader extends Reader
         }
     }
 
+    /**
+     * @return bool
+     */
     public function markSupported()
     {
         return true;
@@ -81,6 +78,11 @@ class StringReader extends Reader
         return $this;
     }
 
+    /**
+     * @param $count
+     * @return int|mixed
+     * @throws IOException
+     */
     public function skip($count)
     {
         $this->ensureOpen();
@@ -100,11 +102,17 @@ class StringReader extends Reader
         return $actualSkip;
     }
 
+    /**
+     * @return bool
+     */
     public function isEof()
     {
         return ($this->next >= $this->length);
     }
 
+    /**
+     * @return null|string
+     */
     public function getWhole()
     {
         return $this->read($this->length - $this->next);
@@ -112,6 +120,11 @@ class StringReader extends Reader
 
     /* void */
 
+    /**
+     * @param $count
+     * @return null|string
+     * @throws IOException
+     */
     public function read($count)
     {
         $this->ensureOpen();

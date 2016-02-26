@@ -26,7 +26,7 @@ abstract class Enumeration extends NamedObject implements Serializable
      * Enumeration constructor.
      * @param $id
      */
-    final public function __construct($id)
+    public function __construct($id)
     {
         $this->setId($id);
     }

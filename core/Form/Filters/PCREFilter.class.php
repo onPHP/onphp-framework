@@ -19,15 +19,6 @@ class PCREFilter implements Filtrator
     private $limit = -1;
 
     /**
-     * @deprecated
-     * @return PCREFilter
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @param $search
      * @param $replace
      * @return PCREFilter

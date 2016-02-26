@@ -17,15 +17,8 @@ class TransparentFile
     private $tempFile = null;
 
     /**
-     * @deprecated
-     *
-     * @return TransparentFile
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
+     * @return null|string
+     */
     public function getPath()
     {
         if (!$this->path && $this->rawData) {
@@ -40,8 +33,10 @@ class TransparentFile
     }
 
     /**
-     * @return TransparentFile
-     **/
+     * @param $path
+     * @return $this
+     * @throws WrongArgumentException
+     */
     public function setPath($path)
     {
         if (!is_readable($path))
@@ -57,6 +52,9 @@ class TransparentFile
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getRawData()
     {
         if (!$this->rawData && $this->path) {
@@ -79,6 +77,9 @@ class TransparentFile
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getSize()
     {
         if ($this->rawData)

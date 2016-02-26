@@ -12,6 +12,8 @@
 /**
  * @ingroup OpenId
  *
+ * @deprecated Class new OAuth2 and OpenID2
+ *
  * @see http://openid.net/specs/openid-attribute-exchange-1_0.html
  * @see http://code.google.com/intl/ru/apis/accounts/docs/OpenID.html
  **/
@@ -31,13 +33,6 @@ class OpenIdExtensionAttributeExchange implements OpenIdExtension
     private $lastname = null;
     private $language = null;
 
-    /**
-     * @return OpenIdExtensionAttributeExchange
-     **/
-    public static function create()
-    {
-        return new self();
-    }
 
     /**
      * @param Model $model

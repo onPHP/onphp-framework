@@ -46,16 +46,6 @@ class SQLFunction extends Castable implements MappableObject, Aliased
         }
     }
 
-    /**
-     * @deprecated
-     *
-     * @param $name
-     * @param array ...$args
-     */
-    public static function create($name, ...$args)
-    {
-        new SQLFunction($name, $args);
-    }
 
     /**
      * @return null

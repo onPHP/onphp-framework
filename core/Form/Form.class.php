@@ -37,15 +37,6 @@ class Form extends RegulatedForm
     private $importFiltering = true;
 
     /**
-     * @deprecated
-     * @return Form
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @param $name
      * @return bool
      */

@@ -22,14 +22,6 @@ class AMQPExchangeConfig extends AMQPBaseConfig
     protected $type = null;
 
     /**
-     * @return AMQPExchangeConfig
-     **/
-    public static function create()
-    {
-        return new self();
-    }
-
-    /**
      * @return AMQPExchangeType
      **/
     public function getType()
@@ -48,6 +40,9 @@ class AMQPExchangeConfig extends AMQPBaseConfig
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getInternal()
     {
         return $this->internal;

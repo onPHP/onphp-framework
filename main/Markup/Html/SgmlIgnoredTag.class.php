@@ -17,14 +17,6 @@ class SgmlIgnoredTag extends SgmlTag
     private $cdata = null;
     private $endMark = null;
 
-    /**
-     * @deprecated
-     * @return SgmlIgnoredTag
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return SgmlIgnoredTag

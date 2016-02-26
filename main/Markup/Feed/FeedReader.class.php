@@ -24,13 +24,6 @@ class FeedReader
         $this->formats[] = RssFeedFormat::me();
     }
 
-    /**
-     * @return FeedReader
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return SimpleXMLElement
@@ -41,8 +34,11 @@ class FeedReader
     }
 
     /**
+     * @param $file
      * @return FeedChannel
-     **/
+     * @throws WrongArgumentException
+     * @throws WrongStateException
+     */
     public function parseFile($file)
     {
         try {
@@ -61,8 +57,9 @@ class FeedReader
     }
 
     /**
-     * @return FeedChannel
-     **/
+     * @return mixed
+     * @throws WrongStateException
+     */
     private function parse()
     {
         foreach ($this->formats as $format) {

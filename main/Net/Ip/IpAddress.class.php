@@ -14,16 +14,22 @@
  **/
 class IpAddress implements Stringable, DialectString
 {
-    private $longIp = null;
+    protected $longIp = null;
 
+    /**
+     * IpAddress constructor.
+     * @param $ip
+     */
     public function __construct($ip)
     {
         $this->setIp($ip);
     }
 
     /**
-     * @return IpAddress
-     **/
+     * @param $ip
+     * @return $this
+     * @throws WrongArgumentException
+     */
     public function setIp($ip)
     {
         $long = ip2long($ip);
@@ -38,15 +44,9 @@ class IpAddress implements Stringable, DialectString
     }
 
     /**
-     * @deprecated
-     *
+     * @param $ip
      * @return IpAddress
-     **/
-    public static function create($ip)
-    {
-        return new self($ip);
-    }
-
+     */
     public static function createFromCutted($ip)
     {
         if (substr_count($ip, '.') < 3) {
@@ -56,21 +56,34 @@ class IpAddress implements Stringable, DialectString
         return new self($ip);
     }
 
+    /**
+     * @return null
+     */
     public function getLongIp()
     {
         return $this->longIp;
     }
 
+    /**
+     * @param Dialect $dialect
+     * @return mixed
+     */
     public function toDialectString(Dialect $dialect)
     {
         return $dialect->quoteValue($this->toString());
     }
 
+    /**
+     * @return string
+     */
     public function toString() : string
     {
         return long2ip($this->longIp);
     }
 
+    /**
+     * @return mixed
+     */
     public function toSignedInt()
     {
         return TypesUtils::unsignedToSigned($this->longIp);

@@ -19,15 +19,6 @@ class FilterChain implements Filtrator
     private $chain = [];
 
     /**
-     * @deprecated
-     * @return FilterChain
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @param Filtrator $filter
      * @return FilterChain
      */

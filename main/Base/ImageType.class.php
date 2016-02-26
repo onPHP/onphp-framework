@@ -38,7 +38,7 @@ class ImageType extends Enumeration
     const XBM = IMAGETYPE_XBM;
     const PJPEG = self::IMAGETYPE_PJPEG;
 
-    protected $names = array(
+    protected $names = [
         IMAGETYPE_GIF => 'gif',
         IMAGETYPE_JPEG => 'jpeg',
         IMAGETYPE_PNG => 'png',
@@ -57,9 +57,9 @@ class ImageType extends Enumeration
         IMAGETYPE_JPEG2000 => 'jpc',
         IMAGETYPE_XBM => 'xbm',
         self::IMAGETYPE_PJPEG => 'jpeg'
-    );
+    ];
 
-    protected $extensions = array(
+    protected $extensions = [
         'gif' => IMAGETYPE_GIF,
         'jpg' => IMAGETYPE_JPEG,
         'jpeg' => IMAGETYPE_JPEG,
@@ -79,9 +79,9 @@ class ImageType extends Enumeration
         'wbmp' => IMAGETYPE_WBMP,
         'jpc' => IMAGETYPE_JPEG2000,
         'xbm' => IMAGETYPE_XBM
-    );
+    ];
 
-    protected $mimeTypes = array(
+    protected $mimeTypes = [
         IMAGETYPE_GIF => 'image/gif',
         IMAGETYPE_JPEG => 'image/jpeg',
         IMAGETYPE_PNG => 'image/png',
@@ -100,7 +100,7 @@ class ImageType extends Enumeration
         IMAGETYPE_JPEG2000 => 'image/jpeg',
         IMAGETYPE_XBM => 'image/xbm',
         self::IMAGETYPE_PJPEG => 'image/pjpeg'
-    );
+    ];
 
     public static function createByFileName($fileName)
     {

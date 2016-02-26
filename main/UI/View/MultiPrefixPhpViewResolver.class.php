@@ -27,14 +27,6 @@ class MultiPrefixPhpViewResolver implements ViewResolver
     private $postfix = EXT_TPL;
     private $viewClassName = 'SimplePhpView';
 
-    /**
-     * @deprecated
-     * @return MultiPrefixPhpViewResolver
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return MultiPrefixPhpViewResolver

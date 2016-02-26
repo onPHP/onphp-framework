@@ -15,15 +15,6 @@
 class ForbiddenCommand implements EditorCommand
 {
     /**
-     * @deprecated
-     * @return ForbiddenCommand
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return ModelAndView
      **/
     public function run(Prototyped $subject, Form $form, HttpRequest $request)

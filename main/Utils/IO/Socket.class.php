@@ -35,6 +35,9 @@ class Socket
     private $readTimeout = null;
     private $writeTimeout = null;
 
+    /**
+     * Socket constructor.
+     */
     public function __construct()
     {
         $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
@@ -52,13 +55,8 @@ class Socket
     }
 
     /**
-     * @return Socket
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
+     *
+     */
     public function __destruct()
     {
         if (!$this->closed) {
@@ -127,6 +125,9 @@ class Socket
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getHost()
     {
         return $this->host;
@@ -161,6 +162,9 @@ class Socket
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isConnected()
     {
         return $this->connected;
@@ -198,6 +202,9 @@ class Socket
 
     // NOTE: return value may slightly differ from $this->readTimeout
 
+    /**
+     * @throws NetworkException
+     */
     private function checkWrite()
     {
         if ($this->closed || !$this->connected || $this->inputShutdown) {
@@ -211,8 +218,11 @@ class Socket
     //  return value may slightly differ from $this->writeTimeout
 
     /**
-     * @return Socket
-     **/
+     * @param int $connectTimeout
+     * @return $this
+     * @throws NetworkException
+     * @throws WrongArgumentException
+     */
     public function connect($connectTimeout = self::DEFAULT_TIMEOUT)
     {
         Assert::isTrue(
@@ -274,12 +284,20 @@ class Socket
         return $this;
     }
 
-    private static function getSeconds($timeout)
+    /**
+     * @param $timeout
+     * @return int
+     */
+    private static function getSeconds($timeout) : int
     {
         return (int) ($timeout / 1000);
     }
 
-    private static function getMicroseconds($timeout)
+    /**
+     * @param $timeout
+     * @return int
+     */
+    private static function getMicroseconds($timeout) : int
     {
         return (int) ($timeout % 1000 * 1000);
     }
@@ -295,6 +313,9 @@ class Socket
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getReadTimeout()
     {
         $timeVal = socket_get_option($this->socket, SOL_SOCKET, SO_RCVTIMEO);
@@ -373,7 +394,10 @@ class Socket
 
     /* void */
 
-    public function isTimedOut()
+    /**
+     * @return bool
+     */
+    public function isTimedOut() : bool
     {
         return (socket_last_error($this->socket) === self::EAGAIN);
     }

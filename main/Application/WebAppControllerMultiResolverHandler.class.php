@@ -12,17 +12,7 @@
  ***************************************************************************/
 class WebAppControllerMultiResolverHandler extends WebAppControllerResolverHandler
 {
-    protected $subPathList = array();
-
-    /**
-     * @deprecated
-     *
-     * @return WebAppControllerMultiResolverHandler
-     */
-    public static function create()
-    {
-        return new self();
-    }
+    protected $subPathList = [];
 
     /**
      * @param $subPath

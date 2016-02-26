@@ -30,15 +30,6 @@ class DBValue extends Castable
     }
 
     /**
-     * @deprecated
-     * @return DBValue
-     **/
-    public static function create($value)
-    {
-        return new self($value);
-    }
-
-    /**
      * @return null
      */
     public function getValue()

@@ -19,15 +19,6 @@ class Cdata extends SgmlToken
 
     private $strict = false;
 
-    /**
-     * @deprecated
-     * @return Cdata
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
     public function getData()
     {
         if ($this->strict) {

@@ -41,20 +41,6 @@ class RedisNoSQL extends CachePeer implements ListGenerator
     }
 
     /**
-     * @param string $host
-     * @param string $port
-     * @param float $timeout
-     * @return RedisNoSQL
-     */
-    public static function create(
-        $host = self::DEFAULT_HOST,
-        $port = self::DEFAULT_PORT,
-        $timeout = self::DEFAULT_TIMEOUT
-    ) {
-        return new self($host, $port, $timeout);
-    }
-
-    /**
      * @see __destruct
      */
     public function __destruct()

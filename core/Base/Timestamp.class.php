@@ -37,16 +37,6 @@ class Timestamp extends Date
 
     }
 
-    /**
-     * @deprecated
-     * @param $timestamp
-     * @param DateTimeZone|null $zone
-     * @return Timestamp
-     */
-    public static function create($timestamp, DateTimeZone $zone = null)
-    {
-        return new static($timestamp, $zone);
-    }
 
     /**
      * @return bool|string

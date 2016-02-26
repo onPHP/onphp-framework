@@ -24,16 +24,6 @@ class PhpViewResolver implements ViewResolver
     }
 
     /**
-     * @deprecated
-     *
-     * @return PhpViewResolver
-     **/
-    public static function create($prefix = null, $postfix = null)
-    {
-        return new self($prefix, $postfix);
-    }
-
-    /**
      * @return SimplePhpView
      **/
     public function resolveViewName($viewName)

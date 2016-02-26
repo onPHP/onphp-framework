@@ -29,16 +29,6 @@ class SQLArray implements DialectString
     }
 
     /**
-     * @deprecated
-     *
-     * @return SQLArray
-     **/
-    public static function create($array) : SQLArray
-    {
-        return new self($array);
-    }
-
-    /**
      * @return array
      */
     public function getArray() : array

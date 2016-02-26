@@ -29,16 +29,6 @@ class StringInputStream extends InputStream
     }
 
     /**
-     * @deprecated
-     *
-     * @return StringInputStream
-     **/
-    public static function create($string)
-    {
-        return new self($string);
-    }
-
-    /**
      * @return StringInputStream
      **/
     public function mark()
@@ -48,6 +38,9 @@ class StringInputStream extends InputStream
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function markSupported()
     {
         return true;
@@ -73,6 +66,10 @@ class StringInputStream extends InputStream
         return $this;
     }
 
+    /**
+     * @param $count
+     * @return null|string
+     */
     public function read($count)
     {
         if (!$this->string || $this->isEof()) {
@@ -90,6 +87,9 @@ class StringInputStream extends InputStream
         return $result;
     }
 
+    /**
+     * @return bool
+     */
     public function isEof()
     {
         return ($this->position >= $this->length);

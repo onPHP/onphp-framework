@@ -14,7 +14,7 @@
  **/
 class UncachersPool implements UncacherBase
 {
-    private $uncachers = array();
+    private $uncachers = [];
 
     public function __construct(UncacherBase $uncacher = null)
     {
@@ -56,16 +56,6 @@ class UncachersPool implements UncacherBase
             $this->uncachers[$class] = $uncacher;
         }
         return $this;
-    }
-
-    /**
-     * @deprecated
-     * @param UncacherBase $uncacher
-     * @return UncachersPool
-     */
-    public static function create(UncacherBase $uncacher = null)
-    {
-        return new self($uncacher);
     }
 
     public function uncache()

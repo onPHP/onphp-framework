@@ -15,15 +15,6 @@ class InterceptingChain
 
     protected $pos = -1;
 
-    /**
-     * @deprecated
-     *
-     * @return InterceptingChain
-     */
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return InterceptingChain

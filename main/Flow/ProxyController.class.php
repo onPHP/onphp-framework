@@ -31,15 +31,6 @@ class ProxyController implements Controller
     }
 
     /**
-     * @deprecated
-     * @return ProxyController
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return ProxyController
      **/
     public function setInner(Controller $controller)

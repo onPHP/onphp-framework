@@ -37,16 +37,6 @@ class PrefixUnaryExpression implements LogicalObject, MappableObject
     }
 
     /**
-     * @param $subject
-     * @param $logic
-     * @return PrefixUnaryExpression
-     */
-    public static function create($subject, $logic)
-    {
-        return new self($subject, $logic);
-    }
-
-    /**
      * @param Dialect $dialect
      * @return string
      */

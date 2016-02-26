@@ -35,15 +35,6 @@ class OqlToken
     private $position = null;
 
     /**
-     * @deprecated
-     * @return OqlToken
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return OqlToken
      **/
     public static function make($value, $rawValue, $type, $line, $position)

@@ -26,13 +26,6 @@ class Urn extends GenericUri
     ];
     protected $schemeSpecificPart = null;
 
-    /**
-     * @return Urn
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     public static function getKnownSubSchemes()
     {

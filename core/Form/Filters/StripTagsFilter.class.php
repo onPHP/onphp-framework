@@ -19,16 +19,6 @@ class StripTagsFilter implements Filtrator
     private $exclude = null;
 
     /**
-     * @deprecated
-     *
-     * @return StripTagsFilter
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return StripTagsFilter
      **/
     public function setAllowableTags($exclude)

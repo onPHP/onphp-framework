@@ -11,17 +11,15 @@
  ***************************************************************************/
 class FormToScopeExporter extends ObjectBuilder
 {
-    /**
-     * @return FormToObjectConverter
-     **/
-    public static function create(EntityProto $proto)
+
+    function __construct(EntityProto $proto)
     {
-        return new self($proto);
+        parent::__construct($proto);
     }
 
     protected function createEmpty()
     {
-        return array();
+        return [];
     }
 
     /**

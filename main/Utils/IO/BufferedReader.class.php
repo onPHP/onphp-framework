@@ -23,17 +23,13 @@ class BufferedReader extends Reader
     private $position = 0;
     private $markPosition = null;
 
+    /**
+     * BufferedReader constructor.
+     * @param Reader $in
+     */
     public function __construct(Reader $in)
     {
         $this->in = $in;
-    }
-
-    /**
-     * @return BufferedReader
-     **/
-    public static function create(Reader $in)
-    {
-        return new self($in);
     }
 
     /**
@@ -46,12 +42,18 @@ class BufferedReader extends Reader
         return $this;
     }
 
-    public function isEof()
+    /**
+     * @return bool
+     */
+    public function isEof() : bool
     {
         return $this->in->isEof();
     }
 
-    public function markSupported()
+    /**
+     * @return bool
+     */
+    public function markSupported() : bool
     {
         return true;
     }
@@ -76,6 +78,11 @@ class BufferedReader extends Reader
         return $this;
     }
 
+    /**
+     * @param $count
+     * @return null|string
+     * @throws IOException
+     */
     public function read($count)
     {
         $this->ensureOpen();
@@ -121,6 +128,9 @@ class BufferedReader extends Reader
         return $result;
     }
 
+    /**
+     * @throws IOException
+     */
     private function ensureOpen()
     {
         if ($this->closed) {
@@ -130,7 +140,11 @@ class BufferedReader extends Reader
 
     /* void */
 
-    public function available()
+    /**
+     * @return int
+     * @throws IOException
+     */
+    public function available() : int
     {
         $this->ensureOpen();
 

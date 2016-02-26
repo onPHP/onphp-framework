@@ -32,15 +32,6 @@ class OrderBy extends FieldTable implements MappableObject
         $this->nulls = new Ternary(null);
     }
 
-    /**
-     * @deprecated
-     *
-     * @return OrderBy
-     **/
-    public static function create($field)
-    {
-        return new self($field);
-    }
 
     /**
      * @see __clone

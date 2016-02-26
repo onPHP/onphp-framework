@@ -24,15 +24,6 @@ class OqlSelectQuery extends OqlQuery
     private $limit = null;
     private $offset = null;
 
-    /**
-     * @deprecated
-     *
-     * @return OqlSelectQuery
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     public function isDistinct()
     {

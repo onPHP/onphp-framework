@@ -54,7 +54,10 @@ class SQLite extends Sequenceless
         return $this;
     }
 
-    public function isConnected()
+    /**
+     * @return bool
+     */
+    public function isConnected() : bool
     {
         return is_resource($this->link);
     }

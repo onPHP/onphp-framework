@@ -20,17 +20,13 @@ class DiffieHellmanKeyPair implements KeyPair
     private $public = null;
     private $parameters = null;
 
+    /**
+     * DiffieHellmanKeyPair constructor.
+     * @param DiffieHellmanParameters $parameters
+     */
     public function __construct(DiffieHellmanParameters $parameters)
     {
         $this->parameters = $parameters;
-    }
-
-    /**
-     * @return DiffieHellmanKeyPair
-     **/
-    public static function create(DiffieHellmanParameters $parameters)
-    {
-        return new self($parameters);
     }
 
     /**

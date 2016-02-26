@@ -15,14 +15,9 @@
 class PrimitiveTimestampRange extends PrimitiveDateRange
 {
 
-    /**
-     * @deprecated
-     *
-     * @return PrimitiveTimestampRange
-     **/
-    public static function create($name)
+    function __construct($name)
     {
-        return new self($name);
+        parent::__construct($name);
     }
 
     /**

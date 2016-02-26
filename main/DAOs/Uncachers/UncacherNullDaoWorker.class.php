@@ -15,15 +15,6 @@
 class UncacherNullDaoWorker implements UncacherBase
 {
     /**
-     * @deprecated
-     * @return UncacherNullDaoWorker
-     */
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @param UncacherBase $uncacher
      * @return $this
      * @throws WrongArgumentException

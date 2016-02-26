@@ -27,16 +27,6 @@ class FeedItem
         $this->title = $title;
     }
 
-    /**
-     * @deprecated
-     *
-     * @return FeedItem
-     **/
-    public static function create($title)
-    {
-        return new self($title);
-    }
-
     public function getId()
     {
         return $this->id;

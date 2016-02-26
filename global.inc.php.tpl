@@ -83,7 +83,7 @@
     $autoloader = ONPHP_CLASS_CACHE_TYPE;
     AutoloaderPool::set('onPHP', $autoloader = new $autoloader());
     /* @var $autoloader AutoloaderClassPathCache */
-    $autoloader->setNamespaceResolver(NamespaceResolverOnPHP::create())->register();
+    $autoloader->setNamespaceResolver((new NamespaceResolverOnPHP())->register();
     
     $autoloader->addPaths(array(
         // core classes

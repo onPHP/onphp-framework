@@ -15,18 +15,13 @@
  * @ingroup onSPL
  **/
 class IndexedList extends AbstractList
-{
+{s
     /**
-     * @return IndexedList
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
-     * @return IndexedList
-     **/
+     * @param mixed $offset
+     * @param mixed $value
+     * @return $this
+     * @throws WrongArgumentException
+     */
     public function offsetSet($offset, $value)
     {
         Assert::isTrue($value instanceof Identifiable);

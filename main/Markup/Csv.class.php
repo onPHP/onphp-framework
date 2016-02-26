@@ -31,14 +31,6 @@ class Csv
         $this->header = (true === $header);
     }
 
-    /**
-     * @return Csv
-     **/
-    public static function create($header = false)
-    {
-        return new self($header);
-    }
-
     public function getArray()
     {
         return $this->data;

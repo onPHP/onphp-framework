@@ -14,7 +14,7 @@
  *
  * @ingroup Form
  **/
-class Primitive extends StaticFactory
+class Primitive
 {
     /**
      * @param $primitive
@@ -34,7 +34,7 @@ class Primitive extends StaticFactory
      * @param BasePrimitive $prm
      * @return PrimitiveAlias
      */
-    public static function alias($name, BasePrimitive $prm)
+    public function alias($name, BasePrimitive $prm)
     {
         return new PrimitiveAlias($name, $prm);
     }
@@ -43,7 +43,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveAnyType
      */
-    public static function anyType($name)
+    public function anyType($name)
     {
         return new PrimitiveAnyType($name);
     }
@@ -52,7 +52,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveInteger
      */
-    public static function integer($name)
+    public function integer($name)
     {
         return new PrimitiveInteger($name);
     }
@@ -61,7 +61,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveFloat
      */
-    public static function float($name)
+    public function float($name)
     {
         return new PrimitiveFloat($name);
     }
@@ -70,7 +70,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveIdentifier
      */
-    public static function identifier($name)
+    public function identifier($name)
     {
         return new PrimitiveIdentifier($name);
     }
@@ -79,7 +79,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveIntegerIdentifier
      */
-    public static function integerIdentifier($name)
+    public function integerIdentifier($name)
     {
         return new PrimitiveIntegerIdentifier($name);
     }
@@ -88,7 +88,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveScalarIdentifier
      */
-    public static function scalarIdentifier($name)
+    public function scalarIdentifier($name)
     {
         return new PrimitiveScalarIdentifier($name);
     }
@@ -97,7 +97,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitivePolymorphicIdentifier
      */
-    public static function polymorphicIdentifier($name)
+    public function polymorphicIdentifier($name)
     {
         return new PrimitivePolymorphicIdentifier($name);
     }
@@ -106,7 +106,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveIdentifierList
      */
-    public static function identifierlist($name)
+    public function identifierlist($name)
     {
         return new PrimitiveIdentifierList($name);
     }
@@ -115,7 +115,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveClass
      */
-    public static function clazz($name)
+    public function clazz($name)
     {
         return new PrimitiveClass($name);
     }
@@ -124,7 +124,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveEnumeration
      */
-    public static function enumeration($name)
+    public function enumeration($name)
     {
         return new PrimitiveEnumeration($name);
     }
@@ -133,7 +133,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveEnumerationByValue
      */
-    public static function enumerationByValue($name)
+    public function enumerationByValue($name)
     {
         return new PrimitiveEnumerationByValue($name);
     }
@@ -142,7 +142,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveEnumerationList
      */
-    public static function enumerationList($name)
+    public function enumerationList($name)
     {
         return new PrimitiveEnumerationList($name);
     }
@@ -151,7 +151,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveDate
      */
-    public static function date($name)
+    public function date($name)
     {
         return new PrimitiveDate($name);
     }
@@ -160,7 +160,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveTimestamp
      */
-    public static function timestamp($name)
+    public function timestamp($name)
     {
         return new PrimitiveTimestamp($name);
     }
@@ -169,7 +169,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveTimestampTZ
      */
-    public static function timestampTZ($name)
+    public function timestampTZ($name)
     {
         return new PrimitiveTimestampTZ($name);
     }
@@ -178,7 +178,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveTime
      */
-    public static function time($name)
+    public function time($name)
     {
         return new PrimitiveTime($name);
     }
@@ -187,7 +187,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveString
      */
-    public static function string($name)
+    public function string($name)
     {
         return new PrimitiveString($name);
     }
@@ -196,7 +196,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveBinary
      */
-    public static function binary($name)
+    public function binary($name)
     {
         return new PrimitiveBinary($name);
     }
@@ -205,7 +205,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveRange
      */
-    public static function range($name)
+    public function range($name)
     {
         return new PrimitiveRange($name);
     }
@@ -214,7 +214,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveDateRange
      */
-    public static function dateRange($name)
+    public function dateRange($name)
     {
         return new PrimitiveDateRange($name);
     }
@@ -223,7 +223,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveTimestampRange
      */
-    public static function timestampRange($name)
+    public function timestampRange($name)
     {
         return new PrimitiveTimestampRange($name);
     }
@@ -232,7 +232,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveList
      */
-    public static function choice($name)
+    public function choice($name)
     {
         return new PrimitiveList($name);
     }
@@ -241,7 +241,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveArray
      */
-    public static function set($name)
+    public function set($name)
     {
         return new PrimitiveArray($name);
     }
@@ -250,7 +250,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveHstore
      */
-    public static function hstore($name)
+    public function hstore($name)
     {
         return new PrimitiveHstore($name);
     }
@@ -259,7 +259,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveMultiList
      */
-    public static function multiChoice($name)
+    public function multiChoice($name)
     {
         return new PrimitiveMultiList($name);
     }
@@ -268,7 +268,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitivePlainList
      */
-    public static function plainChoice($name)
+    public function plainChoice($name)
     {
         return new PrimitivePlainList($name);
     }
@@ -277,7 +277,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveBoolean
      */
-    public static function boolean($name)
+    public function boolean($name)
     {
         return new PrimitiveBoolean($name);
     }
@@ -286,7 +286,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveTernary
      */
-    public static function ternary($name)
+    public function ternary($name)
     {
         return new PrimitiveTernary($name);
     }
@@ -295,7 +295,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveFile
      */
-    public static function file($name)
+    public function file($name)
     {
         return new PrimitiveFile($name);
     }
@@ -304,7 +304,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveImage
      */
-    public static function image($name)
+    public function image($name)
     {
         return new PrimitiveImage($name);
     }
@@ -313,7 +313,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return ExplodedPrimitive
      */
-    public static function exploded($name)
+    public function exploded($name)
     {
         return new ExplodedPrimitive($name);
     }
@@ -322,7 +322,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveInet
      */
-    public static function inet($name)
+    public function inet($name)
     {
         return new PrimitiveInet($name);
     }
@@ -331,7 +331,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveForm
      */
-    public static function form($name)
+    public function form($name)
     {
         return new PrimitiveForm($name);
     }
@@ -340,7 +340,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveFormsList
      */
-    public static function formsList($name)
+    public function formsList($name)
     {
         return new PrimitiveFormsList($name);
     }
@@ -349,7 +349,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveNoValue
      */
-    public static function noValue($name)
+    public function noValue($name)
     {
         return new PrimitiveNoValue($name);
     }
@@ -358,7 +358,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveHttpUrl
      */
-    public static function httpUrl($name)
+    public function httpUrl($name)
     {
         return new PrimitiveHttpUrl($name);
     }
@@ -369,7 +369,7 @@ class Primitive extends StaticFactory
      * @return BasePrimitive
      * @throws WrongArgumentException
      */
-    public static function prototypedIdentifier($class, $name = null)
+    public function prototypedIdentifier($class, $name = null)
     {
         Assert::isInstance($class, 'DAOConnected');
 
@@ -387,7 +387,7 @@ class Primitive extends StaticFactory
      * @return mixed
      * @throws WrongArgumentException
      */
-    public static function prototyped($class, $propertyName, $name = null)
+    public function prototyped($class, $propertyName, $name = null)
     {
         Assert::isInstance($class, 'Prototyped');
 
@@ -408,7 +408,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveIpAddress
      */
-    public static function ipAddress($name)
+    public function ipAddress($name)
     {
         return new PrimitiveIpAddress($name);
     }
@@ -417,7 +417,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveIpRange
      */
-    public static function ipRange($name)
+    public function ipRange($name)
     {
         return new PrimitiveIpRange($name);
     }
@@ -426,7 +426,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveEnum
      */
-    public static function enum($name)
+    public function enum($name)
     {
         return new PrimitiveEnum($name);
     }
@@ -435,7 +435,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveEnumByValue
      */
-    public static function enumByValue($name)
+    public function enumByValue($name)
     {
         return new PrimitiveEnumByValue($name);
     }
@@ -444,7 +444,7 @@ class Primitive extends StaticFactory
      * @param $name
      * @return PrimitiveEnumList
      */
-    public static function enumList($name)
+    public function enumList($name)
     {
         return new PrimitiveEnumList($name);
     }

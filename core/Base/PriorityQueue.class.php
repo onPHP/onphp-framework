@@ -101,14 +101,6 @@ class PriorityQueue
         $this->heap[$index1] = $tmp;
     }
 
-    /**
-     * @param array $unsortedData
-     * @return PriorityQueue
-     */
-    public static function create($unsortedData = []) : PriorityQueue
-    {
-        return new self($unsortedData);
-    }
 
     /**
      * @return integer

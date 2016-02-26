@@ -14,22 +14,13 @@
  **/
 class UncacherVoodoDaoWorkerLists implements UncacherBase
 {
-    private $handlerList = array();
+    private $handlerList = [];
 
     public function __construct($className, SegmentHandler $handler)
     {
         $this->handlerList[$className] = $handler;
     }
 
-    /**
-     * @deprecated
-     *
-     * @return UncacherBaseDaoWorker
-     */
-    public static function create($className, SegmentHandler $handler)
-    {
-        return new self($className, $handler);
-    }
 
     /**
      * @param $uncacher UncacherVoodoDaoWorkerLists same as self class

@@ -44,13 +44,8 @@ class DoctypeDeclaration
     private $uri = null;
 
     /**
-     * @return DoctypeDeclaration
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
+     * @return null
+     */
     public function getRootElement()
     {
         return $this->rootElement;
@@ -66,6 +61,9 @@ class DoctypeDeclaration
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isInline()
     {
         return $this->inline;
@@ -84,6 +82,9 @@ class DoctypeDeclaration
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isPublic()
     {
         return $this->public;
@@ -102,11 +103,17 @@ class DoctypeDeclaration
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isSystem()
     {
         return !$this->public;
     }
 
+    /**
+     * @return null
+     */
     public function getDeclarations()
     {
         return $this->declarations;
@@ -122,6 +129,9 @@ class DoctypeDeclaration
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getUri()
     {
         return $this->uri;
@@ -204,7 +214,10 @@ class DoctypeDeclaration
         return $this;
     }
 
-    public function toString()
+    /**
+     * @return string
+     */
+    public function toString() : string
     {
         if ($this->inline) {
             return $this->rootElement . ' ' . $this->declarations;
@@ -222,6 +235,9 @@ class DoctypeDeclaration
         }
     }
 
+    /**
+     * @return null
+     */
     public function getFpi()
     {
         return $this->fpi;

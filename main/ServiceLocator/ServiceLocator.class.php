@@ -15,14 +15,6 @@ class ServiceLocator implements IServiceLocator
     private $store = [];
 
     /**
-     * @return ServiceLocator
-     */
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @param string $className
      * @return object
      */

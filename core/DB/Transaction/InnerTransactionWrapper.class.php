@@ -36,17 +36,6 @@ class InnerTransactionWrapper
     private $mode = null;
 
     /**
-     * @deprecated
-     *
-     * @deprecated
-     * @return InnerTransactionWrapper
-     */
-    public static function create() : InnerTransactionWrapper
-    {
-        return new self;
-    }
-
-    /**
      * @param DB $db
      * @return InnerTransactionWrapper
      */

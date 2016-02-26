@@ -48,16 +48,6 @@ class PeclMemcache extends CachePeer
     }
 
     /**
-     * @param string $host
-     * @param int $port
-     * @return PeclMemcache
-     */
-    public static function create($host = self::DEFAULT_HOST, $port = self::DEFAULT_PORT) : PeclMemcache
-    {
-        return new self($host, $port);
-    }
-
-    /**
      * @see __destruct
      */
     public function __destruct()

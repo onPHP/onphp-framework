@@ -26,19 +26,18 @@ class RouterTransparentRule extends RouterBaseRule
 
     protected $staticCount = 0;
 
+    /**
+     * RouterTransparentRule constructor.
+     * @param $route
+     */
     public function __construct($route)
     {
         $this->route = trim($route, $this->urlDelimiter);
     }
 
     /**
-     * @return RouterTransparentRule
-     **/
-    public static function create($route)
-    {
-        return new self($route);
-    }
-
+     * @return array
+     */
     public function getRequirements()
     {
         return $this->requirements;
@@ -54,6 +53,11 @@ class RouterTransparentRule extends RouterBaseRule
         return $this;
     }
 
+    /**
+     * @param HttpRequest $request
+     * @return array
+     * @throws RouterException
+     */
     public function match(HttpRequest $request)
     {
         $this->processRoute();
@@ -185,12 +189,12 @@ class RouterTransparentRule extends RouterBaseRule
      * Assembles user submitted parameters forming a URL path
      * defined by this route.
      *
-     * @param array $data An array of variable
-     * and value pairs used as parameters.
-     * @param boolean $reset Whether or not to set
-     * route defaults with those provided in $data.
-     * @return string Route path with user submitted parameters.
-     **/
+     * @param array $data
+     * @param bool|false $reset
+     * @param bool|false $encode
+     * @return string
+     * @throws RouterException
+     */
     public function assembly(
         array $data = [],
         $reset = false,

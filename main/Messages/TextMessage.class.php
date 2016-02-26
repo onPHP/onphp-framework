@@ -14,26 +14,27 @@ class TextMessage implements Message
     private $timestamp = null;
     private $text = null;
 
+    /**
+     * TextMessage constructor.
+     * @param Timestamp|null $timestamp
+     */
     public function __construct(Timestamp $timestamp = null)
     {
         $this->timestamp = $timestamp ?: Timestamp::makeNow();
     }
 
     /**
-     * @deprecated
-     * @param Timestamp|null $timestamp
-     * @return TextMessage
+     * @return null|Timestamp
      */
-    public static function create(Timestamp $timestamp = null)
-    {
-        return new self($timestamp);
-    }
-
     public function getTimestamp()
     {
         return $this->timestamp;
     }
 
+    /**
+     * @param Timestamp $timestamp
+     * @return $this
+     */
     public function setTimestamp(Timestamp $timestamp)
     {
         $this->timestamp = $timestamp;
@@ -41,11 +42,18 @@ class TextMessage implements Message
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getText()
     {
         return $this->text;
     }
 
+    /**
+     * @param $text
+     * @return $this
+     */
     public function setText($text)
     {
         $this->text = $text;

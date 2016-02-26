@@ -14,11 +14,6 @@ class TextFileQueue implements MessageQueue
     private $fileName = null;
     private $offset = null;
 
-    public static function create()
-    {
-        return new self;
-    }
-
     public function getFileName()
     {
         return $this->fileName;

@@ -14,20 +14,14 @@
  **/
 class Hstore implements Stringable
 {
-    protected $properties = array();
+    protected $properties = [];
 
-    /**
-     * @deprecated
-     * Create Hstore by raw string.
-     *
-     * @return Hstore
-     **/
-    public static function create($string)
+    function __construct($string)
     {
-        $self = new self();
-
-        return $self->toValue($string);
+        $this
+            ->toValue($string);
     }
+
 
     /**
      * @return Hstore
@@ -45,7 +39,7 @@ class Hstore implements Stringable
     private function parseString($raw)
     {
         $raw = preg_replace('/([$])/u', "\\\\$1", $raw);
-        $unescapedHStore = array();
+        $unescapedHStore = [];
         eval('$unescapedHStore = array(' . $raw . ');');
         return $unescapedHStore;
     }

@@ -14,12 +14,9 @@
  **/
 class UncacherCommonDaoWorker extends UncacherBaseDaoWorker
 {
-    /**
-     * @return UncacherCommonDaoWorker
-     */
-    public static function create($className, $idKey)
+    function __construct($className, $idKey)
     {
-        return new self($className, $idKey);
+        parent::__construct($className, $idKey);
     }
 
     protected function uncacheClassName($className, $idKeys)

@@ -17,13 +17,9 @@
  **/
 class DBBinary extends DBValue
 {
-    /**
-     * @deprecated
-     * @return DBBinary
-     **/
-    public static function create($value)
+    function __construct($value)
     {
-        return new self($value);
+        parent::__construct($value);
     }
 
     /**

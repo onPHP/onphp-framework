@@ -19,32 +19,32 @@ class LightMetaProperty implements Stringable
 {
     const UNSIGNED_FLAG = 0x1000;
 
-    private static $limits = array(
-        0x0002 => array(
+    private static $limits = [
+        0x0002 => [
             PrimitiveInteger::SIGNED_SMALL_MIN,
             PrimitiveInteger::SIGNED_SMALL_MAX
-        ),
-        0x1002 => array(
+        ],
+        0x1002 => [
             0,
             PrimitiveInteger::UNSIGNED_SMALL_MAX
-        ),
-        0x0004 => array(
+        ],
+        0x0004 => [
             PrimitiveInteger::SIGNED_MIN,
             PrimitiveInteger::SIGNED_MAX
-        ),
-        0x1004 => array(
+        ],
+        0x1004 => [
             0,
             PrimitiveInteger::UNSIGNED_MAX
-        ),
-        0x0008 => array(
+        ],
+        0x0008 => [
             PrimitiveInteger::SIGNED_BIG_MIN,
             PrimitiveInteger::SIGNED_BIG_MAX
-        ),
-        0x1008 => array(
+        ],
+        0x1008 => [
             0,
             null
-        )
-    );
+        ]
+    ];
 
     private $name = null;
     private $columnName = null;
@@ -72,16 +72,6 @@ class LightMetaProperty implements Stringable
     private $dropper = null;
 
     private $identifier = null;
-
-    /**
-     * @deprecated
-     *
-     * @return LightMetaProperty
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * must by in sync with InnerMetaProperty::make()
@@ -314,7 +304,7 @@ class LightMetaProperty implements Stringable
     {
         $prm =
             call_user_func(
-                array('Primitive', $this->type),
+                [new Primitive(), $this->type],
                 $name
             );
 
@@ -421,7 +411,7 @@ class LightMetaProperty implements Stringable
             && $this->generic
             && $this->className
         ) {
-            return call_user_func(array($this->className, 'create'), $raw);
+            return call_user_func([$this->className, 'create'], $raw);
         } elseif (
             !$this->identifier
             && $this->className
@@ -433,7 +423,7 @@ class LightMetaProperty implements Stringable
                 !is_subclass_of($this->className, 'Enumeration')
                 && !is_subclass_of($this->className, 'Enum')
             ) {
-                $remoteDao = call_user_func(array($this->className, 'dao'));
+                $remoteDao = call_user_func([$this->className, 'dao']);
 
                 $joinPrefix = $remoteDao->getJoinPrefix(
                     $this->columnName,
@@ -463,7 +453,7 @@ class LightMetaProperty implements Stringable
         // veeeeery "special" handling, by tradition.
         // MySQL returns 0/1, others - t/f
         if ($this->type == 'boolean') {
-            return (bool)strtr($raw, array('f' => null));
+            return (bool)strtr($raw, ['f' => null]);
         }
 
         return $raw;
@@ -536,10 +526,10 @@ class LightMetaProperty implements Stringable
         // NOTE: enum here formless types
         return in_array(
             $this->type,
-            array(
+            [
                 'enumeration',
                 'enum',
-            )
+            ]
         );
     }
 }

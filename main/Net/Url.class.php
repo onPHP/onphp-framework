@@ -29,14 +29,6 @@ class Url extends GenericUri
         'prospero' => 'Url'
     ];
 
-    /**
-     * @deprecated
-     * @return Url
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     public function isValid()
     {

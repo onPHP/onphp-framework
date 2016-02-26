@@ -24,14 +24,6 @@ class FeedChannel
         $this->title = $title;
     }
 
-    /**
-     * @deprecated
-     * @return FeedChannel
-     **/
-    public static function create($title)
-    {
-        return new self($title);
-    }
 
     public function getTitle()
     {

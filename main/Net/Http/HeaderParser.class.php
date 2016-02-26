@@ -17,14 +17,6 @@ class HeaderParser
     private $headers = [];
     private $currentHeader = null;
 
-    /**
-     * @deprecated
-     * @return HeaderParser
-     */
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @param raw header data

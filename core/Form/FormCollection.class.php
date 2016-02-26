@@ -33,16 +33,6 @@ class FormCollection implements Iterator
     }
 
     /**
-     * @deprecated
-     * @param Form $sample
-     * @return FormCollection
-     */
-    public static function create(Form $sample)
-    {
-        return new self($sample);
-    }
-
-    /**
      * from http request
      * looks like foo[1]=42&bar[1]=test&foo[2]=44&bar[2]=anothertest
      *

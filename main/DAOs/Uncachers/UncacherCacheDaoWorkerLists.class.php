@@ -14,21 +14,11 @@
  **/
 class UncacherCacheDaoWorkerLists implements UncacherBase
 {
-    private $classNameList = array();
+    private $classNameList = [];
 
     public function __construct($className)
     {
         $this->classNameList[$className] = $className;
-    }
-
-    /**
-     * @deprecated
-     *
-     * @return UncacherBaseDaoWorker
-     */
-    public static function create($className)
-    {
-        return new self($className);
     }
 
     /**
@@ -55,6 +45,9 @@ class UncacherCacheDaoWorkerLists implements UncacherBase
         return $this;
     }
 
+    /*
+     *
+     */
     public function getClassNameList()
     {
         return $this->classNameList;

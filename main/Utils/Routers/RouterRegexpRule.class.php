@@ -25,15 +25,9 @@ class RouterRegexpRule extends RouterBaseRule
     }
 
     /**
-     * @deprecated
-     * @return RouterRegexpRule
-     **/
-    public static function create($route)
-    {
-        return new self($route);
-    }
-
-    public function getMap()
+     * @return array
+     */
+    public function getMap() : array
     {
         return $this->map;
     }
@@ -48,6 +42,9 @@ class RouterRegexpRule extends RouterBaseRule
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getReverse()
     {
         return $this->reverse;
@@ -65,7 +62,12 @@ class RouterRegexpRule extends RouterBaseRule
         return $this;
     }
 
-    public function match(HttpRequest $request)
+    /**
+     * @param HttpRequest $request
+     * @return array
+     * @throws RouterException
+     */
+    public function match(HttpRequest $request) : array
     {
         $path = $this->processPath($request)->toString();
 
@@ -141,6 +143,13 @@ class RouterRegexpRule extends RouterBaseRule
         return $return;
     }
 
+    /**
+     * @param array $data
+     * @param bool|false $reset
+     * @param bool|false $encode
+     * @return string
+     * @throws RouterException
+     */
     public function assembly(
         array $data = [],
         $reset = false,

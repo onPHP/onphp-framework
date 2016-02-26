@@ -58,7 +58,7 @@ abstract class BaseDaoWorker implements BaseDAO
         $result =
             DBPool::getByDao($this->dao)
                 ->queryCount(
-                    OSQL::delete()->from($this->dao->getTable())
+                    (new OSQL())->delete()->from($this->dao->getTable())
                         ->where(Expression::eq($this->dao->getIdName(), $id))
             );
 
@@ -71,7 +71,8 @@ abstract class BaseDaoWorker implements BaseDAO
     {
         $result =
             DBPool::getByDao($this->dao)->queryCount(
-                OSQL::delete()
+                (new OSQL())
+                    ->delete()
                     ->from($this->dao->getTable())
                     ->where(Expression::in($this->dao->getIdName(), $ids))
             );

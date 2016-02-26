@@ -41,14 +41,6 @@ class IpNetwork implements SingleRange
         $this->mask = $mask;
     }
 
-    /**
-     * @return IpNetwork
-     **/
-    public static function create(IpAddress $ip, $mask)
-    {
-        return new self($ip, $mask);
-    }
-
     public function getMask()
     {
         return $this->mask;
@@ -77,6 +69,8 @@ class IpNetwork implements SingleRange
     public function contains(/* IpAddress */
         $probe
     ) {
+
+        /**@var IpAddress $probe */
         Assert::isInstance($probe, 'IpAddress');
 
         return

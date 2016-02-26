@@ -15,15 +15,6 @@
  **/
 class GroupBy extends FieldTable implements MappableObject
 {
-    /**
-     * @deprecated
-     *
-     * @return GroupBy
-     **/
-    public static function create($field)
-    {
-        return new self($field);
-    }
 
     /**
      * @param ProtoDAO $dao

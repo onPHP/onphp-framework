@@ -31,14 +31,6 @@ class FormField
     }
 
     /**
-     * @return FormField
-     **/
-    public static function create($name)
-    {
-        return new self($name);
-    }
-
-    /**
      * @return null
      */
     public function getName()

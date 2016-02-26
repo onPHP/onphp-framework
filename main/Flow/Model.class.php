@@ -14,23 +14,14 @@
  **/
 class Model implements SimplifiedArrayAccess
 {
-    private $vars = array();
-
-    /**
-     * @deprecated
-     * @return Model
-     **/
-    public static function create()
-    {
-        return new self;
-    }
+    private $vars = [];
 
     /**
      * @return Model
      **/
     public function clean()
     {
-        $this->vars = array();
+        $this->vars = [];
 
         return $this;
     }
@@ -79,7 +70,7 @@ class Model implements SimplifiedArrayAccess
 
     public function isEmpty()
     {
-        return ($this->vars === array());
+        return ($this->vars === []);
     }
 
     public function getList()

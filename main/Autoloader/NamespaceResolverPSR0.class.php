@@ -17,15 +17,6 @@ class NamespaceResolverPSR0 extends NamespaceResolverOnPHP
     private $allowedUnderline = false;
 
     /**
-     * @deprecated
-     * @return NamespaceResolverPSR0
-     */
-    public static function create()
-    {
-        return new static;
-    }
-
-    /**
      * @param boolean $allowedUnderline
      * @return NamespaceResolverPSR0
      */
@@ -35,6 +26,12 @@ class NamespaceResolverPSR0 extends NamespaceResolverOnPHP
         return $this;
     }
 
+    /**
+     * @param $className
+     * @param $namespace
+     * @param $paths
+     * @return mixed
+     */
     protected function searchClass($className, $namespace, $paths)
     {
         $splitPattern = $this->allowedUnderline ? '~(\\\\+|_+)~' : '~(\\\\+)~';

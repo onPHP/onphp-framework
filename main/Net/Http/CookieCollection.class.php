@@ -18,15 +18,10 @@
  **/
 class CookieCollection extends AbstractCollection
 {
-    /**
-     * @deprecated
-     * @return CookieCollection
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
+    /**
+     * @return $this
+     */
     public function httpSetAll()
     {
         foreach ($this->items as $item) {

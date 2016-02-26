@@ -29,15 +29,6 @@ class HashFilter implements Filtrator
     }
 
     /**
-     * @deprecated
-     * @return HashFilter
-     **/
-    public static function create($binary = false)
-    {
-        return new self($binary);
-    }
-
-    /**
      * @return bool
      */
     public function isBinary()

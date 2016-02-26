@@ -23,19 +23,20 @@ class Cookie extends CollectionItem
     private $secure = false;
     private $httpOnly = false;
 
+    /**
+     * Cookie constructor.
+     * @param $name
+     */
     public function __construct($name)
     {
         $this->id = $this->name = $name;
     }
 
     /**
-     * @return Cookie
-     **/
-    public static function create($name)
-    {
-        return new self($name);
-    }
-
+     * @param $expire
+     * @return $this
+     * @throws WrongArgumentException
+     */
     public function setMaxAge($expire)
     {
         Assert::isInteger($expire);
@@ -45,6 +46,10 @@ class Cookie extends CollectionItem
         return $this;
     }
 
+    /**
+     * @return bool
+     * @throws WrongStateException
+     */
     public function httpSet()
     {
         if (headers_sent()) {
@@ -65,16 +70,26 @@ class Cookie extends CollectionItem
             );
     }
 
+    /**
+     * @return null
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @return null
+     */
     public function getValue()
     {
         return $this->value;
     }
 
+    /**
+     * @param $value
+     * @return $this
+     */
     public function setValue($value)
     {
         $this->value = $value;
@@ -82,16 +97,27 @@ class Cookie extends CollectionItem
         return $this;
     }
 
-    public function getMaxAge()
+    /**
+     * @return int
+     */
+    public function getMaxAge() : integer
     {
         return $this->expire;
     }
 
+    /**
+     * @return null
+     */
     public function getPath()
     {
         return $this->path;
     }
 
+    /**
+     * @param $path
+     * @return $this
+     * @throws WrongArgumentException
+     */
     public function setPath($path)
     {
         Assert::isString($path);
@@ -101,6 +127,9 @@ class Cookie extends CollectionItem
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getDomain()
     {
         return $this->domain;
@@ -115,11 +144,18 @@ class Cookie extends CollectionItem
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function getSecure()
     {
         return $this->secure;
     }
 
+    /**
+     * @param bool|true $secure
+     * @return $this
+     */
     public function setSecure($secure = true)
     {
         $this->secure = (boolean) $secure;
@@ -127,11 +163,18 @@ class Cookie extends CollectionItem
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function getHttpOnly()
     {
         return $this->httpOnly;
     }
 
+    /**
+     * @param bool|true $httpOnly
+     * @return $this
+     */
     public function setHttpOnly($httpOnly = true)
     {
         $this->httpOnly = (boolean) $httpOnly;

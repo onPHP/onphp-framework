@@ -27,7 +27,7 @@ class IsoCurrency extends Enumeration
     const NOK = 578;
     const KGS = 417;
 
-    protected $names = array(
+    protected $names = [
         self::RUB => 'Russian Ruble',
         self::USD => 'US Dollar',
         self::EUR => 'Euro',
@@ -43,9 +43,9 @@ class IsoCurrency extends Enumeration
         self::SEK => 'Swedish Krona',
         self::NOK => 'Norwegian Krone',
         self::KGS => 'Som'
-    );
+    ];
 
-    protected $signs = array(
+    protected $signs = [
         self::RUB => 'руб.',
         self::USD => '$',
         self::EUR => '€',
@@ -61,15 +61,8 @@ class IsoCurrency extends Enumeration
         self::SEK => 'SEK',
         self::NOK => 'NOK',
         self::KGS => 'KGS'
-    );
+    ];
 
-    /**
-     * @return Currency
-     **/
-    public static function create($id)
-    {
-        return new self($id);
-    }
 
     public static function getAnyId()
     {

@@ -39,16 +39,6 @@ class SharedMemory extends SelectivePeer
     }
 
     /**
-     * @param int $defaultSize
-     * @param array $customSized
-     * @return SharedMemory
-     */
-    public static function create($defaultSize = self::DEFAULT_SEGMENT_SIZE, $customSized = []) : SharedMemory
-    {
-        return new self($defaultSize, $customSized);
-    }
-
-    /**
      * @see __destruct
      */
     public function __destruct()

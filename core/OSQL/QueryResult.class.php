@@ -27,22 +27,13 @@ class QueryResult implements Identifiable
     /** @var null  */
     private $query = null;
 
-    /**
-     * @deprecated
-     *
-     * @return QueryResult
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return string
      */
     public function getId() : string
     {
-        return '_result_' . $this->query->getId();
+        return '_result_' . $this->getQuery()->getId();
     }
 
     /**

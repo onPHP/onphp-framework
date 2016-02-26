@@ -30,14 +30,6 @@ class ReadOnlyPeer extends CachePeer
         $this->innerPeer = $peer;
     }
 
-    /**
-     * @param CachePeer $peer
-     * @return ReadOnlyPeer
-     */
-    public static function create(CachePeer $peer)
-    {
-        return new ReadOnlyPeer($peer);
-    }
 
     /**
      * @return bool

@@ -14,15 +14,6 @@
  **/
 class ImportCommand extends MakeCommand
 {
-    /**
-     * @deprecated
-     *
-     * @return ImportCommand
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     protected function daoMethod()
     {

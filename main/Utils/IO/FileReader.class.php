@@ -16,9 +16,6 @@ class FileReader extends Reader
 {
     private $fd = null;
 
-    /**
-     * @return FileReader
-     **/
     public function __construct($fileName)
     {
         if (!is_readable($fileName)) {
@@ -33,13 +30,8 @@ class FileReader extends Reader
     }
 
     /**
-     * @return FileReader
-     **/
-    public static function create($fileName)
-    {
-        return new self($fileName);
-    }
-
+     *
+     */
     public function __destruct()
     {
         try {
@@ -50,8 +42,9 @@ class FileReader extends Reader
     }
 
     /**
-     * @return FileReader
-     **/
+     * @return $this
+     * @throws IOException
+     */
     public function close()
     {
         if (!fclose($this->fd)) {
@@ -61,12 +54,18 @@ class FileReader extends Reader
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isEof()
     {
         return feof($this->fd);
     }
 
-    public function markSupported()
+    /**
+     * @return bool
+     */
+    public function markSupported() : bool
     {
         return true;
     }
@@ -82,8 +81,9 @@ class FileReader extends Reader
     }
 
     /**
-     * @return FileReader
-     **/
+     * @return $this
+     * @throws IOException
+     */
     public function reset()
     {
         if (fseek($this->fd, $this->mark) < 0) {
@@ -95,6 +95,10 @@ class FileReader extends Reader
         return $this;
     }
 
+    /**
+     * @param $length
+     * @return null|string
+     */
     public function read($length)
     {
         $result = null;

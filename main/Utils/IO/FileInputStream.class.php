@@ -37,14 +37,8 @@ class FileInputStream extends InputStream
     }
 
     /**
-     * @deprecated
-     * @return FileInputStream
-     **/
-    public static function create($nameOrFd)
-    {
-        return new self($nameOrFd);
-    }
-
+     *
+     */
     public function __destruct()
     {
         try {
@@ -55,8 +49,9 @@ class FileInputStream extends InputStream
     }
 
     /**
-     * @return FileInputStream
-     **/
+     * @return $this
+     * @throws IOException
+     */
     public function close()
     {
         if (!fclose($this->fd)) {
@@ -66,6 +61,9 @@ class FileInputStream extends InputStream
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isEof()
     {
         return feof($this->fd);
@@ -81,11 +79,17 @@ class FileInputStream extends InputStream
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getOffset()
     {
         return ftell($this->fd);
     }
 
+    /**
+     * @return bool
+     */
     public function markSupported()
     {
         return true;
@@ -100,8 +104,10 @@ class FileInputStream extends InputStream
     }
 
     /**
-     * @return FileInputStream
-     **/
+     * @param $offset
+     * @return $this
+     * @throws IOException
+     */
     public function seek($offset)
     {
         if (fseek($this->fd, $offset) < 0) {
@@ -113,11 +119,22 @@ class FileInputStream extends InputStream
         return $this;
     }
 
+    /**
+     * @param $length
+     * @return null|string
+     * @throws IOException
+     */
     public function read($length)
     {
         return $this->realRead($length);
     }
 
+    /**
+     * @param $length
+     * @param bool|false $string
+     * @return null|string
+     * @throws IOException
+     */
     public function realRead($length, $string = false)
     {
         $result = $string
@@ -143,9 +160,13 @@ class FileInputStream extends InputStream
         return $result;
     }
 
+    /**
+     * @param null $length
+     * @return null|string
+     * @throws IOException
+     */
     public function readString($length = null)
     {
         return $this->realRead($length, true);
     }
 }
-

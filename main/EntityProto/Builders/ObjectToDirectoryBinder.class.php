@@ -11,12 +11,9 @@
  ***************************************************************************/
 class ObjectToDirectoryBinder extends DirectoryBuilder
 {
-    /**
-     * @return ObjectToFormConverter
-     **/
-    public static function create(EntityProto $proto)
+    function __construct(EntityProto $proto)
     {
-        return new self($proto);
+        parent::__construct($proto);
     }
 
     public function make($object, $recursive = true)

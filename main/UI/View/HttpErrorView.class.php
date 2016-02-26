@@ -19,6 +19,12 @@ class HttpErrorView implements View
     protected $prefix = null;
     protected $postfix = null;
 
+    /**
+     * HttpErrorView constructor.
+     * @param HttpStatus $status
+     * @param $prefix
+     * @param $postfix
+     */
     public function __construct(HttpStatus $status, $prefix, $postfix)
     {
         $this->status = $status;
@@ -27,6 +33,9 @@ class HttpErrorView implements View
         $this->postfix = $postfix;
     }
 
+    /**
+     * @param null $model
+     */
     public function render($model = null)
     {
         header($this->status->toString());

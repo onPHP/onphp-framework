@@ -14,20 +14,11 @@
  **/
 class UncacherSmartDaoWorkerLists implements UncacherBase
 {
-    private $classNameMap = array();
+    private $classNameMap = [];
 
     public function __construct($className, $indexKey, $intKey)
     {
-        $this->classNameMap[$className] = array($indexKey, $intKey);
-    }
-
-    /**
-     * @deprecated
-     * @return UncacherSmartDaoWorkerLists
-     */
-    public static function create($className, $indexKey, $intKey)
-    {
-        return new self($className, $indexKey, $intKey);
+        $this->classNameMap[$className] = [$indexKey, $intKey];
     }
 
     public function getClassNameMap()

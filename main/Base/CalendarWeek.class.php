@@ -16,18 +16,12 @@
  **/
 class CalendarWeek
 {
-    private $days = array();
+    private $days = [];
+
 
     /**
-     * @deprecated
-     *
-     * @return CalendarWeek
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
+     * @return array
+     */
     public function getDays()
     {
         return $this->days;

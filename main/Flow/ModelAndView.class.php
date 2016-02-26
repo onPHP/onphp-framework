@@ -23,14 +23,6 @@ class ModelAndView
         $this->model = new Model();
     }
 
-    /**
-     * @deprecated
-     * @return ModelAndView
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return Model

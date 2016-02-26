@@ -16,17 +16,7 @@
  **/
 class RuntimeMemory extends CachePeer
 {
-    private $cache = array();
-
-    /**
-     * @deprecated
-     *
-     * @return RuntimeMemory
-     **/
-    public static function create() : RuntimeMemory
-    {
-        return new self;
-    }
+    private $cache = [];
 
     /**
      * @return bool
@@ -93,7 +83,7 @@ class RuntimeMemory extends CachePeer
      **/
     public function clean()
     {
-        $this->cache = array();
+        $this->cache = [];
 
         return parent::clean();
     }

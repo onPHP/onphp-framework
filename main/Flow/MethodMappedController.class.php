@@ -25,6 +25,7 @@ abstract class MethodMappedController implements Controller
         if ($action = $this->chooseAction($request)) {
 
             $method = $this->methodMap[$action];
+            /** @var ModelAndView $mav */
             $mav = $this->{$method}($request);
 
             if ($mav->viewIsRedirect())
@@ -42,7 +43,10 @@ abstract class MethodMappedController implements Controller
 
     public function chooseAction(HttpRequest $request)
     {
-        $action = Primitive::choice('action')->setList($this->methodMap);
+        $action =
+            (new Primitive())
+                ->choice('action')
+                ->setList($this->methodMap);
 
         if ($this->getDefaultAction())
             $action->setDefault($this->getDefaultAction());

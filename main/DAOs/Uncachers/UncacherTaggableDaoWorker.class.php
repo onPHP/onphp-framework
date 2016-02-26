@@ -14,23 +14,11 @@
  **/
 class UncacherTaggableDaoWorker implements UncacherBase
 {
-    private $classNameMap = array();
+    private $classNameMap = [];
 
     public function __construct($className, $idKey, $tags, UncacherBase $worker)
     {
-        $this->classNameMap[$className] = array(array($idKey), $tags, $worker);
-    }
-
-    /**
-     * @param $className
-     * @param $idKey
-     * @param $tags
-     * @param UncacherBase $worker
-     * @return UncacherTaggableDaoWorker
-     */
-    public static function create($className, $idKey, $tags, UncacherBase $worker)
-    {
-        return new self($className, $idKey, $tags, $worker);
+        $this->classNameMap[$className] = [[$idKey], $tags, $worker];
     }
 
     /**

@@ -31,16 +31,6 @@ class StringReplaceFilter implements Filtrator
     }
 
     /**
-     * @deprecated
-     *
-     * @return StringReplaceFilter
-     **/
-    public static function create($search = null, $replace = null)
-    {
-        return new self($search, $replace);
-    }
-
-    /**
      * @return null
      */
     public function getSearch()

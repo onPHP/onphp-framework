@@ -35,32 +35,32 @@
 	mb_regex_encoding(DEFAULT_ENCODING);
 	
 	DBPool::me()->setDefault(
-		DB::spawn('PgSQL', 'userName', 'passWord', 'hostName', 'baseName')->
-		setEncoding(DEFAULT_ENCODING)
-	);
-	
-	ini_set(
-		'include_path', get_include_path().PATH_SEPARATOR
-		.PATH_CLASSES.PATH_SEPARATOR
-		.PATH_CONTROLLERS.PATH_SEPARATOR
-		.PATH_CLASSES.'DAOs'.PATH_SEPARATOR
-		.PATH_CLASSES.'Flow'.PATH_SEPARATOR
-		.PATH_CLASSES.'Business'.PATH_SEPARATOR
-		.PATH_CLASSES.'Proto'.PATH_SEPARATOR
-		
-		.PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR.'Business'.PATH_SEPARATOR
-		.PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR.'Proto'.PATH_SEPARATOR
-		.PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR.'DAOs'.PATH_SEPARATOR
-	);
-	
-	// magic_quotes_gpc must be off
-	
-	define('__LOCAL_DEBUG__', true);
-	define('BUGLOVERS', 'some.box@host.domain');
+DB::spawn('PgSQL', 'userName', 'passWord', 'hostName', 'baseName')->
+setEncoding(DEFAULT_ENCODING)
+);
 
-	Cache::setPeer(
-		Memcached::create('localhost')
-	);
-	
-	Cache::setDefaultWorker('SmartDaoWorker');
+ini_set(
+'include_path', get_include_path().PATH_SEPARATOR
+.PATH_CLASSES.PATH_SEPARATOR
+.PATH_CONTROLLERS.PATH_SEPARATOR
+.PATH_CLASSES.'DAOs'.PATH_SEPARATOR
+.PATH_CLASSES.'Flow'.PATH_SEPARATOR
+.PATH_CLASSES.'Business'.PATH_SEPARATOR
+.PATH_CLASSES.'Proto'.PATH_SEPARATOR
+
+.PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR.'Business'.PATH_SEPARATOR
+.PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR.'Proto'.PATH_SEPARATOR
+.PATH_CLASSES.'Auto'.DIRECTORY_SEPARATOR.'DAOs'.PATH_SEPARATOR
+);
+
+// magic_quotes_gpc must be off
+
+define('__LOCAL_DEBUG__', true);
+define('BUGLOVERS', 'some.box@host.domain');
+
+Cache::setPeer(
+new Memcached('localhost')
+);
+
+Cache::setDefaultWorker('SmartDaoWorker');
 ?>

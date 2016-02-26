@@ -27,14 +27,6 @@ class CurlHttpClient implements HttpClient
      */
     private $oldUrlConstructor = ONPHP_CURL_CLIENT_OLD_TO_STRING;
 
-    /**
-     * @deprecated
-     * @return CurlHttpClient
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return CurlHttpClient

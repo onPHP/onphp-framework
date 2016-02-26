@@ -40,13 +40,6 @@ class SimpleFrontController implements Controller
         $this->templatesDirectory = $templatesDirectory;
     }
 
-    /**
-     * @return SimpleFrontController
-     */
-    public static function create($templatesDirectory)
-    {
-        return new static($templatesDirectory);
-    }
 
     public function handleRequest(HttpRequest $request)
     {
@@ -54,7 +47,7 @@ class SimpleFrontController implements Controller
 
         $this->getRouter()->route($request);
 
-        $this->prepareResponseFormat($request);
+        $this->prepareResponseFormat();
 
         $this->handleMav(
             $this
@@ -92,7 +85,7 @@ class SimpleFrontController implements Controller
             );
     }
 
-    protected function prepareResponseFormat()
+    private function prepareResponseFormat()
     {
         if ($this->request->hasAttachedVar('format')) {
             Assert::isNotFalse(

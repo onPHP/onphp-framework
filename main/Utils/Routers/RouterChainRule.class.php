@@ -14,14 +14,6 @@ class RouterChainRule extends RouterBaseRule
     protected $routes = [];
     protected $separators = [];
 
-    /**
-     * @deprecated
-     * @return RouterChainRule
-     **/
-    public static function create()
-    {
-        return new self();
-    }
 
     /**
      * @return RouterChainRule
@@ -34,12 +26,19 @@ class RouterChainRule extends RouterBaseRule
         return $this;
     }
 
-    public function getCount()
+    /**
+     * @return integer
+     */
+    public function getCount() : integer
     {
         return count($this->routes);
     }
 
-    public function match(HttpRequest $request)
+    /**
+     * @param HttpRequest $request
+     * @return array
+     */
+    public function match(HttpRequest $request) : array
     {
         $values = [];
 
@@ -56,6 +55,13 @@ class RouterChainRule extends RouterBaseRule
         return $values;
     }
 
+    /**
+     * @param array $data
+     * @param bool|false $reset
+     * @param bool|false $encode
+     * @return null|string
+     * @throws RouterException
+     */
     public function assembly(
         array $data = [],
         $reset = false,

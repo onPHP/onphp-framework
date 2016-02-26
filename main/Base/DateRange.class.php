@@ -539,16 +539,9 @@ class DateRange implements Stringable, SingleRange
     }
 
     /**
-     * @deprecated
-     *
-     * @return DateRange
-     **/
-    public static function create($start = null, $end = null)
-    {
-        return new self($start, $end);
-    }
-
-    public function isOneDay()
+     * @return bool
+     */
+    public function isOneDay() : bool
     {
         return (!$this->isOpen())
         && ($this->start->toDate() == $this->end->toDate());

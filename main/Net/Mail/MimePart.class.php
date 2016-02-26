@@ -41,15 +41,6 @@ class MimePart implements MailBuilder
         $this->contentType = 'text/plain';
     }
 
-    /**
-     * @deprecated
-     * @return MimePart
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
     public function getBoundary()
     {
         return $this->boundary;

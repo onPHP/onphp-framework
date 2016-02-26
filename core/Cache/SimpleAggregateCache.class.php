@@ -20,15 +20,6 @@ class SimpleAggregateCache extends AggregateCache
     private $peerAmount = null;
     private $labels = null;
 
-    /**
-     * @deprecated
-     *
-     * @return SimpleAggregateCache
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @param $label

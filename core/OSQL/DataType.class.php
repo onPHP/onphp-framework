@@ -77,15 +77,6 @@ class DataType extends Enumeration implements DialectString
     private $unsigned = false;
 
     /**
-     * @deprecated
-     * @return DataType
-     **/
-    public static function create($id)
-    {
-        return new self($id);
-    }
-
-    /**
      * @return int
      */
     public static function getAnyId(): int

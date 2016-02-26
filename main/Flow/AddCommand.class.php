@@ -14,15 +14,6 @@
  **/
 class AddCommand extends MakeCommand
 {
-    /**
-     * @deprecated
-     * @return AddCommand
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
     protected function daoMethod()
     {
         return 'add';

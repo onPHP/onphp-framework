@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2007 by Anton E. Lebedevich                             *
  *                                                                         *
@@ -8,43 +9,42 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-
-	final class OpenIdTest extends TestCase
-	{
-		public function testCredentials()
-		{
-			$credential = OpenIdCredentials::create(
-				HttpUrl::create()->parse('http://www.example.com/'),
-				HttpClientStub::create(
-					HttpResponseStub::create()->
-						setStatus(new HttpStatus(HttpStatus::CODE_200))->
-						setBody(<<<EOT
+final class OpenIdTest extends TestCase
+{
+    public function testCredentials()
+    {
+        $credential = OpenIdCredentials::create(
+            HttpUrl::create()->parse('http://www.example.com/'),
+            HttpClientStub::create(
+                HttpResponseStub::create()->
+                setStatus(new HttpStatus(HttpStatus::CODE_200))->
+                setBody(<<<EOT
 <html><head><link rel="openid.server"
                   href="http://www.myopenid.com/server" />
             <link rel="openid.delegate" href="http://example.myopenid.com/" />
 </head></html>
 EOT
-						)
-				)
-			);
-			
-			$this->assertEquals(
-				$credential->getServer()->toString(),
-				'http://www.myopenid.com/server'
-			);
-			
-			$this->assertEquals(
-				$credential->getRealId()->toString(),
-				'http://example.myopenid.com/'
-			);
-			
-			// from openId creator blog
-			$credential = OpenIdCredentials::create(
-				HttpUrl::create()->parse('http://brad.livejournal.com/'),
-				HttpClientStub::create(
-					HttpResponseStub::create()->
-						setStatus(new HttpStatus(HttpStatus::CODE_200))->
-						setBody(<<<EOT
+                )
+            )
+        );
+
+        $this->assertEquals(
+            $credential->getServer()->toString(),
+            'http://www.myopenid.com/server'
+        );
+
+        $this->assertEquals(
+            $credential->getRealId()->toString(),
+            'http://example.myopenid.com/'
+        );
+
+        // from openId creator blog
+        $credential = OpenIdCredentials::create(
+            HttpUrl::create()->parse('http://brad.livejournal.com/'),
+            HttpClientStub::create(
+                HttpResponseStub::create()->
+                setStatus(new HttpStatus(HttpStatus::CODE_200))->
+                setBody(<<<EOT
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -147,166 +147,159 @@ border:  hidden #000000;
 </body>
 </html>
 EOT
-						)
-				)
-			);
-			$this->assertEquals(
-				$credential->getServer()->toString(),
-				'http://www.livejournal.com/openid/server.bml'
-			);
-			
-			try {
-				$credential = OpenIdCredentials::create(
-					HttpUrl::create()->parse('http://www.example.com/'),
-					HttpClientStub::create(
-						HttpResponseStub::create()->
-							setStatus(new HttpStatus(HttpStatus::CODE_404))
-					)
-				);
-				$this->fail();
-			} catch (OpenIdException $e) {
-				/* pass */
-			} catch (Exception $e) {
-				$this->fail();
-			}
-		}
-	}
-	
-	class HttpResponseStub implements HttpResponse
-	{
-		private $status = null;
-		private $body = null;
-		
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function getStatus()
-		{
-			return $this->status;
-		}
-		
-		public function setStatus(HttpStatus $status)
-		{
-			$this->status = $status;
-			return $this;
-		}
-		
-		public function getBody()
-		{
-			return $this->body;
-		}
-		
-		public function setBody($body)
-		{
-			$this->body = $body;
-			return $this;
-		}
-		
-		public function getReasonPhrase()
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function getHeaders()
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function hasHeader($name)
-		{
-			return false;
-		}
-		
-		public function getHeader($name)
-		{
-			return 'text/html';
-		}
-	}
-	
-	class HttpClientStub implements HttpClient
-	{
-		private $response = null;
-		
-		public function __construct(HttpResponse $response)
-		{
-			$this->response = $response;
-		}
-		
-		public static function create(HttpResponse $response)
-		{
-			return new self($response);
-		}
-		
-		public function setTimeout($timeout)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function getTimeout()
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function setFollowLocation(/* boolean */ $really)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function isFollowLocation()
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function setMaxRedirects($maxRedirects)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function getMaxRedirects()
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function send(HttpRequest $request)
-		{
-			return $this->response;
-		}
+                )
+            )
+        );
+        $this->assertEquals(
+            $credential->getServer()->toString(),
+            'http://www.livejournal.com/openid/server.bml'
+        );
 
-		public function setOption($key, $value)
-		{
-			throw new UnsupportedMethodException();
-		}
+        try {
+            $credential = OpenIdCredentials::create(
+                HttpUrl::create()->parse('http://www.example.com/'),
+                HttpClientStub::create(
+                    HttpResponseStub::create()->
+                    setStatus(new HttpStatus(HttpStatus::CODE_404))
+                )
+            );
+            $this->fail();
+        } catch (OpenIdException $e) {
+            /* pass */
+        } catch (Exception $e) {
+            $this->fail();
+        }
+    }
+}
 
-		public function dropOption($key)
-		{
-			throw new UnsupportedMethodException();
-		}
+class HttpResponseStub implements HttpResponse
+{
+    private $status = null;
+    private $body = null;
 
-		public function getOption($key)
-		{
-			throw new UnsupportedMethodException();
-		}
 
-		public function setNoBody($really)
-		{
-			throw new UnsupportedMethodException();
-		}
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
-		public function hasNoBody()
-		{
-			throw new UnsupportedMethodException();
-		}
+    public function setStatus(HttpStatus $status)
+    {
+        $this->status = $status;
+        return $this;
+    }
 
-		public function setMaxFileSize($maxFileSize)
-		{
-			throw new UnsupportedMethodException();
-		}
+    public function getBody()
+    {
+        return $this->body;
+    }
 
-		public function getMaxFileSize()
-		{
-			throw new UnsupportedMethodException();
-		}
-	}
+    public function setBody($body)
+    {
+        $this->body = $body;
+        return $this;
+    }
+
+    public function getReasonPhrase()
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function getHeaders()
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function hasHeader($name)
+    {
+        return false;
+    }
+
+    public function getHeader($name)
+    {
+        return 'text/html';
+    }
+}
+
+class HttpClientStub implements HttpClient
+{
+    private $response = null;
+
+    public function __construct(HttpResponse $response)
+    {
+        $this->response = $response;
+    }
+
+    public function setTimeout($timeout)
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function getTimeout()
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function setFollowLocation(/* boolean */
+        $really)
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function isFollowLocation()
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function setMaxRedirects($maxRedirects)
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function getMaxRedirects()
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function send(HttpRequest $request)
+    {
+        return $this->response;
+    }
+
+    public function setOption($key, $value)
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function dropOption($key)
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function getOption($key)
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function setNoBody($really)
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function hasNoBody()
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function setMaxFileSize($maxFileSize)
+    {
+        throw new UnsupportedMethodException();
+    }
+
+    public function getMaxFileSize()
+    {
+        throw new UnsupportedMethodException();
+    }
+}
+
 ?>

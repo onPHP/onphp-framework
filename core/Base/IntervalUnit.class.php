@@ -96,14 +96,6 @@ class IntervalUnit
         return $result;
     }
 
-    /**
-     * @param $name
-     * @return mixed
-     */
-    public static function create($name)
-    {
-        return self::getInstance($name);
-    }
 
     /**
      * @param $id

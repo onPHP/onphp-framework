@@ -82,19 +82,10 @@ abstract class Enum extends NamedObject
     {
         $list = [];
         foreach (array_keys(static::$names) as $id) {
-            $list[] = static::create($id);
+            $list[] = new static($id);
         }
 
         return $list;
-    }
-
-    /**
-     * @param integer $id
-     * @return Enum
-     */
-    public static function create($id) : Enum
-    {
-        return new static($id);
     }
 
     /**

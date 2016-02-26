@@ -15,13 +15,6 @@ class MockServiceLocator extends ServiceLocator
     protected $store = [];
     protected $objectList = [];
 
-    /**
-     * @return MockServiceLocator
-     */
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @param string $className

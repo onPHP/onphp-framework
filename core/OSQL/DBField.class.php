@@ -36,15 +36,6 @@ class DBField extends Castable implements SQLTableName
         }
     }
 
-    /**
-     * @deprecated
-     *
-     * @return DBField
-     **/
-    public static function create($field, $table = null)
-    {
-        return new self($field, $table);
-    }
 
     /**
      * @param Dialect $dialect

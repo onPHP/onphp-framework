@@ -66,16 +66,11 @@ class SequentialCache extends CachePeer
         return $this;
     }
 
-    /**
-     * @param CachePeer $master
-     * @param array $slaves or CachePeer
-     * @return SequentialCache
-     */
-    public static function create(CachePeer $master, array $slaves = [])
-    {
-        return new self($master, $slaves);
-    }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function get($key)
     {
         foreach ($this->list as $val) {

@@ -18,15 +18,9 @@ class SgmlOpenTag extends SgmlTag
     private $empty = false;
 
     /**
-     * @deprecated
-     * @return SgmlOpenTag
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    public function isEmpty()
+     * @return bool
+     */
+    public function isEmpty() : bool
     {
         return $this->empty;
     }
@@ -53,6 +47,10 @@ class SgmlOpenTag extends SgmlTag
         return $this;
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
     public function hasAttribute($name)
     {
         $name = strtolower($name);
@@ -60,6 +58,11 @@ class SgmlOpenTag extends SgmlTag
         return isset($this->attributes[$name]);
     }
 
+    /**
+     * @param $name
+     * @return mixed
+     * @throws WrongArgumentException
+     */
     public function getAttribute($name)
     {
         $name = strtolower($name);
@@ -74,8 +77,10 @@ class SgmlOpenTag extends SgmlTag
     }
 
     /**
-     * @return SgmlOpenTag
-     **/
+     * @param $name
+     * @return $this
+     * @throws WrongArgumentException
+     */
     public function dropAttribute($name)
     {
         $name = strtolower($name);
@@ -91,6 +96,9 @@ class SgmlOpenTag extends SgmlTag
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getAttributesList()
     {
         return $this->attributes;

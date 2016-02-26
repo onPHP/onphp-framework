@@ -18,7 +18,7 @@
  **/
 class PostgresDialect extends Dialect
 {
-    private static $tsConfiguration = 'utf8_russian';
+    private static $tsConfiguration = 'russian';
     private static $rankFunction = 'rank';
 
     /**

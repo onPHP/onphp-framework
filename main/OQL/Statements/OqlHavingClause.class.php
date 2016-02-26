@@ -14,15 +14,11 @@
  **/
 class OqlHavingClause extends OqlQueryExpressionClause
 {
-    /**
-     * @deprecated
-     * @return OqlHavingClause
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
+    /**
+     * @param OqlQueryExpression $expression
+     * @throws WrongArgumentException
+     */
     protected static function checkExpression(OqlQueryExpression $expression)
     {
         Assert::isInstance($expression->getClassName(), 'HavingProjection');

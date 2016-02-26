@@ -14,17 +14,7 @@
  **/
 class CommandChain implements EditorCommand
 {
-    private $chain = array();
-
-    /**
-     * @deprecated
-     *
-     * @return CommandChain
-     **/
-    public static function create()
-    {
-        return new self;
-    }
+    private $chain = [];
 
     /**
      * @return CommandChain

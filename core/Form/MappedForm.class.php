@@ -32,15 +32,6 @@ class MappedForm
     }
 
     /**
-     * @deprecated
-     * @return MappedForm
-     **/
-    public static function create(Form $form)
-    {
-        return new self($form);
-    }
-
-    /**
      * @return Form
      **/
     public function getForm()

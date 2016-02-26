@@ -33,14 +33,6 @@ class BufferedInputStream extends InputStream
     /**
      * @return BufferedInputStream
      **/
-    public static function create(InputStream $in)
-    {
-        return new self($in);
-    }
-
-    /**
-     * @return BufferedInputStream
-     **/
     public function close()
     {
         $this->closed = true;
@@ -48,11 +40,17 @@ class BufferedInputStream extends InputStream
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function isEof()
     {
         return $this->in->isEof();
     }
 
+    /**
+     * @return bool
+     */
     public function markSupported()
     {
         return true;
@@ -88,6 +86,10 @@ class BufferedInputStream extends InputStream
         return $this;
     }
 
+    /**
+     * @param $count
+     * @return null|string
+     */
     public function read($count)
     {
         if ($this->closed) {
@@ -140,6 +142,9 @@ class BufferedInputStream extends InputStream
         return $result;
     }
 
+    /**
+     * @return int
+     */
     public function available()
     {
         if ($this->closed) {

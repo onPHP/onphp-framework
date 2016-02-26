@@ -46,7 +46,7 @@ abstract class StorableDAO extends ProtoDAO
     {
         return
             $this->inject(
-                $this->targetizeUpdateQuery(OSQL::update(), $object),
+                $this->targetizeUpdateQuery((new OSQL())->update(), $object),
                 $object
             );
     }
@@ -67,7 +67,7 @@ abstract class StorableDAO extends ProtoDAO
     )
     {
         $query = $this->getProtoClass()
-            ->fillQuery(OSQL::update($this->getTable()), $object, $old);
+            ->fillQuery((new OSQL())->update($this->getTable()), $object, $old);
 
         if (!$query->getFieldsCount())
             return $object;
@@ -82,7 +82,7 @@ abstract class StorableDAO extends ProtoDAO
     {
         return
             $this->inject(
-                OSQL::insert(),
+                (new OSQL())->insert(),
                 $object->setId(
                     DBPool::getByDao($this)->obtainSequence(
                         $this->getSequence()
@@ -95,7 +95,7 @@ abstract class StorableDAO extends ProtoDAO
     {
         return
             $this->inject(
-                OSQL::insert(),
+                (new OSQL())->insert(),
                 $object
             );
     }

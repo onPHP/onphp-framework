@@ -20,8 +20,8 @@ class CalendarMonthWeekly
     private $fullRange = null;
     private $fullLength = null;
 
-    private $weeks = array();
-    private $days = array();
+    private $weeks = [];
+    private $days = [];
 
     public function __construct(
         Date $base, $weekStart = Timestamp::WEEKDAY_MONDAY
@@ -70,16 +70,6 @@ class CalendarMonthWeekly
         }
 
         ++$this->fullLength;
-    }
-
-    /**
-     * @return CalendarMonthWeekly
-     **/
-    public static function create(
-        Date $base, $weekStart = Timestamp::WEEKDAY_MONDAY
-    )
-    {
-        return new self($base, $weekStart);
     }
 
     public function getWeeks()

@@ -21,15 +21,6 @@ class DirectoryToObjectBinder extends ObjectBuilder
     }
 
     /**
-     * @deprecated
-     * @return FormToObjectConverter
-     **/
-    public static function create(EntityProto $proto)
-    {
-        return new self($proto);
-    }
-
-    /**
      * @return DirectoryContext
      **/
     public function getIdentityMap()

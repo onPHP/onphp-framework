@@ -17,15 +17,6 @@ class ColorArray
     private $colors = [];
 
     /**
-     * @deprecated
-     * @return ColorArray
-     */
-    public static function create()
-    {
-        return new self();
-    }
-
-    /**
      * @return ColorArray
      **/
     public function add(Color $color)

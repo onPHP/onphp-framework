@@ -43,15 +43,6 @@ class RubberFileSystem extends CachePeer
     }
 
     /**
-     * @param string $directory
-     * @return RubberFileSystem
-     */
-    public static function create($directory = 'cache/') : RubberFileSystem
-    {
-        return new self($directory);
-    }
-
-    /**
      * @return bool
      */
     public function isAlive()

@@ -19,15 +19,10 @@ class ContentTypeHeader
 
     private $charset = null; // reference
 
-    /**
-     * @deprecated
-     * @return ContentTypeHeader
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
+    /**
+     * @return null
+     */
     public function getMediaType()
     {
         return $this->mediaType;
@@ -54,8 +49,10 @@ class ContentTypeHeader
     }
 
     /**
-     * @return ContentTypeHeader
-     **/
+     * @param $attribute
+     * @return $this
+     * @throws MissingElementException
+     */
     public function dropParameter($attribute)
     {
         if (!isset($this->parameters[$attribute])) {
@@ -67,11 +64,20 @@ class ContentTypeHeader
         return $this;
     }
 
+    /**
+     * @param $attribute
+     * @return bool
+     */
     public function hasParameter($attribute)
     {
         return isset($this->parameters[$attribute]);
     }
 
+    /**
+     * @param $attribute
+     * @return mixed
+     * @throws MissingElementException
+     */
     public function getParameter($attribute)
     {
         if (!isset($this->parameters[$attribute])) {
@@ -93,11 +99,17 @@ class ContentTypeHeader
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getParametersList()
     {
         return $this->parameters;
     }
 
+    /**
+     * @return null
+     */
     public function getCharset()
     {
         return $this->charset;
@@ -165,7 +177,10 @@ class ContentTypeHeader
         return $this;
     }
 
-    public function toString()
+    /**
+     * @return string
+     */
+    public function toString() : string
     {
         $parts = [$this->mediaType];
 

@@ -6,18 +6,9 @@
 class SimpleApplicationUrl extends ApplicationUrl
 {
     /**
-     * @deprecated
-     *
-     * @return SimpleApplicationUrl
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @param $requestUri
-     * @param bool $normalize
+     * @param bool|true $normalize
+     * @return ApplicationUrl|void
      * @throws UnimplementedFeatureException
      */
     public function setPathByRequestUri($requestUri, $normalize = true)
@@ -30,7 +21,7 @@ class SimpleApplicationUrl extends ApplicationUrl
         if ($absolute === null)
             $absolute = $this->absolute;
 
-        $baseUrl = $this->base->getPath() . $url;
+        $baseUrl = $this->getBase()->getPath() . $url;
 
         if ($this->applicationScope)
             $baseUrl .=
@@ -39,7 +30,7 @@ class SimpleApplicationUrl extends ApplicationUrl
 
         if ($absolute)
             $baseUrl =
-                'http:' . $this->base->getSchemeSpecificPart()
+                'http:' . $this->getBase()->getSchemeSpecificPart()
                 . ltrim($baseUrl, '/');
 
 

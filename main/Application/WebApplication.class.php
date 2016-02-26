@@ -70,16 +70,6 @@ class WebApplication extends InterceptingChain implements IServiceLocatorSupport
     }
 
     /**
-     * @deprecated
-     *
-     * @return WebApplication
-     */
-    public static function create()
-    {
-        return new self();
-    }
-
-    /**
      * @param $name
      * @return $this
      * @throws MissingElementException

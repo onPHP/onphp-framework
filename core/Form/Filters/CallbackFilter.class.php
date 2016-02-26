@@ -29,15 +29,6 @@ class CallbackFilter implements Filtrator
     }
 
     /**
-     * @deprecated
-     * @return CallbackFilter
-     **/
-    public static function create(Closure $callback)
-    {
-        return new self($callback);
-    }
-
-    /**
      * @param $value
      * @return mixed
      */

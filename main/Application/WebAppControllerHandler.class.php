@@ -12,16 +12,6 @@
 class WebAppControllerHandler implements InterceptingChainHandler
 {
     /**
-     * @deprecated
-     *
-     * @return WebAppControllerHandler
-     */
-    public static function create()
-    {
-        return new self();
-    }
-
-    /**
      * @return WebAppControllerHandler
      */
     public function run(InterceptingChain $chain)

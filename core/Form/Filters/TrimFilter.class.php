@@ -22,15 +22,6 @@ class TrimFilter implements Filtrator
     private $direction = self::BOTH;
 
     /**
-     * @deprecated
-     * @return TrimFilter
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return TrimFilter
      **/
     public function setLeft() : TrimFilter

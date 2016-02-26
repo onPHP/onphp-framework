@@ -24,13 +24,6 @@ class RedirectToView extends RedirectView
         $this->url = $controllerName;
     }
 
-    /**
-     * @return RedirectToView
-     **/
-    public static function create($controllerName)
-    {
-        return new self($controllerName);
-    }
 
     public function getPrefix()
     {

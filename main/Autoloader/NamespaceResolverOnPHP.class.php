@@ -15,18 +15,11 @@ class NamespaceResolverOnPHP implements NamespaceResolver
     private $paths = array();
     private $classExtension = EXT_CLASS;
 
-    /**
-     * @deprecated
-     * @return NamespaceResolverOnPHP
-     */
-    public static function create()
-    {
-        return new static;
-    }
 
     /**
-     * @param string $path
-     * @return NamespaceResolverOnPHP
+     * @param array $pathList
+     * @param null $namespace
+     * @return $this
      */
     public function addPaths(array $pathList, $namespace = null)
     {
@@ -38,7 +31,8 @@ class NamespaceResolverOnPHP implements NamespaceResolver
 
     /**
      * @param string $path
-     * @return NamespaceResolverOnPHP
+     * @param null $namespace
+     * @return $this
      */
     public function addPath($path, $namespace = null)
     {
@@ -125,7 +119,7 @@ class NamespaceResolverOnPHP implements NamespaceResolver
 
     /**
      * @param string $classExtension
-     * @return NamespaceResolverOnPHP
+     * @return $this
      */
     public function setClassExtension($classExtension)
     {

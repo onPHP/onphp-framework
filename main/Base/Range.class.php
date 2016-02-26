@@ -27,13 +27,6 @@ class Range extends BaseRange
         parent::__construct($min, $max);
     }
 
-    /**
-     * @return Range
-     **/
-    public static function create($min = null, $max = null)
-    {
-        return new self($min, $max);
-    }
 
     /**
      * @throws WrongArgumentException

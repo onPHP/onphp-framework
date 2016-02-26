@@ -17,14 +17,8 @@ class StreamLogger extends BaseLogger
     private $stream = null;
 
     /**
-     * @deprecated
-     * @return StreamLogger
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
+     *
+     */
     public function __destruct()
     {
         try {

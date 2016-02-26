@@ -14,20 +14,19 @@ class AMQPOutgoingMessage extends AMQPBaseMessage
     protected $mandatory = false;
     protected $immediate = false;
 
-    /**
-     * @deprecated
-     * @return AMQPOutgoingMessage
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
+    /**
+     * @param AMQPBitmaskResolver $config
+     * @return mixed
+     */
     public function getBitmask(AMQPBitmaskResolver $config)
     {
         return $config->getBitmask($this);
     }
 
+    /**
+     * @return bool
+     */
     public function getMandatory()
     {
         return $this->mandatory;
@@ -43,6 +42,9 @@ class AMQPOutgoingMessage extends AMQPBaseMessage
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function getImmediate()
     {
         return $this->immediate;

@@ -1,44 +1,44 @@
 <?php
-	// $Id$
+// $Id$
 
-	require dirname(__FILE__).'/../../global.inc.php.tpl';
+require dirname(__FILE__) . '/../../global.inc.php.tpl';
 
-	// set up default cache peer
+// set up default cache peer
 
-	Cache::setPeer(
-		SocketMemcached::create()
-	);
+Cache::setPeer(
+    new SocketMemcached()
+);
 
-	// or even several aggregated peers
-	
-	Cache::setPeer(
-		AggregateCache::create()->
-		addPeer(
-			'memcached daemon at localhost',
-			SocketMemcached::create()
-		)->
-		addPeer(
-			'local low-priority file system',
-			RubberFileSystem::create('/tmp/onphp-cache'),
-			AggregateCache::LEVEL_VERYLOW
-		)
-	);
+// or even several aggregated peers
 
-	// let's test out cache system
+Cache::setPeer(
+    (new AggregateCache())
+        ->addPeer(
+            'memcached daemon at localhost',
+            new SocketMemcached()
+        )
+        ->addPeer(
+            'local low-priority file system',
+            new RubberFileSystem('/tmp/onphp-cache'),
+            AggregateCache::LEVEL_VERYLOW
+        )
+);
 
-	$ts = new Timestamp(time());
+// let's test out cache system
 
-	$key = 'timestamp_object';
+$ts = new Timestamp(time());
 
-	if (Cache::me()->set($key, $ts, 2)) {
-		echo "object is in cache now\n";
+$key = 'timestamp_object';
 
-		if ($cached = Cache::me()->get($key)) {
-			echo "got from cache:\n";
-			print_r($cached);
-		}
+if (Cache::me()->set($key, $ts, 2)) {
+    echo "object is in cache now\n";
 
-	} else {
-		echo "failed to store object in cache\n";
-	}
+    if ($cached = Cache::me()->get($key)) {
+        echo "got from cache:\n";
+        print_r($cached);
+    }
+
+} else {
+    echo "failed to store object in cache\n";
+}
 ?>

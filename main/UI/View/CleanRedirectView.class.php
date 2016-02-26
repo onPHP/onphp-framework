@@ -16,29 +16,35 @@ class CleanRedirectView implements View
 {
     protected $url = null;
 
+    /**
+     * CleanRedirectView constructor.
+     * @param $url
+     */
     public function __construct($url)
     {
         $this->url = $url;
     }
 
     /**
-     * @return CleanRedirectView
-     **/
-    public static function create($url)
-    {
-        return new self($url);
-    }
-
+     * @param null $model
+     */
     public function render($model = null)
     {
         HeaderUtils::redirectRaw($this->getLocationUrl($model));
     }
 
+    /**
+     * @param null $model
+     * @return null
+     */
     protected function getLocationUrl($model = null)
     {
         return $this->getUrl();
     }
 
+    /**
+     * @return null
+     */
     public function getUrl()
     {
         return $this->url;

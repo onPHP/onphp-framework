@@ -69,15 +69,6 @@ class SimpleStringableObject implements Stringable
 
 
     /**
-     * @static
-     * @return SimpleStringableObject
-     */
-    public static function create()
-    {
-        return new self();
-    }
-
-    /**
      * @param $value
      * @return SimpleStringableObject
      */

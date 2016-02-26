@@ -93,16 +93,6 @@ class HttpRequest
     }
 
     /**
-     * @deprecated
-     *
-     * @return HttpRequest
-     **/
-    public static function create()
-    {
-        return new static();
-    }
-
-    /**
      * @return HttpRequest
      **/
     public function setHeaderVar($name, $var)

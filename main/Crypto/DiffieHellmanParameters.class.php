@@ -19,20 +19,17 @@ class DiffieHellmanParameters
     private $gen = null;
     private $modulus = null;
 
+    /**
+     * DiffieHellmanParameters constructor.
+     * @param BigInteger $gen
+     * @param BigInteger $modulus
+     */
     public function __construct(BigInteger $gen, BigInteger $modulus)
     {
         Assert::brothers($gen, $modulus);
 
         $this->gen = $gen;
         $this->modulus = $modulus;
-    }
-
-    /**
-     * @return DiffieHellmanParameters
-     **/
-    public static function create(BigInteger $gen, BigInteger $modulus)
-    {
-        return new self($gen, $modulus);
     }
 
     /**

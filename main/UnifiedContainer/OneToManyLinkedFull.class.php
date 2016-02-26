@@ -33,7 +33,8 @@ class OneToManyLinkedFull extends OneToManyLinkedWorker
         if ($delete) {
             DBPool::getByDao($dao)
                 ->queryNull(
-                    OSQL::delete()
+                    (new OSQL())
+                        ->delete()
                         ->from($dao->getTable())
                         ->where(
                             Expression::eq(

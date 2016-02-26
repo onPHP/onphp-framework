@@ -14,15 +14,14 @@
  **/
 class PinbedPeclMemcached extends PeclMemcached
 {
-    /**
-     * @return PinbedPeclMemcached
-     **/
-    public static function create(
+
+    function __construct(
         $host = Memcached::DEFAULT_HOST,
         $port = Memcached::DEFAULT_PORT,
-        $connectTimeout = PeclMemcached::DEFAULT_TIMEOUT
-    ) {
-        return new self($host, $port);
+        $connectTimeout = PeclMemcached::DEFAULT_TIMEOUTs
+    )
+    {
+        parent::__construct($host, $port, $connectTimeout);
     }
 
     public function append($key, $data)
@@ -109,7 +108,8 @@ class PinbedPeclMemcached extends PeclMemcached
         $key,
         $value,
         $expires = Cache::EXPIRES_MEDIUM
-    ) {
+    )
+    {
         $this->log(__METHOD__ . $action);
 
         $result = parent::store($action, $key, $value, $expires);

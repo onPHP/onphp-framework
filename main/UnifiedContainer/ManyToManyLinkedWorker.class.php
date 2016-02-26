@@ -22,7 +22,8 @@ abstract class ManyToManyLinkedWorker extends UnifiedContainerWorker
         $uc = $this->container;
 
         return
-            OSQL::insert()
+            (new OSQL())
+                ->insert()
                 ->into($uc->getHelperTable())
                 ->set(
                     $uc->getParentIdField(),
@@ -41,7 +42,8 @@ abstract class ManyToManyLinkedWorker extends UnifiedContainerWorker
         $uc = $this->container;
 
         return
-            OSQL::delete()
+            (new OSQL())
+                ->delete()
                 ->from($uc->getHelperTable())
                 ->where(
                     Expression::eq(

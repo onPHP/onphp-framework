@@ -16,6 +16,10 @@ class ClassProjection implements ObjectProjection
 {
     protected $className = null;
 
+    /**
+     * ClassProjection constructor.
+     * @param $class
+     */
     public function __construct($class)
     {
         Assert::isTrue(
@@ -29,19 +33,11 @@ class ClassProjection implements ObjectProjection
     }
 
     /**
-     * @return ClassProjection
-     **/
-    public static function create($class)
-    {
-        return new self($class);
-    }
-
-    /**
      * @return JoinCapableQuery
      **/
     public function process(Criteria $criteria, JoinCapableQuery $query)
     {
-        $dao = call_user_func(array($this->className, 'dao'));
+        $dao = call_user_func([$this->className, 'dao']);
 
         foreach ($dao->getFields() as $field)
             $this->subProcess(

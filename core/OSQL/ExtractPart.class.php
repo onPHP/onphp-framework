@@ -45,22 +45,6 @@ class ExtractPart implements DialectString, MappableObject
     }
 
     /**
-     * @deprecated
-     *
-     * @param $what
-     * @param $from
-     * @return ExtractPart
-     */
-    public static function create(
-        /* DatePart */
-        $what,
-        /* DialectString */
-        $from
-    ) {
-        return new self($what, $from);
-    }
-
-    /**
      * @param ProtoDAO $dao
      * @param JoinCapableQuery $query
      * @return ExtractPart

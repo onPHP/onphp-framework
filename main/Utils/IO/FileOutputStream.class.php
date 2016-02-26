@@ -16,6 +16,8 @@ class FileOutputStream extends OutputStream
 {
     private $fd = null;
 
+
+
     public function __construct($nameOrFd, $append = false)
     {
         if (is_resource($nameOrFd)) {
@@ -40,14 +42,8 @@ class FileOutputStream extends OutputStream
     }
 
     /**
-     * @deprecated
-     * @return FileOutputStream
-     **/
-    public static function create($nameOrFd, $append = false)
-    {
-        return new self($nameOrFd, $append);
-    }
-
+     *
+     */
     public function __destruct()
     {
         try {
@@ -70,8 +66,10 @@ class FileOutputStream extends OutputStream
     }
 
     /**
-     * @return FileOutputStream
-     **/
+     * @param $buffer
+     * @return $this
+     * @throws IOException
+     */
     public function write($buffer)
     {
         if (!$this->fd || $buffer === null) {

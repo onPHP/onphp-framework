@@ -30,18 +30,13 @@ class GenericUri implements Stringable
     protected $query = null;
     protected $fragment = null;
 
-    /**
-     * @deprecated
-     * @return GenericUri
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
-     * @return GenericUri
-     **/
+     * @param $uri
+     * @param bool|false $guessClass
+     * @return static
+     * @throws WrongArgumentException
+     */
     public function parse($uri, $guessClass = false)
     {
         static $schemePattern = '([^:/?#]+):';
@@ -797,15 +792,6 @@ class GenericUri implements Stringable
 class PercentEncodingNormalizator
 {
     private $unreservedPartChars = null;
-
-    /**
-     * @deprecated
-     * @return PercentEncodingNormalizator
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return PercentEncodingNormalizator

@@ -11,13 +11,10 @@
  ***************************************************************************/
 class ScopeToFormImporter extends FormBuilder
 {
-    /**
-     * @return ScopeToFormImporter
-     **/
-    public static function create(EntityProto $proto)
-    {
-        return new self($proto);
-    }
+   function __construct(EntityProto $proto)
+   {
+       parent::__construct($proto);
+   }
 
     /**
      * @return ObjectGetter

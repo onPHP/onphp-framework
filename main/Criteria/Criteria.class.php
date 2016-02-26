@@ -48,15 +48,8 @@ class Criteria extends QueryIdentification
     }
 
     /**
-     * @deprecated
-     * @return Criteria
-     **/
-    public static function create(/* ProtoDAO */
-        $dao = null
-    ) {
-        return new self($dao);
-    }
-
+     * __clone
+     */
     public function __clone()
     {
         $this->logic = clone $this->logic;
@@ -65,6 +58,10 @@ class Criteria extends QueryIdentification
         $this->projection = clone $this->projection;
     }
 
+    /**
+     * __sleep
+     * @return array
+     */
     public function __sleep()
     {
         $this->daoClass =
@@ -95,6 +92,9 @@ class Criteria extends QueryIdentification
         return $this;
     }
 
+    /**
+     * __wakeup
+     */
     public function __wakeup()
     {
         if ($this->daoClass) {
@@ -183,6 +183,9 @@ class Criteria extends QueryIdentification
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getOffset()
     {
         return $this->offset;
@@ -233,7 +236,10 @@ class Criteria extends QueryIdentification
         return $this;
     }
 
-    public function isDistinct()
+    /**
+     * @return bool
+     */
+    public function isDistinct() : bool
     {
         return $this->distinct;
     }
@@ -274,6 +280,10 @@ class Criteria extends QueryIdentification
         return $this;
     }
 
+    /**
+     * @return null
+     * @throws WrongStateException
+     */
     public function checkAndGetDao()
     {
         if (!$this->dao) {
@@ -283,6 +293,11 @@ class Criteria extends QueryIdentification
         return $this->dao;
     }
 
+    /**
+     * @return mixed|null
+     * @throws ObjectNotFoundException
+     * @throws WrongStateException
+     */
     public function get()
     {
         try {
@@ -393,6 +408,13 @@ class Criteria extends QueryIdentification
         return $query;
     }
 
+    /**
+     * @param SelectQuery $query
+     * @param ProtoDAO $parentDao
+     * @param $parentTable
+     * @param $parentRequired
+     * @param null $prefix
+     */
     private function joinProperties(
         SelectQuery $query,
         ProtoDAO $parentDao,

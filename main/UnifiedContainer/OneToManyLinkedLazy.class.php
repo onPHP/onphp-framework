@@ -52,7 +52,8 @@ class OneToManyLinkedLazy extends OneToManyLinkedWorker
                 $db->queryNull($this->makeMassUpdateQuery($delete))
                 :
                 $db->queryNull(
-                    OSQL::delete()
+                    (new OSQL())
+                        ->delete()
                         ->from($dao->getTable())
                         ->where(
                             Expression::in(
@@ -76,7 +77,8 @@ class OneToManyLinkedLazy extends OneToManyLinkedWorker
         $uc = $this->container;
 
         return
-            OSQL::update($uc->getDao()->getTable())
+            (new OSQL())
+                ->update($uc->getDao()->getTable())
                 ->set($uc->getParentIdField(), null)
                 ->where(
                     Expression::in(

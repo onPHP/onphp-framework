@@ -17,16 +17,12 @@ class OqlQueryParameter
     private $value = null;
     private $bindable = false;
 
-    /**
-     * @deprecated
-     *
-     * @return OqlQueryParameter
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
+    /**
+     * @param $values
+     * @return array|null
+     * @throws WrongArgumentException
+     */
     public function evaluate($values)
     {
         if ($this->isBindable()) {
@@ -68,7 +64,10 @@ class OqlQueryParameter
         return $value;
     }
 
-    public function isBindable()
+    /**
+     * @return bool
+     */
+    public function isBindable() : bool
     {
         return $this->bindable;
     }
@@ -83,6 +82,9 @@ class OqlQueryParameter
         return $this;
     }
 
+    /**
+     * @return null
+     */
     public function getValue()
     {
         return $this->value;

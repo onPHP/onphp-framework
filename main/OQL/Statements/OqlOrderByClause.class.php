@@ -14,14 +14,6 @@
  **/
 class OqlOrderByClause extends OqlQueryListedClause
 {
-    /**
-     * @deprecated
-     * @return OqlOrderByClause
-     **/
-    public static function create()
-    {
-        return new self;
-    }
 
     /**
      * @return OrderChain

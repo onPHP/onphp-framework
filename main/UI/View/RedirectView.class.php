@@ -17,13 +17,6 @@ class RedirectView extends CleanRedirectView
     private $falseAsUnset = null;
     private $buildArrays = null;
 
-    /**
-     * @return RedirectView
-     **/
-    public static function create($url)
-    {
-        return new self($url);
-    }
 
     /**
      * @return RedirectView

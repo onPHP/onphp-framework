@@ -15,15 +15,6 @@
 class EmptyGifView implements View
 {
     /**
-     * @deprecated
-     * @return EmptyGifView
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return EmptyGifView
      **/
     public function render(/* Model */

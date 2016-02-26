@@ -42,14 +42,6 @@ class OpenIdExtensionSreg implements OpenIdExtension
     private $timezone = null;
 
     /**
-     * @return OpenIdExtensionSreg
-     **/
-    public static function create()
-    {
-        return new self();
-    }
-
-    /**
      * @param Model $model
      **/
     public function addParamsToModel(Model $model)

@@ -32,18 +32,6 @@ class SelectField extends FieldTable implements Aliased
     }
 
     /**
-     * @deprecated
-     *
-     * @param DialectString $field
-     * @param $alias
-     * @return SelectField
-     */
-    public static function create(DialectString $field, $alias)
-    {
-        return new self($field, $alias);
-    }
-
-    /**
      * @return null
      */
     public function getAlias()

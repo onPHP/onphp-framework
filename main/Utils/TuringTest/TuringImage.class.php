@@ -49,15 +49,6 @@ class TuringImage
         $this->height = $height;
     }
 
-    /**
-     * @param $width
-     * @param $height
-     * @return TuringImage
-     */
-    public static function create($width, $height)
-    {
-        return new self($width, $height);
-    }
 
     /**
      * @return TuringImage

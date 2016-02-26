@@ -35,14 +35,6 @@ class WatermarkedPeer extends SelectivePeer
     }
 
     /**
-     * @return WatermarkedPeer
-     **/
-    public static function create(CachePeer $peer, $watermark = "Single onPHP's project") : WatermarkedPeer
-    {
-        return new self($peer, $watermark);
-    }
-
-    /**
      * @return null
      */
     public function getWatermark()

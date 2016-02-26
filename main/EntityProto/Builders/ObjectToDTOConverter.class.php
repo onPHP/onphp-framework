@@ -11,13 +11,9 @@
  ***************************************************************************/
 class ObjectToDTOConverter extends DTOBuilder
 {
-    /**
-     * @deprecated
-     * @return ObjectToDTOConverter
-     **/
-    public static function create(EntityProto $proto)
+    function __construct(EntityProto $proto)
     {
-        return new self($proto);
+        parent::__construct($proto);
     }
 
     /**

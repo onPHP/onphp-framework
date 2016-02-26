@@ -19,16 +19,6 @@ class HttpUrl extends Url
     private $checkPrivilegedPorts = false;
 
     /**
-     * @deprecated
-     *
-     * @return HttpUrl
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
-    /**
      * @return HttpUrl
      *
      * @see rfc2616, sec. 14.23.
@@ -166,7 +156,7 @@ class HttpUrl extends Url
 
         return (
             preg_match(
-                "/^($charPattern*\.)?{$topLabelPattern}$/i",
+                "/^($charPattern*\\.)?{$topLabelPattern}$/i",
                 $this->host
             ) == 1
         );

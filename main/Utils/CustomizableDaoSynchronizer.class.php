@@ -31,13 +31,8 @@ class CustomizableDaoSynchronizer
     private $totalDeleted = 0;
 
     /**
-     * @return CustomizableDaoSynchronizer
-     **/
-    public static function create()
-    {
-        return new self;
-    }
-
+     * @return bool
+     */
     public function isDryRun()
     {
         return $this->dryRun;
@@ -53,7 +48,10 @@ class CustomizableDaoSynchronizer
         return $this;
     }
 
-    public function isReallyDelete()
+    /**
+     * @return bool
+     */
+    public function isReallyDelete() : bool
     {
         return $this->reallyDelete;
     }
@@ -104,6 +102,9 @@ class CustomizableDaoSynchronizer
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getMasterKeyProperty()
     {
         return $this->masterKeyProperty;
@@ -119,6 +120,9 @@ class CustomizableDaoSynchronizer
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getSlaveKeyProperty()
     {
         return $this->slaveKeyProperty;
@@ -262,6 +266,10 @@ class CustomizableDaoSynchronizer
         return $this;
     }
 
+    /**
+     * @param $masterObject
+     * @return mixed
+     */
     private function convertMasterObjectToSlave($masterObject)
     {
         if (
@@ -285,6 +293,11 @@ class CustomizableDaoSynchronizer
         return $masterObject;
     }
 
+    /**
+     * @param $old
+     * @param $object
+     * @return bool
+     */
     protected function sync($old, $object)
     {
         if (!$this->dryRun) {
@@ -294,6 +307,11 @@ class CustomizableDaoSynchronizer
         return true;
     }
 
+    /**
+     * @param $min
+     * @param $sub
+     * @return int
+     */
     protected function compareKeys($min, $sub)
     {
         if ($min > $sub) {
@@ -305,7 +323,12 @@ class CustomizableDaoSynchronizer
         return 0;
     }
 
-    protected function delete($slaveObject)
+    /**
+     * @param $slaveObject
+     * @return bool
+     * @throws WrongArgumentException
+     */
+    protected function delete($slaveObject) : bool
     {
         $slaveGetter = 'get' . ucfirst($this->slaveKeyProperty);
 
@@ -318,7 +341,11 @@ class CustomizableDaoSynchronizer
         return true;
     }
 
-    protected function insert($masterObject)
+    /**
+     * @param $masterObject
+     * @return bool
+     */
+    protected function insert($masterObject) : bool
     {
         if (!$this->dryRun) {
             $this->slave->import($masterObject);
@@ -327,17 +354,26 @@ class CustomizableDaoSynchronizer
         return true;
     }
 
-    public function getTotalInserted()
+    /**
+     * @return int
+     */
+    public function getTotalInserted() : int
     {
         return $this->totalInserted;
     }
 
-    public function getTotalDeleted()
+    /**
+     * @return int
+     */
+    public function getTotalDeleted() : int
     {
         return $this->totalDeleted;
     }
 
-    public function getTotalUpdated()
+    /**
+     * @return int
+     */
+    public function getTotalUpdated() : int
     {
         return $this->totalUpdated;
     }
