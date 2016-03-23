@@ -24,10 +24,16 @@
 		
 		public function add(Identifiable $object)
 		{
+			//Support non-"id" identifier columns
+			if (method_exists($this, 'getIdName')) {
+				$method = 'set'.ucfirst($this->getIdName());
+			} else {
+				$method = 'setId';
+			}
 			return
 				$this->inject(
 					OSQL::insert(),
-					$object->setId(
+					$object->{$method}(
 						DBPool::getByDao($this)->obtainSequence(
 							$this->getSequence()
 						)
