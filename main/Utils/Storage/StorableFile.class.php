@@ -57,6 +57,11 @@ abstract class StorableFile extends IdentifiableObject implements onBeforeSave, 
             throw new Exception('Error in uploaded file', $file['error']);
         }
 
+        if (class_exists('finfo')) {
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $file['type'] = $finfo->file($file['tmp_name']);
+        }
+
         return static::create()
             ->setOriginalFileName($file['name'])
             ->setMimeType($file['type'])
@@ -275,9 +280,13 @@ abstract class StorableFile extends IdentifiableObject implements onBeforeSave, 
 
     public function generateName() {
         $name = str_replace('.', '', microtime(true));
-        $ext = '';
-        if (preg_match('/\.([a-z0-9]+)$/iu', $this->getOriginalFileName(), $ext)) {
-            $name.='.'.$ext[1];
+        if ($this->mimeType) {
+            try {
+                $mime = MimeType::getByMimeType($this->mimeType);
+                $name .= '.' . $mime->getExtension();
+            } catch (MissingElementException $e) {
+                // no extension
+            }
         }
         return $name;
     }

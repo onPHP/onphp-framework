@@ -122,9 +122,14 @@
 				$size = filesize($file);
 			else
 				return false;
-			
-			$this->mimeType = $scope[$this->name]['type'];
-			
+
+			if (class_exists('finfo')) {
+				$finfo = new finfo(FILEINFO_MIME_TYPE);
+				$this->mimeType = $finfo->file($file);
+			} else {
+				$this->mimeType = $scope[$this->name]['type'];
+			}
+
 			if (!$this->isAllowedMimeType())
 				return false;
 			
