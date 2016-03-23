@@ -28,7 +28,7 @@
 			
 			// voodoo magic from w3 validator
 			preg_match_all(
-				'/[\x00-\x7F]                         ' # ASCII
+				'/[\x0A\x0D\x20-\x7F]                 ' # ASCII
 				.'| [\xC2-\xDF]        [\x80-\xBF]    ' # non-overlong 2-byte sequences
 				.'|  \xE0[\xA0-\xBF]   [\x80-\xBF]    ' # excluding overlongs
 				.'| [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2} ' # straight 3-byte sequences

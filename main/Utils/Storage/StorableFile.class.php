@@ -70,8 +70,12 @@ abstract class StorableFile extends IdentifiableObject implements onBeforeSave, 
     /**
      * @param $url string
      * @return static
-     **/
+     * @throws WrongArgumentException
+     */
     public static function createFromUrl($url) {
+        if (!preg_match('@^(http?|ftp)://@', $url)) {
+            throw new WrongArgumentException('not a valid URL: ' . $url);
+        }
         return static::create()
             ->setOriginalFileName($url)
             ->setCreateDate(Timestamp::makeNow())
