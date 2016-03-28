@@ -175,7 +175,7 @@ class DataType extends Enumeration implements DialectString
      * @throws WrongArgumentException
      * @return DateType
      **/
-    public function setTimezoned($zoned = false) : DateType
+    public function setTimezoned($zoned = false)
     {
         Assert::isTrue(($this->id & self::HAVE_TIMEZONE) > 0);
 
