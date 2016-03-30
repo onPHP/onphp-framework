@@ -411,7 +411,7 @@ class LightMetaProperty implements Stringable
             && $this->generic
             && $this->className
         ) {
-            return call_user_func([$this->className, 'create'], $raw);
+            return new $this->className($raw);
         } elseif (
             !$this->identifier
             && $this->className
