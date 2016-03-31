@@ -30,7 +30,7 @@ class Form extends RegulatedForm
     /** @var array */
     private $describedLabels = [];
 
-    /** @var EntityProto  */
+    /** @var EntityProto */
     private $proto = null;
 
     /** @var bool */
@@ -592,6 +592,17 @@ class Form extends RegulatedForm
 
         return $this;
     }
+
+    /**
+     * @param array $labels
+     * @return Form
+     */
+    public function setLabels(array $labels) : Form
+    {
+        $this->labels = $labels;
+        return $this;
+    }
+
 
     /**
      * @see __clone
