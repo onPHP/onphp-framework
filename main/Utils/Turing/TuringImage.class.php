@@ -179,7 +179,7 @@ class TuringImage
      * @throws UnimplementedFeatureException
      * @throws WrongStateException
      */
-    public function toImage(ImageType $imageType)
+    public function toImage(ImageType $imageType, $fileName = null)
     {
         if ($this->drawer === null) {
             throw new WrongStateException('drawer must present');
@@ -191,7 +191,7 @@ class TuringImage
 
         $this->drawer->draw($this->getGeneratedCode());
 
-        $this->outputImage($imageType);
+        $this->outputImage($imageType, $fileName);
 
         imagedestroy($this->getImageId());
 
@@ -282,31 +282,41 @@ class TuringImage
      * @return $this
      * @throws UnimplementedFeatureException
      */
-    private function outputImage(ImageType $imageType)
+    private function outputImage(ImageType $imageType, $fileName)
     {
         switch ($imageType->getId()) {
 
             case ImageType::WBMP: {
-                header("Content-type: image/vnd.wap.wbmp");
-                imagewbmp($this->imageId);
+                
+                if(is_null($fileName))
+                    $this->header('Content-type: image/vnd.wap.wbmp');
+                
+                imagewbmp($this->imageId, $fileName, 95);
                 break;
             }
 
             case ImageType::PNG: {
-                header("Content-type: image/png");
-                imagepng($this->imageId);
+                
+                if(is_null($fileName))
+                    $this->header('Content-type: image/png');
+                
+                imagepng($this->imageId, $fileName, 95);
                 break;
             }
 
             case ImageType::JPEG: {
-                header("Content-type: image/jpeg");
-                imagejpeg($this->imageId);
+                if(is_null($fileName))
+                    $this->header('Content-type: image/jpeg');
+                
+                imagejpeg($this->imageId, $fileName, 95);
                 break;
             }
 
             case ImageType::GIF: {
-                header("Content-type: image/gif");
-                imagegif($this->imageId);
+                if(is_null($fileName))
+                    $this->header('Content-type: image/gif');
+                
+                imagegif($this->imageId, $fileName);
                 break;
             }
 
@@ -317,6 +327,11 @@ class TuringImage
         }
 
         return $this;
+    }
+    
+    private function header($header)
+    {
+        if (!headers_sent()) header($header);
     }
 
     public function getImageId()

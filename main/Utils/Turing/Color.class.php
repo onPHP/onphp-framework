@@ -12,7 +12,7 @@
 /**
  * @ingroup Turing
  **/
-class Color implements Stringable
+class Color 
 {
     private $red = 0;
     private $green = 0;
