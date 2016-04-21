@@ -30,7 +30,7 @@ class Cache extends StaticFactory implements Instantiatable
         EXPIRES_MINIMUM = 300; // 5 mins
 
     const
-        DO_NOT_CACHE = -2005;
+        DO_NOT_CACHE = -2015;
 
     /// map dao -> worker
     private static $map = null;
