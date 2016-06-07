@@ -19,7 +19,8 @@ class PrimitiveString extends FiltrablePrimitive
         MAIL_PATTERN = '/^[a-zA-Z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+(\.[a-zA-Z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+)*@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/Ds',
         URL_PATTERN = '/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}((:[0-9]{1,5})?\/.*)?$/is',
         SHA1_PATTERN = '/^[0-9a-f]{40}$/',
-        MD5_PATTERN = '/^[0-9a-f]{32}$/';
+        MD5_PATTERN = '/^[0-9a-f]{32}$/',
+        PHONE_PATTERN = '/^((8|\+7)[\- ]?)?([\d]{0,4})?[\(\.\-\s]?([\d]{3})[\)\.\-\s]*([\d]{3})[\.\-\s]?([\d]{4})$/';
 
     /**
      * @var null
