@@ -259,5 +259,13 @@
 
 			return $newList;
 		}
+
+		public static function hardMerge(array $one, array $two) {
+			foreach ($two as $key=>$value) {
+				$one[$key] = $value;
+			}
+			return $one;
+		}
+
 	}
 ?>
