@@ -26,6 +26,50 @@
 			$this->setId($id);
 		}
 
+		/// useful helper methods
+		//@{
+		/**
+		 * @param $id
+		 * @return static
+		 */
+		public static function create($id)
+		{
+			return new static($id);
+		}
+
+		/**
+		 * @param int|static $enum
+		 * @throws WrongArgumentException
+		 * @return boolean
+		 */
+		public function is($enum)
+		{
+			if (is_scalar($enum)) {
+				$id = $enum;
+			} else if (is_object($enum) && is_a($enum, get_class($this))) {
+				$id = $enum->getId();
+			} else {
+				throw new WrongArgumentException('cant match this enum with: ' . var_export($enum, true));
+			}
+			return $id == $this->getId();
+		}
+
+		/**
+		 * @param int[]|static[] $enums
+		 * @return bool
+		 * @throws WrongArgumentException
+		 */
+		public function in(array $enums)
+		{
+			foreach ($enums as $enum) {
+				if ($this->is($enum)) {
+					return true;
+				}
+			}
+			return false;
+		}
+		//@}
+
 		/// prevent's serialization of names' array
 		//@{
 		public function serialize()
