@@ -38,7 +38,7 @@
 		}
 
 		/**
-		 * @param int|static $enum
+		 * @param int|Enumeration $enum
 		 * @throws WrongArgumentException
 		 * @return boolean
 		 */
