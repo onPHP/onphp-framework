@@ -15,7 +15,7 @@
 class JsonView implements View, Stringable
 {
     protected $options = 0;
-
+    protected $callback = null;
 
     /**
      * @param bool $flag
@@ -142,13 +142,32 @@ class JsonView implements View, Stringable
     }
 
     /**
+     * Create callback
+     *
+     * @param $callback
+     * @return $this
+     */
+    public function setCallBack($callback)
+    {
+        $this->callback = $callback;
+        return $this;
+    }
+
+    /**
      * @return JsonView
      **/
     public function render(/* Model */
         $model = null
-    ) {
-        echo $this->toString($model);
-
+    )
+    {
+        if (!headers_sent()) {
+            header('Content-Type: ' . ($this->callback ? 'text/javascript' : 'application/json'));
+        }
+        if (is_null($this->callback)) {
+            echo $this->toString($model);
+        } else {
+            echo $this->callback . '(' . $this->toString($model) . ')';
+        }
         return $this;
     }
 

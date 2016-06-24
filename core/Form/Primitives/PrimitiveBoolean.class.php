@@ -20,12 +20,10 @@ class PrimitiveBoolean extends BasePrimitive
      */
     public function import($scope)
     {
-        if (isset($scope[$this->name])) {
-            $this->value = true;
-        } else {
+        if (isset($scope[$this->name]))
+            $this->value = filter_var($scope[$this->name], FILTER_VALIDATE_BOOLEAN);
+        else
             $this->value = false;
-        }
-
         return $this->imported = true;
     }
 
@@ -38,11 +36,11 @@ class PrimitiveBoolean extends BasePrimitive
         if (
             false === $value
             || null === $value
-        ) {
+        )
             $this->value = false;
-        } else {
+        else
             $this->value = true;
-        }
+
 
         return $this->imported = true;
     }

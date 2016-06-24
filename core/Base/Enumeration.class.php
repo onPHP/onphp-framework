@@ -19,7 +19,7 @@
  **/
 abstract class Enumeration extends NamedObject implements Serializable
 {
-    /** @var array  */
+    /** @var array */
     protected $names = [/* override me */];
 
     /**
@@ -50,6 +50,38 @@ abstract class Enumeration extends NamedObject implements Serializable
         }
 
         return $this;
+    }
+
+    /**
+     * @param int|Enumeration $enum
+     * @throws WrongArgumentException
+     * @return boolean
+     */
+    public function is($enum) : bool
+    {
+        if (is_scalar($enum)) {
+            $id = $enum;
+        } else if (is_object($enum) && is_a($enum, get_class($this))) {
+            $id = $enum->getId();
+        } else {
+            throw new WrongArgumentException('cant match this enum with: ' . var_export($enum, true));
+        }
+        return $id == $this->getId();
+    }
+
+    /**
+     * @param int[]|static[] $enums
+     * @return bool
+     * @throws WrongArgumentException
+     */
+    public function in(array $enums) : bool
+    {
+        foreach ($enums as $enum) {
+            if ($this->is($enum)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -100,7 +132,7 @@ abstract class Enumeration extends NamedObject implements Serializable
      */
     public function serialize() : string
     {
-        return (string) $this->id;
+        return (string)$this->id;
     }
 
     /**

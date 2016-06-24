@@ -14,7 +14,13 @@
  **/
 class ArrayUtils extends StaticFactory
 {
-    /// orders $objects list by $ids order
+    /**
+     * orders $objects list by $ids order
+     *
+     * @param $ids
+     * @param $objects
+     * @return array
+     */
     public static function regularizeList($ids, $objects)
     {
         if (!$objects) {
@@ -34,6 +40,11 @@ class ArrayUtils extends StaticFactory
         return $result;
     }
 
+    /**
+     * @param null $list
+     * @param string $getter
+     * @return array
+     */
     public static function convertObjectList($list = null, $getter = 'getId')
     {
         $out = [];
@@ -49,6 +60,11 @@ class ArrayUtils extends StaticFactory
         return $out;
     }
 
+    /**
+     * @param $objectsList
+     * @return array
+     * @throws WrongArgumentException
+     */
     public static function getIdsArray($objectsList)
     {
         $out = [];
@@ -69,6 +85,11 @@ class ArrayUtils extends StaticFactory
         return $out;
     }
 
+    /**
+     * @param $list
+     * @param $key
+     * @return array
+     */
     public static function &convertToPlainList($list, $key)
     {
         $out = [];
@@ -80,6 +101,11 @@ class ArrayUtils extends StaticFactory
         return $out;
     }
 
+    /**
+     * @param $array
+     * @param $var
+     * @return null
+     */
     public static function getArrayVar(&$array, $var)
     {
         if (isset($array[$var]) && !empty($array[$var])) {
@@ -90,6 +116,12 @@ class ArrayUtils extends StaticFactory
         return null;
     }
 
+    /**
+     * @param $column
+     * @param $array
+     * @return array
+     * @throws WrongArgumentException
+     */
     public static function columnFromSet($column, $array)
     {
         Assert::isArray($array);
@@ -104,6 +136,10 @@ class ArrayUtils extends StaticFactory
         return $result;
     }
 
+    /**
+     * @return array
+     * @throws WrongArgumentException
+     */
     public static function mergeUnique(/* ... */)
     {
         $arguments = func_get_args();
@@ -118,6 +154,11 @@ class ArrayUtils extends StaticFactory
         );
     }
 
+    /**
+     * @param $array
+     * @return int
+     * @throws WrongArgumentException
+     */
     public static function countNonemptyValues($array)
     {
         Assert::isArray($array);
@@ -132,6 +173,10 @@ class ArrayUtils extends StaticFactory
         return $result;
     }
 
+    /**
+     * @param array $array
+     * @return bool
+     */
     public static function isEmpty(array $array)
     {
         foreach ($array as $key => $value) {
@@ -164,6 +209,12 @@ class ArrayUtils extends StaticFactory
         return [$first => self::flatToDimensional($array)];
     }
 
+    /**
+     * @param $one
+     * @param $two
+     * @return array
+     * @throws WrongArgumentException
+     */
     public static function mergeRecursiveUnique($one, $two)
     {
         if (!$one) {
@@ -215,13 +266,22 @@ class ArrayUtils extends StaticFactory
     }
 
     // TODO: drop Reflection
+    /**
+     * @param $list1
+     * @param $list2
+     * @param Comparator $comparator
+     * @param null $compareValueGetter
+     * @param null $limit
+     * @return array
+     */
     public static function mergeSortedLists(
         $list1,
         $list2,
         Comparator $comparator,
         $compareValueGetter = null,
         $limit = null
-    ) {
+    )
+    {
         $list1Size = count($list1);
         $list2Size = count($list2);
 
@@ -279,6 +339,19 @@ class ArrayUtils extends StaticFactory
         }
 
         return $newList;
+    }
+
+    /**
+     * @param array $one
+     * @param array $two
+     * @return array
+     */
+    public static function hardMerge(array $one, array $two)
+    {
+        foreach ($two as $key => $value) {
+            $one[$key] = $value;
+        }
+        return $one;
     }
 }
 
