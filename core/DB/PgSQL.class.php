@@ -286,13 +286,36 @@
 				if (empty($types[$info['type']]))
 					continue;
 
-				$column =
-					new DBColumn(
-						DataType::create($types[$info['type']])->
-						setNull(!$info['not null']),
+				$type = DataType::create($types[$info['type']])
+					->setNull(!$info['not null']);
 
-						$name
+				if ($type->hasSize() || $type->hasPrecision()) {
+					$sizeInfo = $this->queryRow(
+						OSQL::select()
+							->get('character_maximum_length')
+							->get('numeric_precision')
+							->get('numeric_scale')
+							->from('information_schema.columns')
+							->where(Expression::andBlock(
+								Expression::eq('table_schema', 'public'),
+								Expression::eq('table_catalog', $this->basename),
+								Expression::eq('table_name', $table->getName()),
+								Expression::eq('column_name', $name)
+							))
 					);
+
+					if ($type->is(DataType::VARCHAR) || $type->is(DataType::CHAR)) {
+						if ($sizeInfo['character_maximum_length']) {
+							$type->setSize($sizeInfo['character_maximum_length']);
+						}
+					}
+					if ($type->is(DataType::NUMERIC)) {
+						$type->setSize($sizeInfo['numeric_precision']);
+						$type->setPrecision($sizeInfo['numeric_scale']);
+					}
+				}
+
+				$column = new DBColumn($type, $name);
 
 				$table->addColumn($column);
 			}

@@ -239,7 +239,7 @@
 			return (bool) ($this->id & self::ARRAY_COLUMN);
 		}
 
-		public function toDialectString(Dialect $dialect)
+		public function toTypeDefinition(Dialect $dialect)
 		{
 			$out = $dialect->typeToString($this);
 
@@ -285,7 +285,14 @@
 
 			if ($this->id & self::HAVE_TIMEZONE)
 				$out .= $dialect->timeZone($this->timezone);
+			
+			return $out;
+		}
 
+		public function toDialectString(Dialect $dialect)
+		{
+			$out = $this->toTypeDefinition($dialect);
+			
 			$out .=
 				$this->null
 					? ' NULL'

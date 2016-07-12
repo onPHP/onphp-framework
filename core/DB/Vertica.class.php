@@ -56,7 +56,7 @@ class Vertica extends PgSQL {
 		$query = OSQL::select()
 			->from('columns')
 			->arrayGet(array(
-				'column_name', 'data_type', 'data_type_length', 'is_nullable'
+				'column_name', 'data_type', 'character_maximum_length', 'numeric_precision', 'numeric_scale', 'is_nullable'
 			))
 			->where(Expression::eq('table_name', $table))
 		;
@@ -89,8 +89,14 @@ class Vertica extends PgSQL {
 				DataType::create($types[$type])
 					->setNull($info['is_nullable'] === 't');
 
-			if ($dataType->hasSize()) {
-				$dataType->setSize($info['data_type_length']);
+			if ($dataType->hasSize() && $info['character_maximum_length']) {
+				$dataType->setSize($info['character_maximum_length']);
+			}
+			if ($dataType->hasSize() && $info['numeric_precision']) {
+				$dataType->setSize($info['numeric_precision']);
+			}
+			if ($dataType->hasPrecision() && $info['numeric_scale']) {
+				$dataType->setPrecision($info['numeric_scale']);
 			}
 
 			$table->addColumn(DBColumn::create(

@@ -139,7 +139,7 @@
 		{
 			return OSQL::createTable($this)->toDialectString($dialect);
 		}
-		
+
 		// TODO: consider port to AlterTable class (unimplemented yet)
 		public static function findDifferences(
 			Dialect $dialect,
@@ -155,12 +155,14 @@
 			$sourceColumns = $source->getColumns();
 			/** @var DBColumn[] $targetColumns */
 			$targetColumns = $target->getColumns();
-			
+
 			foreach ($sourceColumns as $name => $column) {
 				if (isset($targetColumns[$name])) {
 					if (
-						$column->getType()->getId() != $targetColumns[$name]->getType()->getId()
-
+						($column->getType()->getId() != $targetColumns[$name]->getType()->getId()
+							|| ($column->getType()->getSize() && $column->getType()->getSize() != $targetColumns[$name]->getType()->getSize())
+							|| ($column->getType()->getPrecision() && $column->getType()->getPrecision() != $targetColumns[$name]->getType()->getPrecision())
+						)
 						// for vertica: bigint == integer
 						&& !($dialect instanceof VerticaDialect && (
 							($targetColumns[$name]->getType()->getId() == DataType::INTEGER
@@ -174,23 +176,11 @@
 						$out[] =
 							$head
 							.' ALTER COLUMN '.$dialect->quoteField($name)
-							.' TYPE '.$targetColumn->getType()->toString()
-							.(
-								$targetColumn->getType()->hasSize()
-									?
-										'('
-										.$targetColumn->getType()->getSize()
-										.(
-											$targetColumn->getType()->hasPrecision()
-												? ', '.$targetColumn->getType()->getPrecision()
-												: null
-										)
-										.')'
-									: null
-							)
-							.(	(in_array($targetColumn->getType()->getId(), array(DataType::JSON, DataType::JSONB )))
-									? ' USING NULL' : '')
-							.';';
+							.' TYPE '.$targetColumn->getType()->toTypeDefinition($dialect)
+							. ($targetColumn->getType()->in([ DataType::JSON, DataType::JSONB ])
+								? ' USING NULL'
+								: '')
+							. "; \t\t -- (has " . $column->getType()->toTypeDefinition($dialect) . ')';
 					}
 					
 					if (
