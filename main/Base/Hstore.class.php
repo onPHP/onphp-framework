@@ -102,7 +102,8 @@
 			
 			$return = null;
 			try {
-				if (@eval("\$return = array({$raw});") !== false) {
+				$prepared = str_replace('$', '\\$', $raw);
+				if (@eval("\$return = array({$prepared});") !== false) {
 					$this->properties = $return;
 				}
 
