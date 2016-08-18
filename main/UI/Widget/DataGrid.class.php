@@ -75,7 +75,7 @@ class DataGrid extends BaseWidget
      * @return DataGrid
      */
     public static function details() {
-        $self = self::create();
+        $self = static::create();
         $self->templateName = 'DataGrid_details';
         $self->showSorting = false;
         return $self;
@@ -87,7 +87,7 @@ class DataGrid extends BaseWidget
      * @return DataGrid
      */
     public static function table() {
-        $self = self::create();
+        $self = static::create();
         $self->templateName = 'DataGrid_table';
         $self->showSorting = true;
         return $self;
@@ -100,7 +100,7 @@ class DataGrid extends BaseWidget
      * @return DataGrid
      */
     public static function editor($subfield = null) {
-        $self = self::details();
+        $self = static::details();
         $self->isEditor = true;
         return $self;
     }
@@ -110,7 +110,7 @@ class DataGrid extends BaseWidget
      * @return DataGrid
      */
     private static function create() {
-		$self = new self;
+		$self = new static();
 		$self->trueName  =  __('Да');
 		$self->falseName =  __('Нет');
         return $self;
@@ -207,7 +207,7 @@ class DataGrid extends BaseWidget
         // ключ - имя параметра, значение - имя для отображения
         $fields = array();
         foreach($fieldIds as $fieldId) {
-            $fieldName = self::beautifyFieldName($fieldId);
+            $fieldName = static::beautifyFieldName($fieldId);
             $fields[$fieldId] = $fieldName;
         }
         // сливаем с существующим списком, чтобы ничего не потерять,
@@ -679,7 +679,7 @@ class DataGrid extends BaseWidget
         $dataGrid = $this;
         $nesting = 0;
         while ($dataGrid = $dataGrid->parent) {
-            if ($nesting++ > self::$maxNesting)
+            if ($nesting++ > static::$maxNesting)
                 return true;
             foreach ($dataGrid->objects as $o) {
                 if ($o == $object) {
@@ -700,7 +700,7 @@ class DataGrid extends BaseWidget
      * @return DataGrid
      */
     public function setMaxNesting($number) {
-        self::$maxNesting = $number;
+        static::$maxNesting = $number;
         return $this;
     }
 
@@ -708,7 +708,7 @@ class DataGrid extends BaseWidget
      * @return int
      */
     public static function getMaxNesting() {
-        return self::$maxNesting;
+        return static::$maxNesting;
     }
 
 	public function getFields() {
