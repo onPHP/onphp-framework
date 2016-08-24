@@ -319,16 +319,16 @@ class DataGrid extends BaseWidget
                     } else {
 						if ($property->getType() == 'string') {
 							$length = $property->getMax();
-							$styleWidth = 250;
+							$styleWidth = '100%';
 						} else if ($property->getType() == 'hstore') {
 							$length = $property->getMax();
-							$styleWidth = 250;
+							$styleWidth = '100%';
 						} else {
 							$length = 16;
-							$styleWidth = 80;
+							$styleWidth = '80px';
 						}
 
-						return '<input style="width:'.$styleWidth.'px" type="text" name="'. $fieldId
+						return '<input style="width:'.$styleWidth.'" type="text" name="'. $fieldId
 							.'" value="' . $value . '" '
 							. ($length ? 'length="' . $length . '" ' : '')
 							.'/>';
