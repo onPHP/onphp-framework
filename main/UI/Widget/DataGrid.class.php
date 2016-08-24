@@ -328,7 +328,7 @@ class DataGrid extends BaseWidget
 							$styleWidth = '80px';
 						}
 
-						return '<input style="width:'.$styleWidth.'" type="text" name="'. $fieldId
+						return '<input style="width:'.$styleWidth.';box-sizing:border-box" type="text" name="'. $fieldId
 							.'" value="' . $value . '" '
 							. ($length ? 'length="' . $length . '" ' : '')
 							.'/>';
