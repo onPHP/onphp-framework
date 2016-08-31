@@ -301,15 +301,17 @@
 					
 				case HttpMethod::POST:
 					$options[CURLOPT_POST] = true;
-					$options[CURLOPT_POSTFIELDS] =
-					$this->argumentsToString($request->getPost());
 					break;
 					
 				default:
 					$options[CURLOPT_CUSTOMREQUEST] = $request->getMethod()->getName();
 					break;
 			}
-			
+
+            if ($request->getPost()) {
+                $options[CURLOPT_POSTFIELDS] = $this->argumentsToString($request->getPost());
+            }
+
 			$headers = array();
 			foreach ($request->getHeaderList() as $headerName => $headerValue) {
 				$headers[] = "{$headerName}: $headerValue";
