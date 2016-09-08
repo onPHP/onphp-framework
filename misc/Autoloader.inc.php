@@ -305,7 +305,7 @@
 				}
 			}
 
-			if (!class_exists($classname, false) && !interface_exists($classname, false)) {
+			if (!class_exists($classname, false) && !interface_exists($classname, false) && !trait_exists($classname, false)) {
 				__autoload_failed($classname, 'class not found');
 			}
 		}
@@ -369,7 +369,7 @@
 				}
 			}
 
-			if (!class_exists($classname, false) && !interface_exists($classname, false)) {
+			if (!class_exists($classname, false) && !interface_exists($classname, false) && !trait_exists($classname, false)) {
 				__autoload_failed($classname, 'class not found');
 			}
 		}

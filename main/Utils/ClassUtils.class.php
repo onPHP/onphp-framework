@@ -223,6 +223,7 @@
 					if (
 						!class_exists($className)
 						&& !interface_exists($className)
+						&& !trait_exists($className)
 					) {
 						include $file;
 					}
