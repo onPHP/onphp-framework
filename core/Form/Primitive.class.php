@@ -310,7 +310,7 @@
 		/**
 		 * @return PrimitiveFile
 		 **/
-		public static function arrayofFiles($name)
+		public static function arrayOfFiles($name)
 		{
 			return new PrimitiveArrayOfFiles($name);
 		}
