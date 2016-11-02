@@ -308,6 +308,14 @@
 		}
 
 		/**
+		 * @return PrimitiveFile
+		 **/
+		public static function arrayofFiles($name)
+		{
+			return new PrimitiveArrayOfFiles($name);
+		}
+
+		/**
 		 * @return PrimitiveImage
 		**/
 		public static function image($name)

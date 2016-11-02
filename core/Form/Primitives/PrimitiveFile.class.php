@@ -16,11 +16,11 @@
 	**/
 	class PrimitiveFile extends RangedPrimitive
 	{
-		private $originalName		= null;
-		private $mimeType			= null;
+		protected $originalName		= null;
+		protected $mimeType			= null;
 
-		private $allowedMimeTypes	= array();
-		private $checkUploaded		= true;
+		protected $allowedMimeTypes	= array();
+		protected $checkUploaded		= true;
 
 		public function getOriginalName()
 		{
@@ -117,7 +117,7 @@
 				$file = $scope[$this->name]['tmp_name'];
 			else
 				return false;
-			
+
 			if (is_readable($file) && $this->checkUploaded($file))
 				$size = filesize($file);
 			else
@@ -176,8 +176,8 @@
 		{
 			return $this->checkUploaded;
 		}
-		
-		private function checkUploaded($file)
+
+		protected function checkUploaded($file)
 		{
 			return !$this->checkUploaded || is_uploaded_file($file);
 		}
