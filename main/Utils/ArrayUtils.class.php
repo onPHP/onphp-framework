@@ -191,7 +191,11 @@ class ArrayUtils extends StaticFactory
     /**
      * in: array(1, 2, 3, 4)
      * out: array(1 => array(2 => array(3 => 4)))
-     **/
+
+     * @param $array
+     * @return array|mixed|null
+     * @throws WrongArgumentException
+     */
     public static function flatToDimensional($array)
     {
         if (!$array) {
