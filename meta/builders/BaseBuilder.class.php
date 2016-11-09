@@ -47,7 +47,7 @@ EOT;
             $out .= <<<EOT
 public function getTable()
 {
-    return '{$class->getTableName()}';
+    return '{$class->getSchemaAndTableName()}';
 }
 
 public function getObjectName()
@@ -57,7 +57,7 @@ public function getObjectName()
 
 public function getSequence()
 {
-    return '{$class->getTableName()}_id';
+    return '{$class->getTableName()}_seq';
 }
 EOT;
         } elseif ($class->getWithInternalProperties()) {

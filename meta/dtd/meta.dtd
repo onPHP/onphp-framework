@@ -11,6 +11,7 @@
                 extends        CDATA #IMPLIED
                 source        CDATA #IMPLIED
                 table        CDATA #IMPLIED
+                schema  CDATA #IMPLIED
                 >
 
         <!ELEMENT implement EMPTY>

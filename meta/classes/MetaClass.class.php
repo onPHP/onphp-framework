@@ -16,6 +16,7 @@ class MetaClass
 {
     private $name = null;
     private $tableName = null;
+    private $schema = null;
     private $type = null;
 
     private $parent = null;
@@ -47,6 +48,33 @@ class MetaClass
             $this->tableName = $dumb;
         }
     }
+
+    /**
+     * @return null
+     */
+    public function getSchema()
+    {
+        return $this->schema;
+    }
+
+    public function getSchemaAndTableName()
+    {
+        if($this->getSchema())
+            return $this->getSchema().'.'.$this->getTableName();
+
+        return $this->getTableName();
+    }
+
+    /**
+     * @param null $schema
+     */
+    public function setSchema($schema)
+    {
+        $this->schema = $schema;
+
+        return $this;
+    }
+
 
     public function getTableName()
     {

@@ -73,7 +73,7 @@ class CurvedStringDrawer extends TextDrawer
             }
 
             $character = $string[$i];
-            $this->drawCraracter($angle, $x, $y, $character);
+            $this->drawCraracter($angle, $x, $y+10, $character);
 
             $x += $this->getStringWidth($character) + $this->getSize() / 2;
         }

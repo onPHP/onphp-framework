@@ -326,6 +326,10 @@ final class MetaConfiguration extends Singleton implements Instantiatable
                 $class->setSourceLink((string) $xmlClass['source']);
             }
 
+            if(isset($xmlClass['schema'])){
+                $class->setSchema((string) $xmlClass['schema']);
+            }
+
             if (isset($xmlClass['table'])) {
                 $class->setTableName((string) $xmlClass['table']);
             }

@@ -24,6 +24,24 @@ class MimeMail implements MailBuilder
 
     private $boundary = null;
 
+    private $contentType = null;
+
+    public function __construct()
+    {
+        // useful defaults
+        $this->contentType = 'multipart/mixed';
+    }
+
+    /**
+     * @return MimeMail
+     **/
+    public function setContentType($type)
+    {
+        $this->contentType = $type;
+
+        return $this;
+    }
+
     /**
      * @return MimeMail
      **/
@@ -46,7 +64,7 @@ class MimeMail implements MailBuilder
 
         $mail =
             (new MimePart())
-                ->setContentType('multipart/mixed')
+                ->setContentType($this->contentType)
                 ->setBoundary($this->boundary);
 
         $this->headers =
@@ -97,4 +115,3 @@ class MimeMail implements MailBuilder
         return $this;
     }
 }
-
