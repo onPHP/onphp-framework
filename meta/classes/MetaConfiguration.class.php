@@ -873,7 +873,7 @@ final class MetaConfiguration extends Singleton implements Instantiatable
             }
 
             try {
-                $target = $schema->getTableByName($class->getTableName());
+                $target = $schema->getTableByName($class->getSchemaAndTableName());
             } catch (MissingElementException $e) {
                 // dropped or tableless
                 continue;
@@ -892,7 +892,7 @@ final class MetaConfiguration extends Singleton implements Instantiatable
             }
 
             try {
-                $source = $db->getTableInfo($class->getTableName());
+                $source = $db->getTableInfo($class->getSchemaAndTableName());
             } catch (UnsupportedMethodException $e) {
                 $out->
                 errorLine(
@@ -905,7 +905,7 @@ final class MetaConfiguration extends Singleton implements Instantiatable
                 break;
             } catch (ObjectNotFoundException $e) {
                 $out->errorLine(
-                    "table '{$class->getTableName()}' not found, skipping."
+                    "table '{$class->getSchemaAndTableName()}' not found, skipping."
                 );
                 continue;
             }
