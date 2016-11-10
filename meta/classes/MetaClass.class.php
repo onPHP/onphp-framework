@@ -16,7 +16,7 @@ class MetaClass
 {
     private $name = null;
     private $tableName = null;
-    private $schema = null;
+    private $schema = 'public';
     private $type = null;
 
     private $parent = null;

@@ -235,6 +235,11 @@ Dialect
         );
     }
 
+    public function quoteSchema($schema)
+    {
+        return '"'.$schema.'""';
+    }
+
     /**
      * @param $value
      * @return mixed|string

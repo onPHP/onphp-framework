@@ -16,6 +16,7 @@ final class SchemaBuilder extends BaseBuilder
 {
     public static function buildTable($tableName, array $propertyList)
     {
+
         $out = <<<EOT
 \$schema
     ->addTable(
@@ -24,7 +25,15 @@ final class SchemaBuilder extends BaseBuilder
 EOT;
         $columns = [];
 
+        $schema = null;
+
         foreach ($propertyList as $property) {
+
+            if ($property instanceof MetaClassSchema) {
+                $schema = $property->buildSchema();
+                continue;
+            }
+
             if (
                 $property->getRelation()
                 && ($property->getRelationId() != MetaRelation::ONE_TO_ONE)
@@ -41,6 +50,9 @@ EOT;
             }
         }
 
+        if ($schema)
+            $columns[] = $schema;
+
         $out .= implode("\n        ->", $columns);
 
         return $out . "\n);\n\n";
@@ -56,6 +68,7 @@ EOT;
             if ($relation = $property->getRelation()) {
 
                 $foreignClass = $property->getType()->getClass();
+
 
                 if (
                     $relation->getId() == MetaRelation::ONE_TO_MANY
@@ -87,11 +100,11 @@ EOT;
                     $name = strtolower($name[0]) . substr($name, 1);
                     $name .= 'Id';
 
-                    $foreignPropery->
-                    setName($name)->
-                    setColumnName($foreignPropery->getConvertedName())->
-                    // we don't need primary key here
-                    setIdentifier(false);
+                    $foreignPropery
+                        ->setName($name)
+                        ->setColumnName($foreignPropery->getConvertedName())
+                        // we don't need primary key here
+                        ->setIdentifier(false);
 
                     // we don't want any garbage in such tables
                     $property = clone $property;
@@ -102,7 +115,8 @@ EOT;
                         $property->getRelationColumnName()
                         == $foreignPropery->getColumnName()
                     ) {
-                        $foreignPropery->setColumnName(
+                        $foreignPropery
+                            ->setColumnName(
                             $class->getTableName() . '_'
                             . $property->getConvertedName() . '_id'
                         );
@@ -124,6 +138,7 @@ EOT;
                     $sourceColumn = $property->getRelationColumnName();
 
                     $targetTable = $foreignClass->getTableName();
+
                     $targetColumn = $foreignClass->getIdentifier()->getColumnName();
 
                     $out .= <<<EOT
@@ -138,7 +153,6 @@ EOT;
         ForeignChangeAction::restrict(),
         ForeignChangeAction::cascade()
 );
-
 
 EOT;
 

@@ -17,6 +17,8 @@ class DBTable implements DialectString
     /** @var null  */
     private $name = null;
 
+    private $schema = null;
+
     /** @var array  */
     private $columns = [];
     /** @var array  */
@@ -34,6 +36,23 @@ class DBTable implements DialectString
         $this->name = $name;
     }
 
+    /**
+     * @return null
+     */
+    public function getSchema()
+    {
+        return $this->schema;
+    }
+
+    /**
+     * @param $schema
+     * @return $this
+     */
+    public function setSchema($schema)
+    {
+        $this->schema = $schema;
+        return $this;
+    }
 
     /**
      * @param Dialect $dialect

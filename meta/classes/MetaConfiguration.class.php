@@ -810,6 +810,7 @@ final class MetaConfiguration extends Singleton implements Instantiatable
 
         $tables = [];
 
+        /** @var MetaClass $class */
         foreach ($this->classes as $class) {
             if (
                 (!$class->getParent() && !count($class->getProperties()))
@@ -821,6 +822,7 @@ final class MetaConfiguration extends Singleton implements Instantiatable
             foreach ($class->getAllProperties() as $property) {
                 $tables[$class->getTableName()][// just to sort out dupes, if any
                 $property->getColumnName()] = $property;
+                $tables[$class->getTableName()]['schema'] = new MetaClassSchema($class->getSchema());
             }
         }
 

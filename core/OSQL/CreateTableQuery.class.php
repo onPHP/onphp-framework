@@ -26,7 +26,9 @@ class CreateTableQuery extends QueryIdentification
     {
         $name = $this->table->getName();
 
-        $middle = "CREATE TABLE {$dialect->quoteTable($name)} (\n    ";
+        $middle = (new CreateSchemaQuery($this->table->getSchema()))->toDialectString($dialect);
+
+        $middle .= "CREATE TABLE {$dialect->quoteTable($name)} (\n    ";
 
         $prepend = [];
         $columns = [];
