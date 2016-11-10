@@ -35,7 +35,6 @@
 	define('EXT_MOD', '.inc.php');
 	define('EXT_HTML', '.html');
 	define('EXT_UNIT', '.unit.php');
-	define('EXT_FENOM', '.fm');
 	define('EXT_LIB', '.php');
 
 	// overridable constant, don't forget for trailing slash
@@ -76,14 +75,7 @@
 	define('ONPHP_META_PATH', ONPHP_ROOT_PATH.'meta'.DIRECTORY_SEPARATOR);
 	define('ONPHP_UI_PATH', ONPHP_ROOT_PATH.'UI'.DIRECTORY_SEPARATOR);
 	define('ONPHP_LIB_PATH', ONPHP_ROOT_PATH.'lib'.DIRECTORY_SEPARATOR);
-/*
-	spl_autoload_register(function ($className) {
-		if (strpos($className, 'Fenom') !== false) {
-			include ONPHP_LIB_PATH . 'Fenom' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR
-				. str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
-		}
-	}, false);
-*/
+
 	spl_autoload_register(array('Autoloader', ONPHP_CLASS_CACHE_TYPE), false);
 
 
@@ -194,7 +186,6 @@
 		.ONPHP_MAIN_PATH.'Charts'.DIRECTORY_SEPARATOR.'Google'.PATH_SEPARATOR
 		.ONPHP_MAIN_PATH.'Monitoring'.PATH_SEPARATOR
 
-        .ONPHP_LIB_PATH.'Fenom/src'.PATH_SEPARATOR
         .ONPHP_LIB_PATH.'FirePHP'.PATH_SEPARATOR
 
 		.ONPHP_META_CLASSES.PATH_SEPARATOR
