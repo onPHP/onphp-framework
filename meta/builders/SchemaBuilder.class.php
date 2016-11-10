@@ -83,9 +83,9 @@ EOT;
                     $relation->getId() == MetaRelation::MANY_TO_MANY
                 ) {
                     $tableName =
-                        str_replace('.','_',$class->getSchemaAndTableName())
+                        str_replace('.','_',$class->getTableName())
                         . '_'
-                        . $foreignClass->getSchemaAndTableName();
+                        . $foreignClass->getTableName();
 
                     if (isset($knownJunctions[$tableName])) {
                         continue;
@@ -134,10 +134,10 @@ EOT;
 
 EOT;
                 } else {
-                    $sourceTable = $class->getSchemaAndTableName();
+                    $sourceTable = $class->getTableName();
                     $sourceColumn = $property->getRelationColumnName();
 
-                    $targetTable = $foreignClass->getSchemaAndTableName();
+                    $targetTable = $foreignClass->getTableName();
 
                     $targetColumn = $foreignClass->getIdentifier()->getColumnName();
 
