@@ -110,7 +110,7 @@ EOT;
 
     public function toColumnType()
     {
-        return 'DataType::create(DataType::JSON)';
+        return '(new DataType(DataType::JSON))';
     }
 }
 

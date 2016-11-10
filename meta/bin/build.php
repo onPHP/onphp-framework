@@ -48,32 +48,34 @@ function init()
     define('ONPHP_META_PATTERNS', ONPHP_META_PATH . 'patterns' . DIRECTORY_SEPARATOR);
     define('ONPHP_META_TYPES', ONPHP_META_PATH . 'types' . DIRECTORY_SEPARATOR);
 
-    AutoloaderPool::get('onPHP')->
-    addPaths([
-        ONPHP_META_BUILDERS,
-        ONPHP_META_PATTERNS,
-        ONPHP_META_TYPES,
-    ]);
+    AutoloaderPool::get('onPHP')
+        ->addPaths(
+            [
+                ONPHP_META_BUILDERS,
+                ONPHP_META_PATTERNS,
+                ONPHP_META_TYPES,
+            ]
+        );
 
     Assert::isTrue(defined('PATH_CLASSES'), 'constant PATH_CLASSES must be defined');
 
     if (!defined('ONPHP_META_DAO_DIR')) {
         define(
-        'ONPHP_META_DAO_DIR',
+            'ONPHP_META_DAO_DIR',
             PATH_CLASSES . 'DAOs' . DIRECTORY_SEPARATOR
         );
     }
 
     if (!defined('ONPHP_META_BUSINESS_DIR')) {
         define(
-        'ONPHP_META_BUSINESS_DIR',
+            'ONPHP_META_BUSINESS_DIR',
             PATH_CLASSES . 'Business' . DIRECTORY_SEPARATOR
         );
     }
 
     if (!defined('ONPHP_META_PROTO_DIR')) {
         define(
-        'ONPHP_META_PROTO_DIR',
+            'ONPHP_META_PROTO_DIR',
             PATH_CLASSES . 'Proto' . DIRECTORY_SEPARATOR
         );
     }
@@ -82,21 +84,21 @@ function init()
 
     if (!defined('ONPHP_META_AUTO_BUSINESS_DIR')) {
         define(
-        'ONPHP_META_AUTO_BUSINESS_DIR',
+            'ONPHP_META_AUTO_BUSINESS_DIR',
             ONPHP_META_AUTO_DIR
             . 'Business' . DIRECTORY_SEPARATOR
         );
     }
 
     define(
-    'ONPHP_META_AUTO_PROTO_DIR',
+        'ONPHP_META_AUTO_PROTO_DIR',
         ONPHP_META_AUTO_DIR
         . 'Proto' . DIRECTORY_SEPARATOR
     );
 
     if (!defined('ONPHP_META_AUTO_DAO_DIR')) {
         define(
-        'ONPHP_META_AUTO_DAO_DIR',
+            'ONPHP_META_AUTO_DAO_DIR',
             ONPHP_META_AUTO_DIR
             . 'DAOs' . DIRECTORY_SEPARATOR
         );
@@ -296,27 +298,32 @@ if ($pathMeta && $pathConfig) {
 
     init();
 
-    $out->
-    newLine()->
-    infoLine('onPHP-' . ONPHP_VERSION . ': MetaConfiguration builder.', true)->
-    newLine();
+    $out
+        ->newLine()
+        ->infoLine('onPHP-' . ONPHP_VERSION . ': MetaConfiguration builder.', true)
+        ->newLine();
 
     try {
         $meta =
-            MetaConfiguration::me()->
-            setOutput($out)->
-            load(ONPHP_META_PATH . 'internal.xml', false);
+            MetaConfiguration::me()
+                ->setOutput($out)
+                ->load(ONPHP_META_PATH . 'internal.xml', false);
 
-        $out->info('Known internal classes: ');
+        $out
+            ->info('Known internal classes: ');
+
         foreach ($meta->getClassList() as $class) {
             $out->info($class->getName() . ', ', true);
         }
-        $out->infoLine("that's all.")->newLine();
 
-        $meta->
-        setDryRun($metaDryRun)->
-        load($pathMeta)->
-        setForcedGeneration($metaForce);
+        $out
+            ->infoLine("that's all.")
+            ->newLine();
+
+        $meta
+            ->setDryRun($metaDryRun)
+            ->load($pathMeta)
+            ->setForcedGeneration($metaForce);
 
         if ($createPUML) {
             $pumlFile = ONPHP_META_AUTO_DIR . DIRECTORY_SEPARATOR . "puml.txt";
@@ -330,11 +337,12 @@ if ($pathMeta && $pathConfig) {
 
 
         if ($metaOnlyContainers) {
-            $meta->buildContainers();
+            $meta
+                ->buildContainers();
         } else {
-            $meta->
-            buildClasses()->
-            buildContainers();
+            $meta
+                ->buildClasses()
+                ->buildContainers();
 
             if (!$metaNoSchema) {
                 $meta->buildSchema();
@@ -361,13 +369,13 @@ if ($pathMeta && $pathConfig) {
             $meta->checkIntegrity();
         }
     } catch (BaseException $e) {
-        $out->
-        newLine()->
-        errorLine($e->getMessage(), true)->
-        newLine()->
-        logLine(
-            $e->getTraceAsString()
-        );
+        $out
+            ->newLine()
+            ->errorLine($e->getMessage(), true)
+            ->newLine()
+            ->logLine(
+                $e->getTraceAsString()
+            );
     }
 } else {
     $out->getOutput()->resetAll()->newLine();
@@ -375,5 +383,9 @@ if ($pathMeta && $pathConfig) {
     stop('Can not continue.');
 }
 
-$out->getOutput()->resetAll();
-$out->newLine();
+$out
+    ->getOutput()
+    ->resetAll();
+
+$out
+    ->newLine();

@@ -97,15 +97,16 @@ abstract class BasePattern extends Singleton implements GenerationPattern
                 fclose($fp);
             }
 
-            $out->
-            log('(')->
-            remark(
-                str_replace(getcwd() . DIRECTORY_SEPARATOR, null, $path)
-            )->
-            logLine(')');
+            $out
+                ->log('(')
+                ->remark(
+                    str_replace(getcwd() . DIRECTORY_SEPARATOR, null, $path
+                    )
+                )
+                ->logLine(')');
         } else {
-            $out->
-            infoLine("\t\t" . $className . ' ', true);
+            $out
+                ->infoLine("\t\t" . $className . ' ', true);
         }
     }
 

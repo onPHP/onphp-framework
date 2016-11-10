@@ -101,7 +101,8 @@ EOT;
         MetaClass $class,
         MetaClassProperty $property,
         $isNamed
-    ) {
+    )
+    {
         if (
         $parentProperty =
             $class->isRedefinedProperty($property->getName())

@@ -1041,8 +1041,8 @@ final class MetaConfiguration extends Singleton implements Instantiatable
 
                 $info = new ReflectionClass($name);
 
-                $this->
-                checkClassSanity($class, $info);
+                $this
+                    ->checkClassSanity($class, $info);
 
                 if ($info->implementsInterface('Prototyped')) {
                     $this->checkClassSanity(

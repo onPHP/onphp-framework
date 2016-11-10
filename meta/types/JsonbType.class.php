@@ -20,7 +20,7 @@ class JsonbType extends JsonType
     }
     public function toColumnType()
     {
-        return 'DataType::create(DataType::JSONB)';
+        return '(new DataType(DataType::JSONB))';
     }
 }
 ?>
