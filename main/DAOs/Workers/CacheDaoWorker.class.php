@@ -102,6 +102,11 @@
 		{
 			return parent::makeQueryKey($query, $suffix).$this->getLayerId();
 		}
+		
+		protected function makeIdKey($id)
+		{
+			return parent::makeIdKey($id).$this->getLayerId();
+		}
 		//@}
 	}
 ?>
