@@ -1,2 +1,9 @@
+#OLD, think already not work:
 php misc/scan.php --path=../onPHP/main/ --namespace=onPHP > replace.config/onPHP.main.txt
 php misc/replace.php --config=.../converter/replace.config/
+
+#NEW
+#one time scan all paths in config.json to conf file:
+php misc/all.php --config=config.json --action=scan
+#run replace with path dirs until finished success (answer interactive question if you'll get them)
+php misc/all.php --config=config.json --action=replace

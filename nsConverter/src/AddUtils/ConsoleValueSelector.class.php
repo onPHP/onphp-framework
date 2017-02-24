@@ -31,9 +31,16 @@
 		
 		public function readValue()
 		{
+			if ($key = $this->readValue()) {
+				return $this->list[$key];
+			}
+		}
+
+		public function readKey()
+		{
 			if (empty($this->list))
 				return;
-			
+
 			while (true) {
 				foreach ($this->list as $key => $value) {
 					print "[{$key}] {$value}\n";
@@ -41,9 +48,9 @@
 				print "--------------------------\n";
 				print "Please write your string key: ";
 				$key = trim((new ConsoleReader())->readString());
-				
+
 				if (isset($this->list[$key])) {
-					return $this->list[$key];
+					return $key;
 				}
 			}
 		}

@@ -107,7 +107,6 @@ class ClassStorageBuffer
 			->setName($this->currentClass)
 			->setNamespace($this->namespaceBuffer->getNamespace())
 			->setNewNamespace($this->newNamespace);
-		
 		$this->classStorage->addClass($class);
 	}
 }

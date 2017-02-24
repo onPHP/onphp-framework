@@ -38,6 +38,7 @@ class ClassNameDetectBuffer implements Buffer
 	private $classNameBuffer = null;
 	private $classNameList = [];
 	private $prevSubject = null;
+	private $lineNum = 0;
 
 	/**
 	 * @param NamespaceBuffer $namespaceBuffer
@@ -88,6 +89,7 @@ class ClassNameDetectBuffer implements Buffer
 		$this->classNameBuffer = null;
 		$this->classNameList = [];
 		$this->prevSubject = null;
+		$this->lineNum = 0;
 		return $this;
 	}
 
@@ -101,6 +103,9 @@ class ClassNameDetectBuffer implements Buffer
 
 	public function process($subject, $i)
 	{
+		if (is_array($subject) && count($subject) >= 3) {
+			$this->lineNum = $subject[2];
+		}
 		if ($this->classNameBuffer) {
 			$this->classNameBuffer->process($subject, $i);
 			if (!$this->classNameBuffer->isBuffer()) {
@@ -109,6 +114,7 @@ class ClassNameDetectBuffer implements Buffer
 						$this->classNameBuffer->getClassName(),
 						$this->classNameBuffer->getClassNameStart(),
 						$this->classNameBuffer->getClassNameEnd(),
+						$this->lineNum
 					];
 				}
 				$this->classNameBuffer = null;

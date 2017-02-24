@@ -1,8 +1,8 @@
 {
-    "name": "onphp/onphp",
+    "name": "bis-gmbh/onphp",
     "description": "onPHP is the mature GPL'ed multi-purpose object-oriented PHP framework.",
     "keywords": ["framework"],
-    "homepage": "https://github.com/onPHP/onphp-framework",
+    "homepage": "https://github.com/bis-gmbh/onphp-framework",
     "type": "library",
     "license": "GPL-3.0",
     "authors": [

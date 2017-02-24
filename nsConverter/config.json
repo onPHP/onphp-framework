@@ -1,0 +1,23 @@
+{
+	"conf": "/tmp/nsConverter/conf.ns",
+	"pathes": [
+		{
+			"action": "scan",
+			"path": "../core",
+			"ext": ".class.php",
+			"namespace": "Onphp"
+		},
+		{
+			"action": "scan",
+			"path": "../main",
+			"ext": ".class.php",
+			"namespace": "Onphp"
+		},
+		{
+			"action": "replace",
+			"path": "test/data2/",
+			"psr0": true,
+			"namespace": "WoW"
+		}
+	]
+}
