@@ -26,14 +26,19 @@
 		
 		public function add(Identifiable $object)
 		{
+			$sequence =
+				DBPool::getByDao($this)->obtainSequence(
+					$this->getSequence()
+				);
+
+			if ($sequence instanceof Identifier) {
+				$id = $sequence->getId();
+			}
+
 			return
 				$this->inject(
 					OSQL::insert(),
-					$object->setId(
-						DBPool::getByDao($this)->obtainSequence(
-							$this->getSequence()
-						)
-					)
+					$object->setId($id)
 				);
 		}
 		
