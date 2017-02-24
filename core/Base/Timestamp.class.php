@@ -20,6 +20,25 @@
 	**/
 	class Timestamp extends Date
 	{
+        protected static $timeDelimiter = ':';
+        protected static $secondDelimiter = '.';
+
+        /**
+         * задает делимер по умолчанию
+         * @param '-' $dateDelimiter
+         * @param ':' $timeDelimiter
+         * @param '.' $secondDelimiter
+         */
+        public static function setDelimer($dateDelimiter=null,$timeDelimiter=null,$secondDelimiter=null) {
+            parent::setDelimer($dateDelimiter);
+            if ($timeDelimiter !== null) {
+                static::$timeDelimiter = $timeDelimiter;
+            }
+            if ($secondDelimiter !== null) {
+                static::$secondDelimiter = $secondDelimiter;
+            }
+        }
+
 		/**
 		 * @return Timestamp
 		**/
@@ -72,8 +91,15 @@
 			}
 		}
 		
-		public function toTime($timeDelimiter = ':', $secondDelimiter = '.')
+		public function toTime($timeDelimiter = null, $secondDelimiter = null)
 		{
+            if ($timeDelimiter !== null) {
+                $timeDelimiter = static::$timeDelimiter;
+            }
+            if ($secondDelimiter !== null) {
+                $secondDelimiter = static::$secondDelimiter;
+            }
+
 			return
 				$this->getHour()
 				.$timeDelimiter
@@ -82,11 +108,7 @@
 				.$this->getSecond();
 		}
 		
-		public function toDateTime(
-			$dateDelimiter = '-',
-			$timeDelimiter = ':',
-			$secondDelimiter = '.'
-		)
+		public function toDateTime($dateDelimiter = null,$timeDelimiter = null,$secondDelimiter = null)
 		{
 			return
 				$this->toDate($dateDelimiter).' '

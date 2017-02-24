@@ -20,7 +20,19 @@
 	**/
 	class Date implements Stringable, DialectString
 	{
-		const WEEKDAY_MONDAY 	= 1;
+        protected static $dateDelimiter = '-';
+
+        /**
+         * задает делимер по умолчанию
+         * @param '-' $dateDelimiter
+         */
+        public static function setDelimer($dateDelimiter=null) {
+            if ($dateDelimiter !== null) {
+                static::$dateDelimiter = $dateDelimiter;
+            }
+        }
+
+        const WEEKDAY_MONDAY 	= 1;
 		const WEEKDAY_TUESDAY	= 2;
 		const WEEKDAY_WEDNESDAY	= 3;
 		const WEEKDAY_THURSDAY	= 4;
@@ -41,8 +53,11 @@
 			return new static($date);
 		}
 		
-		public static function today($delimiter = '-')
+		public static function today($delimiter = null)
 		{
+            if ($dateDelimiter===null) {
+                $delimiter = static::$dateDelimiter;
+            }
 			return date("Y{$delimiter}m{$delimiter}d");
 		}
 		
@@ -145,13 +160,16 @@
 			return $this->getDateTime()->getTimestamp();
 		}
 		
-		public function toDate($delimiter = '-')
+		public function toDate($dateDelimiter = null)
 		{
+            if ($dateDelimiter===null) {
+                $dateDelimiter = Date::$dateDelimiter;
+            }
 			return
 				$this->getYear()
-				.$delimiter
+				.$dateDelimiter
 				.$this->getMonth()
-				.$delimiter
+				.$dateDelimiter
 				.$this->getDay();
 		}
 		
