@@ -16,6 +16,7 @@
 	 * @see http://www.php.net/mysql
 	 * 
 	 * @ingroup DB
+	 * @deprecated use MySQLim
 	**/
 	final class MySQL extends Sequenceless
 	{
@@ -86,6 +87,11 @@
 				mysql_close($this->link);
 
 			return $this;
+		}
+		
+		public function isConnected()
+		{
+			return parent::isConnected() && mysql_ping($this->link);
 		}
 		
 		/**

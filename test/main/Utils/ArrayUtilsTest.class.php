@@ -137,6 +137,19 @@
 				)
 			);
 		}
+		
+		public function testConvertObjectList()
+		{
+			$list =
+				array(
+					TestCity::create()->setId(42)->setName('Beldyazki'),
+					TestCity::create()->setId(666)->setName('Moscow')
+				);
+			
+			$this->assertEquals(array(42, 666), array_keys(ArrayUtils::convertObjectList($list)));
+			$this->assertEquals(array('Beldyazki', 'Moscow'), array_keys(ArrayUtils::convertObjectList($list, 'getName')));
+			
+		}
 
 		public static function textDataSortedLists()
 		{

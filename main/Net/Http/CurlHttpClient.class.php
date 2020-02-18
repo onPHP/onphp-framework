@@ -64,7 +64,7 @@
 		}
 		
 		/**
-		 * @param $timeout in seconds
+		 * @param $timeout int in seconds
 		 * @return CurlHttpClient
 		**/
 		public function setTimeout($timeout)
@@ -278,14 +278,17 @@
 		{
 			$handle = curl_init();
 			Assert::isNotNull($request->getMethod());
-			
+
 			$options = array(
 				CURLOPT_WRITEFUNCTION => array($response, 'writeBody'),
 				CURLOPT_HEADERFUNCTION => array($response, 'writeHeader'),
 				CURLOPT_URL => $request->getUrl()->toString(),
 				CURLOPT_USERAGENT => 'onPHP::'.__CLASS__
 			);
-			
+
+			if ($this->isPhp55())
+				$options[CURLOPT_SAFE_UPLOAD] = true;
+
 			if ($this->noBody !== null)
 				$options[CURLOPT_NOBODY] = $this->noBody;
 			
@@ -408,11 +411,11 @@
 		 */
 		private function findAtParamInPost($postList)
 		{
-			foreach ($postList as $param)
-				if (mb_stripos($param, '@') === 0)
-					return $param;
-				
-			return null;
+			if (!$this->isPhp55()) {
+				foreach ($postList as $param)
+					if (mb_stripos($param, '@') === 0)
+						return $param;
+			}
 		}
 		
 		/**
@@ -426,7 +429,16 @@
 				is_readable($value) && is_file($value),
 				'couldn\'t access to file with path: '.$value
 			);
-			return '@'.$value;
+			return $this->isPhp55() ? new \CURLFile($value) : '@'.$value;
+		}
+
+		private function isPhp55()
+		{
+			static $result = null;
+			if ($result === null) {
+				$result = version_compare(PHP_VERSION, '5.5.0', '>=') ? true : false;
+			}
+			return $result;
 		}
 	}
 ?>

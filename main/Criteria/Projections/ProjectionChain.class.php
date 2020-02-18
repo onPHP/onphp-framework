@@ -16,6 +16,11 @@
 	{
 		private $list = array();
 		
+		public function getList()
+		{
+			return $this->list;
+		}
+
 		/**
 		 * @return ProjectionChain
 		**/

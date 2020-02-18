@@ -1,3 +1,84 @@
+2013-12-06 Evgeny V. Kokovikhin
+	
+	* core/Form/FormUtils.class.php core/OSQL/QuerySkeleton.class.php
+	main/Flow/ModelAndView.class.php main/Utils/ArrayUtils.class.php
+	test/main/Utils/ArrayUtilsTest.class.php: cosmetics and sugar
+
+2013-11-19 Evgeny V. Kokovikhin
+
+	* core/Form/Form.class.php core/Form/FormCollection.class.php 
+	test/core/FormTest.class.php: FormCollection introduced. See usage examples in tests.§ 
+
+2013-11-01 Evgeny V. Kokovikhin
+	
+	* core/Form/Primitives/PrimitiveIdentifierList.class.php: added ability 
+	to ignore wrong values in list of identifier
+
+2013-10-28 Evgeny V. Kokovikhin
+	
+	*  main/Flow/SimpleFrontController.class.php: added SimpleFrontController
+	this is one of the possible way to use FrontController in your application 
+
+2013-10-25 Vasily M. Stashko
+
+	* core/DB/MySQLim.class.php:
+		added getTableInfo() method implementation
+
+2013-10-21 Evgeny V. Kokovikhin
+	
+	* meta/bin/build.php meta/classes/MetaClassPUMLGenerator.class.php
+	meta/classes/MetaConfiguration.class.php:  added schema generator for PlantUML
+	see http://plantuml.sourceforge.net/classes.html
+
+2013-10-17 Nikita V. Konstantinov
+
+	* main/Flow/HttpRequest.class.php
+	* main/Net/Http/HttpHeaderCollection.class.php
+	* test/AllTests.php
+	* test/main/Net/Http/HttpHeaderCollectionTest.class.php:
+		added HttpHeaderCollection
+
+2013-10-15 Nikita V. Konstantinov
+
+	* main/Flow/HttpRequest.class.php:
+		added HttpRequest::createFromGlobals()
+
+2013-09-03 Vasily M. Stashko
+
+	* core/DB/MySQL.class.php
+	core/DB/MySQLim.class.php:
+		added (mysqli?_ping) check to isConnected() methods
+
+2013-04-19  Aleksey S. Denisov
+
+	* core/Cache/CachePeer.class.php
+	core/Cache/WatermarkedPeer.class.php
+	core/DB/DB.class.php:
+        fixed deferent uncache keys with watermark while in db transaction
+
+2013-04-08  Artem V. Titarenko
+
+	* main/DAOs/Workers/SmartDaoWorker.class.php: SmartDaoWorker race condition bug fix
+
+2013-03-31  Viatcheslav Y. Tsyrulnik
+
+	* core/Form/Primitives/PrimitiveHttpUrl.class.php
+		main/Net/HttpUrl.class.php
+		test/core/PrimitiveHttpUrlTest.class.php
+		test/main/HttpUrlTest.class.php:
+			HttpUrl::isValid skips privileged ports validation by default
+
+2013-03-31  Nikita V. Konstantinov
+
+	* core/Base/Singleton.class.php:
+		Singleton 2+ constructor arguments now without eval
+
+2013-01-23  Dmitriy V. Snezhinskiy
+
+	* main/Math/MathUtils.class.php 
+		test/main/MathUtilsTest.class.php:
+			fix matrix multiplication, add test
+
 2012-12-23  Vasily A. Surikov
 
 	* meta/bin/build.php
@@ -217,7 +298,7 @@
 
 	Introducing Uncachers
 
-2012-06-29	Nikita Konstantinov
+2012-06-29	Nikita V. Konstantinov
 
 	* core/DB/PgSQL.class.php
 		test/core/DbConnectionTest.class.php:

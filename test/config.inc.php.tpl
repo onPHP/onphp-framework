@@ -7,7 +7,7 @@
 			'host'	=> '127.0.0.1',
 			'base'	=> 'onphp'
 		),
-		'MySQL' => array(
+		'MySQLim' => array(
 			'user'	=> 'onphp',
 			'pass'	=> 'onphp',
 			'host'	=> '127.0.0.1',
