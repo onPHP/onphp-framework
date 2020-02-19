@@ -14,12 +14,14 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.6.0"
     },
     "conflict": {
         "ext-http": "*"
     },
-    "autoload": {
-        "classmap": ["core/", "main/", "meta/"]
+     "autoload": {
+        "psr-4": {
+            "onphp\\": "src"
+        }
     }
 }

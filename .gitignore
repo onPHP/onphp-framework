@@ -1,3 +1,5 @@
+vendor
+composer.lock
 global.inc.php
 test/config.inc.php
 test/meta/Auto/
