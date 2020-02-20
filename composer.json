@@ -21,7 +21,7 @@
     },
      "autoload": {
         "psr-4": {
-            "onPHP\\": "src"
+            "OnPHP\\": "src"
         }
     }
 }
