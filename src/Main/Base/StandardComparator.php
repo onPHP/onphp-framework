@@ -9,28 +9,33 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class StandardComparator extends Singleton
-		implements Comparator, Instantiatable
+namespace OnPHP\Main\Base;
+
+use OnPHP\Core\Base\Singleton;
+use OnPHP\Core\Base\Instantiatable;
+
+final class StandardComparator extends Singleton
+	implements Comparator, Instantiatable
+{
+	private $cmpFunction = 'strcmp';
+
+	public static function me()
 	{
- 		private $cmpFunction = 'strcmp';
-		
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function setCmpFunction($name)
-		{
-			$this->cmpFunction = $name;
-			
-			return $this;
-		}
-		
-		public function compare($one, $two)
-		{
-			$cmpFunc = $this->cmpFunction;
-			
-			return $cmpFunc($one, $two);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function setCmpFunction($name)
+	{
+		$this->cmpFunction = $name;
+
+		return $this;
+	}
+
+	public function compare($one, $two)
+	{
+		$cmpFunc = $this->cmpFunction;
+
+		return $cmpFunc($one, $two);
+	}
+}
 ?>

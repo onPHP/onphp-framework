@@ -9,43 +9,48 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+use OnPHP\Main\Util\TuringTest\Color;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartColor extends BaseGoogleChartParameter
+{
+	protected $name = 'chco';
+
+	private $colors = array();
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartColor
 	**/
-	final class GoogleChartColor extends BaseGoogleChartParameter
+	public static function create()
 	{
-		protected $name = 'chco';
-		
-		private $colors = array();
-		
-		/**
-		 * @return GoogleChartColor
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return GoogleChartColor
-		**/
-		public function addColor(Color $color)
-		{
-			$this->colors[] = $color;
-			
-			return $this;
-		}
-		
-		public function toString()
-		{
-			$queryString = "{$this->name}=";
-			
-			Assert::isNotEmptyArray($this->colors);
-			
-			foreach ($this->colors as $color)
-				$queryString .= $color->toString().',';
-			
-			return rtrim($queryString, ',');
-		}
+		return new self;
 	}
+
+	/**
+	 * @return GoogleChartColor
+	**/
+	public function addColor(Color $color)
+	{
+		$this->colors[] = $color;
+
+		return $this;
+	}
+
+	public function toString()
+	{
+		$queryString = "{$this->name}=";
+
+		Assert::isNotEmptyArray($this->colors);
+
+		foreach ($this->colors as $color)
+			$queryString .= $color->toString().',';
+
+		return rtrim($queryString, ',');
+	}
+}
 ?>

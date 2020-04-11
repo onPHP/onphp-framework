@@ -9,42 +9,46 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class RouterStaticRule extends RouterBaseRule
+namespace OnPHP\Main\Util\Router;
+
+use OnPHP\Main\Flow\HttpRequest;
+
+final class RouterStaticRule extends RouterBaseRule
+{
+	protected $route	= null;
+
+	/**
+	 * @return RouterStaticRule
+	**/
+	public static function create($route)
 	{
-		protected $route	= null;
-		
-		/**
-		 * @return RouterStaticRule
-		**/
-		public static function create($route)
-		{
-			return new self($route);
-		}
-		
-		public function __construct($route)
-		{
-			// FIXME: rtrim. probably?
-			$this->route = trim($route, '/');
-		}
-		
-		public function match(HttpRequest $request)
-		{
-			$path = $this->processPath($request)->toString();
-			
-			// FIXME: rtrim, probably?
-			if (trim(urldecode($path), '/') == $this->route)
-				return $this->defaults;
-			
-			return false;
-		}
-		
-		public function assembly(
-			array $data = array(),
-			$reset = false,
-			$encode = false
-		)
-		{
-			return $this->route;
-		}
+		return new self($route);
 	}
+
+	public function __construct($route)
+	{
+		// FIXME: rtrim. probably?
+		$this->route = trim($route, '/');
+	}
+
+	public function match(HttpRequest $request)
+	{
+		$path = $this->processPath($request)->toString();
+
+		// FIXME: rtrim, probably?
+		if (trim(urldecode($path), '/') == $this->route)
+			return $this->defaults;
+
+		return false;
+	}
+
+	public function assembly(
+		array $data = array(),
+		$reset = false,
+		$encode = false
+	)
+	{
+		return $this->route;
+	}
+}
 ?>

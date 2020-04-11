@@ -9,24 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * Inserts HTML line breaks before all newlines in a string.
+ * 
+ * @ingroup Filters
+**/
+final class NewLinesToBreaks extends BaseFilter
+{
 	/**
-	 * Inserts HTML line breaks before all newlines in a string.
-	 * 
-	 * @ingroup Filters
+	 * @return NewLinesToBreaks
 	**/
-	final class NewLinesToBreaks extends BaseFilter
+	public static function me()
 	{
-		/**
-		 * @return NewLinesToBreaks
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return nl2br($value);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function apply($value)
+	{
+		return nl2br($value);
+	}
+}
 ?>

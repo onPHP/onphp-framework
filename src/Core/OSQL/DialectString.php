@@ -9,14 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Basis for almost all implementations of SQL parts.
-	 * 
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	interface DialectString
-	{
-		public function toDialectString(Dialect $dialect);
-	}
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\DB\Dialect;
+
+/**
+ * Basis for almost all implementations of SQL parts.
+ * 
+ * @ingroup OSQL
+ * @ingroup Module
+**/
+interface DialectString
+{
+	public function toDialectString(Dialect $dialect);
+}
 ?>

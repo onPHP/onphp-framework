@@ -9,32 +9,37 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Main\OQL\Statement;
+
+use OnPHP\Main\Criteria\Projection;
+use OnPHP\Main\Criteria\Projection\ProjectionChain;
+
+/**
+ * @ingroup OQL
+**/
+class OqlProjectionClause extends OqlQueryListedClause
+{
 	/**
-	 * @ingroup OQL
+	 * @return OqlProjectionClause
 	**/
-	class OqlProjectionClause extends OqlQueryListedClause
+	public static function create()
 	{
-		/**
-		 * @return OqlProjectionClause
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return ProjectionChain
-		**/
-		public function toProjection()
-		{
-			$projection = Projection::chain();
-			foreach ($this->list as $property) {
-				$projection->add(
-					$property->evaluate($this->parameters)
-				);
-			}
-			
-			return $projection;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return ProjectionChain
+	**/
+	public function toProjection()
+	{
+		$projection = Projection::chain();
+		foreach ($this->list as $property) {
+			$projection->add(
+				$property->evaluate($this->parameters)
+			);
+		}
+
+		return $projection;
+	}
+}
 ?>

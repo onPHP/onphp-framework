@@ -9,71 +9,73 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Markup\Html;
+
+/**
+ * @ingroup Html
+**/
+final class SgmlIgnoredTag extends SgmlTag
+{
+	private $cdata		= null;
+	private $endMark	= null;
+
 	/**
-	 * @ingroup Html
+	 * @return SgmlIgnoredTag
 	**/
-	final class SgmlIgnoredTag extends SgmlTag
+	public static function create()
 	{
-		private $cdata		= null;
-		private $endMark	= null;
-		
-		/**
-		 * @return SgmlIgnoredTag
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return SgmlIgnoredTag
-		**/
-		public static function comment()
-		{
-			return self::create()->setId('!--')->setEndMark('--');
-		}
-		
-		/**
-		 * @return SgmlIgnoredTag
-		**/
-		public function setCdata(Cdata $cdata)
-		{
-			$this->cdata = $cdata;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return Cdata
-		**/
-		public function getCdata()
-		{
-			return $this->cdata;
-		}
-		
-		/**
-		 * @return SgmlIgnoredTag
-		**/
-		public function setEndMark($endMark)
-		{
-			$this->endMark = $endMark;
-			
-			return $this;
-		}
-		
-		public function getEndMark()
-		{
-			return $this->endMark;
-		}
-		
-		public function isComment()
-		{
-			return $this->id == '!--';
-		}
-		
-		public function isExternal()
-		{
-			return ($this->id && $this->id[0] == '?');
-		}
+		return new self;
 	}
+
+	/**
+	 * @return SgmlIgnoredTag
+	**/
+	public static function comment()
+	{
+		return self::create()->setId('!--')->setEndMark('--');
+	}
+
+	/**
+	 * @return SgmlIgnoredTag
+	**/
+	public function setCdata(Cdata $cdata)
+	{
+		$this->cdata = $cdata;
+
+		return $this;
+	}
+
+	/**
+	 * @return Cdata
+	**/
+	public function getCdata()
+	{
+		return $this->cdata;
+	}
+
+	/**
+	 * @return SgmlIgnoredTag
+	**/
+	public function setEndMark($endMark)
+	{
+		$this->endMark = $endMark;
+
+		return $this;
+	}
+
+	public function getEndMark()
+	{
+		return $this->endMark;
+	}
+
+	public function isComment()
+	{
+		return $this->id == '!--';
+	}
+
+	public function isExternal()
+	{
+		return ($this->id && $this->id[0] == '?');
+	}
+}
 ?>

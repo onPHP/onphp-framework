@@ -9,16 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup GoogleChart
-	**/
-	final class GoogleChartDataRange
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartDataRange
+{
+	private static $paramName = 'chxr';
+
+	public static function getParamName()
 	{
-		private static $paramName = 'chxr';
-		
-		public static function getParamName()
-		{
-			return self::$paramName;
-		}
+		return self::$paramName;
 	}
+}
 ?>

@@ -9,61 +9,66 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+use OnPHP\Main\Util\TuringTest\Color;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartSolidFill extends BaseGoogleChartParameter
+{
+	protected static $paramName = 'chf';
+
+	private $type 	= null;
+	private $color 	= null;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartSolidFill
 	**/
-	final class GoogleChartSolidFill extends BaseGoogleChartParameter
+	public static function create(GoogleChartSolidFillType $type)
 	{
-		protected static $paramName = 'chf';
-		
-		private $type 	= null;
-		private $color 	= null;
-		
-		/**
-		 * @return GoogleChartSolidFill
-		**/
-		public static function create(GoogleChartSolidFillType $type)
-		{
-			return new self($type);
-		}
-		
-		public function __construct(GoogleChartSolidFillType $type)
-		{
-			$this->type = $type;
-		}
-		
-		/**
-		 * @return GoogleChartSolidFill
-		**/
-		public function setColor(Color $color)
-		{
-			$this->color = $color;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return Color
-		**/
-		public function getColor()
-		{
-			return $this->color;
-		}
-		
-		public function toString()
-		{
-			Assert::isNotNull($this->color, 'Color parameter required!');
-			
-			return
-				$this->type->toString()
-				.',s'
-				.','.$this->color->toString();
-		}
-		
-		
-		public static function getParamName()
-		{
-			return self::$paramName;
-		}
+		return new self($type);
 	}
+
+	public function __construct(GoogleChartSolidFillType $type)
+	{
+		$this->type = $type;
+	}
+
+	/**
+	 * @return GoogleChartSolidFill
+	**/
+	public function setColor(Color $color)
+	{
+		$this->color = $color;
+
+		return $this;
+	}
+
+	/**
+	 * @return Color
+	**/
+	public function getColor()
+	{
+		return $this->color;
+	}
+
+	public function toString()
+	{
+		Assert::isNotNull($this->color, 'Color parameter required!');
+
+		return
+			$this->type->toString()
+			.',s'
+			.','.$this->color->toString();
+	}
+
+
+	public static function getParamName()
+	{
+		return self::$paramName;
+	}
+}
 ?>

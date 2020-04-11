@@ -9,29 +9,33 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Main\OQL\Statement;
+
+use OnPHP\Main\DAO\ProtoDAO;
+
+/**
+ * @ingroup OQL
+**/
+abstract class OqlQuery extends OqlQueryClause
+{
+	protected $dao = null;
+
 	/**
-	 * @ingroup OQL
+	 * @return ProtoDAO
 	**/
-	abstract class OqlQuery extends OqlQueryClause
+	public function getDao()
 	{
-		protected $dao = null;
-		
-		/**
-		 * @return ProtoDAO
-		**/
-		public function getDao()
-		{
-			return $this->dao;
-		}
-		
-		/**
-		 * @return OqlQuery
-		**/
-		public function setDao(ProtoDAO $dao)
-		{
-			$this->dao = $dao;
-			
-			return $this;
-		}
+		return $this->dao;
 	}
+
+	/**
+	 * @return OqlQuery
+	**/
+	public function setDao(ProtoDAO $dao)
+	{
+		$this->dao = $dao;
+
+		return $this;
+	}
+}
 ?>

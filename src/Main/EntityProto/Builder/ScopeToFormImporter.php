@@ -9,30 +9,38 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class ScopeToFormImporter extends FormBuilder
+namespace OnPHP\Main\EntityProto\Builder;
+
+use OnPHP\Main\EntityProto\EntityProto;
+use OnPHP\Main\EntityProto\Accessor\FormImporter;
+use OnPHP\Main\EntityProto\Accessor\FormSetter;
+use OnPHP\Main\EntityProto\Accessor\ObjectGetter;
+use OnPHP\Main\EntityProto\Accessor\ScopeGetter;
+
+final class ScopeToFormImporter extends FormBuilder
+{
+	/**
+	 * @return ScopeToFormImporter
+	**/
+	public static function create(EntityProto $proto)
 	{
-		/**
-		 * @return ScopeToFormImporter
-		**/
-		public static function create(EntityProto $proto)
-		{
-			return new self($proto);
-		}
-		
-		/**
-		 * @return ObjectGetter
-		**/
-		protected function getGetter($object)
-		{
-			return new ScopeGetter($this->proto, $object);
-		}
-		
-		/**
-		 * @return FormSetter
-		**/
-		protected function getSetter(&$object)
-		{
-			return new FormImporter($this->proto, $object);
-		}
+		return new self($proto);
 	}
+
+	/**
+	 * @return ObjectGetter
+	**/
+	protected function getGetter($object)
+	{
+		return new ScopeGetter($this->proto, $object);
+	}
+
+	/**
+	 * @return FormSetter
+	**/
+	protected function getSetter(&$object)
+	{
+		return new FormImporter($this->proto, $object);
+	}
+}
 ?>

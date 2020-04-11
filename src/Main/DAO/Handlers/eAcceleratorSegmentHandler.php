@@ -9,43 +9,48 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @see http://eaccelerator.net/
-	 * 
-	 * @ingroup DAOs
-	**/
-	final class eAcceleratorSegmentHandler extends OptimizerSegmentHandler
+namespace OnPHP\Main\DAO\Handlers;
+
+use OnPHP\Core\Base\Singleton;
+use OnPHP\Core\Cache\Cache;
+
+/**
+ * @see http://eaccelerator.net/
+ * 
+ * @ingroup DAO
+**/
+final class eAcceleratorSegmentHandler extends OptimizerSegmentHandler
+{
+	public function __construct($segmentId)
 	{
-		public function __construct($segmentId)
-		{
-			parent::__construct($segmentId);
-			
-			$this->locker = Singleton::getInstance('eAcceleratorLocker');
-		}
-		
-		public function drop()
-		{
-			return eaccelerator_rm($this->id);
-		}
-		
-		protected function getMap()
-		{
-			$this->locker->get($this->id);
-			
-			if (!$map = eaccelerator_get($this->id)) {
-				$map = array();
-			}
-			
-			return $map;
-		}
-		
-		protected function storeMap(array $map)
-		{
-			$result = eaccelerator_put($this->id, $map, Cache::EXPIRES_FOREVER);
-			
-			$this->locker->free($this->id);
-			
-			return $result;
-		}
+		parent::__construct($segmentId);
+
+		$this->locker = Singleton::getInstance('eAcceleratorLocker');
 	}
+
+	public function drop()
+	{
+		return eaccelerator_rm($this->id);
+	}
+
+	protected function getMap()
+	{
+		$this->locker->get($this->id);
+
+		if (!$map = eaccelerator_get($this->id)) {
+			$map = array();
+		}
+
+		return $map;
+	}
+
+	protected function storeMap(array $map)
+	{
+		$result = eaccelerator_put($this->id, $map, Cache::EXPIRES_FOREVER);
+
+		$this->locker->free($this->id);
+
+		return $result;
+	}
+}
 ?>

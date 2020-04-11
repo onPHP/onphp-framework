@@ -9,32 +9,34 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+/**
+ * @ingroup Filters
+**/
+final class CallbackFilter implements Filtrator
+{
 	/**
-	 * @ingroup Filters
+	 * @var callable
+	 */
+	private $callback = null;
+
+	/**
+	 * @return CallbackFilter
 	**/
-	final class CallbackFilter implements Filtrator
+	public static function create(\Closure $callback)
 	{
-		/**
-		 * @var Closure
-		 */
-		private $callback = null;
-		
-		/**
-		 * @return CallbackFilter
-		**/
-		public static function create(Closure $callback)
-		{
-			return new self($callback);
-		}
-		
-		public function __construct(Closure $callback)
-		{
-			$this->callback = $callback;
-		}
-		
-		public function apply($value)
-		{
-			return $this->callback->__invoke($value);
-		}
+		return new self($callback);
 	}
+
+	public function __construct(\Closure $callback)
+	{
+		$this->callback = $callback;
+	}
+
+	public function apply($value)
+	{
+		return $this->callback->__invoke($value);
+	}
+}
 ?>

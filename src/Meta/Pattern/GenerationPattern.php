@@ -9,21 +9,25 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	interface GenerationPattern
-	{
-		/// builds everything for given class
-		public function build(MetaClass $class);
-		
-		/// indicates DAO availability for classes which uses this pattern
-		public function daoExists();
-		
-		/// guess what
-		public function tableExists();
-		
-		/// forcing patterns to be singletones
-		public static function getInstance($class /*, $args = null*/);
-	}
+namespace OnPHP\Meta\Pattern;
+
+use OnPHP\Meta\Entity\MetaClass;
+
+/**
+ * @ingroup Patterns
+**/
+interface GenerationPattern
+{
+	/// builds everything for given class
+	public function build(MetaClass $class);
+
+	/// indicates DAO availability for classes which uses this pattern
+	public function daoExists();
+
+	/// guess what
+	public function tableExists();
+
+	/// forcing patterns to be singletones
+	public static function getInstance($class /*, $args = null*/);
+}
 ?>

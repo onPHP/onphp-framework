@@ -9,44 +9,48 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Message;
 
-	final class TextMessage implements Message
+use OnPHP\Main\Message\Specification\Message;
+use OnPHP\Core\Base\Timestamp;
+
+final class TextMessage implements Message
+{
+	private $timestamp	= null;
+	private $text		= null;
+
+	public static function create(Timestamp $timestamp = null)
 	{
-		private $timestamp	= null;
-		private $text		= null;
-
-		public static function create(Timestamp $timestamp = null)
-		{
-			return new self($timestamp);
-		}
-
-		public function __construct(Timestamp $timestamp = null)
-		{
-			$this->timestamp = $timestamp ?: Timestamp::makeNow();
-		}
-
-		public function setTimestamp(Timestamp $timestamp)
-		{
-			$this->timestamp = $timestamp;
-
-			return $this;
-		}
-
-		public function getTimestamp()
-		{
-			return $this->timestamp;
-		}
-
-		public function setText($text)
-		{
-			$this->text = $text;
-
-			return $this;
-		}
-
-		public function getText()
-		{
-			return $this->text;
-		}
+		return new self($timestamp);
 	}
+
+	public function __construct(Timestamp $timestamp = null)
+	{
+		$this->timestamp = $timestamp ?: Timestamp::makeNow();
+	}
+
+	public function setTimestamp(Timestamp $timestamp)
+	{
+		$this->timestamp = $timestamp;
+
+		return $this;
+	}
+
+	public function getTimestamp()
+	{
+		return $this->timestamp;
+	}
+
+	public function setText($text)
+	{
+		$this->text = $text;
+
+		return $this;
+	}
+
+	public function getText()
+	{
+		return $this->text;
+	}
+}
 ?>

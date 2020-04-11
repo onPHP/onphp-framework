@@ -9,24 +9,33 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class TimeType extends ObjectType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\Base\Time;
+use OnPHP\Core\OSQL\DataType;
+
+/**
+ * @ingroup Types
+**/
+final class TimeType extends ObjectType
+{
+	public function getPrimitiveName()
 	{
-		public function getPrimitiveName()
-		{
-			return 'time';
-		}
-
-		public function isGeneric()
-		{
-			return true;
-		}
-
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::TIME)';
-		}
+		return 'time';
 	}
+
+	public function isGeneric()
+	{
+		return true;
+	}
+	
+	public function getFullClass() {
+		return Time::class;
+	}
+
+	public function toColumnType()
+	{
+		return DataType::class.'::create('.DataType::class.'::TIME)';
+	}
+}
 ?>

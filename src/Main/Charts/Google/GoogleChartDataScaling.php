@@ -9,16 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup GoogleChart
-	**/
-	final class GoogleChartDataScaling
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartDataScaling
+{
+	private static $paramName = 'chds';
+
+	public static function getParamName()
 	{
-		private static $paramName = 'chds';
-		
-		public static function getParamName()
-		{
-			return self::$paramName;
-		}
+		return self::$paramName;
 	}
+}
 ?>

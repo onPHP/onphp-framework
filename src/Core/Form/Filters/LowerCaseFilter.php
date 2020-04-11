@@ -9,22 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+  * @ingroup Filters
+**/
+final class LowerCaseFilter extends BaseFilter
+{
 	/**
-	  * @ingroup Filters
+	 * @return LowerCaseFilter
 	**/
-	final class LowerCaseFilter extends BaseFilter
+	public static function me()
 	{
-		/**
-		 * @return LowerCaseFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return mb_strtolower($value);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function apply($value)
+	{
+		return mb_strtolower($value);
+	}
+}
 ?>

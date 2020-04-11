@@ -9,86 +9,96 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\UnifiedContainer;
+
+use OnPHP\Core\OSQL\OSQL;
+use OnPHP\Core\Logic\Expression;
+use OnPHP\Core\OSQL\DBField;
+use OnPHP\Core\OSQL\DBValue;
+use OnPHP\Core\OSQL\DeleteQuery;
+use OnPHP\Core\OSQL\InsertQuery;
+use OnPHP\Core\OSQL\SelectQuery;
+
+/**
+ * @ingroup Containers
+**/
+abstract class ManyToManyLinkedWorker extends UnifiedContainerWorker
+{
 	/**
-	 * @ingroup Containers
+	 * @return InsertQuery
 	**/
-	abstract class ManyToManyLinkedWorker extends UnifiedContainerWorker
+	protected function makeInsertQuery($childId)
 	{
-		/**
-		 * @return InsertQuery
-		**/
-		protected function makeInsertQuery($childId)
-		{
-			$uc = $this->container;
-			
-			return
-				OSQL::insert()->into($uc->getHelperTable())->
-				set(
-					$uc->getParentIdField(),
-					$uc->getParentObject()->getId()
-				)->
-				set($uc->getChildIdField(), $childId);
-		}
-		
-		/**
-		 * only unlinking, we don't want to drop original object
-		 * 
-		 * @return DeleteQuery
-		**/
-		protected function makeDeleteQuery($delete)
-		{
-			$uc = $this->container;
-			
-			return
-				OSQL::delete()->from($uc->getHelperTable())->
-				where(
+		$uc = $this->container;
+
+		return
+			OSQL::insert()->into($uc->getHelperTable())->
+			set(
+				$uc->getParentIdField(),
+				$uc->getParentObject()->getId()
+			)->
+			set($uc->getChildIdField(), $childId);
+	}
+
+	/**
+	 * only unlinking, we don't want to drop original object
+	 * 
+	 * @return DeleteQuery
+	**/
+	protected function makeDeleteQuery($delete)
+	{
+		$uc = $this->container;
+
+		return
+			OSQL::delete()->from($uc->getHelperTable())->
+			where(
+				Expression::eq(
+					new DBField($uc->getParentIdField()),
+					new DBValue($uc->getParentObject()->getId())
+				)
+			)->
+			andWhere(
+				Expression::in(
+					$uc->getChildIdField(),
+					$delete
+				)
+			);
+	}
+
+	/**
+	 * @return SelectQuery
+	**/
+	protected function joinHelperTable(SelectQuery $query)
+	{
+		$uc = $this->container;
+
+		if (!$query->hasJoinedTable($uc->getHelperTable()))
+			$query->
+				join(
+					$uc->getHelperTable(),
 					Expression::eq(
-						new DBField($uc->getParentIdField()),
-						new DBValue($uc->getParentObject()->getId())
-					)
-				)->
-				andWhere(
-					Expression::in(
-						$uc->getChildIdField(),
-						$delete
+						new DBField(
+							$uc->getParentTableIdField(),
+							$uc->getDao()->getTable()
+						),
+						new DBField(
+							$uc->getChildIdField(),
+							$uc->getHelperTable()
+						)
 					)
 				);
-		}
-		
-		/**
-		 * @return SelectQuery
-		**/
-		protected function joinHelperTable(SelectQuery $query)
-		{
-			$uc = $this->container;
-			
-			if (!$query->hasJoinedTable($uc->getHelperTable()))
-				$query->
-					join(
-						$uc->getHelperTable(),
-						Expression::eq(
-							new DBField(
-								$uc->getParentTableIdField(),
-								$uc->getDao()->getTable()
-							),
-							new DBField(
-								$uc->getChildIdField(),
-								$uc->getHelperTable()
-							)
-						)
-					);
-			
-			return
-				$query->
-					andWhere(
-						Expression::eq(
-							new DBField(
-								$uc->getParentIdField(),
-								$uc->getHelperTable()
-							),
-							new DBValue($uc->getParentObject()->getId())
-						)
-					);
-		}
+
+		return
+			$query->
+				andWhere(
+					Expression::eq(
+						new DBField(
+							$uc->getParentIdField(),
+							$uc->getHelperTable()
+						),
+						new DBValue($uc->getParentObject()->getId())
+					)
+				);
 	}
+}
 ?>

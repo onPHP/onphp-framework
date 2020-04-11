@@ -9,67 +9,75 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\UI\View;
+
+use OnPHP\Core\Base\Stringable;
+use OnPHP\Core\Exception\WrongArgumentException;
+use OnPHP\Core\Base\Assert;
+use OnPHP\Main\Flow\Model;
+
+/**
+ * @ingroup Flow
+**/
+
+class JsonPView extends JsonView
+{
 	/**
-	 * @ingroup Flow
-	**/
+	 * Javascript valid function name pattern
+	 */
+	const CALLBACK_PATTERN		= '/^[\$A-Z_][0-9A-Z_\$]*$/i';
 
-	class JsonPView extends JsonView
+	/**
+	 * @static
+	 * @return JsonPView
+	 */
+	public static function create()
 	{
-		/**
-		 * Javascript valid function name pattern
-		 */
-		const CALLBACK_PATTERN		= '/^[\$A-Z_][0-9A-Z_\$]*$/i';
-
-		/**
-		 * @static
-		 * @return JsonPView
-		 */
-		public static function create()
-		{
-			return new self();
-		}
-
-		/**
-		 * Callback function name
-		 * @see http://en.wikipedia.org/wiki/JSONP
-		 * @var string
-		 */
-		protected $callback					= null;
-
-		/**
-		 * @param mixed $callback
-		 * @return JsonPView
-		 */
-		public function setCallback($callback)
-		{
-			$realCallbackName = null;
-
-			if(is_scalar($callback))
-				$realCallbackName = $callback;
-			elseif($callback instanceof Stringable)
-				$realCallbackName = $callback->toString();
-			else
-				throw new WrongArgumentException('undefined type of callback, gived "'.gettype($callback).'"');
-
-			if(!preg_match(static::CALLBACK_PATTERN, $realCallbackName))
-				throw new WrongArgumentException('invalid function name, you should set valid javascript function name! gived "'.$realCallbackName.'"');
-
-			$this->callback = $realCallbackName;
-
-			return $this;
-		}
-
-		/**
-		 * @param Model $model
-		 * @return string
-		 */
-		public function toString(/* Model */ $model = null)
-		{
-			Assert::isNotEmpty($this->callback, 'callback can not be empty!');
-
-			$json = parent::toString($model);
-
-			return $this->callback.'('.$json.');';
-		}
-
+		return new self();
 	}
+
+	/**
+	 * Callback function name
+	 * @see http://en.wikipedia.org/wiki/JSONP
+	 * @var string
+	 */
+	protected $callback					= null;
+
+	/**
+	 * @param mixed $callback
+	 * @return JsonPView
+	 */
+	public function setCallback($callback)
+	{
+		$realCallbackName = null;
+
+		if(is_scalar($callback))
+			$realCallbackName = $callback;
+		elseif($callback instanceof Stringable)
+			$realCallbackName = $callback->toString();
+		else
+			throw new WrongArgumentException('undefined type of callback, gived "'.gettype($callback).'"');
+
+		if(!preg_match(static::CALLBACK_PATTERN, $realCallbackName))
+			throw new WrongArgumentException('invalid function name, you should set valid javascript function name! gived "'.$realCallbackName.'"');
+
+		$this->callback = $realCallbackName;
+
+		return $this;
+	}
+
+	/**
+	 * @param Model $model
+	 * @return string
+	 */
+	public function toString(/* Model */ $model = null)
+	{
+		Assert::isNotEmpty($this->callback, 'callback can not be empty!');
+
+		$json = parent::toString($model);
+
+		return $this->callback.'('.$json.');';
+	}
+
+}
+?>

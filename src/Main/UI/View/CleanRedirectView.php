@@ -9,39 +9,43 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	class CleanRedirectView implements View
+namespace OnPHP\Main\UI\View;
+
+use OnPHP\Main\Net\Http\HeaderUtils;
+
+/**
+ * @ingroup Flow
+**/
+class CleanRedirectView implements View
+{
+	protected $url = null;
+
+	public function __construct($url)
 	{
-		protected $url = null;
-		
-		public function __construct($url)
-		{
-			$this->url = $url;
-		}
-		
-		/**
-		 * @return CleanRedirectView
-		**/
-		public static function create($url)
-		{
-			return new self($url);
-		}
-		
-		public function render($model = null)
-		{
-			HeaderUtils::redirectRaw($this->getLocationUrl($model));
-		}
-		
-		public function getUrl()
-		{
-			return $this->url;
-		}
-		
-		protected function getLocationUrl($model = null)
-		{
-			return $this->getUrl();
-		}
+		$this->url = $url;
 	}
+
+	/**
+	 * @return CleanRedirectView
+	**/
+	public static function create($url)
+	{
+		return new self($url);
+	}
+
+	public function render($model = null)
+	{
+		HeaderUtils::redirectRaw($this->getLocationUrl($model));
+	}
+
+	public function getUrl()
+	{
+		return $this->url;
+	}
+
+	protected function getLocationUrl($model = null)
+	{
+		return $this->getUrl();
+	}
+}
 ?>

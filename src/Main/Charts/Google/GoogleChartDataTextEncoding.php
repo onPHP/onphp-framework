@@ -9,32 +9,34 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartDataTextEncoding
+	extends BaseGoogleChartDataEncoding
+	implements GoogleChartDataEncoding
+{
+	protected $name = 't:';
+	protected $delimiter = ',';
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartDataTextEncoding
 	**/
-	final class GoogleChartDataTextEncoding
-		extends BaseGoogleChartDataEncoding
-		implements GoogleChartDataEncoding
+	public static function create()
 	{
-		protected $name = 't:';
-		protected $delimiter = ',';
-		
-		/**
-		 * @return GoogleChartDataTextEncoding
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function encode(GoogleChartDataSet $set)
-		{
-			return implode($this->delimiter, $set->getData());
-		}
-		
-		public function toString()
-		{
-			return $this->name;
-		}
+		return new self;
 	}
+
+	public function encode(GoogleChartDataSet $set)
+	{
+		return implode($this->delimiter, $set->getData());
+	}
+
+	public function toString()
+	{
+		return $this->name;
+	}
+}
 ?>

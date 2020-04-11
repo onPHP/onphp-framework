@@ -9,24 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Net\Http;
+
+/**
+ * @ingroup Http
+**/
+interface HttpResponse
+{
 	/**
-	 * @ingroup Http
+	 * @return HttpStatus
 	**/
-	interface HttpResponse
-	{
-		/**
-		 * @return HttpStatus
-		**/
-		public function getStatus();
-		public function getReasonPhrase();
-		
-		/**
-		 * @return array of headers
-		**/
-		public function getHeaders();
-		public function hasHeader($name);
-		public function getHeader($name);
-		
-		public function getBody();
-	}
+	public function getStatus();
+	public function getReasonPhrase();
+
+	/**
+	 * @return array of headers
+	**/
+	public function getHeaders();
+	public function hasHeader($name);
+	public function getHeader($name);
+
+	public function getBody();
+}
 ?>

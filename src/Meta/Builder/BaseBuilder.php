@@ -9,6 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Builder;
+
+use OnPHP\Core\Base\StaticFactory;
+use OnPHP\Core\Exception\UnimplementedFeatureException;
+use OnPHP\Meta\Entity\MetaClass;
+use OnPHP\Meta\Entity\MetaClassNameBuilder;
+use OnPHP\Meta\Pattern\AbstractClassPattern;
+
 	/**
 	 * @ingroup Builders
 	**/
@@ -44,6 +52,7 @@ public function getIdName()
 EOT;
 				}
 				
+				$fullClassName = MetaClassNameBuilder::getClassOfMetaClass($class, true);
 				$out .= <<<EOT
 public function getTable()
 {
@@ -52,7 +61,7 @@ public function getTable()
 
 public function getObjectName()
 {
-	return '{$class->getName()}';
+	return '{$fullClassName}';
 }
 
 public function getSequence()

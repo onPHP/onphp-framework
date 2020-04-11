@@ -9,25 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 
+ namespace OnPHP\Main\OpenId;
+
+use OnPHP\Core\Base\Timestamp;
+use OnPHP\Main\Net\HttpUrl;
+
+/**
+ * @ingroup OpenId
+**/
+interface OpenIdConsumerAssociation
+{
+	public function getHandle();
+
+	public function getType();
+
+	public function getSecret();
+
 	/**
-	 * @ingroup OpenId
+	 * @return Timestamp
 	**/
-	interface OpenIdConsumerAssociation
-	{
-		public function getHandle();
-		
-		public function getType();
-		
-		public function getSecret();
-		
-		/**
-		 * @return Timestamp
-		**/
-		public function getExpires();
-		
-		/**
-		 * @return HttpUrl
-		**/
-		public function getServer();
-	}
+	public function getExpires();
+
+	/**
+	 * @return HttpUrl
+	**/
+	public function getServer();
+}
 ?>

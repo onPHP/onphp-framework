@@ -9,28 +9,33 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Flow;
+
+use OnPHP\Core\Base\Prototyped;
+use OnPHP\Core\Form\Form;
+
+/**
+ * @ingroup Flow
+**/
+final class ForbiddenCommand implements EditorCommand
+{
 	/**
-	 * @ingroup Flow
+	 * @return ForbiddenCommand
 	**/
-	final class ForbiddenCommand implements EditorCommand
+	public static function create()
 	{
-		/**
-		 * @return ForbiddenCommand
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request)
-		{
-			return
-				ModelAndView::create()->setView(
-					EditorController::COMMAND_FAILED
-				);
-		}
+		return new self;
 	}
+
+	/**
+	 * @return ModelAndView
+	**/
+	public function run(Prototyped $subject, Form $form, HttpRequest $request)
+	{
+		return
+			ModelAndView::create()->setView(
+				EditorController::COMMAND_FAILED
+			);
+	}
+}
 ?>

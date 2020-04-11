@@ -9,15 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @see NamedObject
-	 * 
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	interface Named extends Identifiable
-	{
-		public function getName();
-		public function setName($name);
-	}
+namespace OnPHP\Core\Base;
+
+/**
+ * @see NamedObject
+ * 
+ * @ingroup Base
+ * @ingroup Module
+**/
+interface Named extends Identifiable
+{
+	public function getName();
+	public function setName($name);
+}
 ?>

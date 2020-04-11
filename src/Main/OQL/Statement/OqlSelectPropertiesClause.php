@@ -9,34 +9,36 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Main\OQL\Statement;
+
+/**
+ * @ingroup OQL
+**/
+final class OqlSelectPropertiesClause extends OqlProjectionClause
+{
+	private $distinct = false;
+
 	/**
-	 * @ingroup OQL
+	 * @return OqlSelectPropertiesClause
 	**/
-	final class OqlSelectPropertiesClause extends OqlProjectionClause
+	public static function create()
 	{
-		private $distinct = false;
-		
-		/**
-		 * @return OqlSelectPropertiesClause
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function isDistinct()
-		{
-			return $this->distinct;
-		}
-		
-		/**
-		 * @return OqlSelectPropertiesClause
-		**/
-		public function setDistinct($orly = true)
-		{
-			$this->distinct = ($orly === true);
-			
-			return $this;
-		}
+		return new self;
 	}
+
+	public function isDistinct()
+	{
+		return $this->distinct;
+	}
+
+	/**
+	 * @return OqlSelectPropertiesClause
+	**/
+	public function setDistinct($orly = true)
+	{
+		$this->distinct = ($orly === true);
+
+		return $this;
+	}
+}
 ?>

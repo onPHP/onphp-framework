@@ -9,25 +9,29 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class FormHardenedSetter extends FormMutator
+namespace OnPHP\Main\EntityProto\Accessor;
+
+use OnPHP\Core\Exception\WrongArgumentException;
+
+final class FormHardenedSetter extends FormMutator
+{
+	public function set($name, $value)
 	{
-		public function set($name, $value)
-		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			$primitive = $this->mapping[$name];
-			
-			$method = ($value === null)
-				? 'dropValue'
-				: 'setValue';
-			
-			$this->object->get($primitive->getName())->
-				$method($value);
-			
-			return $this;
-		}
+		if (!isset($this->mapping[$name]))
+			throw new WrongArgumentException(
+				"knows nothing about property '{$name}'"
+			);
+
+		$primitive = $this->mapping[$name];
+
+		$method = ($value === null)
+			? 'dropValue'
+			: 'setValue';
+
+		$this->object->get($primitive->getName())->
+			$method($value);
+
+		return $this;
 	}
+}
 ?>

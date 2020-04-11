@@ -9,9 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	interface Query extends DialectString, Identifiable, Stringable {/*_*/}
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\Base\Identifiable;
+use OnPHP\Core\Base\Stringable;
+
+/**
+ * @ingroup OSQL
+ * @ingroup Module
+**/
+interface Query extends DialectString, Identifiable, Stringable {/*_*/}
 ?>

@@ -9,30 +9,35 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Containers
-	**/
-	abstract class ManyToManyLinked extends UnifiedContainer
+namespace OnPHP\Main\UnifiedContainer;
+
+use OnPHP\Core\Base\Identifiable;
+use OnPHP\Main\DAO\GenericDAO;
+
+/**
+ * @ingroup Containers
+**/
+abstract class ManyToManyLinked extends UnifiedContainer
+{
+	abstract public function getHelperTable();
+
+	public function getParentTableIdField()
 	{
-		abstract public function getHelperTable();
-		
-		public function getParentTableIdField()
-		{
-			return 'id';
-		}
-		
-		public function __construct(
-			Identifiable $parent, GenericDAO $dao, $lazy = true
-		)
-		{
-			parent::__construct($parent, $dao, $lazy);
-			
-			$worker =
-				$lazy
-					? 'ManyToManyLinkedLazy'
-					: 'ManyToManyLinkedFull';
-			
-			$this->worker = new $worker($this);
-		}
+		return 'id';
 	}
+
+	public function __construct(
+		Identifiable $parent, GenericDAO $dao, $lazy = true
+	)
+	{
+		parent::__construct($parent, $dao, $lazy);
+
+		$worker =
+			$lazy 
+				? ManyToManyLinkedLazy::class 
+				: ManyToManyLinkedFull::class;
+
+		$this->worker = new $worker($this);
+	}
+}
 ?>

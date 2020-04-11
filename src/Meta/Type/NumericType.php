@@ -9,14 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class NumericType extends FloatType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\OSQL\DataType;
+
+/**
+ * @ingroup Types
+**/
+final class NumericType extends FloatType
+{
+	public function toColumnType()
 	{
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::NUMERIC)';
-		}
+		return DataType::class.'::create('.DataType::class.'::NUMERIC)';
 	}
+}
 ?>

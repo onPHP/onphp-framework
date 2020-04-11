@@ -9,92 +9,96 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+use OnPHP\Core\Exception\WrongArgumentException;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartAxisCollection
+{
+	private $axes = array();
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartAxisCollection
 	**/
-	final class GoogleChartAxisCollection
+	public static function create()
 	{
-		private $axes = array();
-		
-		/**
-		 * @return GoogleChartAxisCollection
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return GoogleChartAxisCollection
-		**/
-		public function addAxis(GoogleChartAxis $axis)
-		{
-			$typeId = $axis->getType()->getId();
-			
-			if (isset($this->axes[$typeId]))
-				throw new WrongArgumentException('Axis already exists');
-			
-			$this->axes[$typeId] = $axis;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return GoogleChartAxis
-		**/
-		public function getAxisByTypeId($typeId)
-		{
-			if (isset($this->axes[$typeId]))
-				return $this->axes[$typeId];
-			else
-				return null;
-		}
-		
-		public function toString()
-		{
-			$typeString = GoogleChartAxisType::getParamName().'=';
-			
-			$rangeString = GoogleChartDataRange::getParamName().'=';
-			
-			$labelsString = null;
-			
-			$types = $ranges = $labels = array();
-			
-			$i = 0;
-			
-			foreach ($this->axes as $axis) {
-				$types[] = $axis->getType()->toString();
-				
-				if ($range = $axis->getRange())
-					$ranges[$i] =
-						$i
-						.','
-						.$range->getMin()
-						.','
-						.$range->getMax();
-				
-				if ($interval = $axis->getInterval())
-					$ranges[$i] .= ','.$interval;
-						
-				if ($label = $axis->getLabel())
-					$labels[$i] = $label;
-				
-				$i++;
-			}
-			
-			$typeString .= implode(',', $types);
-			
-			$rangeString.= implode('|', $ranges);
-			
-			if ($labels) {
-				$labelsString = '&'.GoogleChartAxisLabel::getParamName().'=';
-				
-				foreach ($labels as $index => $label) {
-					$labelsString .= $index.':|'.$label->toString();
-				}
-			}
-			
-			return $typeString.'&'.$rangeString.$labelsString;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return GoogleChartAxisCollection
+	**/
+	public function addAxis(GoogleChartAxis $axis)
+	{
+		$typeId = $axis->getType()->getId();
+
+		if (isset($this->axes[$typeId]))
+			throw new WrongArgumentException('Axis already exists');
+
+		$this->axes[$typeId] = $axis;
+
+		return $this;
+	}
+
+	/**
+	 * @return GoogleChartAxis
+	**/
+	public function getAxisByTypeId($typeId)
+	{
+		if (isset($this->axes[$typeId]))
+			return $this->axes[$typeId];
+		else
+			return null;
+	}
+
+	public function toString()
+	{
+		$typeString = GoogleChartAxisType::getParamName().'=';
+
+		$rangeString = GoogleChartDataRange::getParamName().'=';
+
+		$labelsString = null;
+
+		$types = $ranges = $labels = array();
+
+		$i = 0;
+
+		foreach ($this->axes as $axis) {
+			$types[] = $axis->getType()->toString();
+
+			if ($range = $axis->getRange())
+				$ranges[$i] =
+					$i
+					.','
+					.$range->getMin()
+					.','
+					.$range->getMax();
+
+			if ($interval = $axis->getInterval())
+				$ranges[$i] .= ','.$interval;
+
+			if ($label = $axis->getLabel())
+				$labels[$i] = $label;
+
+			$i++;
+		}
+
+		$typeString .= implode(',', $types);
+
+		$rangeString.= implode('|', $ranges);
+
+		if ($labels) {
+			$labelsString = '&'.GoogleChartAxisLabel::getParamName().'=';
+
+			foreach ($labels as $index => $label) {
+				$labelsString .= $index.':|'.$label->toString();
+			}
+		}
+
+		return $typeString.'&'.$rangeString.$labelsString;
+	}
+}
 ?>

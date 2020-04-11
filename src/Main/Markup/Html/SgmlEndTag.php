@@ -9,18 +9,20 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Markup\Html;
+
+/**
+ * @ingroup Html
+ * @ingroup Module
+**/
+final class SgmlEndTag extends SgmlTag
+{
 	/**
-	 * @ingroup Html
-	 * @ingroup Module
+	 * @return SgmlEndTag
 	**/
-	final class SgmlEndTag extends SgmlTag
+	public static function create()
 	{
-		/**
-		 * @return SgmlEndTag
-		**/
-		public static function create()
-		{
-			return new self;
-		}
+		return new self;
 	}
+}
 ?>

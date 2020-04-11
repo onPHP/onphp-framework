@@ -9,29 +9,38 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class IpRangeType extends ObjectType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\OSQL\DataType;
+use OnPHP\Main\Net\Ip\IpRange;
+
+/**
+ * @ingroup Types
+**/
+class IpRangeType extends ObjectType
+{
+	public function getPrimitiveName()
 	{
-		public function getPrimitiveName()
-		{
-			return 'ipRange';
-		}
-		
-		public function isGeneric()
-		{
-			return true;
-		}
-		
-		public function isMeasurable()
-		{
-			return true;
-		}
-		
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::IP_RANGE)';
-		}
+		return 'ipRange';
 	}
+	
+	public function isGeneric()
+	{
+		return true;
+	}
+	
+	public function getFullClass() {
+		return IpRange::class;
+	}
+	
+	public function isMeasurable()
+	{
+		return true;
+	}
+	
+	public function toColumnType()
+	{
+		return DataType::class.'::create('.DataType::class.'::IP_RANGE)';
+	}
+}
 ?>

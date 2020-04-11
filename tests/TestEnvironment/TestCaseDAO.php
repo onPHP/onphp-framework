@@ -1,11 +1,14 @@
 <?php
-	abstract class TestCaseDAO extends TestCaseDB
+
+namespace OnPHP\Tests\TestEnvironment;
+
+abstract class TestCaseDAO extends TestCaseDB
+{
+	public function setUp(): void
 	{
-		public function setUp()
-		{
-			parent::setUp();
-			
-			$this->getDBCreator()->dropDB(true)->createDB();
-		}
+		parent::setUp();
+
+		$this->getDBCreator()->dropDB(true)->createDB();
 	}
+}
 ?>

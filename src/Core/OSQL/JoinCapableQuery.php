@@ -9,16 +9,20 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	**/
-	interface JoinCapableQuery
-	{
-		public function from($table, $alias = null);
-		public function join($table, LogicalObject $logic, $alias = null);
-		public function leftJoin($table, LogicalObject $logic, $alias = null);
-		public function rightJoin($table, LogicalObject $logic, $alias = null);
-		
-		public function hasJoinedTable($table);
-	}
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\Logic\LogicalObject;
+
+/**
+ * @ingroup OSQL
+**/
+interface JoinCapableQuery
+{
+	public function from($table, $alias = null);
+	public function join($table, LogicalObject $logic, $alias = null);
+	public function leftJoin($table, LogicalObject $logic, $alias = null);
+	public function rightJoin($table, LogicalObject $logic, $alias = null);
+
+	public function hasJoinedTable($table);
+}
 ?>

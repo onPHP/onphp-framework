@@ -9,74 +9,76 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class ChartLineStyle
+{
+	private $thickness 			= 1;
+	private $lineSegmentLength 	= 1;
+	private $blankSegmentLength = 0;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return ChartLineStyle
 	**/
-	final class ChartLineStyle
+	public static function create()
 	{
-		private $thickness 			= 1;
-		private $lineSegmentLength 	= 1;
-		private $blankSegmentLength = 0;
-		
-		/**
-		 * @return ChartLineStyle
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return ChartLineStyle
-		**/
-		public function setThickness($size)
-		{
-			$this->thickness = $size;
-			
-			return $this;
-		}
-		
-		public function getThickness()
-		{
-			return $this->thickness;
-		}
-		
-		/**
-		 * @return ChartLineStyle
-		**/
-		public function setLineSegmentLength($length)
-		{
-			$this->lineSegmentLength = $length;
-			
-			return $this;
-		}
-		
-		public function getLineSegmentLength()
-		{
-			return $this->lineSegmentLength;
-		}
-		
-		/**
-		 * @return ChartLineStyle
-		**/
-		public function setBlankSegmentLength($length)
-		{
-			$this->blankSegmentLength = $length;
-			
-			return $this;
-		}
-		
-		public function getBlankSegmentLength()
-		{
-			return $this->blankSegmentLength;
-		}
-		
-		public function toString()
-		{
-			return
-				$this->thickness
-				.','.$this->lineSegmentLength
-				.','.$this->blankSegmentLength;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return ChartLineStyle
+	**/
+	public function setThickness($size)
+	{
+		$this->thickness = $size;
+
+		return $this;
+	}
+
+	public function getThickness()
+	{
+		return $this->thickness;
+	}
+
+	/**
+	 * @return ChartLineStyle
+	**/
+	public function setLineSegmentLength($length)
+	{
+		$this->lineSegmentLength = $length;
+
+		return $this;
+	}
+
+	public function getLineSegmentLength()
+	{
+		return $this->lineSegmentLength;
+	}
+
+	/**
+	 * @return ChartLineStyle
+	**/
+	public function setBlankSegmentLength($length)
+	{
+		$this->blankSegmentLength = $length;
+
+		return $this;
+	}
+
+	public function getBlankSegmentLength()
+	{
+		return $this->blankSegmentLength;
+	}
+
+	public function toString()
+	{
+		return
+			$this->thickness
+			.','.$this->lineSegmentLength
+			.','.$this->blankSegmentLength;
+	}
+}
 ?>

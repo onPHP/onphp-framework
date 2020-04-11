@@ -9,11 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	abstract class ObjectBuilder extends PrototypedBuilder
+namespace OnPHP\Main\EntityProto\Builder;
+
+use OnPHP\Main\EntityProto\PrototypedBuilder;
+
+abstract class ObjectBuilder extends PrototypedBuilder
+{
+	protected function createEmpty()
 	{
-		protected function createEmpty()
-		{
-			return $this->proto->createObject();
-		}
+		return $this->proto->createObject();
 	}
+}
 ?>

@@ -9,37 +9,44 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\Logic\MappableObject;
+use OnPHP\Main\DAO\ProtoDAO;
+use OnPHP\Core\DB\Dialect;
+use OnPHP\Core\Logic\LogicalObject;
+
+/**
+ * @ingroup OSQL
+ * @ingroup Module
+**/
+final class GroupBy extends FieldTable implements MappableObject
+{
 	/**
-	 * @ingroup OSQL
-	 * @ingroup Module
+	 * @return GroupBy
 	**/
-	final class GroupBy extends FieldTable implements MappableObject
+	public static function create($field)
 	{
-		/**
-		 * @return GroupBy
-		**/
-		public static function create($field)
-		{
-			return new self($field);
-		}
-		
-		/**
-		 * @return GroupBy
-		**/
-		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
-		{
-			return self::create($dao->guessAtom($this->field, $query));
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			if (
-				$this->field instanceof SelectQuery
-				|| $this->field instanceof LogicalObject
-			)
-				return '('.$dialect->fieldToString($this->field).')';
-			else
-				return parent::toDialectString($dialect);
-		}
+		return new self($field);
 	}
+
+	/**
+	 * @return GroupBy
+	**/
+	public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
+	{
+		return self::create($dao->guessAtom($this->field, $query));
+	}
+
+	public function toDialectString(Dialect $dialect)
+	{
+		if (
+			$this->field instanceof SelectQuery
+			|| $this->field instanceof LogicalObject
+		)
+			return '('.$dialect->fieldToString($this->field).')';
+		else
+			return parent::toDialectString($dialect);
+	}
+}
 ?>

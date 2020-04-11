@@ -9,15 +9,17 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	**/
-	class PostgresDatabaseException extends DatabaseException
+namespace OnPHP\Core\Exception;
+
+/**
+ * @ingroup Exceptions
+**/
+class PostgresDatabaseException extends DatabaseException
+{
+	public function __construct($message = null, $code = null)
 	{
-		public function __construct($message = null, $code = null)
-		{
-			parent::__construct($message);
-			$this->code = $code;
-		}
+		parent::__construct($message);
+		$this->code = $code;
 	}
+}
 ?>

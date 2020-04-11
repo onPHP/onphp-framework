@@ -9,30 +9,37 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class ObjectToFormSetter extends FormBuilder
+namespace OnPHP\Main\EntityProto\Builder;
+
+use OnPHP\Main\EntityProto\Accessor\FormHardenedSetter;
+use OnPHP\Main\EntityProto\Accessor\FormSetter;
+use OnPHP\Main\EntityProto\Accessor\ObjectGetter;
+use OnPHP\Main\EntityProto\EntityProto;
+
+final class ObjectToFormSetter extends FormBuilder
+{
+	/**
+	 * @return ObjectToFormSetter
+	**/
+	public static function create(EntityProto $proto)
 	{
-		/**
-		 * @return ObjectToFormSetter
-		**/
-		public static function create(EntityProto $proto)
-		{
-			return new self($proto);
-		}
-		
-		/**
-		 * @return ObjectGetter
-		**/
-		protected function getGetter($object)
-		{
-			return new ObjectGetter($this->proto, $object);
-		}
-		
-		/**
-		 * @return FormSetter
-		**/
-		protected function getSetter(&$object)
-		{
-			return new FormHardenedSetter($this->proto, $object);
-		}
+		return new self($proto);
 	}
+
+	/**
+	 * @return ObjectGetter
+	**/
+	protected function getGetter($object)
+	{
+		return new ObjectGetter($this->proto, $object);
+	}
+
+	/**
+	 * @return FormSetter
+	**/
+	protected function getSetter(&$object)
+	{
+		return new FormHardenedSetter($this->proto, $object);
+	}
+}
 ?>

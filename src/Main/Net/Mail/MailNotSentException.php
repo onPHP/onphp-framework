@@ -9,8 +9,10 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	**/
-	class MailNotSentException extends MailException {/*_*/};
+namespace OnPHP\Main\Net\Mail;
+
+/**
+ * @ingroup Exceptions
+**/
+class MailNotSentException extends MailException {/*_*/};
 ?>

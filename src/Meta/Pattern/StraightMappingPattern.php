@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	final class StraightMappingPattern extends BasePattern
+namespace OnPHP\Meta\Pattern;
+
+/**
+ * @ingroup Patterns
+**/
+final class StraightMappingPattern extends BasePattern
+{
+	public function daoExists()
 	{
-		public function daoExists()
-		{
-			return true;
-		}
+		return true;
 	}
+}
 ?>

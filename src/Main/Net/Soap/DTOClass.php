@@ -9,25 +9,32 @@
  *                                                                         *
  ***************************************************************************/
 
-	abstract class DTOClass implements PrototypedEntity
+namespace OnPHP\Main\Net\Soap;
+
+use OnPHP\Core\Form\Form;
+use OnPHP\Main\EntityProto\Builder\FormToObjectConverter;
+use OnPHP\Main\EntityProto\Builder\ObjectToFormConverter;
+use OnPHP\Main\EntityProto\PrototypedEntity;
+
+abstract class DTOClass implements PrototypedEntity
+{
+	final public function makeObject(Form $form)
 	{
-		final public function makeObject(Form $form)
-		{
-			return
-				FormToObjectConverter::create($this->entityProto())->
-					make($form);
-		}
-		
-		/**
-		 * @return Form
-		**/
-		final public function toForm()
-		{
-			return
-				ObjectToFormConverter::create(
-					$this->entityProto()
-				)->
-					make($this);
-		}
+		return
+			FormToObjectConverter::create($this->entityProto())->
+				make($form);
 	}
+
+	/**
+	 * @return Form
+	**/
+	final public function toForm()
+	{
+		return
+			ObjectToFormConverter::create(
+				$this->entityProto()
+			)->
+				make($this);
+	}
+}
 ?>

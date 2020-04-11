@@ -9,26 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * @ingroup Filters
+**/
+final class Paragraphizer extends BaseFilter
+{
 	/**
-	 * @ingroup Filters
+	 * @return Paragraphizer
 	**/
-	final class Paragraphizer extends BaseFilter
+	public static function me()
 	{
-		/**
-		 * @return Paragraphizer
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return preg_replace(
-				'~^([^<].+)\s$~Uums',
-				'<p>$1</p>'."\n",
-				$value
-			);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function apply($value)
+	{
+		return preg_replace(
+			'~^([^<].+)\s$~Uums',
+			'<p>$1</p>'."\n",
+			$value
+		);
+	}
+}
 ?>

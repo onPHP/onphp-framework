@@ -9,23 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class ScopeGetter extends PrototypedGetter
+namespace OnPHP\Main\EntityProto\Accessor;
+
+use OnPHP\Main\EntityProto\PrototypedGetter;
+use OnPHP\Core\Exception\WrongArgumentException;
+
+final class ScopeGetter extends PrototypedGetter
+{
+	public function get($name)
 	{
-		public function get($name)
-		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			$primitive = $this->mapping[$name];
-			
-			$key = $primitive->getName();
-			
-			return
-				isset($this->object[$key])
-				? $this->object[$key]
-				: null;
-		}
+		if (!isset($this->mapping[$name]))
+			throw new WrongArgumentException(
+				"knows nothing about property '{$name}'"
+			);
+
+		$primitive = $this->mapping[$name];
+
+		$key = $primitive->getName();
+
+		return
+			isset($this->object[$key])
+			? $this->object[$key]
+			: null;
 	}
+}
 ?>

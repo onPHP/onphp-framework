@@ -9,77 +9,81 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\UI\View;
+
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup Flow
+**/
+final class RedirectToView extends RedirectView
+{
+	private $prefix = null;
+	private $suffix = null;
+
 	/**
-	 * @ingroup Flow
+	 * @return RedirectToView
 	**/
-	final class RedirectToView extends RedirectView
+	public static function create($controllerName)
 	{
-		private $prefix = null;
-		private $suffix = null;
-		
-		/**
-		 * @return RedirectToView
-		**/
-		public static function create($controllerName)
-		{
-			return new self($controllerName);
-		}
-		
-		public function __construct($controllerName)
-		{
-			Assert::classExists($controllerName);
-			
-			$this->url = $controllerName;
-		}
-		
-		public function getPrefix()
-		{
-			return $this->prefix;
-		}
-		
-		/**
-		 * @return RedirectToView
-		**/
-		public function setPrefix($prefix)
-		{
-			$this->prefix = $prefix;
-			
-			return $this;
-		}
-		
-		public function getSuffix()
-		{
-			return $this->suffix;
-		}
-		
-		/**
-		 * @return RedirectToView
-		**/
-		public function setSuffix($suffix)
-		{
-			$this->suffix = $suffix;
-			
-			return $this;
-		}
-		
-		public function getName()
-		{
-			return $this->url;
-		}
-		
-		/**
-		 * @return RedirectToView
-		**/
-		public function setName($name)
-		{
-			$this->url = $name;
-			
-			return $this;
-		}
-		
-		public function getUrl()
-		{
-			return $this->prefix.$this->url.$this->suffix;
-		}
+		return new self($controllerName);
 	}
+
+	public function __construct($controllerName)
+	{
+		Assert::classExists($controllerName);
+
+		$this->url = $controllerName;
+	}
+
+	public function getPrefix()
+	{
+		return $this->prefix;
+	}
+
+	/**
+	 * @return RedirectToView
+	**/
+	public function setPrefix($prefix)
+	{
+		$this->prefix = $prefix;
+
+		return $this;
+	}
+
+	public function getSuffix()
+	{
+		return $this->suffix;
+	}
+
+	/**
+	 * @return RedirectToView
+	**/
+	public function setSuffix($suffix)
+	{
+		$this->suffix = $suffix;
+
+		return $this;
+	}
+
+	public function getName()
+	{
+		return $this->url;
+	}
+
+	/**
+	 * @return RedirectToView
+	**/
+	public function setName($name)
+	{
+		$this->url = $name;
+
+		return $this;
+	}
+
+	public function getUrl()
+	{
+		return $this->prefix.$this->url.$this->suffix;
+	}
+}
 ?>

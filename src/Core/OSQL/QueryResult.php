@@ -9,99 +9,104 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\Base\Identifiable;
+use OnPHP\Core\Exception\UnsupportedMethodException;
+
+/**
+ * Holder for query's execution information.
+ * 
+ * @ingroup OSQL
+**/
+final class QueryResult implements Identifiable
+{
+	private $list		= array();
+
+	private $count		= 0;
+	private $affected	= 0;
+
+	private $query		= null;
+
 	/**
-	 * Holder for query's execution information.
-	 * 
-	 * @ingroup OSQL
+	 * @return QueryResult
 	**/
-	final class QueryResult implements Identifiable
+	public static function create()
 	{
-		private $list		= array();
-		
-		private $count		= 0;
-		private $affected	= 0;
-		
-		private $query		= null;
-		
-		/**
-		 * @return QueryResult
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function getId()
-		{
-			return '_result_'.$this->query->getId();
-		}
-		
-		public function setId($id)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		/**
-		 * @return SelectQuery
-		**/
-		public function getQuery()
-		{
-			return $this->query;
-		}
-		
-		/**
-		 * @return QueryResult
-		**/
-		public function setQuery(SelectQuery $query)
-		{
-			$this->query = $query;
-			
-			return $this;
-		}
-		
-		public function getList()
-		{
-			return $this->list;
-		}
-		
-		/**
-		 * @return QueryResult
-		**/
-		public function setList($list)
-		{
-			$this->list = $list;
-			
-			return $this;
-		}
-		
-		public function getCount()
-		{
-			return $this->count;
-		}
-		
-		/**
-		 * @return QueryResult
-		**/
-		public function setCount($count)
-		{
-			$this->count = $count;
-			
-			return $this;
-		}
-		
-		public function getAffected()
-		{
-			return $this->affected;
-		}
-		
-		/**
-		 * @return QueryResult
-		**/
-		public function setAffected($affected)
-		{
-			$this->affected = $affected;
-			
-			return $this;
-		}
+		return new self;
 	}
+
+	public function getId()
+	{
+		return '_result_'.$this->query->getId();
+	}
+
+	public function setId($id)
+	{
+		throw new UnsupportedMethodException();
+	}
+
+	/**
+	 * @return SelectQuery
+	**/
+	public function getQuery()
+	{
+		return $this->query;
+	}
+
+	/**
+	 * @return QueryResult
+	**/
+	public function setQuery(SelectQuery $query)
+	{
+		$this->query = $query;
+
+		return $this;
+	}
+
+	public function getList()
+	{
+		return $this->list;
+	}
+
+	/**
+	 * @return QueryResult
+	**/
+	public function setList($list)
+	{
+		$this->list = $list;
+
+		return $this;
+	}
+
+	public function getCount()
+	{
+		return $this->count;
+	}
+
+	/**
+	 * @return QueryResult
+	**/
+	public function setCount($count)
+	{
+		$this->count = $count;
+
+		return $this;
+	}
+
+	public function getAffected()
+	{
+		return $this->affected;
+	}
+
+	/**
+	 * @return QueryResult
+	**/
+	public function setAffected($affected)
+	{
+		$this->affected = $affected;
+
+		return $this;
+	}
+}
 ?>

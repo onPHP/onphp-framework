@@ -9,11 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Math
-	**/
-	interface RandomSource
-	{
-		public function getBytes($numberOfBytes);
-	}
+namespace OnPHP\Main\Math;
+
+/**
+ * @ingroup Math
+**/
+interface RandomSource
+{
+	public function getBytes($numberOfBytes);
+}
 ?>

@@ -9,36 +9,38 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * SHA-1 based filter: passwords.
-	 * 
-	 * @ingroup Filters
-	**/
-	final class HashFilter implements Filtrator
+namespace OnPHP\Core\Form\Filters;
+
+/**
+ * SHA-1 based filter: passwords.
+ * 
+ * @ingroup Filters
+**/
+final class HashFilter implements Filtrator
+{
+	private $binary = false;
+
+	public function __construct($binary = false)
 	{
-		private $binary = false;
-		
-		public function __construct($binary = false)
-		{
-			$this->binary = ($binary === true);
-		}
-		
-		/**
-		 * @return HashFilter
-		**/
-		public static function create($binary = false)
-		{
-			return new self($binary);
-		}
-		
-		public function isBinary()
-		{
-			return $this->binary;
-		}
-		
-		public function apply($value)
-		{
-			return sha1($value, $this->binary);
-		}
+		$this->binary = ($binary === true);
 	}
+
+	/**
+	 * @return HashFilter
+	**/
+	public static function create($binary = false)
+	{
+		return new self($binary);
+	}
+
+	public function isBinary()
+	{
+		return $this->binary;
+	}
+
+	public function apply($value)
+	{
+		return sha1($value, $this->binary);
+	}
+}
 ?>

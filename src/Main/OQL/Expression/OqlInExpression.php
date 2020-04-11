@@ -9,47 +9,53 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup OQL
-	**/
-	final class OqlInExpression extends OqlQueryExpression
+namespace OnPHP\Main\OQL\Expression;
+
+use OnPHP\Core\Logic\InExpression;
+use OnPHP\Core\Logic\Expression;
+use OnPHP\Core\Exception\UnsupportedMethodException;
+
+/**
+ * @ingroup OQL
+**/
+final class OqlInExpression extends OqlQueryExpression
+{
+	private $logic = null;
+
+	public function __construct(
+		OqlQueryParameter $left, OqlQueryParameter $right, $logic
+	)
 	{
-		private $logic = null;
-		
-		public function __construct(
-			OqlQueryParameter $left, OqlQueryParameter $right, $logic
-		)
-		{
-			$this->
-				addParameter($left)->
-				addParameter($right);
-			
-			$this->logic = $logic;
-		}
-		
-		/**
-		 * @return InExpression
-		**/
-		public function evaluate($values)
-		{
-			switch ($this->logic) {
-				case InExpression::IN:
-					return Expression::in(
-						$this->getParameter(0)->evaluate($values),
-						$this->getParameter(1)->evaluate($values)
-					);
-				
-				case InExpression::NOT_IN:
-					return Expression::notIn(
-						$this->getParameter(0)->evaluate($values),
-						$this->getParameter(1)->evaluate($values)
-					);
-				
-				default:
-					throw new UnsupportedMethodException(
-						"'{$this->logic}' doesn't supported yet"
-					);
-			}
+		$this->
+			addParameter($left)->
+			addParameter($right);
+
+		$this->logic = $logic;
+	}
+
+	/**
+	 * @return InExpression
+	**/
+	public function evaluate($values)
+	{
+		switch ($this->logic) {
+			case InExpression::IN:
+				return Expression::in(
+					$this->getParameter(0)->evaluate($values),
+					$this->getParameter(1)->evaluate($values)
+				);
+
+			case InExpression::NOT_IN:
+				return Expression::notIn(
+					$this->getParameter(0)->evaluate($values),
+					$this->getParameter(1)->evaluate($values)
+				);
+
+			default:
+				throw new UnsupportedMethodException(
+					"'{$this->logic}' doesn't supported yet"
+				);
 		}
 	}
+}
 ?>

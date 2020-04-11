@@ -9,5 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 
-	class AMQPServerConnectionException extends AMQPServerException {/**/}
+namespace OnPHP\Main\Util\AMQP\Exception;
+
+class AMQPServerConnectionException extends AMQPServerException {/**/}
 ?>

@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Flow
-	**/
-	interface CarefulCommand extends EditorCommand
-	{
-		public function commit();
-		public function rollback();
-	}
+namespace OnPHP\Main\Flow;
+
+/**
+ * @ingroup Flow
+**/
+interface CarefulCommand extends EditorCommand
+{
+	public function commit();
+	public function rollback();
+}
 ?>

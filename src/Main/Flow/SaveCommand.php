@@ -9,38 +9,45 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Flow;
+
+use OnPHP\Core\Base\Prototyped;
+use OnPHP\Core\Form\Form;
+use OnPHP\Core\Form\FormUtils;
+use OnPHP\Main\Util\ClassUtils;
+
+/**
+ * @ingroup Flow
+**/
+class SaveCommand extends TakeCommand
+{
 	/**
-	 * @ingroup Flow
+	 * @return SaveCommand
 	**/
-	class SaveCommand extends TakeCommand
+	public static function create()
 	{
-		/**
-		 * @return SaveCommand
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request)
-		{
-			if (!$form->getErrors()) {
-				ClassUtils::copyProperties($form->getValue('id'), $subject);
-				
-				FormUtils::form2object($form, $subject, false);
-				
-				return parent::run($subject, $form, $request);
-			}
-			
-			return new ModelAndView();
-		}
-		
-		protected function daoMethod()
-		{
-			return 'save';
-		}
+		return new self;
 	}
+
+	/**
+	 * @return ModelAndView
+	**/
+	public function run(Prototyped $subject, Form $form, HttpRequest $request)
+	{
+		if (!$form->getErrors()) {
+			ClassUtils::copyProperties($form->getValue('id'), $subject);
+
+			FormUtils::form2object($form, $subject, false);
+
+			return parent::run($subject, $form, $request);
+		}
+
+		return new ModelAndView();
+	}
+
+	protected function daoMethod()
+	{
+		return 'save';
+	}
+}
 ?>

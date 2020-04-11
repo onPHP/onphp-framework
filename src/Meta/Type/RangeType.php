@@ -9,19 +9,27 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class RangeType extends InternalType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Main\Base\Range;
+
+/**
+ * @ingroup Types
+**/
+class RangeType extends InternalType
+{
+	public function getPrimitiveName()
 	{
-		public function getPrimitiveName()
-		{
-			return 'range';
-		}
-		
-		public function toColumnType()
-		{
-			return null;
-		}
+		return 'range';
 	}
+	
+	public function getFullClass() {
+		return Range::class;
+	}
+	
+	public function toColumnType()
+	{
+		return null;
+	}
+}
 ?>

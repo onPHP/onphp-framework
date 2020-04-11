@@ -8,30 +8,35 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+
+namespace OnPHP\Main\Net\Http;
+
+use OnPHP\Main\Base\AbstractCollection;
+
 /*$id$*/
 
+/**
+ * using java.utils.Collection Interface
+ * see http://java.sun.com/javase/6/docs/api/java/util/Collection.html
+ * 
+ * @ingroup Http
+**/
+final class CookieCollection extends AbstractCollection
+{
 	/**
-	 * using java.utils.Collection Interface
-	 * see http://java.sun.com/javase/6/docs/api/java/util/Collection.html
-	 * 
-	 * @ingroup Http
+	 * @return CookieCollection
 	**/
-	final class CookieCollection extends AbstractCollection
+	public static function create()
 	{
-		/**
-		 * @return CookieCollection
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function httpSetAll()
-		{
-			foreach ($this->items as $item)
-				$item->httpSet();
-				
-			return $this;
-		}
+		return new self;
 	}
+
+	public function httpSetAll()
+	{
+		foreach ($this->items as $item)
+			$item->httpSet();
+
+		return $this;
+	}
+}
 ?>

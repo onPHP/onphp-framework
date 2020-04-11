@@ -9,10 +9,12 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * In case we're soapless.
-	 * 
-	 * @ingroup Exceptions
-	**/
-	class SoapFault extends Exception {/*_*/}
+namespace OnPHP\Core\Exception;
+
+/**
+ * In case we're soapless.
+ * 
+ * @ingroup Exceptions
+**/
+class SoapFault extends \Exception {/*_*/}
 ?>

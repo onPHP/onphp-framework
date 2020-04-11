@@ -9,26 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+use OnPHP\Core\Base\Stringable;
+
+/**
+ * @ingroup GoogleChart
+**/
+abstract class BaseGoogleChartParameter implements Stringable
+{
+	protected $name = null;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return BaseGoogleChartParameter
 	**/
-	abstract class BaseGoogleChartParameter implements Stringable
+	public function setName($name)
 	{
-		protected $name = null;
-		
-		/**
-		 * @return BaseGoogleChartParameter
-		**/
-		public function setName($name)
-		{
-			$this->name = $name;
-			
-			return $this;
-		}
-		
-		public function getName()
-		{
-			return $this->name;
-		}
+		$this->name = $name;
+
+		return $this;
 	}
+
+	public function getName()
+	{
+		return $this->name;
+	}
+}
 ?>

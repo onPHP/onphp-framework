@@ -9,24 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * HTML Special Characters replacer.
+ * 
+ * @ingroup Filters
+**/
+final class HtmlSpecialCharsFilter extends BaseFilter
+{
 	/**
-	 * HTML Special Characters replacer.
-	 * 
-	 * @ingroup Filters
+	 * @return HtmlSpecialCharsFilter
 	**/
-	final class HtmlSpecialCharsFilter extends BaseFilter
+	public static function me()
 	{
-		/**
-		 * @return HtmlSpecialCharsFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return htmlspecialchars($value);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function apply($value)
+	{
+		return htmlspecialchars($value);
+	}
+}
 ?>

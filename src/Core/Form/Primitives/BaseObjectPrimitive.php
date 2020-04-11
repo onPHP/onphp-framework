@@ -9,51 +9,56 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	abstract class BaseObjectPrimitive extends BasePrimitive
+namespace OnPHP\Core\Form\Primitives;
+
+use OnPHP\Core\Exception\WrongArgumentException;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup Primitives
+**/
+abstract class BaseObjectPrimitive extends BasePrimitive
+{
+	protected $className = null;
+
+	public function import($scope)
 	{
-		protected $className = null;
-		
-		public function import($scope)
-		{
-			if (!BasePrimitive::import($scope))
-				return null;
-			
-			if ($scope[$this->getName()] instanceof $this->className) {
-				$this->value = $scope[$this->getName()];
-				
-				return true;
-			}
-			
-			try {
-				$this->value = new $this->className($scope[$this->getName()]);
-				
-				return true;
-			} catch (WrongArgumentException $e) {
-				return false;
-			}
-			
-			Assert::isUnreachable();
+		if (!BasePrimitive::import($scope))
+			return null;
+
+		if ($scope[$this->getName()] instanceof $this->className) {
+			$this->value = $scope[$this->getName()];
+
+			return true;
 		}
-		
-		public function setValue($value)
-		{
-			Assert::isInstance($value, $this->className);
-			
-			$this->value = $value;
-			
-			return $this;
+
+		try {
+			$this->value = new $this->className($scope[$this->getName()]);
+
+			return true;
+		} catch (WrongArgumentException $e) {
+			return false;
 		}
-		
-		public function setDefault($default)
-		{
-			Assert::isInstance($default, $this->className);
-			
-			$this->default = $default;
-			
-			return $this;
-		}
+
+		Assert::isUnreachable();
 	}
+
+	public function setValue($value)
+	{
+		Assert::isInstance($value, $this->className);
+
+		$this->value = $value;
+
+		return $this;
+	}
+
+	public function setDefault($default)
+	{
+		Assert::isInstance($default, $this->className);
+
+		$this->default = $default;
+
+		return $this;
+	}
+}
 ?>

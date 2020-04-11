@@ -9,43 +9,47 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+use OnPHP\Main\Util\TuringTest\Color;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartSolidFillCollection extends BaseGoogleChartParameter
+{
+	private $fillers = array();
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartSolidFillCollection
 	**/
-	final class GoogleChartSolidFillCollection extends BaseGoogleChartParameter
+	public static function create()
 	{
-		private $fillers = array();
-		
-		/**
-		 * @return GoogleChartSolidFillCollection
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function addFiller(GoogleChartSolidFillType $type, Color $color)
-		{
-			$this->fillers[] =
-				GoogleChartSolidFill::create($type)->
-				setColor($color);
-			
-			return $this;
-		}
-		
-		public function hasFillers()
-		{
-			return !empty($this->fillers);
-		}
-		
-		public function toString()
-		{
-			$fillerString = GoogleChartSolidFill::getParamName().'=';
-			
-			foreach ($this->fillers as $filler)
-				$fillers[] = $filler->toString();
-			
-			return $fillerString.implode('|', $fillers);
-		}
+		return new self;
 	}
+
+	public function addFiller(GoogleChartSolidFillType $type, Color $color)
+	{
+		$this->fillers[] =
+			GoogleChartSolidFill::create($type)->
+			setColor($color);
+
+		return $this;
+	}
+
+	public function hasFillers()
+	{
+		return !empty($this->fillers);
+	}
+
+	public function toString()
+	{
+		$fillerString = GoogleChartSolidFill::getParamName().'=';
+
+		foreach ($this->fillers as $filler)
+			$fillers[] = $filler->toString();
+
+		return $fillerString.implode('|', $fillers);
+	}
+}
 ?>

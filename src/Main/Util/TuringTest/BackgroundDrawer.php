@@ -9,24 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Util\TuringTest;
+
+/**
+ * @ingroup Turing
+**/
+abstract class BackgroundDrawer extends Drawer
+{
+	abstract public function draw();
+
 	/**
-	 * @ingroup Turing
+	 * @return Color
 	**/
-	abstract class BackgroundDrawer extends Drawer
+	public function makeColor()
 	{
-		abstract public function draw();
-		
-		/**
-		 * @return Color
-		**/
-		public function makeColor()
-		{
-			$color = $this->getTuringImage()->getTextColors()->getRandomTextColor();
-			
-			$invertColor = clone $color;
-			$invertColor->invertColor();
-			
-			return $invertColor;
-		}
+		$color = $this->getTuringImage()->getTextColors()->getRandomTextColor();
+
+		$invertColor = clone $color;
+		$invertColor->invertColor();
+
+		return $invertColor;
 	}
+}
 ?>

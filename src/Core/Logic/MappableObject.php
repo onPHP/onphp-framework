@@ -9,15 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Logic;
+
+use OnPHP\Core\OSQL\DialectString;
+use OnPHP\Main\DAO\ProtoDAO;
+use OnPHP\Core\OSQL\JoinCapableQuery;
+
+/**
+ * @ingroup Logic
+ * @ingroup Module
+**/
+interface MappableObject extends DialectString
+{
 	/**
-	 * @ingroup Logic
-	 * @ingroup Module
+	 * @return MappableObject
 	**/
-	interface MappableObject extends DialectString
-	{
-		/**
-		 * @return MappableObject
-		**/
-		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query);
-	}
+	public function toMapped(ProtoDAO $dao, JoinCapableQuery $query);
+}
 ?>

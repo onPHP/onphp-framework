@@ -1,8 +1,11 @@
 <?php
-	/* $Id$ */
-	
-	abstract class TestCase extends PHPUnit_Framework_TestCase
-	{
-		protected $backupGlobals = false;
-	}
+
+namespace OnPHP\Tests\TestEnvironment;
+
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+
+abstract class TestCase extends PHPUnitTestCase
+{
+	protected $backupGlobals = false;
+}
 ?>

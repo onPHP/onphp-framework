@@ -9,13 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Util\AMQP\Pecl;
+
+use OnPHP\Core\Base\StaticFactory;
+use OnPHP\Main\Util\AMQP\AMQPIncomingMessage;
+
 final class AMQPPeclIncomingMessageAdapter extends StaticFactory
 {
 	/**
-	 * @param AMQPEnvelope $incoming
+	 * @param \AMQPEnvelope $incoming
 	 * @return AMQPIncomingMessage
 	 */
-	public static function convert(AMQPEnvelope $incoming)
+	public static function convert(\AMQPEnvelope $incoming)
 	{
 		$data = array(
 			AMQPIncomingMessage::APP_ID => $incoming->getAppId(),
@@ -45,5 +50,4 @@ final class AMQPPeclIncomingMessageAdapter extends StaticFactory
 	}
 
 }
-
 ?>

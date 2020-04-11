@@ -8,42 +8,48 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-	
+
+namespace OnPHP\Main\Flow;
+
+use OnPHP\Core\Base\Identifiable;
+use OnPHP\Core\Base\Prototyped;
+use OnPHP\Core\Form\Form;
+
+/**
+ * @ingroup Flow
+**/
+class DropCommand implements EditorCommand
+{
 	/**
-	 * @ingroup Flow
+	 * @return DropCommand
 	**/
-	class DropCommand implements EditorCommand
+	public static function create()
 	{
-		/**
-		 * @return DropCommand
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request)
-		{
-			if ($object = $form->getValue('id')) {
-
-				if ($object instanceof Identifiable) {
-					
-					$object->dao()->drop($object);
-					
-					return
-						ModelAndView::create()->
-						setView(BaseEditor::COMMAND_SUCCEEDED);
-
-				} else {
-					// already deleted
-					$form->markMissing('id');
-				}
-			}
-			
-			return ModelAndView::create();
-		}
+		return new self;
 	}
+
+	/**
+	 * @return ModelAndView
+	**/
+	public function run(Prototyped $subject, Form $form, HttpRequest $request)
+	{
+		if ($object = $form->getValue('id')) {
+
+			if ($object instanceof Identifiable) {
+
+				$object->dao()->drop($object);
+
+				return
+					ModelAndView::create()->
+					setView(BaseEditor::COMMAND_SUCCEEDED);
+
+			} else {
+				// already deleted
+				$form->markMissing('id');
+			}
+		}
+
+		return ModelAndView::create();
+	}
+}
 ?>

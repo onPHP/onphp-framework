@@ -9,29 +9,33 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Pattern;
+
+use OnPHP\Meta\Entity\MetaClass;
+
+/**
+ * @ingroup Patterns
+**/
+final class InternalClassPattern
+	extends BasePattern
+	implements GenerationPattern
+{
 	/**
-	 * @ingroup Patterns
+	 * @return InternalClassPattern
 	**/
-	final class InternalClassPattern
-		extends BasePattern
-		implements GenerationPattern
+	public function build(MetaClass $class)
 	{
-		/**
-		 * @return InternalClassPattern
-		**/
-		public function build(MetaClass $class)
-		{
-			return $this;
-		}
-		
-		public function tableExists()
-		{
-			return false;
-		}
-		
-		public function daoExists()
-		{
-			return true;
-		}
+		return $this;
 	}
+
+	public function tableExists()
+	{
+		return false;
+	}
+
+	public function daoExists()
+	{
+		return true;
+	}
+}
 ?>

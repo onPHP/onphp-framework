@@ -8,53 +8,55 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-	
-	class AutoloaderPool
+
+namespace OnPHP\Main\Autoloader;
+
+class AutoloaderPool
+{
+	private static $map = array();
+	private static $recacheMap = array();
+
+	public static function set($name, Autoloader $autoloader)
 	{
-		private static $map = array();
-		private static $recacheMap = array();
-		
-		public static function set($name, Autoloader $autoloader)
-		{
-			self::$map[$name] = $autoloader;
-		}
-		
-		/**
-		 * @param string $name
-		 * @return Autoloader
-		 */
-		public static function get($name)
-		{
-			return isset(self::$map[$name]) ? self::$map[$name] : null;
-		}
-		
-		public static function drop($name)
-		{
-			unset(self::$map[$name]);
-		}
-		
-		public static function registerRecache(AutoloaderRecachable $autoloader)
-		{
-			self::$recacheMap[] = $autoloader;
-		}
-		
-		public static function unregisterRecache(AutoloaderRecachable $autoloader)
-		{
-			foreach (self::$recacheMap as $key => $registeredAutoloader) {
-				if ($registeredAutoloader == $autoloader)
-					unset(self::$recacheMap[$key]);
-			}
-		}
-		
-		public static function autoloadWithRecache($className)
-		{
-			foreach (self::$recacheMap as $autoloader) {
-				/* @var $autoloader AutoloaderRecachable */
-				$autoloader->autoloadWithRecache($className);
-				
-				if (class_exists($className, false))
-					return;
-			}
+		self::$map[$name] = $autoloader;
+	}
+
+	/**
+	 * @param string $name
+	 * @return Autoloader
+	 */
+	public static function get($name)
+	{
+		return isset(self::$map[$name]) ? self::$map[$name] : null;
+	}
+
+	public static function drop($name)
+	{
+		unset(self::$map[$name]);
+	}
+
+	public static function registerRecache(AutoloaderRecachable $autoloader)
+	{
+		self::$recacheMap[] = $autoloader;
+	}
+
+	public static function unregisterRecache(AutoloaderRecachable $autoloader)
+	{
+		foreach (self::$recacheMap as $key => $registeredAutoloader) {
+			if ($registeredAutoloader == $autoloader)
+				unset(self::$recacheMap[$key]);
 		}
 	}
+
+	public static function autoloadWithRecache($className)
+	{
+		foreach (self::$recacheMap as $autoloader) {
+			/* @var $autoloader AutoloaderRecachable */
+			$autoloader->autoloadWithRecache($className);
+
+			if (class_exists($className, false))
+				return;
+		}
+	}
+}
 ?>

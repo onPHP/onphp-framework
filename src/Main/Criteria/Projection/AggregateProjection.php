@@ -9,29 +9,36 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Criteria\Projection;
+
+use OnPHP\Main\Criteria\Criteria;
+use OnPHP\Core\OSQL\JoinCapableQuery;
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\OSQL\SQLFunction;
+
+/**
+ * @ingroup Projection
+**/
+abstract class AggregateProjection extends BaseProjection
+{
+	abstract public function getFunctionName();
+
 	/**
-	 * @ingroup Projections
+	 * @return JoinCapableQuery
 	**/
-	abstract class AggregateProjection extends BaseProjection
+	public function process(Criteria $criteria, JoinCapableQuery $query)
 	{
-		abstract public function getFunctionName();
-		
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query)
-		{
-			Assert::isNotNull($this->property);
-			
-			return
-				$query->
-				get(
-					SQLFunction::create(
-						$this->getFunctionName(),
-						$criteria->getDao()->guessAtom($this->property, $query)
-					)->
-					setAlias($this->alias)
-				);
-		}
+		Assert::isNotNull($this->property);
+
+		return
+			$query->
+			get(
+				SQLFunction::create(
+					$this->getFunctionName(),
+					$criteria->getDao()->guessAtom($this->property, $query)
+				)->
+				setAlias($this->alias)
+			);
 	}
+}
 ?>

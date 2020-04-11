@@ -9,56 +9,61 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Math;
+
+use OnPHP\Core\Base\Singleton;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup Math
+**/
+final class GmpBigIntegerFactory extends BigNumberFactory
+{
 	/**
-	 * @ingroup Math
+	 * @return GmpBigIntegerFactory
 	**/
-	final class GmpBigIntegerFactory extends BigNumberFactory
+	public static function me()
 	{
-		/**
-		 * @return GmpBigIntegerFactory
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		/**
-		 * @return GmpBigInteger
-		**/
-		public function makeNumber($number, $base = 10)
-		{
-			return GmpBigInteger::make($number, $base);
-		}
-		
-		/**
-		 * @return GmpBigInteger
-		**/
-		public function makeFromBinary($binary)
-		{
-			return GmpBigInteger::makeFromBinary($binary);
-		}
-		
-		/**
-		 * @return GmpBigInteger
-		**/
-		public function makeRandom($stop, RandomSource $source)
-		{
-			if (is_string($stop)) {
-				$stop = $this->makeNumber($stop);
-			} elseif (
-				$stop instanceof BigInteger
-				&& !$stop instanceof GmpBigInteger
-			) {
-				$stop = $this->makeNumber($stop->toString());
-			}
-			
-			Assert::isTrue($stop instanceof GmpBigInteger);
-			
-			$numBytes = ceil(log($stop->floatValue(), 2) / 8);
-			
-			return $this->
-				makeFromBinary("\x00".$source->getBytes($numBytes))->
-				mod($stop);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	/**
+	 * @return GmpBigInteger
+	**/
+	public function makeNumber($number, $base = 10)
+	{
+		return GmpBigInteger::make($number, $base);
+	}
+
+	/**
+	 * @return GmpBigInteger
+	**/
+	public function makeFromBinary($binary)
+	{
+		return GmpBigInteger::makeFromBinary($binary);
+	}
+
+	/**
+	 * @return GmpBigInteger
+	**/
+	public function makeRandom($stop, RandomSource $source)
+	{
+		if (is_string($stop)) {
+			$stop = $this->makeNumber($stop);
+		} elseif (
+			$stop instanceof BigInteger
+			&& !$stop instanceof GmpBigInteger
+		) {
+			$stop = $this->makeNumber($stop->toString());
+		}
+
+		Assert::isTrue($stop instanceof GmpBigInteger);
+
+		$numBytes = ceil(log($stop->floatValue(), 2) / 8);
+
+		return $this->
+			makeFromBinary("\x00".$source->getBytes($numBytes))->
+			mod($stop);
+	}
+}
 ?>

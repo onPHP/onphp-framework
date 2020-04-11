@@ -9,80 +9,82 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartGrid extends BaseGoogleChartParameter
+{
+	protected $name = 'chg';
+
+	private $horizontalStepSize = 0;
+	private $verticalStepSize 	= 0;
+	private $lineSegmentLength 	= 0;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartGrid
 	**/
-	final class GoogleChartGrid extends BaseGoogleChartParameter
+	public static function create()
 	{
-		protected $name = 'chg';
-		
-		private $horizontalStepSize = 0;
-		private $verticalStepSize 	= 0;
-		private $lineSegmentLength 	= 0;
-		
-		/**
-		 * @return GoogleChartGrid
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return GoogleChartGrid
-		**/
-		public function setHorizontalStepSize($size)
-		{
-			$this->horizontalStepSize = $size;
-			
-			return $this;
-		}
-		
-		public function getHorizontalStepSize()
-		{
-			return $this->horizontalStepSize;
-		}
-		
-		/**
-		 * @return GoogleChartGrid
-		**/
-		public function setVerticalStepSize($size)
-		{
-			$this->verticalStepSize = $size;
-			
-			return $this;
-		}
-		
-		public function getVerticalStepSize()
-		{
-			return $this->verticalStepSize;
-		}
-		
-		/**
-		 * @return GoogleChartGrid
-		**/
-		public function setLineSegmentLength($length)
-		{
-			$this->lineSegmentLength = $length;
-			
-			return $this;
-		}
-		
-		public function getLineSegmentLength()
-		{
-			return $this->lineSegmentLength;
-		}
-		
-		public function toString()
-		{
-			return
-				$this->name
-				.'='
-				.$this->horizontalStepSize
-				.','
-				.$this->verticalStepSize
-				.','
-				.$this->lineSegmentLength;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return GoogleChartGrid
+	**/
+	public function setHorizontalStepSize($size)
+	{
+		$this->horizontalStepSize = $size;
+
+		return $this;
+	}
+
+	public function getHorizontalStepSize()
+	{
+		return $this->horizontalStepSize;
+	}
+
+	/**
+	 * @return GoogleChartGrid
+	**/
+	public function setVerticalStepSize($size)
+	{
+		$this->verticalStepSize = $size;
+
+		return $this;
+	}
+
+	public function getVerticalStepSize()
+	{
+		return $this->verticalStepSize;
+	}
+
+	/**
+	 * @return GoogleChartGrid
+	**/
+	public function setLineSegmentLength($length)
+	{
+		$this->lineSegmentLength = $length;
+
+		return $this;
+	}
+
+	public function getLineSegmentLength()
+	{
+		return $this->lineSegmentLength;
+	}
+
+	public function toString()
+	{
+		return
+			$this->name
+			.'='
+			.$this->horizontalStepSize
+			.','
+			.$this->verticalStepSize
+			.','
+			.$this->lineSegmentLength;
+	}
+}
 ?>

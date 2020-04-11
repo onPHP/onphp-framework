@@ -9,31 +9,33 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartTitle extends BaseGoogleChartParameter
+{
+	protected static $paramName = 'chtt';
+
+	private $title = null;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartTitle
 	**/
-	final class GoogleChartTitle extends BaseGoogleChartParameter
+	public static function create($title)
 	{
-		protected static $paramName = 'chtt';
-		
-		private $title = null;
-		
-		/**
-		 * @return GoogleChartTitle
-		**/
-		public static function create($title)
-		{
-			return new self($title);
-		}
-		
-		public function __construct($title)
-		{
-			$this->title = $title;
-		}
-		
-		public function toString()
-		{
-			return 'chtt='.$this->title;
-		}
+		return new self($title);
 	}
+
+	public function __construct($title)
+	{
+		$this->title = $title;
+	}
+
+	public function toString()
+	{
+		return 'chtt='.$this->title;
+	}
+}
 ?>

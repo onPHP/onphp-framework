@@ -9,17 +9,19 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class BaseException extends Exception
+namespace OnPHP\Core\Exception;
+
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+**/
+class BaseException extends \Exception
+{
+	public function __toString()
 	{
-		public function __toString()
-		{
-			return
-				"[$this->message] in: \n".
-				$this->getTraceAsString();
-		}
+		return
+			"[$this->message] in: \n".
+			$this->getTraceAsString();
 	}
+}
 ?>

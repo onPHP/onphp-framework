@@ -9,30 +9,36 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Main\OQL\Statement;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Main\Criteria\Projection\HavingProjection;
+use OnPHP\Main\OQL\Expression\OqlQueryExpression;
+
+/**
+ * @ingroup OQL
+**/
+final class OqlHavingClause extends OqlQueryExpressionClause
+{
 	/**
-	 * @ingroup OQL
+	 * @return OqlHavingClause
 	**/
-	final class OqlHavingClause extends OqlQueryExpressionClause
+	public static function create()
 	{
-		/**
-		 * @return OqlHavingClause
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return HavingProjection
-		**/
-		public function toProjection()
-		{
-			return $this->toLogic();
-		}
-		
-		protected static function checkExpression(OqlQueryExpression $expression)
-		{
-			Assert::isInstance($expression->getClassName(), 'HavingProjection');
-		}
+		return new self;
 	}
+
+	/**
+	 * @return HavingProjection
+	**/
+	public function toProjection()
+	{
+		return $this->toLogic();
+	}
+
+	protected static function checkExpression(OqlQueryExpression $expression)
+	{
+		Assert::isInstance($expression->getClassName(), HavingProjection::class);
+	}
+}
 ?>

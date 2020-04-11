@@ -9,19 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class SmallIntegerType extends IntegerType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\OSQL\DataType;
+
+/**
+ * @ingroup Types
+**/
+class SmallIntegerType extends IntegerType
+{
+	public function getSize()
 	{
-		public function getSize()
-		{
-			return 2;
-		}
-		
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::SMALLINT)';
-		}
+		return 2;
 	}
+	
+	public function toColumnType()
+	{
+		return DataType::class.'::create('.DataType::class.'::SMALLINT)';
+	}
+}
 ?>

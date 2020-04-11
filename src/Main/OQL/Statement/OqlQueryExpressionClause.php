@@ -9,41 +9,46 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Main\OQL\Statement;
+
+use OnPHP\Main\OQL\Expression\OqlQueryExpression;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup OQL
+**/
+abstract class OqlQueryExpressionClause extends OqlQueryClause
+{
+	protected $expression = null;
+
 	/**
-	 * @ingroup OQL
+	 * @return OqlQueryExpression
 	**/
-	abstract class OqlQueryExpressionClause extends OqlQueryClause
+	public function getExpression()
 	{
-		protected $expression = null;
-		
-		/**
-		 * @return OqlQueryExpression
-		**/
-		public function getExpression()
-		{
-			return $this->expression;
-		}
-		
-		/**
-		 * @return OqlQueryExpressionClause
-		**/
-		public function setExpression(OqlQueryExpression $expression)
-		{
-			$this->checkExpression($expression);
-			$this->expression = $expression;
-			
-			return $this;
-		}
-		
-		public function toLogic()
-		{
-			Assert::isNotNull($this->expression);
-			
-			return $this->expression->evaluate($this->parameters);
-		}
-		
-		protected static function checkExpression(OqlQueryExpression $expression)
-		{
-		}
+		return $this->expression;
 	}
+
+	/**
+	 * @return OqlQueryExpressionClause
+	**/
+	public function setExpression(OqlQueryExpression $expression)
+	{
+		$this->checkExpression($expression);
+		$this->expression = $expression;
+
+		return $this;
+	}
+
+	public function toLogic()
+	{
+		Assert::isNotNull($this->expression);
+
+		return $this->expression->evaluate($this->parameters);
+	}
+
+	protected static function checkExpression(OqlQueryExpression $expression)
+	{
+	}
+}
 ?>

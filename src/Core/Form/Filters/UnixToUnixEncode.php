@@ -9,24 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * Uuencode a string.
+ * 
+ * @ingroup Filters
+**/
+final class UnixToUnixEncode extends BaseFilter
+{
 	/**
-	 * Uuencode a string.
-	 * 
-	 * @ingroup Filters
+	 * @return UnixToUnixEncode
 	**/
-	final class UnixToUnixEncode extends BaseFilter
+	public static function me()
 	{
-		/**
-		 * @return UnixToUnixEncode
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return convert_uuencode($value);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function apply($value)
+	{
+		return convert_uuencode($value);
+	}
+}
 ?>

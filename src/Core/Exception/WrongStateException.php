@@ -9,9 +9,11 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class WrongStateException extends BaseException {/*_*/}
+namespace OnPHP\Core\Exception;
+
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+**/
+class WrongStateException extends BaseException {/*_*/}
 ?>

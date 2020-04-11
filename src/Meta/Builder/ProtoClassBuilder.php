@@ -9,6 +9,10 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Builder;
+
+use OnPHP\Meta\Entity\MetaClass;
+
 	/**
 	 * @ingroup Builders
 	**/
@@ -18,10 +22,19 @@
 		{
 			$out = self::getHead();
 			
-			if ($type = $class->getType())
-				$typeName = $type->toString().' ';
-			else
+			if ($type = $class->getType()) {
+				$typeName = $type->toString() . ' ';
+			} else {
 				$typeName = null;
+			}
+			
+			$out .= <<<EOT
+namespace {$class->getProtoNamespace()};
+
+use {$class->getAutoProtoClass()};
+
+
+EOT;
 			
 			$out .= <<<EOT
 {$typeName}class Proto{$class->getName()} extends AutoProto{$class->getName()} {/*_*/}

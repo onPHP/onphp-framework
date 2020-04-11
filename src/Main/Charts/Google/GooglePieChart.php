@@ -9,46 +9,48 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GooglePieChart extends GoogleChart
+{
 	/**
-	 * @ingroup GoogleChart
+	 * @return GooglePieChart
 	**/
-	final class GooglePieChart extends GoogleChart
+	public static function create()
 	{
-		/**
-		 * @return GooglePieChart
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function __construct()
-		{
-			parent::__construct();
-			
-			$this->type =
-				new GoogleChartType(GoogleChartType::TWO_DIMENSIONAL_PIE);
-			
-			$this->color = GoogleChartColor::create();
-			
-			$this->label = GoogleChartLabel::create();
-			
-			$this->data =
-				GoogleChartData::create()->
-				addDataSet(GoogleChartDataSet::create())->
-				setEncoding(GoogleChartDataTextEncoding::create());
-		}
-		
-		/**
-		 * @return GooglePieChart
-		**/
-		public function addPiece(GoogleChartPiece $piece)
-		{
-			$this->color->addColor($piece->getColor());
-			$this->label->addLabel($piece->getTitle());
-			$this->data->getDataSetByIndex(0)->addElement($piece->getValue());
-			
-			return $this;
-		}
+		return new self;
 	}
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->type =
+			new GoogleChartType(GoogleChartType::TWO_DIMENSIONAL_PIE);
+
+		$this->color = GoogleChartColor::create();
+
+		$this->label = GoogleChartLabel::create();
+
+		$this->data =
+			GoogleChartData::create()->
+			addDataSet(GoogleChartDataSet::create())->
+			setEncoding(GoogleChartDataTextEncoding::create());
+	}
+
+	/**
+	 * @return GooglePieChart
+	**/
+	public function addPiece(GoogleChartPiece $piece)
+	{
+		$this->color->addColor($piece->getColor());
+		$this->label->addLabel($piece->getTitle());
+		$this->data->getDataSetByIndex(0)->addElement($piece->getValue());
+
+		return $this;
+	}
+}
 ?>

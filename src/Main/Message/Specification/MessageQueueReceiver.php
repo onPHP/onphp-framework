@@ -9,16 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	interface MessageQueueReceiver
-	{
-		/**
-		 * @return Message
-		**/
-		public function receive($uTimeout = null);
-		
-		/**
-		 * @return MessageQueue
-		**/
-		public function getQueue();
-	}
+namespace OnPHP\Main\Message\Specification;
+
+interface MessageQueueReceiver
+{
+	/**
+	 * @return Message
+	**/
+	public function receive($uTimeout = null);
+
+	/**
+	 * @return MessageQueue
+	**/
+	public function getQueue();
+}
 ?>

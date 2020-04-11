@@ -9,38 +9,44 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\SPL;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Base\Identifiable;
+use OnPHP\Core\Exception\WrongArgumentException;
+
+/**
+ * Unordered indexed list of Identifiable objects.
+ * 
+ * @ingroup onSPL
+**/
+final class IndexedList extends AbstractList
+{
 	/**
-	 * Unordered indexed list of Identifiable objects.
-	 * 
-	 * @ingroup onSPL
+	 * @return IndexedList
 	**/
-	final class IndexedList extends AbstractList
+	public static function create()
 	{
-		/**
-		 * @return IndexedList
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return IndexedList
-		**/
-		public function offsetSet($offset, $value)
-		{
-			Assert::isTrue($value instanceof Identifiable);
-			
-			$offset = $value->getId();
-			
-			if ($this->offsetExists($offset))
-				throw new WrongArgumentException(
-					"object with id == '{$offset}' already exists"
-				);
-			
-			$this->list[$offset] = $value;
-			
-			return $this;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return IndexedList
+	**/
+	public function offsetSet($offset, $value)
+	{
+		Assert::isTrue($value instanceof Identifiable);
+
+		$offset = $value->getId();
+
+		if ($this->offsetExists($offset))
+			throw new WrongArgumentException(
+				"object with id == '{$offset}' already exists"
+			);
+
+		$this->list[$offset] = $value;
+
+		return $this;
+	}
+}
 ?>

@@ -8,13 +8,15 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-	
-	interface Autoloader
-	{
-		public function autoload($className);
-		
-		public function register();
-		
-		public function unregister();
-	}
+
+namespace OnPHP\Main\Autoloader;
+
+interface Autoloader
+{
+	public function autoload($className);
+
+	public function register();
+
+	public function unregister();
+}
 ?>

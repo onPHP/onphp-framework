@@ -9,56 +9,62 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	**/
-	final class DeleteQuery extends QuerySkeleton implements SQLTableName
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\Exception\UnsupportedMethodException;
+use OnPHP\Core\DB\Dialect;
+use OnPHP\Core\Exception\WrongArgumentException;
+
+/**
+ * @ingroup OSQL
+**/
+final class DeleteQuery extends QuerySkeleton implements SQLTableName
+{
+	protected $table	= null;
+
+	public function getId()
 	{
-		protected $table	= null;
-		
-		public function getId()
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		/**
-		 * @return DeleteQuery
-		**/
-		public function from($table)
-		{
-			$this->table = $table;
-			
-			return $this;
-		}
-		
-		public function getTable()
-		{
-			return $this->table;
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			if ($this->where) {
-				$deleteStr =
-					'DELETE FROM '.$dialect->quoteTable($this->table)
-					.parent::toDialectString($dialect);
-				
-				$this->checkReturning($dialect);
-				
-				if (empty($this->returning)) {
-					return $deleteStr;
-				} else {
-					$query =
-						$deleteStr
-						.' RETURNING '
-						.$this->toDialectStringReturning($dialect);
-					
-					return $query;
-				}
-			} else
-				throw new WrongArgumentException(
-					"leave '{$this->table}' table alone in peace, bastard"
-				);
-		}
+		throw new UnsupportedMethodException();
 	}
+
+	/**
+	 * @return DeleteQuery
+	**/
+	public function from($table)
+	{
+		$this->table = $table;
+
+		return $this;
+	}
+
+	public function getTable()
+	{
+		return $this->table;
+	}
+
+	public function toDialectString(Dialect $dialect)
+	{
+		if ($this->where) {
+			$deleteStr =
+				'DELETE FROM '.$dialect->quoteTable($this->table)
+				.parent::toDialectString($dialect);
+
+			$this->checkReturning($dialect);
+
+			if (empty($this->returning)) {
+				return $deleteStr;
+			} else {
+				$query =
+					$deleteStr
+					.' RETURNING '
+					.$this->toDialectStringReturning($dialect);
+
+				return $query;
+			}
+		} else
+			throw new WrongArgumentException(
+				"leave '{$this->table}' table alone in peace, bastard"
+			);
+	}
+}
 ?>

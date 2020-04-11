@@ -9,92 +9,99 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Flow;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Base\Prototyped;
+use OnPHP\Core\Exception\BaseException;
+use OnPHP\Core\Form\Form;
+
+/**
+ * @ingroup Flow
+**/
+final class CommandChain implements EditorCommand
+{
+	private $chain = array();
+
 	/**
-	 * @ingroup Flow
+	 * @return CommandChain
 	**/
-	final class CommandChain implements EditorCommand
+	public static function create()
 	{
-		private $chain = array();
-		
-		/**
-		 * @return CommandChain
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return CommandChain
-		**/
-		public function add(EditorCommand $command)
-		{
-			$this->chain[] = $command;
-			
-			return $this;
-		}
-		
-		/**
-		 * @throws BaseException
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request)
-		{
-			Assert::isTrue(
-				($size = count($this->chain)) > 0,
-				
-				'command chain is empty'
-			);
-			
-			for ($i = 0; $i < $size; ++$i) {
-				$command = &$this->chain[$i];
-				
-				try {
-					$mav = $command->run($subject, $form, $request);
-					
-					if ($mav->getView() == EditorController::COMMAND_FAILED) {
-						$this->rollback($i);
-						return $mav;
-					}
-				} catch (BaseException $e) {
-					$this->rollback($i);
-					throw $e;
-				}
-			}
-			
-			return $mav;
-		}
-		
-		/**
-		 * @return CommandChain
-		**/
-		private function rollback($position)
-		{
-			for ($i = $position; $i > -1; --$i) {
-				if ($this->chain[$i] instanceof CarefulCommand) {
-					try {
-						$this->chain[$i]->rollback();
-					} catch (BaseException $e) {
-						// silently ignore, since no one
-						// allowed to interrupt this proccess
-					}
-				}
-			}
-			
-			return $this;
-		}
-		
-		/**
-		 * @return CommandChain
-		**/
-		private function commit()
-		{
-			for ($size = count($this->chain), $i = 0; $i < $size; --$i) {
-				if ($this->chain[$i] instanceof CarefulCommand)
-					$this->chain[$i]->commit();
-			}
-			
-			return $this;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return CommandChain
+	**/
+	public function add(EditorCommand $command)
+	{
+		$this->chain[] = $command;
+
+		return $this;
+	}
+
+	/**
+	 * @throws BaseException
+	 * @return ModelAndView
+	**/
+	public function run(Prototyped $subject, Form $form, HttpRequest $request)
+	{
+		Assert::isTrue(
+			($size = count($this->chain)) > 0,
+
+			'command chain is empty'
+		);
+
+		for ($i = 0; $i < $size; ++$i) {
+			$command = &$this->chain[$i];
+
+			try {
+				$mav = $command->run($subject, $form, $request);
+
+				if ($mav->getView() == EditorController::COMMAND_FAILED) {
+					$this->rollback($i);
+					return $mav;
+				}
+			} catch (BaseException $e) {
+				$this->rollback($i);
+				throw $e;
+			}
+		}
+
+		return $mav;
+	}
+
+	/**
+	 * @return CommandChain
+	**/
+	private function rollback($position)
+	{
+		for ($i = $position; $i > -1; --$i) {
+			if ($this->chain[$i] instanceof CarefulCommand) {
+				try {
+					$this->chain[$i]->rollback();
+				} catch (BaseException $e) {
+					// silently ignore, since no one
+					// allowed to interrupt this proccess
+				}
+			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return CommandChain
+	**/
+	private function commit()
+	{
+		for ($size = count($this->chain), $i = 0; $i < $size; --$i) {
+			if ($this->chain[$i] instanceof CarefulCommand)
+				$this->chain[$i]->commit();
+		}
+
+		return $this;
+	}
+}
 ?>

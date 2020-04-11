@@ -9,40 +9,46 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveEnumByValue extends PrimitiveEnum
+namespace OnPHP\Core\Form\Primitives;
+
+use OnPHP\Core\Exception\WrongStateException;
+use OnPHP\Main\Util\ClassUtils;
+use OnPHP\Core\Exception\MissingElementException;
+
+/**
+ * @ingroup Primitives
+**/
+final class PrimitiveEnumByValue extends PrimitiveEnum
+{
+	public function import($scope)
 	{
-		public function import($scope)
-		{
-			if (!$this->className)
-				throw new WrongStateException(
-					"no class defined for PrimitiveEnum '{$this->name}'"
-				);
-			
-			if (isset($scope[$this->name])) {
-				$scopedValue = urldecode($scope[$this->name]);
-				
-				$names = ClassUtils::callStaticMethod($this->className.'::getNameList');
-				
-				foreach ($names as $key => $value) {
-					if ($value == $scopedValue) {
-						try {
-							$this->value = new $this->className($key);
-						} catch (MissingElementException $e) {
-							$this->value = null;
-							return false;
-						}
-						
-						return true;
+		if (!$this->className)
+			throw new WrongStateException(
+				"no class defined for PrimitiveEnum '{$this->name}'"
+			);
+
+		if (isset($scope[$this->name])) {
+			$scopedValue = urldecode($scope[$this->name]);
+
+			$names = ClassUtils::callStaticMethod($this->className.'::getNameList');
+
+			foreach ($names as $key => $value) {
+				if ($value == $scopedValue) {
+					try {
+						$this->value = new $this->className($key);
+					} catch (MissingElementException $e) {
+						$this->value = null;
+						return false;
 					}
+
+					return true;
 				}
-				
-				return false;
 			}
-			
-			return null;
+
+			return false;
 		}
+
+		return null;
 	}
+}
 ?>

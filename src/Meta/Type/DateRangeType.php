@@ -9,6 +9,10 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Main\Base\DateRange;
+
 	/**
 	 * @ingroup Types
 	**/
@@ -17,6 +21,10 @@
 		public function getPrimitiveName()
 		{
 			return 'dateRange';
+		}
+		
+		public function getFullClass() {
+			return DateRange::class;
 		}
 	}
 ?>

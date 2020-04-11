@@ -9,26 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+abstract class BaseGoogleChartStyle extends BaseGoogleChartParameter
+{
+	protected $styles = array();
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return BaseGoogleChartStyle
 	**/
-	abstract class BaseGoogleChartStyle extends BaseGoogleChartParameter
+	public function addStyle($style)
 	{
-		protected $styles = array();
-		
-		/**
-		 * @return BaseGoogleChartStyle
-		**/
-		public function addStyle($style)
-		{
-			$this->styles[] = $style;
-			
-			return $this;
-		}
-		
-		public function hasStyles()
-		{
-			return !empty($this->styles);
-		}
+		$this->styles[] = $style;
+
+		return $this;
 	}
+
+	public function hasStyles()
+	{
+		return !empty($this->styles);
+	}
+}
 ?>

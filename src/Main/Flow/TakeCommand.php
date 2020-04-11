@@ -9,29 +9,34 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Flow;
+
+use OnPHP\Core\Base\Prototyped;
+use OnPHP\Core\Form\Form;
+
+/**
+ * @ingroup Flow
+**/
+abstract class TakeCommand implements EditorCommand
+{
+	abstract protected function daoMethod();
+
 	/**
-	 * @ingroup Flow
+	 * @return ModelAndView
 	**/
-	abstract class TakeCommand implements EditorCommand
+	public function run(Prototyped $subject, Form $form, HttpRequest $request)
 	{
-		abstract protected function daoMethod();
-		
-		/**
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request)
-		{
-			$subject = $subject->dao()->{$this->daoMethod()}($subject);
-			
-			return
-				ModelAndView::create()->
-				setView(
-					EditorController::COMMAND_SUCCEEDED
-				)->
-				setModel(
-					Model::create()->
-					set('id', $subject->getId())
-				);
-		}
+		$subject = $subject->dao()->{$this->daoMethod()}($subject);
+
+		return
+			ModelAndView::create()->
+			setView(
+				EditorController::COMMAND_SUCCEEDED
+			)->
+			setModel(
+				Model::create()->
+				set('id', $subject->getId())
+			);
 	}
+}
 ?>

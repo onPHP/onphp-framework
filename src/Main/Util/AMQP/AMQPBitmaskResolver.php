@@ -9,8 +9,10 @@
  *                                                                         *
  ***************************************************************************/
 
-	interface AMQPBitmaskResolver
-	{
-		public function getBitmask($config);
-	}
+namespace OnPHP\Main\Util\AMQP;
+
+interface AMQPBitmaskResolver
+{
+	public function getBitmask($config);
+}
 ?>

@@ -9,6 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\Exception\WrongStateException;
+use OnPHP\Main\Criteria\FetchStrategy;
+use OnPHP\Meta\Entity\MetaClass;
+use OnPHP\Meta\Entity\MetaClassProperty;
+use OnPHP\Meta\Entity\MetaConfiguration;
+use OnPHP\Meta\Entity\MetaRelation;
+use OnPHP\Meta\Pattern\EnumClassPattern;
+use OnPHP\Meta\Pattern\EnumerationClassPattern;
+
 	/**
 	 * @ingroup Types
 	**/
@@ -36,6 +47,10 @@
 		
 		public function getClassName()
 		{
+			return $this->className;
+		}
+		
+		public function getFullClass() {
 			return $this->className;
 		}
 		
@@ -139,6 +154,8 @@ EOT;
 						
 						$containerName = $class->getName().$remoteName.'DAO';
 						
+						$wrongStateException = '\\'.WrongStateException::class;
+						
 						$method = <<<EOT
 
 /**
@@ -161,7 +178,7 @@ public function fill{$methodName}(\$collection, \$lazy = false)
 	\$this->{$name} = new {$containerName}(\$this, \$lazy);
 	
 	if (!\$this->id) {
-		throw new WrongStateException(
+		throw new {$wrongStateException}(
 			'i do not know which object i belong to'
 		);
 	}

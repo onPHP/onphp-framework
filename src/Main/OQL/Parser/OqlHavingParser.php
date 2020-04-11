@@ -9,39 +9,44 @@
  *                                                                          *
  ****************************************************************************/
 
-	final class OqlHavingParser extends OqlParser
+namespace OnPHP\Main\OQL\Parser;
+
+use OnPHP\Main\Criteria\Projection\HavingProjection;
+use OnPHP\Main\OQL\Statement\OqlHavingClause;
+
+final class OqlHavingParser extends OqlParser
+{
+	const CLASS_NAME = HavingProjection::class;
+
+	/**
+	 * @return OqlHavingParser
+	**/
+	public static function create()
 	{
-		const CLASS_NAME = 'HavingProjection';
-		
-		/**
-		 * @return OqlHavingParser
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return OqlHavingClause
-		**/
-		protected function makeOqlObject()
-		{
-			return OqlHavingClause::create();
-		}
-		
-		protected function handleState()
-		{
-			if ($this->state == self::INITIAL_STATE) {
-				if ($argument = $this->getLogicExpression()) {
-					$this->oqlObject->setExpression(
-						$this->makeQueryExpression(self::CLASS_NAME, $argument)
-					);
-				
-				} else
-					$this->error("expecting 'having' expression");
-			}
-			
-			return self::FINAL_STATE;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return OqlHavingClause
+	**/
+	protected function makeOqlObject()
+	{
+		return OqlHavingClause::create();
+	}
+
+	protected function handleState()
+	{
+		if ($this->state == self::INITIAL_STATE) {
+			if ($argument = $this->getLogicExpression()) {
+				$this->oqlObject->setExpression(
+					$this->makeQueryExpression(self::CLASS_NAME, $argument)
+				);
+
+			} else
+				$this->error("expecting 'having' expression");
+		}
+
+		return self::FINAL_STATE;
+	}
+}
 ?>

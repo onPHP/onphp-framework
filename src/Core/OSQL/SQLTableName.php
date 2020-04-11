@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	interface SQLTableName extends DialectString
-	{
-		public function getTable();
-	}
+namespace OnPHP\Core\OSQL;
+
+/**
+ * @ingroup OSQL
+ * @ingroup Module
+**/
+interface SQLTableName extends DialectString
+{
+	public function getTable();
+}
 ?>

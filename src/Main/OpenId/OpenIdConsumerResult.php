@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\OpenId;
+
+/**
+ * @ingroup OpenId
+**/
+interface OpenIdConsumerResult
+{
 	/**
-	 * @ingroup OpenId
+	 * @return bool
 	**/
-	interface OpenIdConsumerResult
-	{
-		/**
-		 * @return bool
-		**/
-		public function isOk();
-	}
+	public function isOk();
+}
 ?>

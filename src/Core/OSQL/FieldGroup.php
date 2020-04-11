@@ -9,34 +9,38 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\DB\Dialect;
+
+/**
+ * @ingroup OSQL
+**/
+final class FieldGroup implements DialectString
+{
+	private $list = array();
+
 	/**
-	 * @ingroup OSQL
+	 * @return FieldGroup
 	**/
-	final class FieldGroup implements DialectString
+	public function add(Castable $field)
 	{
-		private $list = array();
-		
-		/**
-		 * @return FieldGroup
-		**/
-		public function add(Castable $field)
-		{
-			$this->list[] = $field;
-			
-			return $this;
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			if (!$this->list)
-				return null;
-			
-			$out = array();
-			
-			foreach ($this->list as $field)
-				$out[] = $field->toDialectString($dialect);
-			
-			return implode(', ', $out);
-		}
+		$this->list[] = $field;
+
+		return $this;
 	}
+
+	public function toDialectString(Dialect $dialect)
+	{
+		if (!$this->list)
+			return null;
+
+		$out = array();
+
+		foreach ($this->list as $field)
+			$out[] = $field->toDialectString($dialect);
+
+		return implode(', ', $out);
+	}
+}
 ?>

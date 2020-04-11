@@ -9,22 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * @ingroup Filters
+**/
+final class JsonEncoderFilter extends BaseFilter
+{
 	/**
-	 * @ingroup Filters
+	 * @return JsonEncoderFilter
 	**/
-	final class JsonEncoderFilter extends BaseFilter
+	public static function me()
 	{
-		/**
-		 * @return JsonEncoderFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return json_encode($value);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function apply($value)
+	{
+		return json_encode($value);
+	}
+}
 ?>

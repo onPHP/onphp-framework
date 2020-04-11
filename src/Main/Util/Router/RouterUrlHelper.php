@@ -9,21 +9,25 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class RouterUrlHelper extends StaticFactory
+namespace OnPHP\Main\Util\Router;
+
+use OnPHP\Core\Base\StaticFactory;
+
+final class RouterUrlHelper extends StaticFactory
+{
+	/**
+	 * @return string
+	**/
+	public static function url(
+		array $urlOptions = array(),
+		$name,
+		$reset = false,
+		$encode = true
+	)
 	{
-		/**
-		 * @return string
-		**/
-		public static function url(
-			array $urlOptions = array(),
-			$name,
-			$reset = false,
-			$encode = true
-		)
-		{
-			return
-				RouterRewrite::me()->
-				assembly($urlOptions, $name, $reset, $encode);
-		}
+		return
+			RouterRewrite::me()->
+			assembly($urlOptions, $name, $reset, $encode);
 	}
+}
 ?>

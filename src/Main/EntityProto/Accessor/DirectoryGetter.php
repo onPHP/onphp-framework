@@ -9,60 +9,69 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class DirectoryGetter extends PrototypedGetter
+namespace OnPHP\Main\EntityProto\Accessor;
+
+use OnPHP\Core\Exception\WrongArgumentException;
+use OnPHP\Core\Exception\WrongStateException;
+use OnPHP\Core\Form\Primitives\PrimitiveFile;
+use OnPHP\Core\Form\Primitives\PrimitiveForm;
+use OnPHP\Core\Form\Primitives\PrimitiveFormsList;
+use OnPHP\Main\EntityProto\PrototypedGetter;
+
+final class DirectoryGetter extends PrototypedGetter
+{
+	public function get($name)
 	{
-		public function get($name)
-		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			$primitive = $this->mapping[$name];
+		if (!isset($this->mapping[$name]))
+			throw new WrongArgumentException(
+				"knows nothing about property '{$name}'"
+			);
 
-			$path = $this->object.'/'.$primitive->getName();
+		$primitive = $this->mapping[$name];
 
-			if ($primitive instanceof PrimitiveFile)
+		$path = $this->object.'/'.$primitive->getName();
+
+		if ($primitive instanceof PrimitiveFile)
+			return $path;
+
+		if (!file_exists($path))
+			return null;
+
+		if ($primitive instanceof PrimitiveForm) {
+			if (!$primitive instanceof PrimitiveFormsList)
 				return $path;
 
-			if (!file_exists($path))
-				return null;
+			$result = array();
 
-			if ($primitive instanceof PrimitiveForm) {
-				if (!$primitive instanceof PrimitiveFormsList)
-					return $path;
+			$subDirs = glob($path.'/*');
 
-				$result = array();
+			if ($subDirs === false)
+				throw new WrongStateException(
+					'cannot read directory '.$path
+				);
 
-				$subDirs = glob($path.'/*');
-
-				if ($subDirs === false)
-					throw new WrongStateException(
-						'cannot read directory '.$path
-					);
-
-				foreach ($subDirs as $path)
-					$result[basename($path)] = $path;
-
-				return $result;
-			}
-
-			for ($i = 0; $i <= 42; ++$i) { // yanetut
-				$result = file_get_contents($path);
-
-				if ($result === false) {
-					throw new WrongArgumentException("failed to read $path");
-				}
-
-				if ($result)
-					break;
-
-				// NOTE: empty file COULD mean that data is being prepared now.
-				// On heavy loaded systems it means that file was just
-				// truncated and we should try again several times.
-			}
+			foreach ($subDirs as $path)
+				$result[basename($path)] = $path;
 
 			return $result;
 		}
+
+		for ($i = 0; $i <= 42; ++$i) { // yanetut
+			$result = file_get_contents($path);
+
+			if ($result === false) {
+				throw new WrongArgumentException("failed to read $path");
+			}
+
+			if ($result)
+				break;
+
+			// NOTE: empty file COULD mean that data is being prepared now.
+			// On heavy loaded systems it means that file was just
+			// truncated and we should try again several times.
+		}
+
+		return $result;
 	}
+}
 ?>

@@ -9,19 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class TimestampTZType extends DateType
-	{
-		public function getPrimitiveName()
-		{
-			return 'timestampTZ';
-		}
+namespace OnPHP\Meta\Type;
 
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::TIMESTAMPTZ)->setTimezoned(true)';
-		}
+use OnPHP\Core\Base\TimestampTZ;
+use OnPHP\Core\OSQL\DataType;
+
+/**
+ * @ingroup Types
+**/
+final class TimestampTZType extends DateType
+{
+	public function getPrimitiveName()
+	{
+		return 'timestampTZ';
 	}
+	
+	public function getFullClass() {
+		return TimestampTZ::class;
+	}
+
+	public function toColumnType()
+	{
+		return DataType::class.'::create('.DataType::class.'::TIMESTAMPTZ)->setTimezoned(true)';
+	}
+}
 ?>

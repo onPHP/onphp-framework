@@ -9,89 +9,98 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Core\Logic;
+
+use OnPHP\Main\DAO\ProtoDAO;
+use OnPHP\Core\OSQL\JoinCapableQuery;
+use OnPHP\Core\DB\Dialect;
+use OnPHP\Core\Form\Form;
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Exception\UnsupportedMethodException;
+
+/**
+ * @ingroup Logic
+**/
+final class PostfixUnaryExpression implements LogicalObject, MappableObject
+{
+	const IS_NULL			= 'IS NULL';
+	const IS_NOT_NULL		= 'IS NOT NULL';
+
+	const IS_TRUE			= 'IS TRUE';
+	const IS_FALSE			= 'IS FALSE';
+
+	private $subject	= null;
+	private $logic		= null;
+	private $brackets   = true;
+
 	/**
-	 * @ingroup Logic
-	**/
-	final class PostfixUnaryExpression implements LogicalObject, MappableObject
+	 * @return PostfixUnaryExpression
+	 */
+	public static function create($subject, $logic)
 	{
-		const IS_NULL			= 'IS NULL';
-		const IS_NOT_NULL		= 'IS NOT NULL';
+		return new self($subject, $logic);
+	}
 
-		const IS_TRUE			= 'IS TRUE';
-		const IS_FALSE			= 'IS FALSE';
+	public function __construct($subject, $logic)
+	{
+		$this->subject	= $subject;
+		$this->logic	= $logic;
+	}
 
-		private $subject	= null;
-		private $logic		= null;
-		private $brackets   = true;
-		
-		/**
-		 * @return PostfixUnaryExpression
-		 */
-		public static function create($subject, $logic)
-		{
-			return new self($subject, $logic);
-		}
-		
-		public function __construct($subject, $logic)
-		{
-			$this->subject	= $subject;
-			$this->logic	= $logic;
-		}
-		
-		/**
-		 * @param boolean $noBrackets
-		 * @return PostfixUnaryExpression
-		 */
-		public function noBrackets($noBrackets = true)
-		{
-			$this->brackets = !$noBrackets;
-			return $this;
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			$sql = $dialect->toFieldString($this->subject)
-				.' '.$dialect->logicToString($this->logic);
-			return $this->brackets ? "({$sql})" : $sql;
-		}
-		
-		/**
-		 * @return PostfixUnaryExpression
-		**/
-		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
-		{
-			$expression = new self(
-				$dao->guessAtom($this->subject, $query),
-				$this->logic
-			);
-			
-			return $expression->noBrackets(!$this->brackets);
-		}
-		
-		public function toBoolean(Form $form)
-		{
-			Assert::isTrue($this->brackets, 'brackets must be enabled');
-			$subject = $form->toFormValue($this->subject);
-				
-			switch ($this->logic) {
-				case self::IS_NULL:
-					return null === $subject;
+	/**
+	 * @param boolean $noBrackets
+	 * @return PostfixUnaryExpression
+	 */
+	public function noBrackets($noBrackets = true)
+	{
+		$this->brackets = !$noBrackets;
+		return $this;
+	}
 
-				case self::IS_NOT_NULL:
-					return null !== $subject;
+	public function toDialectString(Dialect $dialect)
+	{
+		$sql = $dialect->toFieldString($this->subject)
+			.' '.$dialect->logicToString($this->logic);
+		return $this->brackets ? "({$sql})" : $sql;
+	}
 
-				case self::IS_TRUE:
-					return true === $subject;
+	/**
+	 * @return PostfixUnaryExpression
+	**/
+	public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
+	{
+		$expression = new self(
+			$dao->guessAtom($this->subject, $query),
+			$this->logic
+		);
 
-				case self::IS_FALSE:
-					return false === $subject;
+		return $expression->noBrackets(!$this->brackets);
+	}
 
-				default:
-					
-					throw new UnsupportedMethodException(
-						"'{$this->logic}' doesn't supported yet"
-					);
-			}
+	public function toBoolean(Form $form)
+	{
+		Assert::isTrue($this->brackets, 'brackets must be enabled');
+		$subject = $form->toFormValue($this->subject);
+
+		switch ($this->logic) {
+			case self::IS_NULL:
+				return null === $subject;
+
+			case self::IS_NOT_NULL:
+				return null !== $subject;
+
+			case self::IS_TRUE:
+				return true === $subject;
+
+			case self::IS_FALSE:
+				return false === $subject;
+
+			default:
+
+				throw new UnsupportedMethodException(
+					"'{$this->logic}' doesn't supported yet"
+				);
 		}
 	}
+}
 ?>

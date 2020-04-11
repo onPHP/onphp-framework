@@ -9,30 +9,36 @@
  *                                                                         *
  ***************************************************************************/
 
-	abstract class DirectoryMutator extends PrototypedSetter
+namespace OnPHP\Main\EntityProto\Accessor;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Main\EntityProto\EntityProto;
+use OnPHP\Main\EntityProto\PrototypedSetter;
+
+abstract class DirectoryMutator extends PrototypedSetter
+{
+	private $getter = null;
+
+	public function __construct(EntityProto $proto, &$object)
 	{
-		private $getter = null;
-		
-		public function __construct(EntityProto $proto, &$object)
-		{
-			Assert::isTrue(
-				is_dir($object) && is_writable($object),
-				'object must be a writeble directory'
-			);
-			
-			return parent::__construct($proto, $object);
-		}
-		
-		/**
-		 * @return FormGetter
-		**/
-		public function getGetter()
-		{
-			if (!$this->getter) {
-				$this->getter = new DirectoryGetter($this->proto, $this->object);
-			}
-			
-			return $this->getter;
-		}
+		Assert::isTrue(
+			is_dir($object) && is_writable($object),
+			'object must be a writeble directory'
+		);
+
+		return parent::__construct($proto, $object);
 	}
+
+	/**
+	 * @return FormGetter
+	**/
+	public function getGetter()
+	{
+		if (!$this->getter) {
+			$this->getter = new DirectoryGetter($this->proto, $this->object);
+		}
+
+		return $this->getter;
+	}
+}
 ?>

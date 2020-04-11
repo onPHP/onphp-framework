@@ -9,42 +9,49 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class DirectorySetter extends DirectoryMutator
+namespace OnPHP\Main\EntityProto\Accessor;
+
+use OnPHP\Core\Exception\UnimplementedFeatureException;
+use OnPHP\Core\Exception\WrongArgumentException;
+use OnPHP\Core\Form\Primitives\PrimitiveFile;
+use OnPHP\Core\Form\Primitives\PrimitiveForm;
+
+final class DirectorySetter extends DirectoryMutator
+{
+	public function set($name, $value)
 	{
-		public function set($name, $value)
-		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			$primitive = $this->mapping[$name];
-			
-			if ($value && !is_scalar($value) && !is_array($value)) {
-				throw new UnimplementedFeatureException(
-					"directory services for property $name is unsupported yet"
-				);
+		if (!isset($this->mapping[$name]))
+			throw new WrongArgumentException(
+				"knows nothing about property '{$name}'"
+			);
+
+		$primitive = $this->mapping[$name];
+
+		if ($value && !is_scalar($value) && !is_array($value)) {
+			throw new UnimplementedFeatureException(
+				"directory services for property $name is unsupported yet"
+			);
+		}
+
+		$path = $this->object.'/'.$primitive->getName();
+
+		if ($primitive instanceof PrimitiveFile) {
+			if ($value && $value != $path && file_exists($value)) {
+				copy($value, $path);
 			}
 
-			$path = $this->object.'/'.$primitive->getName();
+			touch($path);
 
-			if ($primitive instanceof PrimitiveFile) {
-				if ($value && $value != $path && file_exists($value)) {
-					copy($value, $path);
-				}
+			return $this;
 
-				touch($path);
-
-				return $this;
-
-			} elseif ($primitive instanceof PrimitiveForm) {
-				// under builder control
-				return $this;
-			}
-
-			file_put_contents($path, $value);
-			
+		} elseif ($primitive instanceof PrimitiveForm) {
+			// under builder control
 			return $this;
 		}
+
+		file_put_contents($path, $value);
+
+		return $this;
 	}
+}
 ?>

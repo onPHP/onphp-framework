@@ -8,50 +8,52 @@
  *   License, or (at your option) any later version.                       *
  ***************************************************************************/
 
+namespace OnPHP\Core\Base;
+
+/**
+ * Timestamp with time zone
+ */
+class TimestampTZ extends Timestamp
+{
 	/**
-	 * Timestamp with time zone
+	 * @static
+	 * @return string
 	 */
-	class TimestampTZ extends Timestamp
+	protected static function getFormat()
 	{
-		/**
-		 * @static
-		 * @return string
-		 */
-		protected static function getFormat()
-		{
-			return 'Y-m-d H:i:sO';
-		}
+		return 'Y-m-d H:i:sO';
+	}
 
-		/**
-		 * @return Timestamp
-		**/
-		public function toTimestamp($zone=null)
-		{
-			if($zone) {
+	/**
+	 * @return Timestamp
+	**/
+	public function toTimestamp($zone=null)
+	{
+		if($zone) {
 
-				if(
-					!($zone instanceof DateTimeZone)
-					&& is_scalar($zone)
-				) {
-					$zone = new DateTimeZone($zone);
-				}
-
-				return new static($this->toStamp(), $zone);
+			if(
+				!($zone instanceof \DateTimeZone)
+				&& is_scalar($zone)
+			) {
+				$zone = new \DateTimeZone($zone);
 			}
 
-			return  parent::toTimestamp();
+			return new static($this->toStamp(), $zone);
 		}
 
-		public static function compare(Date $left, Date $right)
-		{
-			Assert::isTrue(
-				(
-					$left instanceof TimestampTZ
-					&& $right instanceof TimestampTZ
-				)
-			);
-
-			return parent::compare($left, $right);
-		}
+		return  parent::toTimestamp();
 	}
+
+	public static function compare(Date $left, Date $right)
+	{
+		Assert::isTrue(
+			(
+				$left instanceof TimestampTZ
+				&& $right instanceof TimestampTZ
+			)
+		);
+
+		return parent::compare($left, $right);
+	}
+}
 ?>

@@ -9,64 +9,68 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Net\Http;
+
+use OnPHP\Main\Flow\HttpRequest;
+
+/**
+ * @ingroup Http
+**/
+interface HttpClient
+{
 	/**
-	 * @ingroup Http
+	 * @param $timeout int in seconds
 	**/
-	interface HttpClient
-	{
-		/**
-		 * @param $timeout int in seconds
-		**/
-		public function setTimeout($timeout);
-		public function getTimeout();
-		
-		/**
-		 * whether to follow header Location or not
-		**/
-		public function setFollowLocation(/* boolean */ $really);
-		public function isFollowLocation();
-		
-		/**
-		 * maximum number of header Location followed
-		**/
-		public function setMaxRedirects($maxRedirects);
-		public function getMaxRedirects();
-		
-		/**
-		 * @param $request HttpRequest
-		 * @return HttpResponse
-		**/
-		public function send(HttpRequest $request);
+	public function setTimeout($timeout);
+	public function getTimeout();
 
-		/**
-		 * @param $key string
-		 * @param $value string
-		 * @return CurlHttpClient
-		**/
-		public function setOption($key, $value);
+	/**
+	 * whether to follow header Location or not
+	**/
+	public function setFollowLocation(/* boolean */ $really);
+	public function isFollowLocation();
 
-		/**
-		 * @param $key string
-		 * @return CurlHttpClient
-		**/
-		public function dropOption($key);
+	/**
+	 * maximum number of header Location followed
+	**/
+	public function setMaxRedirects($maxRedirects);
+	public function getMaxRedirects();
 
-		public function getOption($key);
+	/**
+	 * @param $request HttpRequest
+	 * @return HttpResponse
+	**/
+	public function send(HttpRequest $request);
 
-		/**
-		 * @param $really boolean
-		 * @return CurlHttpClient
-		**/
-		public function setNoBody($really);
+	/**
+	 * @param $key string
+	 * @param $value string
+	 * @return CurlHttpClient
+	**/
+	public function setOption($key, $value);
 
-		public function hasNoBody();
+	/**
+	 * @param $key string
+	 * @return CurlHttpClient
+	**/
+	public function dropOption($key);
 
-		/**
-		 * @param $maxFileSize int
-		 * @return CurlHttpClient
-		**/
-		public function setMaxFileSize($maxFileSize);
+	public function getOption($key);
 
-		public function getMaxFileSize();
-	}
+	/**
+	 * @param $really boolean
+	 * @return CurlHttpClient
+	**/
+	public function setNoBody($really);
+
+	public function hasNoBody();
+
+	/**
+	 * @param $maxFileSize int
+	 * @return CurlHttpClient
+	**/
+	public function setMaxFileSize($maxFileSize);
+
+	public function getMaxFileSize();
+}
 ?>

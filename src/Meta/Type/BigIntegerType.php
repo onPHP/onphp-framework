@@ -9,19 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class BigIntegerType extends IntegerType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\OSQL\DataType;
+
+/**
+ * @ingroup Types
+**/
+class BigIntegerType extends IntegerType
+{
+	public function getSize()
 	{
-		public function getSize()
-		{
-			return 8;
-		}
-		
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::BIGINT)';
-		}
+		return 8;
 	}
+	
+	public function toColumnType()
+	{
+		return DataType::class.'::create('.DataType::class.'::BIGINT)';
+	}
+}
 ?>

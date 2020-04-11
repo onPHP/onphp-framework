@@ -9,19 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Primitives;
+
+/**
+ * @ingroup Primitives
+**/
+final class PrimitivePlainList extends PrimitiveList
+{
 	/**
-	 * @ingroup Primitives
+	 * @return PrimitivePlainList
 	**/
-	final class PrimitivePlainList extends PrimitiveList
+	public function setList($list)
 	{
-		/**
-		 * @return PrimitivePlainList
-		**/
-		public function setList($list)
-		{
-			$this->list = array_combine($list, $list);
-			
-			return $this;
-		}
+		$this->list = array_combine($list, $list);
+
+		return $this;
 	}
+}
 ?>

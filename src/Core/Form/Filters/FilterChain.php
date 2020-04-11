@@ -9,47 +9,49 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+/**
+ * Chained Filtrator.
+ * 
+ * @ingroup Form
+**/
+final class FilterChain implements Filtrator
+{
+	private $chain = array();
+
 	/**
-	 * Chained Filtrator.
-	 * 
-	 * @ingroup Form
+	 * @return FilterChain
 	**/
-	final class FilterChain implements Filtrator
+	public static function create()
 	{
-		private $chain = array();
-
-		/**
-		 * @return FilterChain
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return FilterChain
-		**/
-		public function add(Filtrator $filter)
-		{
-			$this->chain[] = $filter;
-			return $this;
-		}
-
-		/**
-		 * @return FilterChain
-		**/
-		public function dropAll()
-		{
-			$this->chain = array();
-			return $this;
-		}
-
-		public function apply($value)
-		{
-			foreach ($this->chain as $filter)
-				$value = $filter->apply($value);
-
-			return $value;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return FilterChain
+	**/
+	public function add(Filtrator $filter)
+	{
+		$this->chain[] = $filter;
+		return $this;
+	}
+
+	/**
+	 * @return FilterChain
+	**/
+	public function dropAll()
+	{
+		$this->chain = array();
+		return $this;
+	}
+
+	public function apply($value)
+	{
+		foreach ($this->chain as $filter)
+			$value = $filter->apply($value);
+
+		return $value;
+	}
+}
 ?>

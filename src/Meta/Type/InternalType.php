@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	abstract class InternalType extends ObjectType
+namespace OnPHP\Meta\Type;
+
+/**
+ * @ingroup Types
+**/
+abstract class InternalType extends ObjectType
+{
+	public function isGeneric()
 	{
-		public function isGeneric()
-		{
-			return true;
-		}
+		return true;
 	}
+}
 ?>

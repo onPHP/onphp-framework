@@ -9,6 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Exception\WrongArgumentException;
+use OnPHP\Core\OSQL\DataType;
+use OnPHP\Meta\Entity\MetaClass;
+use OnPHP\Meta\Entity\MetaClassProperty;
+
 	/**
 	 * @ingroup Types
 	**/
@@ -55,7 +63,7 @@
 
 		public function toColumnType()
 		{
-			return 'DataType::create(DataType::BOOLEAN)';
+			return DataType::class.'::create('.DataType::class.'::BOOLEAN)';
 		}
 
 		public function toGetter(

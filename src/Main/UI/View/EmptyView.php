@@ -9,30 +9,34 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\UI\View;
+
+use OnPHP\Core\Base\Stringable;
+
+/**
+ * @ingroup Flow
+**/
+class EmptyView implements View, Stringable
+{
 	/**
-	 * @ingroup Flow
+	 * @return EmptyView
 	**/
-	class EmptyView implements View, Stringable
+	public static function create()
 	{
-		/**
-		 * @return EmptyView
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return EmptyView
-		**/
-		public function render(/* Model */ $model = null)
-		{
-			return $this;
-		}
-		
-		public function toString()
-		{
-			return null;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return EmptyView
+	**/
+	public function render(/* Model */ $model = null)
+	{
+		return $this;
+	}
+
+	public function toString()
+	{
+		return null;
+	}
+}
 ?>

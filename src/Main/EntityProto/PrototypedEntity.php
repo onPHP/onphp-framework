@@ -9,11 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Main
-	**/
-	interface PrototypedEntity
-	{
-		public static function entityProto();
-	}
+namespace OnPHP\Main\EntityProto;
+
+/**
+ * @ingroup Main
+**/
+interface PrototypedEntity
+{
+	public static function entityProto();
+}
 ?>

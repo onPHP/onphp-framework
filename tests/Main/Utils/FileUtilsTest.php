@@ -1,28 +1,34 @@
 <?php
-	final class FileUtilsTest extends TestCase
+
+namespace OnPHP\Tests\Main\Utils;
+
+use OnPHP\Main\Util\FileUtils;
+use OnPHP\Tests\TestEnvironment\TestCase;
+
+final class FileUtilsTest extends TestCase
+{
+	public function testUniqueNames()
 	{
-		public function testUniqueNames()
-		{
-			$uniqueName = FileUtils::makeUniqueName('Chasey Lain.jpeg');
-			
-			$this->assertEquals(
-				substr($uniqueName, strpos($uniqueName, '.')),
-				'.jpeg'
-			);
+		$uniqueName = FileUtils::makeUniqueName('Chasey Lain.jpeg');
 
-			$uniqueName = FileUtils::makeUniqueName('Елена Беркова.jpeg');
-			
-			$this->assertEquals(
-				substr($uniqueName, strpos($uniqueName, '.')),
-				'.jpeg'
-			);
+		$this->assertEquals(
+			substr($uniqueName, strpos($uniqueName, '.')),
+			'.jpeg'
+		);
 
-			$uniqueName = FileUtils::makeUniqueLatinName('Елена Беркова.gif'); //animated gif ;)
-			
-			$this->assertEquals(
-				substr($uniqueName, strpos($uniqueName, '.')),
-				'.gif'
-			);
-		}
+		$uniqueName = FileUtils::makeUniqueName('Елена Беркова.jpeg');
+
+		$this->assertEquals(
+			substr($uniqueName, strpos($uniqueName, '.')),
+			'.jpeg'
+		);
+
+		$uniqueName = FileUtils::makeUniqueLatinName('Елена Беркова.gif'); //animated gif ;)
+
+		$this->assertEquals(
+			substr($uniqueName, strpos($uniqueName, '.')),
+			'.gif'
+		);
 	}
+}
 ?>

@@ -9,5 +9,9 @@
  *                                                                         *
  ***************************************************************************/
 
-	class CollectionItem extends IdentifiableObject {/*_*/}
+namespace OnPHP\Main\Base;
+
+use OnPHP\Core\Base\IdentifiableObject;
+
+class CollectionItem extends IdentifiableObject {/*_*/}
 ?>

@@ -9,25 +9,29 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * Unserialize string
+ * 
+ * @ingroup Filters
+ * @deprecated Because of the potential security problem.
+**/
+final class UnserializeFilter extends BaseFilter
+{
 	/**
-	 * Unserialize string
-	 * 
-	 * @ingroup Filters
-	 * @deprecated Because of the potential security problem.
+	 * @return UnserializeFilter
 	**/
-	final class UnserializeFilter extends BaseFilter
+	public static function me()
 	{
-		/**
-		 * @return UnserializeFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return unserialize($value);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function apply($value)
+	{
+		return unserialize($value);
+	}
+}
 ?>

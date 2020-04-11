@@ -9,40 +9,45 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\OpenId;
+
+use OnPHP\Main\Net\HttpUrl;
+use OnPHP\Core\Base\Timestamp;
+
+/**
+ * @ingroup OpenId
+**/
+interface OpenIdConsumerAssociationManager
+{
 	/**
-	 * @ingroup OpenId
+	 * @return OpenIdConsumerAssociation
 	**/
-	interface OpenIdConsumerAssociationManager
-	{
-		/**
-		 * @return OpenIdConsumerAssociation
-		**/
-		public function findByHandle($handle, $type);
-		
-		/**
-		 * @return OpenIdConsumerAssociation
-		**/
-		public function findByServer(HttpUrl $server);
-		
-		/**
-		 * @return OpenIdConsumerAssociation
-		**/
-		public function makeAndSave(
-			$handle,
-			$type,
-			$secred,
-			Timestamp $expires,
-			HttpUrl $server
-		);
-		
-		/**
-		 * @return OpenIdConsumerAssociationManager
-		**/
-		public function purgeExpired();
-		
-		/**
-		 * @return OpenIdConsumerAssociationManager
-		**/
-		public function purgeByHandle($handle);
-	}
+	public function findByHandle($handle, $type);
+
+	/**
+	 * @return OpenIdConsumerAssociation
+	**/
+	public function findByServer(HttpUrl $server);
+
+	/**
+	 * @return OpenIdConsumerAssociation
+	**/
+	public function makeAndSave(
+		$handle,
+		$type,
+		$secred,
+		Timestamp $expires,
+		HttpUrl $server
+	);
+
+	/**
+	 * @return OpenIdConsumerAssociationManager
+	**/
+	public function purgeExpired();
+
+	/**
+	 * @return OpenIdConsumerAssociationManager
+	**/
+	public function purgeByHandle($handle);
+}
 ?>

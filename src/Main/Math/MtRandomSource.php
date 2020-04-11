@@ -9,31 +9,36 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Math;
+
+use OnPHP\Core\Base\Singleton;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * based on pseudorandom generator mt_rand
+ * 
+ * @ingroup Math
+**/
+final class MtRandomSource extends Singleton implements RandomSource
+{
 	/**
-	 * based on pseudorandom generator mt_rand
-	 * 
-	 * @ingroup Math
+	 * @return MtRandomSource
 	**/
-	final class MtRandomSource extends Singleton implements RandomSource
+	public static function me()
 	{
-		/**
-		 * @return MtRandomSource
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function getBytes($numberOfBytes)
-		{
-			Assert::isPositiveInteger($numberOfBytes);
-			
-			$bytes = null;
-			for ($i = 0; $i < $numberOfBytes; $i += 4) {
-				$bytes .= pack('L', mt_rand());
-			}
-			
-			return substr($bytes, 0, $numberOfBytes);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function getBytes($numberOfBytes)
+	{
+		Assert::isPositiveInteger($numberOfBytes);
+
+		$bytes = null;
+		for ($i = 0; $i < $numberOfBytes; $i += 4) {
+			$bytes .= pack('L', mt_rand());
+		}
+
+		return substr($bytes, 0, $numberOfBytes);
+	}
+}
 ?>

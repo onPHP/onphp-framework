@@ -9,29 +9,31 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Util\TuringTest;
+
+/**
+ * @ingroup Turing
+**/
+abstract class Drawer
+{
+	private	$turingImage	= null;
+
 	/**
-	 * @ingroup Turing
+	 * @return Drawer
 	**/
-	abstract class Drawer
+	public function setTuringImage(TuringImage $turingImage)
 	{
-		private	$turingImage	= null;
-		
-		/**
-		 * @return Drawer
-		**/
-		public function setTuringImage(TuringImage $turingImage)
-		{
-			$this->turingImage = $turingImage;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return TuringImage
-		**/
-		public function getTuringImage()
-		{
-			return $this->turingImage;
-		}
+		$this->turingImage = $turingImage;
+
+		return $this;
 	}
+
+	/**
+	 * @return TuringImage
+	**/
+	public function getTuringImage()
+	{
+		return $this->turingImage;
+	}
+}
 ?>

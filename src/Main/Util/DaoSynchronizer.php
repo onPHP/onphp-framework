@@ -9,77 +9,83 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Util;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Main\DAO\GenericDAO;
+use OnPHP\Main\DAO\ProtoDAO;
+
+/**
+ * Prototyped variant of DAO synchronizer.
+ *
+ * @ingroup Utils
+**/
+class DaoSynchronizer extends CustomizableDaoSynchronizer
+{
 	/**
-	 * Prototyped variant of DAO synchronizer.
-	 *
-	 * @ingroup Utils
+	 * @return DaoSynchronizer
 	**/
-	class DaoSynchronizer extends CustomizableDaoSynchronizer
+	public static function create()
 	{
-		/**
-		 * @return DaoSynchronizer
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return DaoSynchronizer
-		**/
-		public function setMaster(GenericDAO $master)
-		{
-			Assert::isInstance($master, 'ProtoDAO');
-			
-			return parent::setMaster($master);
-		}
-		
-		/**
-		 * @return DaoSynchronizer
-		**/
-		public function setSlave(GenericDAO $slave)
-		{
-			Assert::isInstance($slave, 'ProtoDAO');
-			
-			return parent::setSlave($slave);
-		}
-		
-		protected function sync($old, $object)
-		{
-			$changed = array();
-			
-			foreach (
-				$this->slave->getProtoClass()->
-					getPropertyList() as $property
-			) {
-				$getter = $property->getGetter();
-				
-				if ($property->getClassName() === null) {
-					if ($old->$getter() != $object->$getter())
-						$changed[$property->getName()] = $property;
-					
-				} else {
-					if (
-						(
-							is_object($old->$getter())
-							&& !$old->$getter()->isEqualTo($object->$getter())
-						)
-						|| (!$old->$getter() && $object->$getter())
-					)
-						$changed[$property->getName()] = $property;
-				}
-			}
-			
-			if ($changed) {
-				return $this->changed($old, $object, $changed);
-			}
-			
-			return false;
-		}
-		
-		protected function changed($old, $object, $properties)
-		{
-			return parent::sync($old, $object);
-		}
+		return new self;
 	}
+
+	/**
+	 * @return DaoSynchronizer
+	**/
+	public function setMaster(GenericDAO $master)
+	{
+		Assert::isInstance($master, ProtoDAO::class);
+
+		return parent::setMaster($master);
+	}
+
+	/**
+	 * @return DaoSynchronizer
+	**/
+	public function setSlave(GenericDAO $slave)
+	{
+		Assert::isInstance($slave, ProtoDAO::class);
+
+		return parent::setSlave($slave);
+	}
+
+	protected function sync($old, $object)
+	{
+		$changed = array();
+
+		foreach (
+			$this->slave->getProtoClass()->
+				getPropertyList() as $property
+		) {
+			$getter = $property->getGetter();
+
+			if ($property->getClassName() === null) {
+				if ($old->$getter() != $object->$getter())
+					$changed[$property->getName()] = $property;
+
+			} else {
+				if (
+					(
+						is_object($old->$getter())
+						&& !$old->$getter()->isEqualTo($object->$getter())
+					)
+					|| (!$old->$getter() && $object->$getter())
+				)
+					$changed[$property->getName()] = $property;
+			}
+		}
+
+		if ($changed) {
+			return $this->changed($old, $object, $changed);
+		}
+
+		return false;
+	}
+
+	protected function changed($old, $object, $properties)
+	{
+		return parent::sync($old, $object);
+	}
+}
 ?>

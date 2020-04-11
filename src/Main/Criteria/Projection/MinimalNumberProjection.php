@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class MinimalNumberProjection extends AggregateProjection
+namespace OnPHP\Main\Criteria\Projection;
+
+/**
+ * @ingroup Projection
+**/
+final class MinimalNumberProjection extends AggregateProjection
+{
+	public function getFunctionName()
 	{
-		public function getFunctionName()
-		{
-			return 'min';
-		}
+		return 'min';
 	}
+}
 ?>

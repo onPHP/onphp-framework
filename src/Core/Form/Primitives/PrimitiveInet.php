@@ -9,28 +9,30 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveInet extends BasePrimitive
+namespace OnPHP\Core\Form\Primitives;
+
+/**
+ * @ingroup Primitives
+**/
+final class PrimitiveInet extends BasePrimitive
+{
+	public function import($scope)
 	{
-		public function import($scope)
-		{
-			if (!BasePrimitive::import($scope))
-				return null;
-			
-			if (
-				is_string($scope[$this->name])
-				&& (($length = strlen($scope[$this->name])) < 16)
-				&& (substr_count($scope[$this->name], '.', null, $length) == 3)
-				&& (ip2long($scope[$this->name]) !== false)
-			) {
-				$this->value = $scope[$this->name];
-				
-				return true;
-			}
-			
-			return false;
+		if (!BasePrimitive::import($scope))
+			return null;
+
+		if (
+			is_string($scope[$this->name])
+			&& (($length = strlen($scope[$this->name])) < 16)
+			&& (substr_count($scope[$this->name], '.', null, $length) == 3)
+			&& (ip2long($scope[$this->name]) !== false)
+		) {
+			$this->value = $scope[$this->name];
+
+			return true;
 		}
+
+		return false;
 	}
+}
 ?>

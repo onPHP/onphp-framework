@@ -8,161 +8,173 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
-	
+
+namespace OnPHP\Main\Flow;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Main\UI\View\MultiPrefixPhpViewResolver;
+use OnPHP\Main\UI\View\RedirectView;
+use OnPHP\Main\UI\View\SimplePhpView;
+use OnPHP\Main\Util\ClassUtils;
+use OnPHP\Main\Util\Router\Router;
+use OnPHP\Main\Util\Router\RouterRegexpRule;
+use OnPHP\Main\Util\Router\RouterRewrite;
+
+/**
+ * @ingroup Flow
+**/
+class SimpleFrontController implements Controller
+{
+	const DEFAULT_CONTROLLER	= 'main';
+	const DEFAULT_TEMPLATE		= 'main';
+	const DEFAULT_ACTION		= 'show';
+								//LIKE /controller/42/action.html
+	const ROUTE_REGEXP			= '(\w+)?((/(\d+))?(/(\w+)))?(\.(.*))?';
+
+	const DEFAULT_ROUTE_NAME	= '*';
+
+	const DEFAULT_FORMAT		= 'html';
+
+
+	protected $allowedFormatList	= array(self::DEFAULT_FORMAT);
+
 	/**
-	 * @ingroup Flow
-	**/
-	class SimpleFrontController implements Controller
+	 * @var HttpRequest
+	 */
+	protected $request				= null;
+	private $controllerName			= null;
+
+	private $templatesDirectory		= null;
+
+	/**
+	 * @return SimpleFrontController
+	 */
+	public static function create($templatesDirectory)
 	{
-		const DEFAULT_CONTROLLER	= 'main';
-		const DEFAULT_TEMPLATE		= 'main';
-		const DEFAULT_ACTION		= 'show';
-									//LIKE /controller/42/action.html
-		const ROUTE_REGEXP			= '(\w+)?((/(\d+))?(/(\w+)))?(\.(.*))?';
-		
-		const DEFAULT_ROUTE_NAME	= '*';
-		
-		const DEFAULT_FORMAT		= 'html';
-		
-		
-		protected $allowedFormatList	= array(self::DEFAULT_FORMAT);
-		
-		/**
-		 * @var HttpRequest
-		 */
-		protected $request				= null;
-		private $controllerName			= null;
-		
-		private $templatesDirectory		= null;
-		
-		/**
-		 * @return SimpleFrontController
-		 */
-		public static function create($templatesDirectory)
-		{
-			return new static($templatesDirectory);
-		}
-		
-		public function __construct($templatesDirectory)
-		{
-			$this->templatesDirectory = $templatesDirectory;
-		}
-		
-		public function handleRequest(HttpRequest $request)
-		{
-			$this->request = $request;
-			
-			$this->getRouter()->route($request);
+		return new static($templatesDirectory);
+	}
 
-			$this->prepareResponseFormat($request);
+	public function __construct($templatesDirectory)
+	{
+		$this->templatesDirectory = $templatesDirectory;
+	}
 
-			$this->handleMav(
-				$this->
-					makeControllerChain()->
-					handleRequest($request)
-			);
-		}
-		
-		/**
-		 * @return Router
-		 */
-		protected function getRouter()
-		{
-			return
-				RouterRewrite::me()->
-					addRoute(
-						self::DEFAULT_ROUTE_NAME,
-						RouterRegexpRule::create(self::ROUTE_REGEXP)->
-						setMap(
-							array(
-								1 => 'area',
-								4 => 'id',
-								6 => 'action',
-								8 => 'format',
-							)
-						)->
-						setDefaults(
-							array(
-								'area' => self::DEFAULT_CONTROLLER,
-								'action' => self::DEFAULT_ACTION,
-								'id' => 0,
-								'format' => self::DEFAULT_FORMAT
-							)
+	public function handleRequest(HttpRequest $request)
+	{
+		$this->request = $request;
+
+		$this->getRouter()->route($request);
+
+		$this->prepareResponseFormat($request);
+
+		$this->handleMav(
+			$this->
+				makeControllerChain()->
+				handleRequest($request)
+		);
+	}
+
+	/**
+	 * @return Router
+	 */
+	protected function getRouter()
+	{
+		return
+			RouterRewrite::me()->
+				addRoute(
+					self::DEFAULT_ROUTE_NAME,
+					RouterRegexpRule::create(self::ROUTE_REGEXP)->
+					setMap(
+						array(
+							1 => 'area',
+							4 => 'id',
+							6 => 'action',
+							8 => 'format',
 						)
-					);
-		}
-		
-		protected function prepareResponseFormat()
-		{
-			if ($this->request->hasAttachedVar('format')) {
-				Assert::isNotFalse(
-					array_search(
-						$this->request->getAttachedVar('format'),
-						$this->allowedFormatList
+					)->
+					setDefaults(
+						array(
+							'area' => self::DEFAULT_CONTROLLER,
+							'action' => self::DEFAULT_ACTION,
+							'id' => 0,
+							'format' => self::DEFAULT_FORMAT
+						)
 					)
 				);
-				
-			} else {
-				$this->request->setAttachedVar('format', self::DEFAULT_FORMAT);
-			}
-		}
-		
-		/**
-		 * @return Controller
-		 */
-		protected function makeControllerChain()
-		{
-			$this->controllerName = self::DEFAULT_CONTROLLER;
-			
-			if (
-				$this->request->hasAttachedVar('area')
-				&& $this->request->getAttachedVar('area')
-				&& ClassUtils::isClassName(
-					$this->request->getAttachedVar('area')
+	}
+
+	protected function prepareResponseFormat()
+	{
+		if ($this->request->hasAttachedVar('format')) {
+			Assert::isNotFalse(
+				array_search(
+					$this->request->getAttachedVar('format'),
+					$this->allowedFormatList
 				)
-			)
-				$this->controllerName = $this->request->getAttachedVar('area');
+			);
 
-			return new $this->controllerName;
-		}
-		
-		protected function handleMav(ModelAndView $mav)
-		{
-			$view = $mav->getView() ?: self::DEFAULT_TEMPLATE;
-			$model = $mav->getModel();
-
-			if (!$view instanceof RedirectView)
-				$model->set('area', $this->controllerName);
-
-			if (is_string($view)) {
-				if ($view == $this->controllerName)
-					$view = self::DEFAULT_TEMPLATE;
-
-				$viewResolver = $this->getViewResolver();
-				
-				foreach ($this->getTemplatePathList() as $templatePath) {
-					$viewResolver->addPrefix($templatePath);
-				}
-				
-				$view = $viewResolver->resolveViewName($view);
-			}
-
-			$view->render($model);
-		}
-		
-		protected function getTemplatePathList()
-		{
-			return
-				array(
-					$this->templatesDirectory.$this->request->getAttachedVar('format').'/'.$this->controllerName.'/',
-					$this->templatesDirectory.$this->request->getAttachedVar('format').'/'
-				);
-		}
-		
-		protected function getViewResolver()
-		{
-			return
-				MultiPrefixPhpViewResolver::create()->
-					setViewClassName('SimplePhpView');
+		} else {
+			$this->request->setAttachedVar('format', self::DEFAULT_FORMAT);
 		}
 	}
+
+	/**
+	 * @return Controller
+	 */
+	protected function makeControllerChain()
+	{
+		$this->controllerName = self::DEFAULT_CONTROLLER;
+
+		if (
+			$this->request->hasAttachedVar('area')
+			&& $this->request->getAttachedVar('area')
+			&& ClassUtils::isClassName(
+				$this->request->getAttachedVar('area')
+			)
+		)
+			$this->controllerName = $this->request->getAttachedVar('area');
+
+		return new $this->controllerName;
+	}
+
+	protected function handleMav(ModelAndView $mav)
+	{
+		$view = $mav->getView() ?: self::DEFAULT_TEMPLATE;
+		$model = $mav->getModel();
+
+		if (!$view instanceof RedirectView)
+			$model->set('area', $this->controllerName);
+
+		if (is_string($view)) {
+			if ($view == $this->controllerName)
+				$view = self::DEFAULT_TEMPLATE;
+
+			$viewResolver = $this->getViewResolver();
+
+			foreach ($this->getTemplatePathList() as $templatePath) {
+				$viewResolver->addPrefix($templatePath);
+			}
+
+			$view = $viewResolver->resolveViewName($view);
+		}
+
+		$view->render($model);
+	}
+
+	protected function getTemplatePathList()
+	{
+		return
+			array(
+				$this->templatesDirectory.$this->request->getAttachedVar('format').'/'.$this->controllerName.'/',
+				$this->templatesDirectory.$this->request->getAttachedVar('format').'/'
+			);
+	}
+
+	protected function getViewResolver()
+	{
+		return
+			MultiPrefixPhpViewResolver::create()->
+				setViewClassName(SimplePhpView::class);
+	}
+}
+?>

@@ -9,75 +9,81 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Main\Base;
+
+use OnPHP\Core\Base\IdentifiableObject;
+use OnPHP\Core\Base\Stringable;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @see NamedTree
+ * 
+ * @ingroup Helpers
+**/
+abstract class IdentifiableTree
+	extends IdentifiableObject
+	implements Stringable
+{
+	private $parent	= null;
+
 	/**
-	 * @see NamedTree
-	 * 
-	 * @ingroup Helpers
+	 * @return IdentifiableTree
 	**/
-	abstract class IdentifiableTree
-		extends IdentifiableObject
-		implements Stringable
+	public function getParent()
 	{
-		private $parent	= null;
-		
-		/**
-		 * @return IdentifiableTree
-		**/
-		public function getParent()
-		{
-			return $this->parent;
-		}
-		
-		/**
-		 * @return IdentifiableTree
-		**/
-		public function setParent(IdentifiableTree $parent)
-		{
-			Assert::brothers($this, $parent);
-			
-			$this->parent = $parent;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return IdentifiableTree
-		**/
-		public function dropParent()
-		{
-			$this->parent = null;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return IdentifiableTree
-		**/
-		public function getRoot()
-		{
-			$current = $this;
-			$next = $this;
-			
-			while ($next) {
-				$current = $next;
-				$next = $next->getParent();
-			}
-			
-			return $current;
-		}
-		
-		public function toString($delimiter = ', ')
-		{
-			$ids = array($this->getId());
-			
-			$parent = $this;
-			
-			while ($parent = $parent->getParent())
-				$ids[] = $parent->getId();
-			
-			$ids = array_reverse($ids);
-			
-			return implode($delimiter, $ids);
-		}
+		return $this->parent;
 	}
+
+	/**
+	 * @return IdentifiableTree
+	**/
+	public function setParent(IdentifiableTree $parent)
+	{
+		Assert::brothers($this, $parent);
+
+		$this->parent = $parent;
+
+		return $this;
+	}
+
+	/**
+	 * @return IdentifiableTree
+	**/
+	public function dropParent()
+	{
+		$this->parent = null;
+
+		return $this;
+	}
+
+	/**
+	 * @return IdentifiableTree
+	**/
+	public function getRoot()
+	{
+		$current = $this;
+		$next = $this;
+
+		while ($next) {
+			$current = $next;
+			$next = $next->getParent();
+		}
+
+		return $current;
+	}
+
+	public function toString($delimiter = ', ')
+	{
+		$ids = array($this->getId());
+
+		$parent = $this;
+
+		while ($parent = $parent->getParent())
+			$ids[] = $parent->getId();
+
+		$ids = array_reverse($ids);
+
+		return implode($delimiter, $ids);
+	}
+}
 ?>

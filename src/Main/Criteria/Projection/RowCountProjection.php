@@ -9,8 +9,10 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class RowCountProjection extends CountProjection {/*_*/}
+namespace OnPHP\Main\Criteria\Projection;
+
+/**
+ * @ingroup Projection
+**/
+final class RowCountProjection extends CountProjection {/*_*/}
 ?>

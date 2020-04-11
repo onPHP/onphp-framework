@@ -9,19 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Feed
-	**/
-	final class FeedItemContentType extends Enumeration
-	{
-		const TEXT		= 1;
-		const HTML		= 2;
-		const XHTML		= 3;
-		
-		protected $names = array(
-			self::TEXT		=> 'text',
-			self::HTML		=> 'html',
-			self::XHTML		=> 'xhtml'
-		);
-	}
+namespace OnPHP\Main\Markup\Feed;
+
+use OnPHP\Core\Base\Enumeration;
+
+/**
+ * @ingroup Feed
+**/
+final class FeedItemContentType extends Enumeration
+{
+	const TEXT		= 1;
+	const HTML		= 2;
+	const XHTML		= 3;
+
+	protected $names = array(
+		self::TEXT		=> 'text',
+		self::HTML		=> 'html',
+		self::XHTML		=> 'xhtml'
+	);
+}
 ?>

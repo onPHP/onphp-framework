@@ -9,16 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\UI\View;
+
+/**
+ * @ingroup Flow
+ * @ingroup Module
+**/
+interface ViewResolver
+{
 	/**
-	 * @ingroup Flow
-	 * @ingroup Module
+	 * @param	$viewName	string
+	 * @return	View
 	**/
-	interface ViewResolver
-	{
-		/**
-		 * @param	$viewName	string
-		 * @return	View
-		**/
-		public function resolveViewName($viewName);
-	}
+	public function resolveViewName($viewName);
+}
 ?>

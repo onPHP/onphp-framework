@@ -9,29 +9,33 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\DB\Transaction;
+
+use OnPHP\Core\OSQL\Query;
+
+/**
+ * Transaction-like wrapper around DB's queryNull.
+ * 
+ * @ingroup Transaction
+**/
+final class FakeTransaction extends BaseTransaction
+{
 	/**
-	 * Transaction-like wrapper around DB's queryNull.
-	 * 
-	 * @ingroup Transaction
+	 * @return FakeTransaction
 	**/
-	final class FakeTransaction extends BaseTransaction
+	public function add(Query $query)
 	{
-		/**
-		 * @return FakeTransaction
-		**/
-		public function add(Query $query)
-		{
-			$this->db->queryNull($query);
-			
-			return $this;
-		}
-		
-		/**
-		 * @return FakeTransaction
-		**/
-		public function flush()
-		{
-			return $this;
-		}
+		$this->db->queryNull($query);
+
+		return $this;
 	}
+
+	/**
+	 * @return FakeTransaction
+	**/
+	public function flush()
+	{
+		return $this;
+	}
+}
 ?>

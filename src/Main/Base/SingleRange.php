@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Helpers
-	**/
-	interface SingleRange
-	{
-		public function getStart();
-		public function getEnd();
-		
-		public function contains($probe);
-	}
+namespace OnPHP\Main\Base;
+
+/**
+ * @ingroup Helpers
+**/
+interface SingleRange
+{
+	public function getStart();
+	public function getEnd();
+
+	public function contains($probe);
+}
 ?>

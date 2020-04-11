@@ -9,52 +9,54 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartDataSimpleEncoding
+	extends BaseGoogleChartDataEncoding
+{
+	protected $name = 's:';
+
+	private $encodingChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	private $length = null;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartDataSimpleEncoding
 	**/
-	final class GoogleChartDataSimpleEncoding
-		extends BaseGoogleChartDataEncoding
+	public static function create()
 	{
-		protected $name = 's:';
-		
-		private $encodingChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		private $length = null;
-		
-		/**
-		 * @return GoogleChartDataSimpleEncoding
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function __construct()
-		{
-			$this->length = strlen($this->encodingChars);
-		}
-		
-		public function encode(GoogleChartDataSet $set)
-		{
-			$encodedString = null;
-			
-			foreach ($set->getData() as $dataElement) {
-				if ($dataElement >= 0)
-					 $encodedString .=
-						$this->encodingChars[
-							round($this->length - 1)
-							* $dataElement
-							/ $this->maxValue
-						];
-				else
-					$encodedString .= '_';
-			}
-			
-			return $encodedString;
-		}
-		
-		public function toString()
-		{
-			return $this->name;
-		}
+		return new self;
 	}
+
+	public function __construct()
+	{
+		$this->length = strlen($this->encodingChars);
+	}
+
+	public function encode(GoogleChartDataSet $set)
+	{
+		$encodedString = null;
+
+		foreach ($set->getData() as $dataElement) {
+			if ($dataElement >= 0)
+				 $encodedString .=
+					$this->encodingChars[
+						round($this->length - 1)
+						* $dataElement
+						/ $this->maxValue
+					];
+			else
+				$encodedString .= '_';
+		}
+
+		return $encodedString;
+	}
+
+	public function toString()
+	{
+		return $this->name;
+	}
+}
 ?>

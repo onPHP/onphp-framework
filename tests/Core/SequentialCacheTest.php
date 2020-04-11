@@ -9,72 +9,79 @@
  *                                                                          *
  ****************************************************************************/
 
-	final class SequentialCacheTest extends TestCase
+namespace OnPHP\Tests\Core;
+
+use OnPHP\Core\Cache\AggregateCache;
+use OnPHP\Core\Cache\CyclicAggregateCache;
+use OnPHP\Core\Cache\PeclMemcached;
+use OnPHP\Core\Cache\SequentialCache;
+use OnPHP\Core\Cache\SocketMemcached;
+use OnPHP\Tests\TestEnvironment\TestCase;
+
+final class SequentialCacheTest extends TestCase
+{
+	public function testMultiCacheAliveLast()
 	{
-		public function testMultiCacheAliveLast()
-		{
-			$alifePeer = new PeclMemcached("127.0.0.1", "11211"); //some existing memcached
-			$alifePeer->set('some_key', 'some_value');
-			
-			$deadPeer = new SocketMemcached("165.42.42.42", "11211"); //some not existing memcache
-			
-			$slave1 = new PeclMemcached("35.143.65.241", "11211"); //some not existing memcache
+		$alifePeer = new PeclMemcached("127.0.0.1", "11211"); //some existing memcached
+		$alifePeer->set('some_key', 'some_value');
 
-			$slave2 =
-				AggregateCache::create()->
-				addPeer('dead', new PeclMemcached("165.34.176.221", "11211"))-> //some not existing memcache
-				addPeer('dead_too', new PeclMemcached("165.34.176.222", "11211")); //some not existing memcache
-
-			$cache = new SequentialCache($deadPeer, array($slave1, $slave2, $alifePeer));
-
-			$result = $cache->get("some_key");
-
-			$this->assertEquals($result, 'some_value');
-		}
+		$deadPeer = new SocketMemcached("165.42.42.42", "11211"); //some not existing memcache
 		
-		public function testMultiCacheAliveFirst()
-		{
-			$alifePeer = new SocketMemcached("127.0.0.1", "11211"); //some existing memcached
-			$alifePeer->set('some_key', 'some_value');
-			
-			$slave1 = new PeclMemcached("35.143.65.241", "11211"); //some not existing memcache
+		$slave1 = new PeclMemcached("35.143.65.241", "11211", 1, 1/*timeout=1ms*/); //some not existing memcache
 
-			$slave2 = new PeclMemcached("165.34.176.221", "11211"); //some not existing memcache
+		$slave2 =
+			AggregateCache::create()->
+			addPeer('dead', new PeclMemcached("165.34.176.221", "11211", 1, 1/*timeout=1ms*/))-> //some not existing memcache
+			addPeer('dead_too', new PeclMemcached("165.34.176.222", "11211", 1, 1/*timeout=1ms*/)); //some not existing memcache
 
-			$cache = new SequentialCache($alifePeer, array($slave1, $slave1, $slave2));
+		$cache = new SequentialCache($deadPeer, array($slave1, $slave2, $alifePeer));
 
-			$result = $cache->get("some_key");
+		$result = $cache->get("some_key");
 
-			$this->assertEquals($result, 'some_value');
-		}
-		
-		public function testMultiCacheAliveOnly()
-		{
-			$alifePeer =
-				CyclicAggregateCache::create()-> //some existing memcached
-				setSummaryWeight(42)->
-				addPeer('first', new PeclMemcached("127.0.0.1", "11211"), 0)->
-				addPeer('second', new SocketMemcached("127.0.0.1", "11211"), 21);
-			
-			$alifePeer->set('some_key', 'some_value');
-			
-			$cache = new SequentialCache($alifePeer);
-
-			$result = $cache->get("some_key");
-
-			$this->assertEquals($result, 'some_value');
-		}
-		
-		/**
-		 * @expectedException RuntimeException 
-		 */
-		public function testMultiCacheNoAlive()
-		{
-			$dead1 = new PeclMemcached("35.143.65.241", "11211", 0.01);	//some not existing memcache
-			$dead2 = new PeclMemcached("165.34.176.221", "11211", 0.01);	//some not existing memcache
-			
-			$cache = new SequentialCache($dead1, array($dead2));
-
-			$result = $cache->get("some_key");	//will throw RuntimeException
-		}
+		$this->assertEquals($result, 'some_value');
 	}
+
+	public function testMultiCacheAliveFirst()
+	{
+		$alifePeer = new SocketMemcached("127.0.0.1", "11211"); //some existing memcached
+		$alifePeer->set('some_key', 'some_value');
+
+		$slave1 = new PeclMemcached("35.143.65.241", "11211", 1, 1/*timeout=1ms*/); //some not existing memcache
+
+		$slave2 = new PeclMemcached("165.34.176.221", "11211", 1, 1/*timeout=1ms*/); //some not existing memcache
+
+		$cache = new SequentialCache($alifePeer, array($slave1, $slave1, $slave2));
+
+		$result = $cache->get("some_key");
+
+		$this->assertEquals($result, 'some_value');
+	}
+
+	public function testMultiCacheAliveOnly()
+	{
+		$alifePeer =
+			CyclicAggregateCache::create()-> //some existing memcached
+			setSummaryWeight(42)->
+			addPeer('first', new PeclMemcached("127.0.0.1", "11211"), 0)->
+			addPeer('second', new SocketMemcached("127.0.0.1", "11211"), 21);
+
+		$alifePeer->set('some_key', 'some_value');
+
+		$cache = new SequentialCache($alifePeer);
+
+		$result = $cache->get("some_key");
+
+		$this->assertEquals($result, 'some_value');
+	}
+
+	public function testMultiCacheNoAlive()
+	{
+		$dead1 = new PeclMemcached("35.143.65.241", "11211", 1, 1/*timeout=1ms*/);	//some not existing memcache
+		$dead2 = new PeclMemcached("165.34.176.221", "11211", 1, 1/*timeout=1ms*/);	//some not existing memcache
+
+		$cache = new SequentialCache($dead1, array($dead2));
+
+		$this->expectException(\RuntimeException::class);
+		$result = $cache->get("some_key");
+	}
+}

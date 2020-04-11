@@ -9,5 +9,7 @@
  *                                                                         *
  ***************************************************************************/
 
-	class AMQPQueueConsumer extends AMQPDefaultConsumer {/**/}
+namespace OnPHP\Main\Util\AMQP;
+
+class AMQPQueueConsumer extends AMQPDefaultConsumer {/**/}
 ?>

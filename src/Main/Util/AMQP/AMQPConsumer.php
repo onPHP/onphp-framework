@@ -9,80 +9,82 @@
  *                                                                         *
  ***************************************************************************/
 
-	interface AMQPConsumer
-	{
-		/**
-		 * @return AMQPChannelInterface
-		**/
-		public function getChannel();
+namespace OnPHP\Main\Util\AMQP;
 
-		/**
-		 * Called when a delivery appears for this consumer.
-		 * @param AMQPIncomingMessage $delivery
-		 * @return void
-		**/
-		public function handleDelivery(AMQPIncomingMessage $delivery);
+interface AMQPConsumer
+{
+	/**
+	 * @return AMQPChannelInterface
+	**/
+	public function getChannel();
 
-		/**
-		 * Called when the consumer is first registered by a call
-		 * to {@link Channel#basicConsume}.
-		 *
-		 * @param consumerTag the defined consumerTag
-		 * @return void
-		**/
-		public function handleConsumeOk($consumerTag);
+	/**
+	 * Called when a delivery appears for this consumer.
+	 * @param AMQPIncomingMessage $delivery
+	 * @return void
+	**/
+	public function handleDelivery(AMQPIncomingMessage $delivery);
 
-		/**
-		 * Called when the consumer is deregistered by a call
-		 * to {@link Channel#basicCancel}.
-		 *
-		 * @param consumerTag the defined consumerTag
-		 * @return void
-		**/
-		public function handleCancelOk($consumerTag);
+	/**
+	 * Called when the consumer is first registered by a call
+	 * to {@link Channel#basicConsume}.
+	 *
+	 * @param consumerTag the defined consumerTag
+	 * @return void
+	**/
+	public function handleConsumeOk($consumerTag);
 
-		/**
-		 * Called when the consumer is changed tag
-		 *
-		 * @param string $fromTag
-		 * @param string $toTag
-		 * @return void
-		**/
-		public function handleChangeConsumerTag($fromTag, $toTag);
+	/**
+	 * Called when the consumer is deregistered by a call
+	 * to {@link Channel#basicCancel}.
+	 *
+	 * @param consumerTag the defined consumerTag
+	 * @return void
+	**/
+	public function handleCancelOk($consumerTag);
 
-		/**
-		 * @return AMQPConsumer
-		**/
-		public function setQueueName($name);
+	/**
+	 * Called when the consumer is changed tag
+	 *
+	 * @param string $fromTag
+	 * @param string $toTag
+	 * @return void
+	**/
+	public function handleChangeConsumerTag($fromTag, $toTag);
 
-		/**
-		 * @return string
-		**/
-		public function getQueueName();
+	/**
+	 * @return AMQPConsumer
+	**/
+	public function setQueueName($name);
 
-		/**
-		 * @return AMQPConsumer
-		**/
-		public function setAutoAcknowledge($boolean);
+	/**
+	 * @return string
+	**/
+	public function getQueueName();
 
-		/**
-		 * @return boolean
-		**/
-		public function isAutoAcknowledge();
+	/**
+	 * @return AMQPConsumer
+	**/
+	public function setAutoAcknowledge($boolean);
 
-		/**
-		 * @return AMQPConsumer
-		**/
-		public function setConsumerTag($consumerTag);
+	/**
+	 * @return boolean
+	**/
+	public function isAutoAcknowledge();
 
-		/**
-		 * @return string
-		**/
-		public function getConsumerTag();
+	/**
+	 * @return AMQPConsumer
+	**/
+	public function setConsumerTag($consumerTag);
 
-		/**
-		 * @return AMQPIncomingMessage
-		**/
-		public function getNextDelivery();
-	}
+	/**
+	 * @return string
+	**/
+	public function getConsumerTag();
+
+	/**
+	 * @return AMQPIncomingMessage
+	**/
+	public function getNextDelivery();
+}
 ?>

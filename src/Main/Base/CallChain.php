@@ -9,62 +9,72 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Base;
+
+use OnPHP\Core\Exception\WrongStateException;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup Helpers
+**/
+final class CallChain
+{
+	private $chain = array();
+
 	/**
-	 * @ingroup Helpers
+	 * @return CallChain
 	**/
-	final class CallChain
+	public static function create()
 	{
-		private $chain = array();
-		
-		/**
-		 * @return CallChain
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return CallChain
-		**/
-		public function add($object)
-		{
-			$this->chain[] = $object;
-			
-			return $this;
-		}
-		
-		public function call($method, $args = null /* , ... */)
-		{
-			if (!$this->chain)
-				throw new WrongStateException();
-			
-			$args = func_get_args();
-			array_shift($args);
-			
-			if (count($args)) {
-				$result = $args;
-				foreach ($this->chain as $object)
-					$result = call_user_func_array(
-						array($object, $method),
-						is_array($result)
-							? $result
-							: array($result)
-					);
-			} else {
-				foreach ($this->chain as $object)
-					$result = call_user_func(array($object, $method));
-			}
-			
-			return $result;
-		}
-		
-		public function __call($method, $args = null)
-		{
-			return call_user_func_array(
-				array($this, 'call'),
-				array_merge(array($method), $args)
-			);
-		}
+		return new self;
 	}
+
+	/**
+	 * @return CallChain
+	**/
+	public function add($object)
+	{
+		$this->chain[] = $object;
+
+		return $this;
+	}
+
+	public function call($method, $args = null /* , ... */)
+	{
+		if (!$this->chain)
+			throw new WrongStateException();
+		
+		$args = func_get_args();
+		array_shift($args);
+
+		if (count($args)) {
+			$result = $args;
+			foreach ($this->chain as $object) {
+				Assert::methodExists($object, $method);
+				
+				$result = call_user_func_array(
+					array($object, $method),
+					is_array($result)
+						? $result
+						: array($result)
+				);
+			}
+		} else {
+			foreach ($this->chain as $object) {
+				Assert::methodExists($object, $method);
+				$result = call_user_func(array($object, $method));
+			}
+		}
+
+		return $result;
+	}
+
+	public function __call($method, $args = null)
+	{
+		return call_user_func_array(
+			array($this, 'call'),
+			array_merge(array($method), $args)
+		);
+	}
+}
 ?>

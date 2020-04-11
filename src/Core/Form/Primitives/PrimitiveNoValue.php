@@ -9,51 +9,55 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Core\Form\Primitives;
+
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup Primitives
+**/
+final class PrimitiveNoValue extends BasePrimitive
+{
 	/**
-	 * @ingroup Primitives
+	 * @return PrimitiveNoValue
 	**/
-	final class PrimitiveNoValue extends BasePrimitive
+	public function setValue($value)
 	{
-		/**
-		 * @return PrimitiveNoValue
-		**/
-		public function setValue($value)
-		{
-			Assert::isUnreachable('No value!');
-			
-			return $this;
-		}
-		
-		public function setDefaultValue($default)
-		{
-			Assert::isUnreachable('No default value!');
-			
-			return $this;
-		}
-		
-		public function setRawValue($raw)
-		{
-			Assert::isUnreachable('No raw value!');
-			
-			return $this;
-		}
-		
-		public function importValue($value)
-		{
-			Assert::isUnreachable('No import value!');
-			
-			return $this;
-		}
-		
-		public function import($scope)
-		{
-			if (
-				array_key_exists($this->name, $scope)
-				&& $scope[$this->name] == null
-			)
-				return $this->imported = true;
-			
-			return null;
-		}
+		Assert::isUnreachable('No value!');
+
+		return $this;
 	}
+
+	public function setDefaultValue($default)
+	{
+		Assert::isUnreachable('No default value!');
+
+		return $this;
+	}
+
+	public function setRawValue($raw)
+	{
+		Assert::isUnreachable('No raw value!');
+
+		return $this;
+	}
+
+	public function importValue($value)
+	{
+		Assert::isUnreachable('No import value!');
+
+		return $this;
+	}
+
+	public function import($scope)
+	{
+		if (
+			array_key_exists($this->name, $scope)
+			&& $scope[$this->name] == null
+		)
+			return $this->imported = true;
+
+		return null;
+	}
+}
 ?>

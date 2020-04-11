@@ -9,24 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup MetaBase
-	**/
-	final class MetaClassType extends Enumeration
+namespace OnPHP\Meta\Entity;
+
+use OnPHP\Core\Base\Enumeration;
+
+/**
+ * @ingroup MetaBase
+**/
+final class MetaClassType extends Enumeration
+{
+	const CLASS_FINAL		= 'final';
+	const CLASS_ABSTRACT	= 'abstract';
+	const CLASS_SPOOKED		= 'spooked';
+
+	protected $names = array(
+		self::CLASS_FINAL		=> self::CLASS_FINAL,
+		self::CLASS_ABSTRACT	=> self::CLASS_ABSTRACT,
+		self::CLASS_SPOOKED		=> self::CLASS_SPOOKED
+	);
+
+	public static function getAnyId()
 	{
-		const CLASS_FINAL		= 'final';
-		const CLASS_ABSTRACT	= 'abstract';
-		const CLASS_SPOOKED		= 'spooked';
-		
-		protected $names = array(
-			self::CLASS_FINAL		=> self::CLASS_FINAL,
-			self::CLASS_ABSTRACT	=> self::CLASS_ABSTRACT,
-			self::CLASS_SPOOKED		=> self::CLASS_SPOOKED
-		);
-		
-		public static function getAnyId()
-		{
-			return self::CLASS_SPOOKED;
-		}
+		return self::CLASS_SPOOKED;
 	}
+}
 ?>

@@ -9,141 +9,145 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Util\TuringTest;
+
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup Turing
+**/
+final class CodeGenerator
+{
+	private	$length				= null;
+
+	private	$lowerAllowed		= true;
+	private $upperAllowed		= true;
+	private $numbersAllowed		= true;
+	private $similarAllowed		= true;
+
+	static private $similarSymbols	= array('0', 'o', '1', 'l');
+
 	/**
-	 * @ingroup Turing
+	 * @return CodeGenerator
 	**/
-	final class CodeGenerator
+	public static function create()
 	{
-		private	$length				= null;
-		
-		private	$lowerAllowed		= true;
-		private $upperAllowed		= true;
-		private $numbersAllowed		= true;
-		private $similarAllowed		= true;
-		
-		static private $similarSymbols	= array('0', 'o', '1', 'l');
-		
-		/**
-		 * @return CodeGenerator
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function generate()
-		{
-			$code = null;
-			
-			for ($i = 0; $i < $this->length; ++$i)
-				$code .= $this->generateOneSymbol();
-			
-			return $code;
-		}
-		
-		/**
-		 * @return CodeGenerator
-		**/
-		public function setLength($length)
-		{
-			$this->length = $length;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return CodeGenerator
-		**/
-		public function setLowerAllowed($lowerAllowed = true)
-		{
-			$this->lowerAllowed = $lowerAllowed;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return CodeGenerator
-		**/
-		public function setUpperAllowed($upperAllowed = true)
-		{
-			$this->upperAllowed = $upperAllowed;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return CodeGenerator
-		**/
-		public function setSimilarAllowed($similarAllowed = true)
-		{
-			$this->similarAllowed = $similarAllowed;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return CodeGenerator
-		**/
-		public function setNumbersAllowed($numbersAllowed = true)
-		{
-			$this->numbersAllowed = $numbersAllowed;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return CodeGenerator
-		**/
-		public function setCharactersAllowed($charactersAllowed = true)
-		{
-			$this->setLowerAllowed($charactersAllowed);
-			$this->setUpperAllowed($charactersAllowed);
-			
-			return $this;
-		}
-		
-		private function generateOneSymbol()
-		{
-			$variants = array();
-			
-			Assert::isTrue(
-				$this->lowerAllowed
-				|| $this->upperAllowed
-				|| $this->numbersAllowed,
-				
-				'what exactly should i generate?'
-			);
-			
-			do {
-				if ($this->lowerAllowed)
-					$variants[] = $this->randomChar();
-				
-				if ($this->upperAllowed)
-					$variants[] = strtoupper($this->randomChar());
-				
-				if ($this->numbersAllowed)
-					$variants[] = $this->randomNumber();
-				
-				shuffle($variants);
-				
-				$symbol = $variants[0];
-				
-			} while (
-				(!$this->similarAllowed)
-				&& (in_array($symbol, self::$similarSymbols))
-			);
-			
-			return $symbol;
-		}
-		
-		private function randomNumber()
-		{
-			return mt_rand(0,9);
-		}
-		
-		private function randomChar()
-		{
-			return chr(mt_rand(ord('a'), ord('z')));
-		}
+		return new self;
 	}
+
+	public function generate()
+	{
+		$code = null;
+
+		for ($i = 0; $i < $this->length; ++$i)
+			$code .= $this->generateOneSymbol();
+
+		return $code;
+	}
+
+	/**
+	 * @return CodeGenerator
+	**/
+	public function setLength($length)
+	{
+		$this->length = $length;
+
+		return $this;
+	}
+
+	/**
+	 * @return CodeGenerator
+	**/
+	public function setLowerAllowed($lowerAllowed = true)
+	{
+		$this->lowerAllowed = $lowerAllowed;
+
+		return $this;
+	}
+
+	/**
+	 * @return CodeGenerator
+	**/
+	public function setUpperAllowed($upperAllowed = true)
+	{
+		$this->upperAllowed = $upperAllowed;
+
+		return $this;
+	}
+
+	/**
+	 * @return CodeGenerator
+	**/
+	public function setSimilarAllowed($similarAllowed = true)
+	{
+		$this->similarAllowed = $similarAllowed;
+
+		return $this;
+	}
+
+	/**
+	 * @return CodeGenerator
+	**/
+	public function setNumbersAllowed($numbersAllowed = true)
+	{
+		$this->numbersAllowed = $numbersAllowed;
+
+		return $this;
+	}
+
+	/**
+	 * @return CodeGenerator
+	**/
+	public function setCharactersAllowed($charactersAllowed = true)
+	{
+		$this->setLowerAllowed($charactersAllowed);
+		$this->setUpperAllowed($charactersAllowed);
+
+		return $this;
+	}
+
+	private function generateOneSymbol()
+	{
+		$variants = array();
+
+		Assert::isTrue(
+			$this->lowerAllowed
+			|| $this->upperAllowed
+			|| $this->numbersAllowed,
+
+			'what exactly should i generate?'
+		);
+
+		do {
+			if ($this->lowerAllowed)
+				$variants[] = $this->randomChar();
+
+			if ($this->upperAllowed)
+				$variants[] = strtoupper($this->randomChar());
+
+			if ($this->numbersAllowed)
+				$variants[] = $this->randomNumber();
+
+			shuffle($variants);
+
+			$symbol = $variants[0];
+
+		} while (
+			(!$this->similarAllowed)
+			&& (in_array($symbol, self::$similarSymbols))
+		);
+
+		return $symbol;
+	}
+
+	private function randomNumber()
+	{
+		return mt_rand(0,9);
+	}
+
+	private function randomChar()
+	{
+		return chr(mt_rand(ord('a'), ord('z')));
+	}
+}
 ?>

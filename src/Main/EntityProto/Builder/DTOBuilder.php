@@ -9,13 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
-	abstract class DTOBuilder extends PrototypedBuilder
+namespace OnPHP\Main\EntityProto\Builder;
+
+use OnPHP\Main\EntityProto\PrototypedBuilder;
+
+abstract class DTOBuilder extends PrototypedBuilder
+{
+	protected function createEmpty()
 	{
-		protected function createEmpty()
-		{
-			$className = $this->proto->className().'DTO';
-			
-			return new $className;
-		}
+		$className = $this->proto->className().'DTO';
+
+		return new $className;
 	}
+}
 ?>

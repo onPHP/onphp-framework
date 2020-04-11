@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	interface Stringable
-	{
-		public function toString();
-	}
+namespace OnPHP\Core\Base;
+
+/**
+ * @ingroup Base
+ * @ingroup Module
+**/
+interface Stringable
+{
+	public function toString();
+}
 ?>

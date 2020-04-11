@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Flow;
+
+/**
+ * @ingroup Flow
+**/
+interface Controller
+{
 	/**
-	 * @ingroup Flow
+	 * @return ModelAndView
 	**/
-	interface Controller
-	{
-		/**
-		 * @return ModelAndView
-		**/
-		public function handleRequest(HttpRequest $request);
-	}
+	public function handleRequest(HttpRequest $request);
+}
 ?>

@@ -9,15 +9,19 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Base;
+
+use OnPHP\Main\Base\AbstractProtoClass;
+
+/**
+ * @ingroup Base
+ * @ingroup Module
+**/
+interface Prototyped
+{
 	/**
-	 * @ingroup Base
-	 * @ingroup Module
+	 * @return AbstractProtoClass
 	**/
-	interface Prototyped
-	{
-		/**
-		 * @return AbstractProtoClass
-		**/
-		public static function proto();
-	}
+	public static function proto();
+}
 ?>

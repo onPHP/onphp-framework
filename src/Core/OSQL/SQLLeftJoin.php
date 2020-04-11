@@ -9,14 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	**/
-	final class SQLLeftJoin extends SQLBaseJoin
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\DB\Dialect;
+
+/**
+ * @ingroup OSQL
+**/
+final class SQLLeftJoin extends SQLBaseJoin
+{
+	public function toDialectString(Dialect $dialect)
 	{
-		public function toDialectString(Dialect $dialect)
-		{
-			return parent::baseToString($dialect, 'LEFT ');
-		}
+		return parent::baseToString($dialect, 'LEFT ');
 	}
+}
 ?>

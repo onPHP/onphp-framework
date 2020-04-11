@@ -9,53 +9,55 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+class GoogleChartLabel extends BaseGoogleChartParameter
+{
+	protected $name = 'chl';
+
+	protected $labels = array();
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartLabel
 	**/
-	class GoogleChartLabel extends BaseGoogleChartParameter
+	public static function create()
 	{
-		protected $name = 'chl';
-		
-		protected $labels = array();
-		
-		/**
-		 * @return GoogleChartLabel
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return GoogleChartLabel
-		**/
-		public function addLabel($label)
-		{
-			$this->labels[] = $label;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return GoogleChartLabel
-		**/
-		public function setLabels($labels)
-		{
-			$this->labels = $labels;
-			
-			return $this;
-		}
-		
-		public function getCount()
-		{
-			return count($this->labels);
-		}
-		
-		public function toString()
-		{
-			$labels = implode('|', $this->labels);
-			
-			return $this->name.'='.$labels;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return GoogleChartLabel
+	**/
+	public function addLabel($label)
+	{
+		$this->labels[] = $label;
+
+		return $this;
+	}
+
+	/**
+	 * @return GoogleChartLabel
+	**/
+	public function setLabels($labels)
+	{
+		$this->labels = $labels;
+
+		return $this;
+	}
+
+	public function getCount()
+	{
+		return count($this->labels);
+	}
+
+	public function toString()
+	{
+		$labels = implode('|', $this->labels);
+
+		return $this->name.'='.$labels;
+	}
+}
 ?>

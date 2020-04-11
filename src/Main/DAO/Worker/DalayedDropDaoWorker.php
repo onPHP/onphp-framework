@@ -9,49 +9,55 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * DAO worker with dealyed object drop from cache
-	 * 
-	 * @see CommonDaoWorker for manual-caching one.
-	 * @see SmartDaoWorker for transparent one.
-	 * 
-	 * @ingroup DAOs
-	**/
-	final class DalayedDropDaoWorker extends NullDaoWorker
+namespace OnPHP\Main\DAO\Worker;
+
+use OnPHP\Main\DAO\Uncacher\UncacherBase;
+use OnPHP\Main\DAO\Uncacher\UncacherNullDaoWorker;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * DAO worker with dealyed object drop from cache
+ * 
+ * @see CommonDaoWorker for manual-caching one.
+ * @see SmartDaoWorker for transparent one.
+ * 
+ * @ingroup DAO
+**/
+final class DalayedDropDaoWorker extends NullDaoWorker
+{
+	private $modifiedIds = array();
+
+	/// uncachers
+	//@{
+	public function uncacheById($id)
 	{
-		private $modifiedIds = array();
-		
-		/// uncachers
-		//@{
-		public function uncacheById($id)
-		{
-			$this->modifiedIds[$id] = $id;
-			
-			return true;
-		}
-		
-		/**
-		 * @param mixed $id
-		 * @return UncacherBase
-		 */
-		public function getUncacherById($id) {
-			return UncacherNullDaoWorker::create();
-		}
-		
-		public function dropWith($worker)
-		{
-			Assert::classExists($worker);
-			
-			if ($this->modifiedIds) {
-				$workerObject = new $worker($this->dao);
-				
-				$workerObject->uncacheByIds($this->modifiedIds);
-				
-				$this->modifiedIds = array();
-			}
-			
-			return $this;
-		}
-		//@}
+		$this->modifiedIds[$id] = $id;
+
+		return true;
 	}
+
+	/**
+	 * @param mixed $id
+	 * @return UncacherBase
+	 */
+	public function getUncacherById($id) {
+		return UncacherNullDaoWorker::create();
+	}
+
+	public function dropWith($worker)
+	{
+		Assert::classExists($worker);
+
+		if ($this->modifiedIds) {
+			$workerObject = new $worker($this->dao);
+
+			$workerObject->uncacheByIds($this->modifiedIds);
+
+			$this->modifiedIds = array();
+		}
+
+		return $this;
+	}
+	//@}
+}
 ?>

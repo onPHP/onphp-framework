@@ -1,8 +1,28 @@
 <!-- $Id$ -->
 
-<!ELEMENT metaconfiguration (include*, classes*, sources*)>
+<!ELEMENT metaconfiguration (include*, namespaces*, uses*, classes*, sources*)>
+
+<!ELEMENT namespaces (namespace+)>
+
+<!ELEMENT namespace EMPTY>
+<!ATTLIST namespace
+		name		CDATA #REQUIRED
+		path		CDATA #REQUIRED
+		build		(true|false) "true"
+>
+
+<!ELEMENT uses (use+)>
+
+<!ELEMENT use EMPTY>
+<!ATTLIST use
+		name		CDATA #REQUIRED
+		import		CDATA #REQUIRED
+>
 
 <!ELEMENT classes (class*)>
+<!ATTLIST classes
+		namespace	CDATA #REQUIRED
+>
 
 <!ELEMENT class (implement*, properties*, pattern)>
 <!ATTLIST class

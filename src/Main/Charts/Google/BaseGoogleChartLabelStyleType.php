@@ -9,18 +9,20 @@
  *                                                                         *
  ***************************************************************************/
 
-	// TODO: support for other types
-	
-	/**
-	 * @ingroup GoogleChart
-	**/
-	abstract class BaseGoogleChartLabelStyleType
+namespace OnPHP\Main\Charts\Google;
+
+// TODO: support for other types
+
+/**
+ * @ingroup GoogleChart
+**/
+abstract class BaseGoogleChartLabelStyleType
+{
+	protected $name = null;
+
+	public function toString()
 	{
-		protected $name = null;
-		
-		public function toString()
-		{
-			return $this->name;
-		}
+		return $this->name;
 	}
+}
 ?>

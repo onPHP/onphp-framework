@@ -9,105 +9,112 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\DB\Transaction;
+
+use OnPHP\Core\DB\DB;
+use OnPHP\Main\DAO\GenericDAO;
+use OnPHP\Core\DB\DBPool;
+use OnPHP\Core\Exception\WrongStateException;
+
+/**
+ * Utility to create transaction and not think about current nested level
+ * 
+ * @ingroup Transaction
+**/
+final class InnerTransaction
+{
 	/**
-	 * Utility to create transaction and not think about current nested level
-	 * 
-	 * @ingroup Transaction
+	 * @var DB
 	**/
-	final class InnerTransaction
+	private $db = null;
+	private $savepointName = null;
+	private $finished = false;
+
+	/**
+	 * @param DB|GenericDAO $database
+	 * @param IsolationLevel $level
+	 * @param AccessMode $mode
+	 * @return InnerTransaction
+	**/
+	public static function begin(
+		$database,
+		IsolationLevel $level = null,
+		AccessMode $mode = null
+	)
 	{
-		/**
-		 * @var DB
-		**/
-		private $db = null;
-		private $savepointName = null;
-		private $finished = false;
-		
-		/**
-		 * @param DB|GenericDAO $database
-		 * @param IsolationLevel $level
-		 * @param AccessMode $mode
-		 * @return InnerTransaction
-		**/
-		public static function begin(
-			$database,
-			IsolationLevel $level = null,
-			AccessMode $mode = null
-		)
-		{
-			return new self($database, $level, $mode);
+		return new self($database, $level, $mode);
+	}
+
+	/**
+	 * @param DB|GenericDAO $database
+	 * @param IsolationLevel $level
+	 * @param AccessMode $mode
+	**/
+	public function __construct(
+		$database,
+		IsolationLevel $level = null,
+		AccessMode $mode = null
+	)
+	{
+		if ($database instanceof DB) {
+			$this->db = $database;
+		} elseif ($database instanceof GenericDAO) {
+			$this->db = DBPool::getByDao($database);
+		} else {
+			throw new WrongStateException(
+				'$database must be instance of DB or GenericDAO'
+			);
 		}
-		
-		/**
-		 * @param DB|GenericDAO $database
-		 * @param IsolationLevel $level
-		 * @param AccessMode $mode
-		**/
-		public function __construct(
-			$database,
-			IsolationLevel $level = null,
-			AccessMode $mode = null
-		)
-		{
-			if ($database instanceof DB) {
-				$this->db = $database;
-			} elseif ($database instanceof GenericDAO) {
-				$this->db = DBPool::getByDao($database);
-			} else {
-				throw new WrongStateException(
-					'$database must be instance of DB or GenericDAO'
-				);
-			}
-			
-			$this->beginTransaction($level, $mode);
-		}
-		
-		public function commit()
-		{
-			$this->assertFinished();
-			$this->finished = true;
-			if (!$this->savepointName) {
-				$this->db->commit();
-			} else {
-				$this->db->savepointRelease($this->savepointName);
-			}
-		}
-		
-		public function rollback()
-		{
-			$this->assertFinished();
-			$this->finished = true;
-			if (!$this->savepointName) {
-				$this->db->rollback();
-			} else {
-				$this->db->savepointRollback($this->savepointName);
-			}
-		}
-		
-		private function beginTransaction(
-			IsolationLevel $level = null,
-			AccessMode $mode = null
-		)
-		{
-			$this->assertFinished();
-			if (!$this->db->inTransaction()) {
-				$this->db->begin($level, $mode);
-			} else {
-				$this->savepointName = $this->createSavepointName();
-				$this->db->savepointBegin($this->savepointName);
-			}
-		}
-		
-		private function assertFinished()
-		{
-			if ($this->finished)
-				throw new WrongStateException('This Transaction already finished');
-		}
-		
-		private static function createSavepointName()
-		{
-			static $i = 1;
-			return 'innerSavepoint'.($i++);
+
+		$this->beginTransaction($level, $mode);
+	}
+
+	public function commit()
+	{
+		$this->assertFinished();
+		$this->finished = true;
+		if (!$this->savepointName) {
+			$this->db->commit();
+		} else {
+			$this->db->savepointRelease($this->savepointName);
 		}
 	}
+
+	public function rollback()
+	{
+		$this->assertFinished();
+		$this->finished = true;
+		if (!$this->savepointName) {
+			$this->db->rollback();
+		} else {
+			$this->db->savepointRollback($this->savepointName);
+		}
+	}
+
+	private function beginTransaction(
+		IsolationLevel $level = null,
+		AccessMode $mode = null
+	)
+	{
+		$this->assertFinished();
+		if (!$this->db->inTransaction()) {
+			$this->db->begin($level, $mode);
+		} else {
+			$this->savepointName = $this->createSavepointName();
+			$this->db->savepointBegin($this->savepointName);
+		}
+	}
+
+	private function assertFinished()
+	{
+		if ($this->finished)
+			throw new WrongStateException('This Transaction already finished');
+	}
+
+	private static function createSavepointName()
+	{
+		static $i = 1;
+		return 'innerSavepoint'.($i++);
+	}
+}
 ?>

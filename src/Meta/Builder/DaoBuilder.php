@@ -9,6 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Builder;
+
+use OnPHP\Meta\Entity\MetaClass;
+use OnPHP\Meta\Entity\MetaClassType;
+use OnPHP\Core\Exception\WrongStateException;
+
 	/**
 	 * @ingroup Builders
 	**/
@@ -17,6 +23,14 @@
 		public static function build(MetaClass $class)
 		{
 			$out = self::getHead();
+			
+			$out .= <<<EOT
+namespace {$class->getDaoNamespace()};
+
+use {$class->getAutoDaoClass()};
+
+
+EOT;
 			
 			$type = $class->getType();
 			

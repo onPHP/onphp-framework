@@ -9,6 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Builder;
+
+use OnPHP\Main\Base\AbstractProtoClass;
+use OnPHP\Meta\Entity\MetaClass;
+
 	/**
 	 * @ingroup Builders
 	**/
@@ -20,10 +25,21 @@
 			
 			$parent = $class->getParent();
 			
-			if ($class->hasBuildableParent())
-				$parentName = 'Proto'.$parent->getName();
-			else
+			if ($class->hasBuildableParent()) {
+				$parentName = 'Proto' . $parent->getName();
+				$uses = "{$parent->getProtoNamespace()}\\{$parentName}";
+			} else {
 				$parentName = 'AbstractProtoClass';
+				$uses = AbstractProtoClass::class;
+			}
+			
+			$out .= <<<EOT
+namespace {$class->getAutoProtoNamespace()};
+
+use $uses;
+
+
+EOT;
 			
 			$out .= <<<EOT
 abstract class AutoProto{$class->getName()} extends {$parentName}
@@ -37,7 +53,7 @@ EOT;
 }
 
 EOT;
-
+	
 			return $out.self::getHeel();
 		}
 		
@@ -89,6 +105,7 @@ EOT;
 		);
 	}
 EOT;
+			
 			return $out;
 		}
 	}

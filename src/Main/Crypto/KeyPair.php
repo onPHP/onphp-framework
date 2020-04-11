@@ -9,19 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Crypto;
+
+use OnPHP\Main\Math\BigInteger;
+
+/**
+ * @ingroup Crypto
+**/
+interface KeyPair
+{
 	/**
-	 * @ingroup Crypto
+	 * @return BigInteger
 	**/
-	interface KeyPair
-	{
-		/**
-		 * @return BigInteger
-		**/
-		public function getPublic();
-		
-		/**
-		 * @return BigInteger
-		**/
-		public function getPrivate();
-	}
+	public function getPublic();
+
+	/**
+	 * @return BigInteger
+	**/
+	public function getPrivate();
+}
 ?>

@@ -9,6 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Meta\Entity\MetaClass;
+use OnPHP\Meta\Entity\MetaClassProperty;
+use OnPHP\Core\Exception\UnsupportedMethodException;
+use OnPHP\Core\Base\Assert;
+
 	/**
 	 * @ingroup Types
 	**/

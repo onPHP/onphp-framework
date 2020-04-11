@@ -9,29 +9,35 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class MappableObjectProjection implements ObjectProjection
+namespace OnPHP\Main\Criteria\Projection;
+
+use OnPHP\Core\Logic\MappableObject;
+use OnPHP\Main\Criteria\Criteria;
+use OnPHP\Core\OSQL\JoinCapableQuery;
+
+/**
+ * @ingroup Projection
+**/
+final class MappableObjectProjection implements ObjectProjection
+{
+	private $mappable	= null;
+	private $alias		= null;
+
+	public function __construct(MappableObject $mappable, $alias = null)
 	{
-		private $mappable	= null;
-		private $alias		= null;
-		
-		public function __construct(MappableObject $mappable, $alias = null)
-		{
-			$this->mappable = $mappable;
-			$this->alias = $alias;
-		}
-		
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query)
-		{
-			return $query->get(
-				$this->mappable->toMapped($criteria->getDao(), $query),
-				$this->alias
-			);
-		}
+		$this->mappable = $mappable;
+		$this->alias = $alias;
 	}
+
+	/**
+	 * @return JoinCapableQuery
+	**/
+	public function process(Criteria $criteria, JoinCapableQuery $query)
+	{
+		return $query->get(
+			$this->mappable->toMapped($criteria->getDao(), $query),
+			$this->alias
+		);
+	}
+}
 ?>

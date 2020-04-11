@@ -9,36 +9,38 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Base;
+
+/**
+ * Calendar week representation.
+ * 
+ * @ingroup Calendar
+**/
+final class CalendarWeek
+{
+	private $days = array();
+
 	/**
-	 * Calendar week representation.
-	 * 
-	 * @ingroup Calendar
+	 * @return CalendarWeek
 	**/
-	final class CalendarWeek
+	public static function create()
 	{
-		private $days = array();
-		
-		/**
-		 * @return CalendarWeek
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function getDays()
-		{
-			return $this->days;
-		}
-		
-		/**
-		 * @return CalendarWeek
-		**/
-		public function addDay(CalendarDay $day)
-		{
-			$this->days[$day->toDate()] = $day;
-			
-			return $this;
-		}
+		return new self;
 	}
+
+	public function getDays()
+	{
+		return $this->days;
+	}
+
+	/**
+	 * @return CalendarWeek
+	**/
+	public function addDay(CalendarDay $day)
+	{
+		$this->days[$day->toDate()] = $day;
+
+		return $this;
+	}
+}
 ?>

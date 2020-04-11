@@ -9,7 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Message\Specification;
 
-	interface MessageQueue { /* nop */ }
+interface MessageQueue { /* nop */ }
 
 ?>

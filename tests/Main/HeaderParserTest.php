@@ -9,11 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	class HeaderParserTest extends TestCase
+namespace OnPHP\Tests\Main;
+
+use OnPHP\Main\Net\Http\HeaderParser;
+use OnPHP\Tests\TestEnvironment\TestCase;
+
+class HeaderParserTest extends TestCase
+{
+	public function testSimple()
 	{
-		public function testSimple()
-		{
-			$raw = <<<EOT
+		$raw = <<<EOT
 HTTP/1.1 200 OK
 Date: Tue, 31 Jul 2007 14:30:10 GMT
 Server: Apache/1.3.27 (Unix) PHP/3.0.18 rus/PL30.16
@@ -25,14 +30,14 @@ Content-Type: text/html; charset=koi8-r
 Content-Language: ru
 Vary: accept-charset, user-agent
 EOT;
-			$parser = HeaderParser::create()->parse($raw);
-			$this->assertEquals(9, count($parser->getHeaders()));
-			$this->assertEquals('close', $parser->getHeader('connection'));
-		}
-		
-		public function testMultiline()
-		{
-			$raw = <<<EOT
+		$parser = HeaderParser::create()->parse($raw);
+		$this->assertEquals(9, count($parser->getHeaders()));
+		$this->assertEquals('close', $parser->getHeader('connection'));
+	}
+
+	public function testMultiline()
+	{
+		$raw = <<<EOT
 HTTP/1.1 200 OK
 Date: Tue, Jul 31 18:23:39 MSD 2007
 Server: Nginx
@@ -43,10 +48,10 @@ Connection: Keep-Alive
 Content-Type: text/html;
   charset=utf-8
 EOT;
-			$parser = HeaderParser::create()->parse($raw);
-			$this->assertEquals(6, count($parser->getHeaders()));
-			$this->assertEquals($parser->getHeader('keep-alive'), 'timeout=20, max=200');
-			$this->assertEquals($parser->getHeader('content-length'), '123');
-		}
+		$parser = HeaderParser::create()->parse($raw);
+		$this->assertEquals(6, count($parser->getHeaders()));
+		$this->assertEquals($parser->getHeader('keep-alive'), 'timeout=20, max=200');
+		$this->assertEquals($parser->getHeader('content-length'), '123');
 	}
+}
 ?>

@@ -9,36 +9,38 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Util\AMQP;
+
+/**
+ * @see http://www.rabbitmq.com/amqp-0-9-1-quickref.html#queue.declare
+**/
+final class AMQPQueueConfig extends AMQPBaseConfig
+{
+	protected $exclusive = false;
+
 	/**
-	 * @see http://www.rabbitmq.com/amqp-0-9-1-quickref.html#queue.declare
+	 * @return AMQPQueueConfig
 	**/
-	final class AMQPQueueConfig extends AMQPBaseConfig
+	public static function create()
 	{
-		protected $exclusive = false;
-
-		/**
-		 * @return AMQPQueueConfig
-		**/
-		public static function create()
-		{
-			return new self();
-		}
-
-		public function getExclusive()
-		{
-			return $this->exclusive;
-		}
-
-		/**
-		 * @param boolean $exclusive
-		 * @return AMQPQueueConfig
-		**/
-		public function setExclusive($exclusive)
-		{
-			$this->exclusive = $exclusive === false;
-
-			return $this;
-		}
-
+		return new self();
 	}
+
+	public function getExclusive()
+	{
+		return $this->exclusive;
+	}
+
+	/**
+	 * @param boolean $exclusive
+	 * @return AMQPQueueConfig
+	**/
+	public function setExclusive($exclusive)
+	{
+		$this->exclusive = $exclusive === false;
+
+		return $this;
+	}
+
+}
 ?>

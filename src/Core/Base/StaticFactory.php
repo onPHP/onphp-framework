@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Simple grouping class.
-	 * 
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	abstract class StaticFactory
-	{
-		final private function __construct() {/*_*/}
-	}
+namespace OnPHP\Core\Base;
+
+/**
+ * Simple grouping class.
+ * 
+ * @ingroup Base
+ * @ingroup Module
+**/
+abstract class StaticFactory
+{
+	final private function __construct() {/*_*/}
+}
 ?>

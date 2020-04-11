@@ -9,53 +9,57 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\DB\Dialect;
+
+/**
+ * Values row implementation.
+ * 
+ * @ingroup OSQL
+**/
+final class SQLArray implements DialectString
+{
+	private $array = array();
+
 	/**
-	 * Values row implementation.
-	 * 
-	 * @ingroup OSQL
+	 * @return SQLArray
 	**/
-	final class SQLArray implements DialectString
+	public static function create($array)
 	{
-		private $array = array();
-		
-		/**
-		 * @return SQLArray
-		**/
-		public static function create($array)
-		{
-			return new self($array);
-		}
-		
-		public function __construct($array)
-		{
-			$this->array = $array;
-		}
-		
-		public function getArray()
-		{
-			return $this->array;
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			$array = $this->array;
-			
-			if (is_array($array)) {
-				$quoted = array();
-				
-				foreach ($array as $item) {
-					if ($item instanceof DialectString) {
-						$quoted[] = $item->toDialectString($dialect);
-					} else {
-						$quoted[] = $dialect->valueToString($item);
-					}
-				}
-				
-				$value = implode(', ', $quoted);
-			} else
-				$value = $dialect->quoteValue($array);
-			
-			return "({$value})";
-		}
+		return new self($array);
 	}
+
+	public function __construct($array)
+	{
+		$this->array = $array;
+	}
+
+	public function getArray()
+	{
+		return $this->array;
+	}
+
+	public function toDialectString(Dialect $dialect)
+	{
+		$array = $this->array;
+
+		if (is_array($array)) {
+			$quoted = array();
+
+			foreach ($array as $item) {
+				if ($item instanceof DialectString) {
+					$quoted[] = $item->toDialectString($dialect);
+				} else {
+					$quoted[] = $dialect->valueToString($item);
+				}
+			}
+
+			$value = implode(', ', $quoted);
+		} else
+			$value = $dialect->quoteValue($array);
+
+		return "({$value})";
+	}
+}
 ?>

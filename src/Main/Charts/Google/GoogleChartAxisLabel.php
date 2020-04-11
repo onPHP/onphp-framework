@@ -9,31 +9,33 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartAxisLabel extends GoogleChartLabel
+{
+	protected static $paramName = 'chxl';
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartLabel
 	**/
-	final class GoogleChartAxisLabel extends GoogleChartLabel
+	public static function create()
 	{
-		protected static $paramName = 'chxl';
-		
-		/**
-		 * @return GoogleChartLabel
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public static function getParamName()
-		{
-			return self::$paramName;
-		}
-		
-		public function toString()
-		{
-			$labels = implode('|', $this->labels);
-			
-			return $labels;
-		}
+		return new self;
 	}
+
+	public static function getParamName()
+	{
+		return self::$paramName;
+	}
+
+	public function toString()
+	{
+		$labels = implode('|', $this->labels);
+
+		return $labels;
+	}
+}
 ?>

@@ -9,9 +9,11 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class SecurityException extends Exception {/*_*/}
+namespace OnPHP\Core\Exception;
+
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+**/
+class SecurityException extends \Exception {/*_*/}
 ?>

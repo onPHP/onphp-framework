@@ -9,22 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Criteria\Projection;
+
+use OnPHP\Main\Criteria\Criteria;
+use OnPHP\Core\OSQL\JoinCapableQuery;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup Projection
+**/
+final class GroupByPropertyProjection extends BaseProjection
+{
 	/**
-	 * @ingroup Projections
+	 * @return JoinCapableQuery
 	**/
-	final class GroupByPropertyProjection extends BaseProjection
+	public function process(Criteria $criteria, JoinCapableQuery $query)
 	{
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query)
-		{
-			Assert::isNotNull($this->property);
-			
-			return
-				$query->groupBy(
-					$criteria->getDao()->guessAtom($this->property, $query)
-				);
-		}
+		Assert::isNotNull($this->property);
+
+		return
+			$query->groupBy(
+				$criteria->getDao()->guessAtom($this->property, $query)
+			);
 	}
+}
 ?>

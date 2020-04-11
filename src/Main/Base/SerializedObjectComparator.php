@@ -9,23 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class SerializedObjectComparator extends Singleton
-		implements Comparator, Instantiatable
+namespace OnPHP\Main\Base;
+
+use OnPHP\Core\Base\Singleton;
+use OnPHP\Core\Base\Instantiatable;
+
+final class SerializedObjectComparator extends Singleton
+	implements Comparator, Instantiatable
+{
+	public static function me()
 	{
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function compare($one, $two)
-		{
-			$serializedOne = serialize($one);
-			$serializedTwo = serialize($two);
-			
-			if ($serializedOne == $serializedTwo)
-				return 0;
-			
-			return ($serializedOne < $serializedTwo) ? -1 : 1;
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function compare($one, $two)
+	{
+		$serializedOne = serialize($one);
+		$serializedTwo = serialize($two);
+
+		if ($serializedOne == $serializedTwo)
+			return 0;
+
+		return ($serializedOne < $serializedTwo) ? -1 : 1;
+	}
+}
 ?>

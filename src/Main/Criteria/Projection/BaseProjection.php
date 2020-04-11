@@ -9,23 +9,27 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	abstract class BaseProjection implements ObjectProjection, Aliased
+namespace OnPHP\Main\Criteria\Projection;
+
+use OnPHP\Core\Base\Aliased;
+
+/**
+ * @ingroup Projection
+**/
+abstract class BaseProjection implements ObjectProjection, Aliased
+{
+	protected $property	= null;
+	protected $alias	= null;
+
+	public function __construct($propertyName = null, $alias = null)
 	{
-		protected $property	= null;
-		protected $alias	= null;
-		
-		public function __construct($propertyName = null, $alias = null)
-		{
-			$this->property = $propertyName;
-			$this->alias = $alias;
-		}
-		
-		public function getAlias()
-		{
-			return $this->alias;
-		}
+		$this->property = $propertyName;
+		$this->alias = $alias;
 	}
+
+	public function getAlias()
+	{
+		return $this->alias;
+	}
+}
 ?>

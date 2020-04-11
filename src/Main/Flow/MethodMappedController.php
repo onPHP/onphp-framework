@@ -9,104 +9,110 @@
  *                                                                          *
  ****************************************************************************/
 	
+namespace OnPHP\Main\Flow;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Form\Form;
+use OnPHP\Core\Form\Primitive;
+
+/**
+ * @ingroup Flow
+**/
+abstract class MethodMappedController implements Controller
+{
+	private $methodMap		= array();
+	private $defaultAction	= null;
+
 	/**
-	 * @ingroup Flow
+	 * @return ModelAndView
 	**/
-	abstract class MethodMappedController implements Controller
+	public function handleRequest(HttpRequest $request)
 	{
-		private $methodMap		= array();
-		private $defaultAction	= null;
-		
-		/**
-		 * @return ModelAndView
-		**/
-		public function handleRequest(HttpRequest $request)
-		{
-			if ($action = $this->chooseAction($request)) {
-				
-				$method = $this->methodMap[$action];
-				$mav = $this->{$method}($request);
-				
-				if ($mav->viewIsRedirect())
-					return $mav;
-					
-				$mav->getModel()->set('action', $action);
-				
+		if ($action = $this->chooseAction($request)) {
+
+			$method = $this->methodMap[$action];
+			$mav = $this->{$method}($request);
+
+			if ($mav->viewIsRedirect())
 				return $mav;
-				
-			} else
-				return ModelAndView::create();
-				
-			Assert::isUnreachable();
-		}
-		
-		public function chooseAction(HttpRequest $request)
-		{
-			$action = Primitive::choice('action')->setList($this->methodMap);
 
-			if ($this->getDefaultAction())
-				$action->setDefault($this->getDefaultAction());
+			$mav->getModel()->set('action', $action);
 
-			Form::create()->
-				add($action)->
-				import($request->getGet())->
-				importMore($request->getPost())->
-				importMore($request->getAttached());
-			
-			if (!$command = $action->getValue())
-				return $action->getDefault();
+			return $mav;
 
-			return $command;
-		}
-		
-		/**
-		 * @return MethodMappedController
-		**/
-		public function setMethodMapping($action, $methodName)
-		{
-			$this->methodMap[$action] = $methodName;
-			return $this;
-		}
-		
-		/**
-		 * @return MethodMappedController
-		**/
-		public function dropMethodMapping($action)
-		{
-			unset($this->methodMap[$action]);
-			
-			return $this;
-		}
-		
-		public function getMethodMapping()
-		{
-			return $this->methodMap;
-		}
-		
-		/**
-		 * @return MethodMappedController
-		**/
-		public function setDefaultAction($action)
-		{
-			$this->defaultAction = $action;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return MethodMappedController
-		**/
-		public function setMethodMappingList($array)
-		{
-			foreach ($array as $action => $methodName)
-				$this->setMethodMapping($action, $methodName);
-			
-			return $this;
-		}
-		
-		public function getDefaultAction()
-		{
-			return $this->defaultAction;
-		}
+		} else
+			return ModelAndView::create();
+
+		Assert::isUnreachable();
 	}
+
+	public function chooseAction(HttpRequest $request)
+	{
+		$action = Primitive::choice('action')->setList($this->methodMap);
+
+		if ($this->getDefaultAction())
+			$action->setDefault($this->getDefaultAction());
+
+		Form::create()->
+			add($action)->
+			import($request->getGet())->
+			importMore($request->getPost())->
+			importMore($request->getAttached());
+
+		if (!$command = $action->getValue())
+			return $action->getDefault();
+
+		return $command;
+	}
+
+	/**
+	 * @return MethodMappedController
+	**/
+	public function setMethodMapping($action, $methodName)
+	{
+		$this->methodMap[$action] = $methodName;
+		return $this;
+	}
+
+	/**
+	 * @return MethodMappedController
+	**/
+	public function dropMethodMapping($action)
+	{
+		unset($this->methodMap[$action]);
+
+		return $this;
+	}
+
+	public function getMethodMapping()
+	{
+		return $this->methodMap;
+	}
+
+	/**
+	 * @return MethodMappedController
+	**/
+	public function setDefaultAction($action)
+	{
+		$this->defaultAction = $action;
+
+		return $this;
+	}
+
+	/**
+	 * @return MethodMappedController
+	**/
+	public function setMethodMappingList($array)
+	{
+		foreach ($array as $action => $methodName)
+			$this->setMethodMapping($action, $methodName);
+
+		return $this;
+	}
+
+	public function getDefaultAction()
+	{
+		return $this->defaultAction;
+	}
+}
 ?>

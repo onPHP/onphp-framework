@@ -9,51 +9,53 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Base;
+
+/**
+ * @see Timestamp
+ * @see DateRange
+ * 
+ * @ingroup Helpers
+**/
+class TimestampRange extends DateRange
+{
 	/**
-	 * @see Timestamp
-	 * @see DateRange
-	 * 
-	 * @ingroup Helpers
+	 * @return TimestampRange
 	**/
-	class TimestampRange extends DateRange
+	public static function create($start = null, $end = null)
 	{
-		/**
-		 * @return TimestampRange
-		**/
-		public static function create($start = null, $end = null)
-		{
-			return new self($start, $end);
-		}
-		
-		public function getStartStamp() // null if start is null
-		{
-			if ($start = $this->getStart()) {
-				return $start->toStamp();
-			}
-			
-			return null;
-		}
-		
-		public function getEndStamp() // null if end is null
-		{
-			if ($end = $this->getEnd()) {
-				return $end->toStamp();
-			}
-			
-			return null;
-		}
-		
-		/**
-		 * @return TimestampRange
-		**/
-		public function toTimestampRange()
-		{
-			return $this;
-		}
-		
-		protected function getObjectName()
-		{
-			return 'Timestamp';
-		}
+		return new self($start, $end);
 	}
+
+	public function getStartStamp() // null if start is null
+	{
+		if ($start = $this->getStart()) {
+			return $start->toStamp();
+		}
+
+		return null;
+	}
+
+	public function getEndStamp() // null if end is null
+	{
+		if ($end = $this->getEnd()) {
+			return $end->toStamp();
+		}
+
+		return null;
+	}
+
+	/**
+	 * @return TimestampRange
+	**/
+	public function toTimestampRange()
+	{
+		return $this;
+	}
+
+	protected function getObjectName()
+	{
+		return '\OnPHP\Core\Base\Timestamp';
+	}
+}
 ?>

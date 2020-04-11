@@ -9,14 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class FixedLengthStringType extends StringType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\OSQL\DataType;
+
+/**
+ * @ingroup Types
+**/
+final class FixedLengthStringType extends StringType
+{
+	public function toColumnType($length = null)
 	{
-		public function toColumnType($length = null)
-		{
-			return 'DataType::create(DataType::CHAR)';
-		}
+		return DataType::class.'::create('.DataType::class.'::CHAR)';
 	}
+}
 ?>

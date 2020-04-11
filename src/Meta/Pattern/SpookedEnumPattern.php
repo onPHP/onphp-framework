@@ -9,22 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Pattern;
+
+use OnPHP\Meta\Entity\MetaClass;
+
+/**
+ * @ingroup Patterns
+**/
+final class SpookedEnumPattern extends EnumClassPattern
+{
 	/**
-	 * @ingroup Patterns
+	 * @return SpookedEnumPattern
 	**/
-	final class SpookedEnumPattern extends EnumClassPattern
+	public function build(MetaClass $class)
 	{
-		/**
-		 * @return SpookedEnumPattern
-		**/
-		public function build(MetaClass $class)
-		{
-			return $this;
-		}
-		
-		public function daoExists()
-		{
-			return false;
-		}
+		return $this;
 	}
+
+	public function daoExists()
+	{
+		return false;
+	}
+}
 ?>

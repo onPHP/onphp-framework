@@ -9,38 +9,44 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Primitives;
+
+use OnPHP\Core\Base\Timestamp;
+use OnPHP\Core\Exception\WrongArgumentException;
+use OnPHP\Main\Base\TimestampRange;
+
+/**
+ * @ingroup Primitives
+**/
+final class PrimitiveTimestampRange extends PrimitiveDateRange
+{
+	private $className = null;
+
 	/**
-	 * @ingroup Primitives
+	 * @return PrimitiveTimestampRange
 	**/
-	final class PrimitiveTimestampRange extends PrimitiveDateRange
+	public static function create($name)
 	{
-		private $className = null;
-		
-		/**
-		 * @return PrimitiveTimestampRange
-		**/
-		public static function create($name)
-		{
-			return new self($name);
-		}
-		
-		protected function getObjectName()
-		{
-			return 'TimestampRange';
-		}
-		
-		protected function makeRange($string)
-		{
-			if (strpos($string, ' - ') !== false) {
-				list($first, $second) = explode(' - ', $string);
-				
-				return TimestampRange::create(
-					new Timestamp(trim($first)),
-					new Timestamp(trim($second))
-				);
-			}
-			
-			throw new WrongArgumentException();
-		}
+		return new self($name);
 	}
+
+	protected function getObjectName()
+	{
+		return TimestampRange::class;
+	}
+
+	protected function makeRange($string)
+	{
+		if (strpos($string, ' - ') !== false) {
+			list($first, $second) = explode(' - ', $string);
+
+			return TimestampRange::create(
+				new Timestamp(trim($first)),
+				new Timestamp(trim($second))
+			);
+		}
+
+		throw new WrongArgumentException();
+	}
+}
 ?>

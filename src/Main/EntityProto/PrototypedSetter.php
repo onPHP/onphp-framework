@@ -9,15 +9,19 @@
  *                                                                         *
  ***************************************************************************/
 
-	abstract class PrototypedSetter extends PrototypedMethodCaller
+namespace OnPHP\Main\EntityProto;
+
+use OnPHP\Core\Exception\UnimplementedFeatureException;
+
+abstract class PrototypedSetter extends PrototypedMethodCaller
+{
+	abstract public function set($name, $value);
+
+	public function getGetter()
 	{
-		abstract public function set($name, $value);
-		
-		public function getGetter()
-		{
-			throw new UnimplementedFeatureException(
-				'inverse operation is not defined yet'
-			);
-		}
+		throw new UnimplementedFeatureException(
+			'inverse operation is not defined yet'
+		);
 	}
+}
 ?>

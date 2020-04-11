@@ -9,29 +9,43 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Builders
-	**/
-	final class EnumerationClassBuilder extends OnceBuilder
+namespace OnPHP\Meta\Builder;
+
+use OnPHP\Meta\Entity\MetaClass;
+use OnPHP\Core\Base\Enumeration;
+use OnPHP\Meta\Util\NamespaceUtils;
+
+/**
+ * @ingroup Builders
+**/
+final class EnumerationClassBuilder extends OnceBuilder
+{
+	public static function build(MetaClass $class)
 	{
-		public static function build(MetaClass $class)
-		{
-			$out = self::getHead();
-			
-			if ($type = $class->getType())
-				$type = "{$type->getName()} ";
-			else
-				$type = null;
-			
-			$out .= <<<EOT
+		$out = self::getHead();
+		
+		$namespace = NamespaceUtils::getBusinessNS($class);
+		
+		$out .= "\nnamespace {$namespace};\n\n";
+		
+		$uses = Enumeration::class;
+		
+		$out .= "use {$uses};\n\n";
+		
+		if ($type = $class->getType())
+			$type = "{$type->getName()} ";
+		else
+			$type = null;
+		
+		$out .= <<<EOT
 {$type}class {$class->getName()} extends Enumeration
 {
 	// implement me!
 }
 
 EOT;
-			
-			return $out.self::getHeel();
-		}
+		
+		return $out.self::getHeel();
 	}
+}
 ?>

@@ -9,24 +9,29 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	final class SpookedClassPattern extends Singleton implements GenerationPattern
+namespace OnPHP\Meta\Pattern;
+
+use OnPHP\Core\Base\Singleton;
+use OnPHP\Meta\Entity\MetaClass;
+
+/**
+ * @ingroup Patterns
+**/
+final class SpookedClassPattern extends Singleton implements GenerationPattern
+{
+	public function build(MetaClass $class)
 	{
-		public function build(MetaClass $class)
-		{
-			return $this;
-		}
-		
-		public function daoExists()
-		{
-			return false;
-		}
-		
-		public function tableExists()
-		{
-			return false;
-		}
+		return $this;
 	}
+
+	public function daoExists()
+	{
+		return false;
+	}
+
+	public function tableExists()
+	{
+		return false;
+	}
+}
 ?>

@@ -9,46 +9,50 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Main\OQL\Statement;
+
+use OnPHP\Main\OQL\Expression\OqlQueryParameter;
+
+/**
+ * @ingroup OQL
+**/
+abstract class OqlQueryListedClause extends OqlQueryClause
+{
+	protected $list = array();
+
 	/**
-	 * @ingroup OQL
+	 * @return OqlQueryListedClause
 	**/
-	abstract class OqlQueryListedClause extends OqlQueryClause
+	public function add(OqlQueryParameter $property)
 	{
-		protected $list = array();
-		
-		/**
-		 * @return OqlQueryListedClause
-		**/
-		public function add(OqlQueryParameter $property)
-		{
-			$this->list[] = $property;
-			
-			return $this;
-		}
-		
-		public function getList()
-		{
-			return $this->list;
-		}
-		
-		/**
-		 * @return OqlQueryListedClause
-		**/
-		public function setList(array $list)
-		{
-			$this->list = $list;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OqlQueryListedClause
-		**/
-		public function dropList()
-		{
-			$this->list = array();
-			
-			return $this;
-		}
+		$this->list[] = $property;
+
+		return $this;
 	}
+
+	public function getList()
+	{
+		return $this->list;
+	}
+
+	/**
+	 * @return OqlQueryListedClause
+	**/
+	public function setList(array $list)
+	{
+		$this->list = $list;
+
+		return $this;
+	}
+
+	/**
+	 * @return OqlQueryListedClause
+	**/
+	public function dropList()
+	{
+		$this->list = array();
+
+		return $this;
+	}
+}
 ?>

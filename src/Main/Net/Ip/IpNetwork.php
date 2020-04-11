@@ -9,79 +9,85 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Net\Ip;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Exception\WrongArgumentException;
+use OnPHP\Main\Base\SingleRange;
+
+/**
+ * @ingroup Ip
+ * @deprecated use IpRange instead
+**/
+final class IpNetwork implements SingleRange
+{
+	const MASK_MAX_SIZE = 31;
+
+	private $ip			= null;
+	private $end 		= null;
+	private $mask 		= null;
+	private $longMask 	= null;
+
 	/**
-	 * @ingroup Ip
-	 * @deprecated use IpRange instead
+	 * @return IpNetwork
 	**/
-	final class IpNetwork implements SingleRange
+	public static function create(IpAddress $ip, $mask)
 	{
-		const MASK_MAX_SIZE = 31;
-		
-		private $ip			= null;
-		private $end 		= null;
-		private $mask 		= null;
-		private $longMask 	= null;
-		
-		/**
-		 * @return IpNetwork
-		**/
-		public static function create(IpAddress $ip, $mask)
-		{
-			return new self($ip, $mask);
-		}
-		
-		public function __construct(IpAddress $ip, $mask)
-		{
-			Assert::isInteger($mask);
-			
-			if ($mask == 0 || self::MASK_MAX_SIZE < $mask)
-				throw new WrongArgumentException('wrong mask given');
-			
-			$this->longMask =
-				(int) (pow(2, (32 - $mask)) * (pow(2, $mask) - 1));
-			
-			if (($ip->getLongIp() & $this->longMask) != $ip->getLongIp())
-				throw new WrongArgumentException('wrong ip network given');
-			
-			$this->ip = $ip;
-			$this->mask = $mask;
-		}
-		
-		public function getMask()
-		{
-			return $this->mask;
-		}
-		
-		/**
-		 * @return IpAddress
-		**/
-		public function getStart()
-		{
-			return $this->ip;
-		}
-		
-		/**
-		 * @return IpAddress
-		**/
-		public function getEnd()
-		{
-			if (!$this->end) {
-				$this->end =
-					IpAddress::create(
-						long2ip($this->ip->getLongIp() | ~$this->longMask)
-					);
-			}
-			
-			return $this->end;
-		}
-		
-		public function contains(/* IpAddress */ $probe)
-		{
-			Assert::isInstance($probe, 'IpAddress');
-			
-			return
-				($probe->getLongIp() & $this->longMask)
-				== $this->ip->getLongIp();
-		}
+		return new self($ip, $mask);
 	}
+
+	public function __construct(IpAddress $ip, $mask)
+	{
+		Assert::isInteger($mask);
+
+		if ($mask == 0 || self::MASK_MAX_SIZE < $mask)
+			throw new WrongArgumentException('wrong mask given');
+
+		$this->longMask =
+			(int) (pow(2, (32 - $mask)) * (pow(2, $mask) - 1));
+
+		if (($ip->getLongIp() & $this->longMask) != $ip->getLongIp())
+			throw new WrongArgumentException('wrong ip network given');
+
+		$this->ip = $ip;
+		$this->mask = $mask;
+	}
+
+	public function getMask()
+	{
+		return $this->mask;
+	}
+
+	/**
+	 * @return IpAddress
+	**/
+	public function getStart()
+	{
+		return $this->ip;
+	}
+
+	/**
+	 * @return IpAddress
+	**/
+	public function getEnd()
+	{
+		if (!$this->end) {
+			$this->end =
+				IpAddress::create(
+					long2ip($this->ip->getLongIp() | ~$this->longMask)
+				);
+		}
+
+		return $this->end;
+	}
+
+	public function contains(/* IpAddress */ $probe)
+	{
+		Assert::isInstance($probe, IpAddress::class);
+
+		return
+			($probe->getLongIp() & $this->longMask)
+			== $this->ip->getLongIp();
+	}
+}
 ?>

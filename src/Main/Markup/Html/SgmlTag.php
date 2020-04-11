@@ -9,27 +9,29 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Markup\Html;
+
+/**
+ * @ingroup Html
+ * @ingroup Module
+**/
+abstract class SgmlTag extends SgmlToken
+{
+	private $id = null;
+
 	/**
-	 * @ingroup Html
-	 * @ingroup Module
+	 * @return SgmlTag
 	**/
-	abstract class SgmlTag extends SgmlToken
+	public function setId($id)
 	{
-		private $id = null;
-		
-		/**
-		 * @return SgmlTag
-		**/
-		public function setId($id)
-		{
-			$this->id = $id;
-			
-			return $this;
-		}
-		
-		public function getId()
-		{
-			return $this->id;
-		}
+		$this->id = $id;
+
+		return $this;
 	}
+
+	public function getId()
+	{
+		return $this->id;
+	}
+}
 ?>

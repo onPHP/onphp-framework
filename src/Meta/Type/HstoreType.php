@@ -9,38 +9,47 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	 * @see http://www.postgresql.org/docs/8.3/interactive/hstore.html
-	**/
-	final class HstoreType extends ObjectType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\OSQL\DataType;
+use OnPHP\Main\Base\Hstore;
+
+/**
+ * @ingroup Types
+ * @see http://www.postgresql.org/docs/8.3/interactive/hstore.html
+**/
+final class HstoreType extends ObjectType
+{
+	public function getPrimitiveName()
 	{
-		public function getPrimitiveName()
-		{
-			return 'hstore';
-		}
-		
-		public function isGeneric()
-		{
-			return true;
-		}
-		
-		public function isMeasurable()
-		{
-			return true;
-		}
-		
-		public function getDeclaration()
-		{
-			if ($this->hasDefault())
-				return "'{$this->default}'";
-		
-			return 'null';
-		}
-		
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::TEXT)';
-		}
+		return 'hstore';
 	}
+	
+	public function isGeneric()
+	{
+		return true;
+	}
+	
+	public function getFullClass() {
+		return Hstore::class;
+	}
+	
+	public function isMeasurable()
+	{
+		return true;
+	}
+	
+	public function getDeclaration()
+	{
+		if ($this->hasDefault())
+			return "'{$this->default}'";
+	
+		return 'null';
+	}
+	
+	public function toColumnType()
+	{
+		return DataType::class.'::create('.DataType::class.'::TEXT)';
+	}
+}
 ?>

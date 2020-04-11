@@ -9,30 +9,44 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Builders
-	**/
-	final class DictionaryDaoBuilder extends BaseBuilder
+namespace OnPHP\Meta\Builder;
+
+use OnPHP\Main\DAO\StorableDAO;
+use OnPHP\Meta\Entity\MetaClass;
+
+/**
+ * @ingroup Builders
+**/
+final class DictionaryDaoBuilder extends BaseBuilder
+{
+	public static function build(MetaClass $class)
 	{
-		public static function build(MetaClass $class)
-		{
-			$out = self::getHead();
-			
-			$out .= <<<EOT
+		$out = self::getHead();
+		
+		$uses = [StorableDAO::class];
+		
+		$out .= "\nnamespace {$class->getAutoDaoNamespace()};\n\n";
+		
+		foreach($uses as $use) {
+			$out .= "use $use;\n";
+		}
+		
+		$out .= <<<EOT
+
 abstract class Auto{$class->getName()}DAO extends StorableDAO
 {
 
 EOT;
 
-			$pointers = self::buildPointers($class);
-			
-			$out .= <<<EOT
+		$pointers = self::buildPointers($class);
+		
+		$out .= <<<EOT
 {$pointers}
 }
 
 EOT;
-			
-			return $out.self::getHeel();
-		}
+		
+		return $out.self::getHeel();
 	}
+}
 ?>

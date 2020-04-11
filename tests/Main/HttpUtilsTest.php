@@ -9,63 +9,67 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class HttpUtilsTest extends TestCase
+namespace OnPHP\Tests\Main;
+
+use OnPHP\Core\Exception\NetworkException;
+use OnPHP\Main\Flow\HttpRequest;
+use OnPHP\Main\Net\Http\CurlHttpClient;
+use OnPHP\Main\Net\Http\HttpMethod;
+use OnPHP\Main\Net\Http\HttpStatus;
+use OnPHP\Main\Net\HttpUrl;
+use OnPHP\Tests\TestEnvironment\TestCase;
+
+final class HttpUtilsTest extends TestCase
+{
+	public function testCurlGet()
 	{
-		public function testCurlGet()
-		{
-			$request = HttpRequest::create()->
-				setUrl(
-					HttpUrl::create()->parse('https://github.com/')
-				)->
-				setHeaderVar('User-Agent', 'onphp-test')->
-				setMethod(HttpMethod::get());
-			
-			try {
-				$response = CurlHttpClient::create()->
-					setTimeout(3)->
-					send($request);
-			} catch (NetworkException $e) {
-				return $this->markTestSkipped('no network available');
-			}
-			
-			$this->assertEquals(
-				$response->getStatus()->getId(),
-				HttpStatus::CODE_200
-			);
-			
-			$this->assertContains(
-				'github',
-				$response->getBody()
-			);
-			
-			try {
-				$badResponse = CurlHttpClient::create()->
-					setTimeout(3)->
-					setMaxFileSize(100)-> // github page is bigger than 100 bytes
-					send($request);
-				$this->fail();
-			} catch (NetworkException $e) {
-				/* pass */
-			}
+		$request = HttpRequest::create()->
+			setUrl(
+				HttpUrl::create()->parse('https://github.com/')
+			)->
+			setHeaderVar('User-Agent', 'onphp-test')->
+			setMethod(HttpMethod::get());
+
+		try {
+			$response = CurlHttpClient::create()->
+				setTimeout(3)->
+				send($request);
+		} catch (NetworkException $e) {
+			return $this->markTestSkipped('no network available');
 		}
+
+		$this->assertEquals(
+			$response->getStatus()->getId(),
+			HttpStatus::CODE_200
+		);
 		
-		public function testCurlException()
-		{
-			$request = HttpRequest::create()->
-				setUrl(
-					HttpUrl::create()->parse('http://nonexistentdomain.xyz')
-				)->
-				setMethod(HttpMethod::get());
-			
-			try {
-				$response = CurlHttpClient::create()->
-					setTimeout(3)->
-					send($request);
-				
-				$this->fail();
-			} catch (NetworkException $e) {
-				$this->assertContains('curl error', $e->getMessage());
-			}
-		}
+		$this->assertStringContainsString(
+			'github',
+			$response->getBody()
+		);
+		
+		$this->expectException(NetworkException::class);
+		
+		$badResponse = CurlHttpClient::create()->
+				setTimeout(3)->
+				setMaxFileSize(100)-> // github page is bigger than 100 bytes
+				send($request);
 	}
+
+	public function testCurlException()
+	{
+		$request = HttpRequest::create()->
+			setUrl(
+				HttpUrl::create()->parse('http://nonexistentdomain.xyz')
+			)->
+			setMethod(HttpMethod::get());
+
+		$this->expectException(NetworkException::class);
+		$this->expectExceptionMessageMatches('/curl\s+error/');
+		
+		$response = CurlHttpClient::create()->
+				setTimeout(3)->
+				send($request);
+	}
+}
 ?>

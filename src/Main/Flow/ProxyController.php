@@ -9,103 +9,108 @@
  *                                                                          *
  ****************************************************************************/
 
-	// TODO: add action => requestType mapper
+namespace OnPHP\Main\Flow;
+
+use OnPHP\Main\Base\RequestType;
+use OnPHP\Core\Base\Assert;
+
+// TODO: add action => requestType mapper
+/**
+ * @ingroup Flow
+**/
+final class ProxyController implements Controller
+{
+	private $innerController	= null;
+	private $request			= null;
+	private $requestType		= null;
+	private $requestGetter		= null;
+
+	private static $requestGetterMap = array(
+		RequestType::ATTACHED	=> 'Attached',
+		RequestType::GET		=> 'Get',
+		RequestType::POST		=> 'Post'
+	);
+
 	/**
-	 * @ingroup Flow
+	 * @return ProxyController
 	**/
-	final class ProxyController implements Controller
+	public static function create()
 	{
-		private $innerController	= null;
-		private $request			= null;
-		private $requestType		= null;
-		private $requestGetter		= null;
-		
-		private static $requestGetterMap = array(
-			RequestType::ATTACHED	=> 'Attached',
-			RequestType::GET		=> 'Get',
-			RequestType::POST		=> 'Post'
-		);
-		
-		/**
-		 * @return ProxyController
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function __construct()
-		{
-			$this->requestType = RequestType::post();
-		}
-		
-		/**
-		 * @return ProxyController
-		**/
-		public function setInner(Controller $controller)
-		{
-			$this->innerController = $controller;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return Controller
-		**/
-		public function getInner()
-		{
-			return $this->innerController;
-		}
-		
-		public function getName()
-		{
-			return get_class($this->innerController);
-		}
-		
-		/**
-		 * @return ModelAndView
-		**/
-		public function handleRequest(HttpRequest $request)
-		{
-			return $this->getInner()->handleRequest($request);
-		}
-		
-		/**
-		 * @return ProxyController
-		**/
-		public function setRequestType(RequestType $requestType)
-		{
-			$this->requestType = $requestType;
-			
-			return $this;
-		}
-		
-		public function isActive($request)
-		{
-			return $this->fetchVariable('controller', $request)
-				? (
-					$this->fetchVariable('controller', $request)
-					== get_class($this->getInner())
-				)
-				: false;
-		}
-		
-		public function getRequestGetter()
-		{
-			Assert::isNotNull($this->requestType);
-			
-			if (!$this->requestGetter)
-				$this->requestGetter =
-					self::$requestGetterMap[$this->requestType->getId()];
-			
-			return $this->requestGetter;
-		}
-		
-		private function fetchVariable($name, HttpRequest $request)
-		{
-			return $request->{'has'.$this->getRequestGetter().'Var'}($name)
-				? $request->{'get'.$this->getRequestGetter().'Var'}($name)
-				: false;
-		}
+		return new self;
 	}
+
+	public function __construct()
+	{
+		$this->requestType = RequestType::post();
+	}
+
+	/**
+	 * @return ProxyController
+	**/
+	public function setInner(Controller $controller)
+	{
+		$this->innerController = $controller;
+
+		return $this;
+	}
+
+	/**
+	 * @return Controller
+	**/
+	public function getInner()
+	{
+		return $this->innerController;
+	}
+
+	public function getName()
+	{
+		return get_class($this->innerController);
+	}
+
+	/**
+	 * @return ModelAndView
+	**/
+	public function handleRequest(HttpRequest $request)
+	{
+		return $this->getInner()->handleRequest($request);
+	}
+
+	/**
+	 * @return ProxyController
+	**/
+	public function setRequestType(RequestType $requestType)
+	{
+		$this->requestType = $requestType;
+
+		return $this;
+	}
+
+	public function isActive($request)
+	{
+		return $this->fetchVariable('controller', $request)
+			? (
+				$this->fetchVariable('controller', $request)
+				== get_class($this->getInner())
+			)
+			: false;
+	}
+
+	public function getRequestGetter()
+	{
+		Assert::isNotNull($this->requestType);
+
+		if (!$this->requestGetter)
+			$this->requestGetter =
+				self::$requestGetterMap[$this->requestType->getId()];
+
+		return $this->requestGetter;
+	}
+
+	private function fetchVariable($name, HttpRequest $request)
+	{
+		return $request->{'has'.$this->getRequestGetter().'Var'}($name)
+			? $request->{'get'.$this->getRequestGetter().'Var'}($name)
+			: false;
+	}
+}
 ?>

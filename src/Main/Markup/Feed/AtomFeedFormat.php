@@ -9,38 +9,42 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Markup\Feed;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * @ingroup Feed
+**/
+final class AtomFeedFormat extends FeedFormat
+{
 	/**
-	 * @ingroup Feed
+	 * @return AtomFeedFormat
 	**/
-	final class AtomFeedFormat extends FeedFormat
+	public static function me()
 	{
-		/**
-		 * @return AtomFeedFormat
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		/**
-		 * @return AtomChannelWorker
-		**/
-		public function getChannelWorker()
-		{
-			return AtomChannelWorker::me();
-		}
-		
-		/**
-		 * @return AtomItemWorker
-		**/
-		public function getItemWorker()
-		{
-			return AtomItemWorker::me();
-		}
-		
-		public function isAcceptable(SimpleXMLElement $xmlFeed)
-		{
-			return ($xmlFeed->getName() == 'feed');
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	/**
+	 * @return AtomChannelWorker
+	**/
+	public function getChannelWorker()
+	{
+		return AtomChannelWorker::me();
+	}
+
+	/**
+	 * @return AtomItemWorker
+	**/
+	public function getItemWorker()
+	{
+		return AtomItemWorker::me();
+	}
+
+	public function isAcceptable(\SimpleXMLElement $xmlFeed)
+	{
+		return ($xmlFeed->getName() == 'feed');
+	}
+}
 ?>

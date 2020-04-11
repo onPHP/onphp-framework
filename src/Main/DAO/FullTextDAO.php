@@ -9,15 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Support interface for use with FullTextUtils.
-	 * 
-	 * @ingroup DAOs
-	 * @ingroup Module
-	**/
-	interface FullTextDAO extends BaseDAO
-	{
-		// index' field name
-		public function getIndexField();
-	}
+namespace OnPHP\Main\DAO;
+
+/**
+ * Support interface for use with FullTextUtils.
+ * 
+ * @ingroup DAO
+ * @ingroup Module
+**/
+interface FullTextDAO extends BaseDAO
+{
+	// index' field name
+	public function getIndexField();
+}
 ?>

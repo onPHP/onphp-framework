@@ -9,8 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	**/
-	class MailException extends BaseException {/*_*/};
+namespace OnPHP\Main\Net\Mail;
+
+use OnPHP\Core\Exception\BaseException;
+
+/**
+ * @ingroup Exceptions
+**/
+class MailException extends BaseException {/*_*/};
 ?>

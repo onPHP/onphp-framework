@@ -9,29 +9,38 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class HttpUrlType extends ObjectType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\OSQL\DataType;
+use OnPHP\Main\Net\HttpUrl;
+
+/**
+ * @ingroup Types
+**/
+final class HttpUrlType extends ObjectType
+{
+	public function getPrimitiveName()
 	{
-		public function getPrimitiveName()
-		{
-			return 'httpUrl';
-		}
-		
-		public function isGeneric()
-		{
-			return true;
-		}
-		
-		public function isMeasurable()
-		{
-			return true;
-		}
-		
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::VARCHAR)';
-		}
+		return 'httpUrl';
 	}
+	
+	public function isGeneric()
+	{
+		return true;
+	}
+	
+	public function getFullClass() {
+		return HttpUrl::class;
+	}
+	
+	public function isMeasurable()
+	{
+		return true;
+	}
+	
+	public function toColumnType()
+	{
+		return DataType::class.'::create('.DataType::class.'::VARCHAR)';
+	}
+}
 ?>

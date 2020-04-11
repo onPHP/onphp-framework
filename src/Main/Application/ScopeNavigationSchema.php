@@ -9,9 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	abstract class ScopeNavigationSchema extends Singleton
-	{
-		abstract public function extractPath(&$scope);
-		abstract public function getScope($path);
-	}
+namespace OnPHP\Main\Application;
+
+use OnPHP\Core\Base\Singleton;
+
+abstract class ScopeNavigationSchema extends Singleton
+{
+	abstract public function extractPath(&$scope);
+	abstract public function getScope($path);
+}
 ?>

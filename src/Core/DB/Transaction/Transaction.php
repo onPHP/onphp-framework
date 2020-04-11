@@ -9,35 +9,40 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\DB\Transaction;
+
+use OnPHP\Core\Base\StaticFactory;
+use OnPHP\Core\DB\DB;
+
+/**
+ * Transaction's factory.
+ * 
+ * @ingroup Transaction
+**/
+final class Transaction extends StaticFactory
+{
 	/**
-	 * Transaction's factory.
-	 * 
-	 * @ingroup Transaction
+	 * @return DBTransaction
 	**/
-	final class Transaction extends StaticFactory
+	public static function immediate(DB $db)
 	{
-		/**
-		 * @return DBTransaction
-		**/
-		public static function immediate(DB $db)
-		{
-			return new DBTransaction($db);
-		}
-		
-		/**
-		 * @return TransactionQueue
-		**/
-		public static function deferred(DB $db)
-		{
-			return new TransactionQueue($db);
-		}
-		
-		/**
-		 * @return FakeTransaction
-		**/
-		public static function fake(DB $db)
-		{
-			return new FakeTransaction($db);
-		}
+		return new DBTransaction($db);
 	}
+
+	/**
+	 * @return TransactionQueue
+	**/
+	public static function deferred(DB $db)
+	{
+		return new TransactionQueue($db);
+	}
+
+	/**
+	 * @return FakeTransaction
+	**/
+	public static function fake(DB $db)
+	{
+		return new FakeTransaction($db);
+	}
+}
 ?>

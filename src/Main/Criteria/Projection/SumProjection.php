@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class SumProjection extends AggregateProjection
+namespace OnPHP\Main\Criteria\Projection;
+
+/**
+ * @ingroup Projection
+**/
+final class SumProjection extends AggregateProjection
+{
+	public function getFunctionName()
 	{
-		public function getFunctionName()
-		{
-			return 'sum';
-		}
+		return 'sum';
 	}
+}
 ?>

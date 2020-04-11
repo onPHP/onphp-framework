@@ -9,41 +9,45 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartLineStyle extends BaseGoogleChartStyle
+{
+	protected $name = 'chls';
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartLineStyle
 	**/
-	final class GoogleChartLineStyle extends BaseGoogleChartStyle
+	public static function create()
 	{
-		protected $name = 'chls';
-		
-		/**
-		 * @return GoogleChartLineStyle
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return GoogleChartLineStyle
-		**/
-		public function addStyle($style)
-		{
-			Assert::isInstance($style, 'ChartLineStyle');
-			
-			return parent::addStyle($style);
-		}
-		
-		public function toString()
-		{
-			$queryString = "{$this->name}=";
-			
-			Assert::isNotEmptyArray($this->styles);
-			
-			foreach ($this->styles as $style)
-				$queryString .= $style->toString().'|';
-			
-			return rtrim($queryString, '|');
-		}
+		return new self;
 	}
+
+	/**
+	 * @return GoogleChartLineStyle
+	**/
+	public function addStyle($style)
+	{
+		Assert::isInstance($style, ChartLineStyle::class);
+
+		return parent::addStyle($style);
+	}
+
+	public function toString()
+	{
+		$queryString = "{$this->name}=";
+
+		Assert::isNotEmptyArray($this->styles);
+
+		foreach ($this->styles as $style)
+			$queryString .= $style->toString().'|';
+
+		return rtrim($queryString, '|');
+	}
+}
 ?>

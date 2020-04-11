@@ -9,22 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class UnsignedBigIntegerType extends BigIntegerType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Main\Base\LightMetaProperty;
+
+/**
+ * @ingroup Types
+**/
+final class UnsignedBigIntegerType extends BigIntegerType
+{
+	public function getSize()
 	{
-		public function getSize()
-		{
-			return 8 & LightMetaProperty::UNSIGNED_FLAG;
-		}
-		
-		public function toColumnType()
-		{
-			return
-				parent::toColumnType()
-				."->\n"
-				.'setUnsigned(true)';
-		}
+		return 8 & LightMetaProperty::UNSIGNED_FLAG;
 	}
+	
+	public function toColumnType()
+	{
+		return
+			parent::toColumnType()
+			."->\n"
+			.'setUnsigned(true)';
+	}
+}
 ?>

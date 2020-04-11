@@ -9,8 +9,10 @@
  *                                                                         *
  ***************************************************************************/
 
-	interface Comparator
-	{
-		public function compare($one, $two);
-	}
+namespace OnPHP\Main\Base;
+
+interface Comparator
+{
+	public function compare($one, $two);
+}
 ?>

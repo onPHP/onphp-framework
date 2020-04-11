@@ -9,19 +9,23 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	**/
-	final class FullTextSearch extends FullText
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\DB\Dialect;
+
+/**
+ * @ingroup OSQL
+**/
+final class FullTextSearch extends FullText
+{
+	public function toDialectString(Dialect $dialect)
 	{
-		public function toDialectString(Dialect $dialect)
-		{
-			return
-				$dialect->fullTextSearch(
-					$this->field,
-					$this->words,
-					$this->logic
-				);
-		}
+		return
+			$dialect->fullTextSearch(
+				$this->field,
+				$this->words,
+				$this->logic
+			);
 	}
+}
 ?>

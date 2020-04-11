@@ -9,16 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Interface for primitive's filters.
-	 * 
-	 * @see FiltrablePrimitive::getDisplayValue()
-	 * 
-	 * @ingroup Filters
-	 * @ingroup Module
-	**/
-	interface Filtrator
-	{
-		public function apply($value);
-	}
+namespace OnPHP\Core\Form\Filters;
+
+/**
+ * Interface for primitive's filters.
+ * 
+ * @see FiltrablePrimitive::getDisplayValue()
+ * 
+ * @ingroup Filters
+ * @ingroup Module
+**/
+interface Filtrator
+{
+	public function apply($value);
+}
 ?>

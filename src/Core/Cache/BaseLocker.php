@@ -9,29 +9,33 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Lockers
-	**/
-	abstract class BaseLocker extends Singleton
+namespace OnPHP\Core\Cache;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * @ingroup Lockers
+**/
+abstract class BaseLocker extends Singleton
+{
+	protected $pool = array();
+
+	/// acquire lock
+	abstract public function get($key);
+
+	/// release lock
+	abstract public function free($key);
+
+	/// completely remove lock
+	abstract public function drop($key);
+
+	/// drop all acquired/released locks
+	public function clean()
 	{
-		protected $pool = array();
-		
-		/// acquire lock
-		abstract public function get($key);
-		
-		/// release lock
-		abstract public function free($key);
-		
-		/// completely remove lock
-		abstract public function drop($key);
-		
-		/// drop all acquired/released locks
-		public function clean()
-		{
-			foreach (array_keys($this->pool) as $key)
-				$this->drop($key);
-			
-			return true;
-		}
+		foreach (array_keys($this->pool) as $key)
+			$this->drop($key);
+
+		return true;
 	}
+}
 ?>

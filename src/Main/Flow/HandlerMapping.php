@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Flow;
+
+/**
+ * @ingroup Flow
+**/
+interface HandlerMapping
+{
 	/**
-	 * @ingroup Flow
+	 * @return Controller
 	**/
-	interface HandlerMapping
-	{
-		/**
-		 * @return Controller
-		**/
-		public function getController(HttpRequest $request);
-	}
+	public function getController(HttpRequest $request);
+}
 ?>

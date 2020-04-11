@@ -9,62 +9,74 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class DTOGetter extends PrototypedGetter
+namespace OnPHP\Main\EntityProto\Accessor;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Exception\WrongArgumentException;
+use OnPHP\Core\Form\Primitives\PrimitiveArray;
+use OnPHP\Core\Form\Primitives\PrimitiveEnumerationList;
+use OnPHP\Core\Form\Primitives\PrimitiveFormsList;
+use OnPHP\Core\Form\Primitives\PrimitiveIdentifierList;
+use OnPHP\Main\EntityProto\EntityProto;
+use OnPHP\Main\EntityProto\PrototypedGetter;
+use OnPHP\Main\Net\Soap\DTOClass;
+
+final class DTOGetter extends PrototypedGetter
+{
+	private $soapDto	= true;
+
+	public function __construct(EntityProto $proto, $object)
 	{
-		private $soapDto	= true;
-		
-		public function __construct(EntityProto $proto, $object)
-		{
-			Assert::isInstance($object, 'DTOClass');
-			
-			return parent::__construct($proto, $object);
-		}
-		
-		/**
-		 * @return DTOGetter
-		**/
-		public function setSoapDto($soapDto)
-		{
-			$this->soapDto = ($soapDto === true);
-			
-			return $this;
-		}
-		
-		// FIXME: isSoapDto()
-		public function getSoapDto()
-		{
-			return $this->soapDto;
-		}
-		
-		public function get($name)
-		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			$primitive = $this->mapping[$name];
-			
-			$method = 'get'.ucfirst($primitive->getName());
-			
-			$result = $this->object->$method();
-			
-			// TODO: primitives refactoring
-			if (
-				$result !== null
-				&& $this->soapDto
-				&& !is_array($result)
-				&& (
-					($primitive instanceof PrimitiveFormsList)
-					|| ($primitive instanceof PrimitiveEnumerationList)
-					|| ($primitive instanceof PrimitiveIdentifierList)
-					|| ($primitive instanceof PrimitiveArray)
-				)
-			) {
-				$result = array($result);
-			}
-			
-			return $result;
-		}
+		Assert::isInstance($object, DTOClass::class);
+
+		return parent::__construct($proto, $object);
 	}
+
+	/**
+	 * @return DTOGetter
+	**/
+	public function setSoapDto($soapDto)
+	{
+		$this->soapDto = ($soapDto === true);
+
+		return $this;
+	}
+
+	// FIXME: isSoapDto()
+	public function getSoapDto()
+	{
+		return $this->soapDto;
+	}
+
+	public function get($name)
+	{
+		if (!isset($this->mapping[$name]))
+			throw new WrongArgumentException(
+				"knows nothing about property '{$name}'"
+			);
+
+		$primitive = $this->mapping[$name];
+
+		$method = 'get'.ucfirst($primitive->getName());
+
+		$result = $this->object->$method();
+
+		// TODO: primitives refactoring
+		if (
+			$result !== null
+			&& $this->soapDto
+			&& !is_array($result)
+			&& (
+				($primitive instanceof PrimitiveFormsList)
+				|| ($primitive instanceof PrimitiveEnumerationList)
+				|| ($primitive instanceof PrimitiveIdentifierList)
+				|| ($primitive instanceof PrimitiveArray)
+			)
+		) {
+			$result = array($result);
+		}
+
+		return $result;
+	}
+}
 ?>

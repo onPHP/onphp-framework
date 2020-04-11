@@ -9,38 +9,42 @@
  *                                                                         *
  ***************************************************************************/
 
-	class TextFileQueue implements MessageQueue
+namespace OnPHP\Main\Message;
+
+use OnPHP\Main\Message\Specification\MessageQueue;
+
+class TextFileQueue implements MessageQueue
+{
+	private $fileName	= null;
+	private $offset		= null;
+
+	public static function create()
 	{
-		private $fileName	= null;
-		private $offset		= null;
-
-		public static function create()
-		{
-			return new self;
-		}
-
-		public function setFileName($fileName)
-		{
-			$this->fileName = $fileName;
-
-			return $this;
-		}
-
-		public function getFileName()
-		{
-			return $this->fileName;
-		}
-
-		public function setOffset($offset)
-		{
-			$this->offset = $offset;
-
-			return $this;
-		}
-
-		public function getOffset()
-		{
-			return $this->offset;
-		}
+		return new self;
 	}
+
+	public function setFileName($fileName)
+	{
+		$this->fileName = $fileName;
+
+		return $this;
+	}
+
+	public function getFileName()
+	{
+		return $this->fileName;
+	}
+
+	public function setOffset($offset)
+	{
+		$this->offset = $offset;
+
+		return $this;
+	}
+
+	public function getOffset()
+	{
+		return $this->offset;
+	}
+}
 ?>

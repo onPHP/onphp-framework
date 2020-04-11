@@ -9,83 +9,91 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\Logic\LogicalObject;
+use OnPHP\Core\Logic\MappableObject;
+use OnPHP\Main\DAO\ProtoDAO;
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\DB\Dialect;
+
+/**
+ * @ingroup OSQL
+**/
+abstract class SQLChain implements LogicalObject, MappableObject
+{
+	protected $chain = array();
+	protected $logic = array();
+
 	/**
-	 * @ingroup OSQL
+	 * @return SQLChain
 	**/
-	abstract class SQLChain implements LogicalObject, MappableObject
+	protected function exp(DialectString $exp, $logic)
 	{
-		protected $chain = array();
-		protected $logic = array();
-		
-		/**
-		 * @return SQLChain
-		**/
-		protected function exp(DialectString $exp, $logic)
-		{
-			$this->chain[] = $exp;
-			$this->logic[] = $logic;
-			
-			return $this;
-		}
-		
-		public function getSize()
-		{
-			return count($this->chain);
-		}
-		
-		public function getChain()
-		{
-			return $this->chain;
-		}
-		
-		public function getLogic()
-		{
-			return $this->logic;
-		}
-		
-		/**
-		 * @return SQLChain
-		**/
-		public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
-		{
-			$size = count($this->chain);
-			
-			Assert::isTrue($size > 0, 'empty chain');
-			
-			$chain = new $this;
-			
-			for ($i = 0; $i < $size; ++$i) {
-				$chain->exp(
-					$dao->guessAtom($this->chain[$i], $query),
-					$this->logic[$i]
-				);
-			}
-			
-			return $chain;
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			if ($this->chain) {
-				$out = $this->chain[0]->toDialectString($dialect).' ';
-				for ($i = 1, $size = count($this->chain); $i < $size; ++$i) {
-					$out .=
-						$this->logic[$i]
-						.' '
-						.$this->chain[$i]->toDialectString($dialect)
-						.' ';
-				}
-				
-				if ($size > 1)
-					$out = rtrim($out); // trailing space
-				
-				if ($size === 1)
-					return $out;
-				
-				return '('.$out.')';
-			}
-			
-			return null;
-		}
+		$this->chain[] = $exp;
+		$this->logic[] = $logic;
+
+		return $this;
 	}
+
+	public function getSize()
+	{
+		return count($this->chain);
+	}
+
+	public function getChain()
+	{
+		return $this->chain;
+	}
+
+	public function getLogic()
+	{
+		return $this->logic;
+	}
+
+	/**
+	 * @return SQLChain
+	**/
+	public function toMapped(ProtoDAO $dao, JoinCapableQuery $query)
+	{
+		$size = count($this->chain);
+
+		Assert::isTrue($size > 0, 'empty chain');
+
+		$chain = new $this;
+
+		for ($i = 0; $i < $size; ++$i) {
+			$chain->exp(
+				$dao->guessAtom($this->chain[$i], $query),
+				$this->logic[$i]
+			);
+		}
+
+		return $chain;
+	}
+
+	public function toDialectString(Dialect $dialect)
+	{
+		if ($this->chain) {
+			$out = $this->chain[0]->toDialectString($dialect).' ';
+			for ($i = 1, $size = count($this->chain); $i < $size; ++$i) {
+				$out .=
+					$this->logic[$i]
+					.' '
+					.$this->chain[$i]->toDialectString($dialect)
+					.' ';
+			}
+
+			if ($size > 1)
+				$out = rtrim($out); // trailing space
+
+			if ($size === 1)
+				return $out;
+
+			return '('.$out.')';
+		}
+
+		return null;
+	}
+}
 ?>

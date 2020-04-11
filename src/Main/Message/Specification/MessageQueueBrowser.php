@@ -9,11 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	interface MessageQueueBrowser
-	{
-		/**
-		 * @return Message
-		**/
-		public function getNextMessage();
-	}
+namespace OnPHP\Main\Message\Specification;
+
+interface MessageQueueBrowser
+{
+	/**
+	 * @return Message
+	**/
+	public function getNextMessage();
+}
 ?>

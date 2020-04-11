@@ -9,29 +9,33 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class BinaryType extends BasePropertyType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\OSQL\DataType;
+
+/**
+ * @ingroup Types
+**/
+final class BinaryType extends BasePropertyType
+{
+	public function getPrimitiveName()
 	{
-		public function getPrimitiveName()
-		{
-			return 'binary';
-		}
-		
-		public function getDeclaration()
-		{
-			return 'null';
-		}
-		
-		public function toColumnType($length = null)
-		{
-			return 'DataType::create(DataType::BINARY)';
-		}
-		
-		public function isMeasurable()
-		{
-			return false;
-		}
+		return 'binary';
 	}
+	
+	public function getDeclaration()
+	{
+		return 'null';
+	}
+	
+	public function toColumnType($length = null)
+	{
+		return DataType::class.'::create('.DataType::class.'::BINARY)';
+	}
+	
+	public function isMeasurable()
+	{
+		return false;
+	}
+}
 ?>

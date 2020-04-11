@@ -9,79 +9,85 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup DAOs
-	**/
-	final class FileSystemSegmentHandler implements SegmentHandler
+namespace OnPHP\Main\DAO\Handlers;
+
+use OnPHP\Core\Exception\BaseException;
+use OnPHP\Core\Base\Assert;
+use OnPHP\Main\Util\FileUtils;
+
+/**
+ * @ingroup DAO
+**/
+final class FileSystemSegmentHandler implements SegmentHandler
+{
+	private $path = null;
+
+	public function __construct($segmentId)
 	{
-		private $path = null;
-		
-		public function __construct($segmentId)
-		{
-			$path =
-				ONPHP_TEMP_PATH
-				.'fsdw'.DIRECTORY_SEPARATOR
-				.$segmentId
-				.DIRECTORY_SEPARATOR;
-			
-			try {
-				mkdir($path, 0700, true);
-			} catch (BaseException $e) {
-				// already created in race
-			}
-			
-			$this->path = $path;
+		$path =
+			ONPHP_TEMP_PATH
+			.'fsdw'.DIRECTORY_SEPARATOR
+			.$segmentId
+			.DIRECTORY_SEPARATOR;
+
+		try {
+			mkdir($path, 0700, true);
+		} catch (BaseException $e) {
+			// already created in race
 		}
-		
-		public function touch($key)
-		{
-			try {
-				return touch($this->path.$key);
-			} catch (BaseException $e) {
-				return false;
-			}
-			
-			Assert::isUnreachable();
+
+		$this->path = $path;
+	}
+
+	public function touch($key)
+	{
+		try {
+			return touch($this->path.$key);
+		} catch (BaseException $e) {
+			return false;
 		}
-		
-		public function unlink($key)
-		{
-			try {
-				return unlink($this->path.$key);
-			} catch (BaseException $e) {
-				return false;
-			}
-			
-			Assert::isUnreachable();
+
+		Assert::isUnreachable();
+	}
+
+	public function unlink($key)
+	{
+		try {
+			return unlink($this->path.$key);
+		} catch (BaseException $e) {
+			return false;
 		}
-		
-		public function ping($key)
-		{
-			return is_readable($this->path.$key);
-		}
-		
-		public function drop()
-		{
-			// removed, but not created yet
-			if (!is_writable($this->path))
-				return true;
-			
-			$toRemove =
-				realpath($this->path)
-				.'.'.microtime(true)
-				.getmypid().'.'
-				.'.removing';
-			
-			try {
-				rename($this->path, $toRemove);
-			} catch (BaseException $e) {
-				// already removed during race
-				return true;
-			}
-			
-			FileUtils::removeDirectory($toRemove, true);
-			
+
+		Assert::isUnreachable();
+	}
+
+	public function ping($key)
+	{
+		return is_readable($this->path.$key);
+	}
+
+	public function drop()
+	{
+		// removed, but not created yet
+		if (!is_writable($this->path))
+			return true;
+
+		$toRemove =
+			realpath($this->path)
+			.'.'.microtime(true)
+			.getmypid().'.'
+			.'.removing';
+
+		try {
+			rename($this->path, $toRemove);
+		} catch (BaseException $e) {
+			// already removed during race
 			return true;
 		}
+
+		FileUtils::removeDirectory($toRemove, true);
+
+		return true;
 	}
+}
 ?>

@@ -9,31 +9,35 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup OQL
-	**/
-	final class OqlOrderByExpression extends OqlQueryExpression
+namespace OnPHP\Main\OQL\Expression;
+
+use OnPHP\Core\OSQL\OrderBy;
+
+/**
+ * @ingroup OQL
+**/
+final class OqlOrderByExpression extends OqlQueryExpression
+{
+	const CLASS_NAME = OrderBy::class;
+
+	private $direction = null;
+
+	public function __construct(OqlQueryParameter $parameter, $direction)
 	{
-		const CLASS_NAME = 'OrderBy';
-		
-		private $direction = null;
-		
-		public function __construct(OqlQueryParameter $parameter, $direction)
-		{
-			$this->
-				setClassName(self::CLASS_NAME)->
-				addParameter($parameter);
-			
-			$this->direction = $direction;
-		}
-		
-		/**
-		 * @return OrderBy
-		**/
-		public function evaluate($values)
-		{
-			return parent::evaluate($values)->
-				setDirection($this->direction);
-		}
+		$this->
+			setClassName(self::CLASS_NAME)->
+			addParameter($parameter);
+
+		$this->direction = $direction;
 	}
+
+	/**
+	 * @return OrderBy
+	**/
+	public function evaluate($values)
+	{
+		return parent::evaluate($values)->
+			setDirection($this->direction);
+	}
+}
 ?>

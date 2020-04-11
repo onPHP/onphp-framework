@@ -9,35 +9,43 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class FormToScopeExporter extends ObjectBuilder
+namespace OnPHP\Main\EntityProto\Builder;
+
+use OnPHP\Main\EntityProto\Accessor\FormExporter;
+use OnPHP\Main\EntityProto\Accessor\FormGetter;
+use OnPHP\Main\EntityProto\Accessor\ObjectSetter;
+use OnPHP\Main\EntityProto\Accessor\ScopeSetter;
+use OnPHP\Main\EntityProto\EntityProto;
+
+final class FormToScopeExporter extends ObjectBuilder
+{
+	/**
+	 * @return FormToObjectConverter
+	**/
+	public static function create(EntityProto $proto)
 	{
-		/**
-		 * @return FormToObjectConverter
-		**/
-		public static function create(EntityProto $proto)
-		{
-			return new self($proto);
-		}
-		
-		protected function createEmpty()
-		{
-			return array();
-		}
-		
-		/**
-		 * @return FormGetter
-		**/
-		protected function getGetter($object)
-		{
-			return new FormExporter($this->proto, $object);
-		}
-		
-		/**
-		 * @return ObjectSetter
-		**/
-		protected function getSetter(&$object)
-		{
-			return new ScopeSetter($this->proto, $object);
-		}
+		return new self($proto);
 	}
+
+	protected function createEmpty()
+	{
+		return array();
+	}
+
+	/**
+	 * @return FormGetter
+	**/
+	protected function getGetter($object)
+	{
+		return new FormExporter($this->proto, $object);
+	}
+
+	/**
+	 * @return ObjectSetter
+	**/
+	protected function getSetter(&$object)
+	{
+		return new ScopeSetter($this->proto, $object);
+	}
+}
 ?>

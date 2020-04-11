@@ -9,24 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	final class ValueObjectPattern extends BasePattern
+namespace OnPHP\Meta\Pattern;
+
+use OnPHP\Meta\Entity\MetaClass;
+
+/**
+ * @ingroup Patterns
+**/
+final class ValueObjectPattern extends BasePattern
+{
+	public function tableExists()
 	{
-		public function tableExists()
-		{
-			return false;
-		}
-		
-		/**
-		 * @return ValueObjectPattern
-		**/
-		protected function fullBuild(MetaClass $class)
-		{
-			return $this->
-				buildBusiness($class)->
-				buildProto($class);
-		}
+		return false;
 	}
+
+	/**
+	 * @return ValueObjectPattern
+	**/
+	protected function fullBuild(MetaClass $class)
+	{
+		return $this->
+			buildBusiness($class)->
+			buildProto($class);
+	}
+}
 ?>

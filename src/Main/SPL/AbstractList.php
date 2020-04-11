@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************************
  *   Copyright (C) 2006-2007 by Konstantin V. Arkhipov                     *
  *                                                                         *
@@ -9,80 +10,84 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Base for handling Identifiable object's lists.
-	 * 
-	 * @ingroup onSPL
-	**/
-	abstract class AbstractList implements ArrayAccess, SimplifiedArrayAccess
+namespace OnPHP\Main\SPL;
+
+use OnPHP\Core\Exception\MissingElementException;
+
+/**
+ * Base for handling Identifiable object's lists.
+ * 
+ * @ingroup onSPL
+**/
+abstract class AbstractList implements \ArrayAccess, SimplifiedArrayAccess
+{
+	protected $list = array();
+
+	public function offsetGet($offset)
 	{
-		protected $list = array();
-		
-		public function offsetGet($offset)
-		{
-			if (isset($this->list[$offset]))
-				return $this->list[$offset];
-			
-			throw new MissingElementException(
-				"no object found with index == '{$offset}'"
-			);
-		}
-		
-		/**
-		 * @return AbstractList
-		**/
-		public function offsetUnset($offset)
-		{
-			unset($this->list[$offset]);
-			
-			return $this;
-		}
-		
-		public function offsetExists($offset)
-		{
-			return isset($this->list[$offset]);
-		}
-		
-		// SAA goes here
-		
-		/**
-		 * @return AbstractList
-		**/
-		public function clean()
-		{
-			$this->list = array();
-			
-			return $this;
-		}
-		
-		public function isEmpty()
-		{
-			return ($this->list === array());
-		}
-		
-		public function getList()
-		{
-			return $this->list;
-		}
-		
-		public function set($name, $var)
-		{
-			return $this->offsetSet($name, $var);
-		}
-		
-		public function get($name)
-		{
-			return $this->offsetGet($name);
-		}
-		
-		public function has($name)
-		{
-			return $this->offsetExists($name);
-		}
-		
-		public function drop($name)
-		{
-			return $this->offsetUnset($name);
-		}
+		if (isset($this->list[$offset]))
+			return $this->list[$offset];
+
+		throw new MissingElementException(
+			"no object found with index == '{$offset}'"
+		);
 	}
+
+	/**
+	 * @return AbstractList
+	**/
+	public function offsetUnset($offset)
+	{
+		unset($this->list[$offset]);
+
+		return $this;
+	}
+
+	public function offsetExists($offset)
+	{
+		return isset($this->list[$offset]);
+	}
+
+	// SAA goes here
+
+	/**
+	 * @return AbstractList
+	**/
+	public function clean()
+	{
+		$this->list = array();
+
+		return $this;
+	}
+
+	public function isEmpty()
+	{
+		return ($this->list === array());
+	}
+
+	public function getList()
+	{
+		return $this->list;
+	}
+
+	public function set($name, $var)
+	{
+		return $this->offsetSet($name, $var);
+	}
+
+	public function get($name)
+	{
+		return $this->offsetGet($name);
+	}
+
+	public function has($name)
+	{
+		return $this->offsetExists($name);
+	}
+
+	public function drop($name)
+	{
+		return $this->offsetUnset($name);
+	}
+}
 ?>

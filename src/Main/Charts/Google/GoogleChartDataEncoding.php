@@ -9,11 +9,13 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup GoogleChart
-	**/
-	interface GoogleChartDataEncoding
-	{
-		public function encode(GoogleChartDataSet $set);
-	}
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+interface GoogleChartDataEncoding
+{
+	public function encode(GoogleChartDataSet $set);
+}
 ?>

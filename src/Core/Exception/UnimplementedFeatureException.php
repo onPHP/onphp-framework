@@ -8,13 +8,16 @@
  *   License, or (at your option) any later version.                        *
  *                                                                          *
  ****************************************************************************/
+
+namespace OnPHP\Core\Exception;
+
 /*
 	$Id$
 */
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class UnimplementedFeatureException extends Exception {/*_*/}
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+**/
+class UnimplementedFeatureException extends \Exception {/*_*/}
 ?>

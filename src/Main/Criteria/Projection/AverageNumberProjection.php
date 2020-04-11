@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class AverageNumberProjection extends AggregateProjection
+namespace OnPHP\Main\Criteria\Projection;
+
+/**
+ * @ingroup Projection
+**/
+final class AverageNumberProjection extends AggregateProjection
+{
+	public function getFunctionName()
 	{
-		public function getFunctionName()
-		{
-			return 'avg';
-		}
+		return 'avg';
 	}
+}
 ?>

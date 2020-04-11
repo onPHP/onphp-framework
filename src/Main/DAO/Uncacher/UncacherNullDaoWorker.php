@@ -9,28 +9,32 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Uncachers
-	**/
-	class UncacherNullDaoWorker implements UncacherBase
+namespace OnPHP\Main\DAO\Uncacher;
+
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup Uncacher
+**/
+class UncacherNullDaoWorker implements UncacherBase
+{
+	public static function create()
 	{
-		public static function create()
-		{
-			return new self;
-		}
-		/**
-		 * @param $uncacher UncacherNullDaoWorker same as self class
-		 * @return BaseUncacher (this)
-		 */
-		public function merge(UncacherBase $uncacher)
-		{
-			Assert::isInstance($uncacher, 'UncacherNullDaoWorker');
-			return $this;
-		}
-		
-		public function uncache()
-		{
-			/* do nothing */
-		}
+		return new self;
 	}
+	/**
+	 * @param $uncacher UncacherNullDaoWorker same as self class
+	 * @return UncacherBase (this)
+	 */
+	public function merge(UncacherBase $uncacher)
+	{
+		Assert::isInstance($uncacher, UncacherNullDaoWorker::class);
+		return $this;
+	}
+
+	public function uncache()
+	{
+		/* do nothing */
+	}
+}
 ?>

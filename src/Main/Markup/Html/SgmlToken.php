@@ -9,27 +9,29 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Markup\Html;
+
+/**
+ * @ingroup Html
+ * @ingroup Module
+**/
+class SgmlToken
+{
+	private $value	= null;
+
 	/**
-	 * @ingroup Html
-	 * @ingroup Module
+	 * @return SgmlToken
 	**/
-	class SgmlToken
+	public function setValue($value)
 	{
-		private $value	= null;
-		
-		/**
-		 * @return SgmlToken
-		**/
-		public function setValue($value)
-		{
-			$this->value = $value;
-			
-			return $this;
-		}
-		
-		public function getValue()
-		{
-			return $this->value;
-		}
+		$this->value = $value;
+
+		return $this;
 	}
+
+	public function getValue()
+	{
+		return $this->value;
+	}
+}
 ?>

@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	final class AbstractClassPattern extends BasePattern
+namespace OnPHP\Meta\Pattern;
+
+/**
+ * @ingroup Patterns
+**/
+final class AbstractClassPattern extends BasePattern
+{
+	public function tableExists()
 	{
-		public function tableExists()
-		{
-			return false;
-		}
+		return false;
 	}
+}
 ?>

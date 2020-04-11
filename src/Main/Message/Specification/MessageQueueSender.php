@@ -9,16 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	interface MessageQueueSender
-	{
-		/**
-		 * @return MessageQueueReceiver
-		**/
-		public function send(Message $message);
-		
-		/**
-		 * @return MessageQueue
-		**/
-		public function getQueue();
-	}
+namespace OnPHP\Main\Message\Specification;
+
+interface MessageQueueSender
+{
+	/**
+	 * @return MessageQueueReceiver
+	**/
+	public function send(Message $message);
+
+	/**
+	 * @return MessageQueue
+	**/
+	public function getQueue();
+}
 ?>

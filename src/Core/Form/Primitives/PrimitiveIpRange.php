@@ -9,11 +9,15 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveIpRange extends BaseObjectPrimitive
-	{
-		protected $className = 'IpRange';
-	}
+namespace OnPHP\Core\Form\Primitives;
+
+use OnPHP\Main\Net\Ip\IpRange;
+
+/**
+ * @ingroup Primitives
+**/
+final class PrimitiveIpRange extends BaseObjectPrimitive
+{
+	protected $className = IpRange::class;
+}
 ?>

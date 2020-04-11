@@ -9,9 +9,11 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	final class ClassNotFoundException extends BaseException {/*_*/}
+namespace OnPHP\Core\Exception;
+
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+**/
+final class ClassNotFoundException extends BaseException {/*_*/}
 ?>

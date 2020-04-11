@@ -9,43 +9,50 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class ScopeSetter extends PrototypedSetter
+namespace OnPHP\Main\EntityProto\Accessor;
+
+use OnPHP\Main\EntityProto\PrototypedSetter;
+use OnPHP\Main\EntityProto\EntityProto;
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Exception\WrongArgumentException;
+
+final class ScopeSetter extends PrototypedSetter
+{
+	private $getter = null;
+
+	public function __construct(EntityProto $proto, &$object)
 	{
-		private $getter = null;
-		
-		public function __construct(EntityProto $proto, &$object)
-		{
-			Assert::isArray($object);
-			
-			return parent::__construct($proto, $object);
-		}
-		
-		public function set($name, $value)
-		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			Assert::isTrue(!is_object($value), 'cannot put objects into scope');
-			
-			$primitive = $this->mapping[$name];
-			
-			$this->object[$primitive->getName()] =  $value;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return ScopeGetter
-		**/
-		public function getGetter()
-		{
-			if (!$this->getter) {
-				$this->getter = new ScopeGetter($this->proto, $this->object);
-			}
-			
-			return $this->getter;
-		}
+		Assert::isArray($object);
+
+		return parent::__construct($proto, $object);
 	}
+
+	public function set($name, $value)
+	{
+		if (!isset($this->mapping[$name]))
+			throw new WrongArgumentException(
+				"knows nothing about property '{$name}'"
+			);
+
+		Assert::isTrue(!is_object($value), 'cannot put objects into scope');
+
+		$primitive = $this->mapping[$name];
+
+		$this->object[$primitive->getName()] =  $value;
+
+		return $this;
+	}
+
+	/**
+	 * @return ScopeGetter
+	**/
+	public function getGetter()
+	{
+		if (!$this->getter) {
+			$this->getter = new ScopeGetter($this->proto, $this->object);
+		}
+
+		return $this->getter;
+	}
+}
 ?>

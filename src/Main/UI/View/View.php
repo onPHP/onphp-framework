@@ -9,16 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\UI\View;
+
+/**
+ * @ingroup Flow
+**/
+interface View
+{
+	const ERROR_VIEW = 'error';
+
 	/**
-	 * @ingroup Flow
+	 * @param $model null or Model
 	**/
-	interface View
-	{
-		const ERROR_VIEW = 'error';
-		
-		/**
-		 * @param $model null or Model
-		**/
-		public function render($model = null);
-	}
+	public function render($model = null);
+}
 ?>

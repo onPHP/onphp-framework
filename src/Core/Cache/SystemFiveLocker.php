@@ -9,53 +9,58 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * System-V semaphores based locking.
-	 * 
-	 * @ingroup Lockers
-	**/
-	final class SystemFiveLocker extends BaseLocker
+namespace OnPHP\Core\Cache;
+
+use OnPHP\Core\Exception\BaseException;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * System-V semaphores based locking.
+ * 
+ * @ingroup Lockers
+**/
+final class SystemFiveLocker extends BaseLocker
+{
+	public function get($key)
 	{
-		public function get($key)
-		{
-			try {
-				if (!isset($this->pool[$key]))
-					$this->pool[$key] = sem_get($key, 1, ONPHP_IPC_PERMS, false);
-				
-				return sem_acquire($this->pool[$key]);
-			} catch (BaseException $e) {
-				return null;
-			}
-			
-			Assert::isUnreachable();
-		}
-		
-		public function free($key)
-		{
-			if (isset($this->pool[$key])) {
-				try {
-					return sem_release($this->pool[$key]);
-				} catch (BaseException $e) {
-					// acquired by another process
-					return false;
-				}
-			}
-			
+		try {
+			if (!isset($this->pool[$key]))
+				$this->pool[$key] = sem_get($key, 1, ONPHP_IPC_PERMS, false);
+
+			return sem_acquire($this->pool[$key]);
+		} catch (BaseException $e) {
 			return null;
 		}
-		
-		public function drop($key)
-		{
-			if (isset($this->pool[$key])) {
-				try {
-					return sem_remove($this->pool[$key]);
-				} catch (BaseException $e) {
-					unset($this->pool[$key]); // already race-removed
-					return false;
-				}
-			}
-			
-			return null;
-		}
+
+		Assert::isUnreachable();
 	}
+
+	public function free($key)
+	{
+		if (isset($this->pool[$key])) {
+			try {
+				return sem_release($this->pool[$key]);
+			} catch (BaseException $e) {
+				// acquired by another process
+				return false;
+			}
+		}
+
+		return null;
+	}
+
+	public function drop($key)
+	{
+		if (isset($this->pool[$key])) {
+			try {
+				return sem_remove($this->pool[$key]);
+			} catch (BaseException $e) {
+				unset($this->pool[$key]); // already race-removed
+				return false;
+			}
+		}
+
+		return null;
+	}
+}
 ?>

@@ -9,57 +9,59 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartLegend extends BaseGoogleChartParameter
+{
+	protected $name = 'chdl';
+
+	private $items = array();
+	private $position = null;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartLegend
 	**/
-	final class GoogleChartLegend extends BaseGoogleChartParameter
+	public static function create()
 	{
-		protected $name = 'chdl';
-		
-		private $items = array();
-		private $position = null;
-		
-		/**
-		 * @return GoogleChartLegend
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function __construct()
-		{
-			$this->position =
-				GoogleChartLegendPositionType::create(
-					GoogleChartLegendPositionType::LEFT
-				);
-		}
-		
-		/**
-		 * @return GoogleChartLegend
-		**/
-		public function setPosition(GoogleChartLegendPositionType $type)
-		{
-			$this->position = $type;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return GoogleChartLegend
-		**/
-		public function addItem($item)
-		{
-			$this->items[] = $item;
-			
-			return $this;
-		}
-		
-		public function toString()
-		{
-			$items = implode('|', $this->items);
-			
-			return $this->name.'='.$items.'&'.$this->position->toString();
-		}
+		return new self;
 	}
+
+	public function __construct()
+	{
+		$this->position =
+			GoogleChartLegendPositionType::create(
+				GoogleChartLegendPositionType::LEFT
+			);
+	}
+
+	/**
+	 * @return GoogleChartLegend
+	**/
+	public function setPosition(GoogleChartLegendPositionType $type)
+	{
+		$this->position = $type;
+
+		return $this;
+	}
+
+	/**
+	 * @return GoogleChartLegend
+	**/
+	public function addItem($item)
+	{
+		$this->items[] = $item;
+
+		return $this;
+	}
+
+	public function toString()
+	{
+		$items = implode('|', $this->items);
+
+		return $this->name.'='.$items.'&'.$this->position->toString();
+	}
+}
 ?>

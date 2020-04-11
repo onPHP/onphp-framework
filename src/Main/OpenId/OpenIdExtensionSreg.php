@@ -9,153 +9,158 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\OpenId;
+
+use OnPHP\Main\Flow\Model;
+use OnPHP\Main\Flow\HttpRequest;
+
+/**
+ * @ingroup OpenId
+ * @see http://openid.net/specs/openid-simple-registration-extension-1_1-01.html,
+ * @see http://openid.net/specs/openid-simple-registration-extension-1_0.html
+ *
+**/
+final class OpenIdExtensionSreg implements OpenIdExtension
+{
+	const NAMESPACE_1_1 = "http://openid.net/extensions/sreg/1.1";
+
+	const PARAM_NICKNAME		= 'nickname';
+	const PARAM_EMAIL			= 'email';
+	const PARAM_FULLNAME		= 'fullname';
+	const PARAM_DATE_OF_BIRTH	= 'dob';
+	const PARAM_GENDER			= 'gender';
+	const PARAM_POSTCODE		= 'postcode';
+	const PARAM_COUNTRY			= 'country';
+	const PARAM_LANGUAGE		= 'language';
+	const PARAM_TIMEZONE		= 'timezone';
+
+	private $params = array();
+	private $version = '1.1';
+	private $nickname		= null;
+	private $email			= null;
+	private $fullname		= null;
+	private $dob			= null;
+	private $gender			= null;
+	private $postcode		= null;
+	private $country		= null;
+	private $language		= null;
+	private $timezone		= null;
+
 	/**
-	 * @ingroup OpenId
-	 * @see http://openid.net/specs/openid-simple-registration-extension-1_1-01.html,
-	 * @see http://openid.net/specs/openid-simple-registration-extension-1_0.html
-	 *
+	 * @return OpenIdExtensionSreg
 	**/
-	final class OpenIdExtensionSreg implements OpenIdExtension
+	public static function create()
 	{
-		const NAMESPACE_1_1 = "http://openid.net/extensions/sreg/1.1";
-		
-		const PARAM_NICKNAME		= 'nickname';
-		const PARAM_EMAIL			= 'email';
-		const PARAM_FULLNAME		= 'fullname';
-		const PARAM_DATE_OF_BIRTH	= 'dob';
-		const PARAM_GENDER			= 'gender';
-		const PARAM_POSTCODE		= 'postcode';
-		const PARAM_COUNTRY			= 'country';
-		const PARAM_LANGUAGE		= 'language';
-		const PARAM_TIMEZONE		= 'timezone';
-		
-		private $params = array();
-		private $version = '1.1';
-		private $nickname		= null;
-		private $email			= null;
-		private $fullname		= null;
-		private $dob			= null;
-		private $gender			= null;
-		private $postcode		= null;
-		private $country		= null;
-		private $language		= null;
-		private $timezone		= null;
-		
-		/**
-		 * @return OpenIdExtensionSreg
-		**/
-		public static function create()
-		{
-			return new self();
+		return new self();
+	}
+
+	/**
+	 * @param Model $model
+	**/
+	public function addParamsToModel(Model $model)
+	{
+		if ($this->version == '1.1') {
+			$model->set('openid.ns.sreg', self::NAMESPACE_1_1);
 		}
-		
-		/**
-		 * @param Model $model
-		**/
-		public function addParamsToModel(Model $model)
-		{
-			if ($this->version == '1.1') {
-				$model->set('openid.ns.sreg', self::NAMESPACE_1_1);
+
+		$model->set('openid.sreg.optional', implode(',', $this->params));
+
+	}
+
+	/**
+	 * @param HttpRequest $request
+	 * @param array $params
+	**/
+	public function parseResponce(HttpRequest $request, array $params)
+	{
+		foreach ($this->params as $param) {
+			$this->$param = null;
+			if (isset($params['openid.sreg_'.$param])) {
+				$this->$param = $params['openid.sreg_'.$param];
 			}
-			
-			$model->set('openid.sreg.optional', implode(',', $this->params));
-			
-		}
-		
-		/**
-		 * @param HttpRequest $request
-		 * @param array $params
-		**/
-		public function parseResponce(HttpRequest $request, array $params)
-		{
-			foreach ($this->params as $param) {
-				$this->$param = null;
-				if (isset($params['openid.sreg_'.$param])) {
-					$this->$param = $params['openid.sreg_'.$param];
-				}
-			}
-		}
-		
-		public function getVersion()
-		{
-			return $this->version;
-		}
-		
-		/**
-		 * @param string $paramName
-		 * @return OpenIdExtensionSreg
-		**/
-		public function addParam($paramName)
-		{
-			$this->params []= $paramName;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return OpenIdExtensionSreg
-		**/
-		public function dropParams()
-		{
-			$this->params = array();
-			
-			return $this;
-		}
-		
-		/**
-		 * @param string $version
-		 * @return OpenIdExtensionSreg
-		**/
-		public function setVersion($version)
-		{
-			$this->version = $version;
-			
-			return $this;
-		}
-		
-		public function getNickname()
-		{
-			return $this->nickname;
-		}
-		
-		public function getEmail()
-		{
-			return $this->email;
-		}
-		
-		public function getFullname()
-		{
-			return $this->fullname;
-		}
-		
-		public function getDateOfBirth()
-		{
-			return $this->dob;
-		}
-		
-		public function getGender()
-		{
-			return $this->gender;
-		}
-		
-		public function getPostcode()
-		{
-			return $this->postcode;
-		}
-		
-		public function getCountry()
-		{
-			return $this->country;
-		}
-		
-		public function getLanguage()
-		{
-			return $this->language;
-		}
-		
-		public function getTimezone()
-		{
-			return $this->timezone;
 		}
 	}
+
+	public function getVersion()
+	{
+		return $this->version;
+	}
+
+	/**
+	 * @param string $paramName
+	 * @return OpenIdExtensionSreg
+	**/
+	public function addParam($paramName)
+	{
+		$this->params []= $paramName;
+
+		return $this;
+	}
+
+	/**
+	 * @return OpenIdExtensionSreg
+	**/
+	public function dropParams()
+	{
+		$this->params = array();
+
+		return $this;
+	}
+
+	/**
+	 * @param string $version
+	 * @return OpenIdExtensionSreg
+	**/
+	public function setVersion($version)
+	{
+		$this->version = $version;
+
+		return $this;
+	}
+
+	public function getNickname()
+	{
+		return $this->nickname;
+	}
+
+	public function getEmail()
+	{
+		return $this->email;
+	}
+
+	public function getFullname()
+	{
+		return $this->fullname;
+	}
+
+	public function getDateOfBirth()
+	{
+		return $this->dob;
+	}
+
+	public function getGender()
+	{
+		return $this->gender;
+	}
+
+	public function getPostcode()
+	{
+		return $this->postcode;
+	}
+
+	public function getCountry()
+	{
+		return $this->country;
+	}
+
+	public function getLanguage()
+	{
+		return $this->language;
+	}
+
+	public function getTimezone()
+	{
+		return $this->timezone;
+	}
+}
 ?>

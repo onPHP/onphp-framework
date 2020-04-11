@@ -9,24 +9,26 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Core\OSQL;
+
+/**
+ * Cast-able SQL parts.
+ * 
+ * @ingroup OSQL
+ * @ingroup Module
+**/
+abstract class Castable implements DialectString
+{
+	protected $cast	= null;
+
 	/**
-	 * Cast-able SQL parts.
-	 * 
-	 * @ingroup OSQL
-	 * @ingroup Module
+	 * @return Castable
 	**/
-	abstract class Castable implements DialectString
+	public function castTo($cast)
 	{
-		protected $cast	= null;
-		
-		/**
-		 * @return Castable
-		**/
-		public function castTo($cast)
-		{
-			$this->cast = $cast;
-			
-			return $this;
-		}
+		$this->cast = $cast;
+
+		return $this;
 	}
+}
 ?>

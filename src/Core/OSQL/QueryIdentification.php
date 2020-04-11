@@ -9,25 +9,30 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OSQL
-	 * @ingroup Module
-	**/
-	abstract class QueryIdentification implements Query
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\Exception\UnsupportedMethodException;
+use OnPHP\Core\DB\ImaginaryDialect;
+
+/**
+ * @ingroup OSQL
+ * @ingroup Module
+**/
+abstract class QueryIdentification implements Query
+{
+	public function getId()
 	{
-		public function getId()
-		{
-			return sha1($this->toString());
-		}
-		
-		final public function setId($id)
-		{
-			throw new UnsupportedMethodException();
-		}
-		
-		public function toString()
-		{
-			return $this->toDialectString(ImaginaryDialect::me());
-		}
+		return sha1($this->toString());
 	}
+
+	final public function setId($id)
+	{
+		throw new UnsupportedMethodException();
+	}
+
+	public function toString()
+	{
+		return $this->toDialectString(ImaginaryDialect::me());
+	}
+}
 ?>

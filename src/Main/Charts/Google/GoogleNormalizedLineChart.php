@@ -9,24 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+class GoogleNormalizedLineChart extends GoogleLineChart
+{
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleNormalizedLineChart
 	**/
-	class GoogleNormalizedLineChart extends GoogleLineChart
+	public static function create()
 	{
-		/**
-		 * @return GoogleNormalizedLineChart
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public function __construct()
-		{
-			parent::__construct();
-			
-			$this->data->setNormalize();
-		}
+		return new self;
 	}
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->data->setNormalize();
+	}
+}
 ?>

@@ -9,28 +9,34 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Flow;
+
+use OnPHP\Core\Base\Prototyped;
+use OnPHP\Core\Form\Form;
+use OnPHP\Core\Form\FormUtils;
+
+/**
+ * @ingroup Flow
+**/
+class EditCommand implements EditorCommand
+{
 	/**
-	 * @ingroup Flow
+	 * @return EditCommand
 	**/
-	class EditCommand implements EditorCommand
+	public static function create()
 	{
-		/**
-		 * @return EditCommand
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request)
-		{
-			if ($object = $form->getValue('id'))
-				FormUtils::object2form($object, $form);
-			
-			return ModelAndView::create();
-		}
+		return new self;
 	}
+
+	/**
+	 * @return ModelAndView
+	**/
+	public function run(Prototyped $subject, Form $form, HttpRequest $request)
+	{
+		if ($object = $form->getValue('id'))
+			FormUtils::object2form($object, $form);
+
+		return ModelAndView::create();
+	}
+}
 ?>

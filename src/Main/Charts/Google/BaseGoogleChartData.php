@@ -9,29 +9,31 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+abstract class BaseGoogleChartData extends BaseGoogleChartParameter
+{
+	protected $encoding = null;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return BaseGoogleChartData
 	**/
-	abstract class BaseGoogleChartData extends BaseGoogleChartParameter
+	public static function create()
 	{
-		protected $encoding = null;
-		
-		/**
-		 * @return BaseGoogleChartData
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return BaseGoogleChartData
-		**/
-		public function setEncoding(GoogleChartDataEncoding $encoding)
-		{
-			$this->encoding = $encoding;
-			
-			return $this;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return BaseGoogleChartData
+	**/
+	public function setEncoding(GoogleChartDataEncoding $encoding)
+	{
+		$this->encoding = $encoding;
+
+		return $this;
+	}
+}
 ?>

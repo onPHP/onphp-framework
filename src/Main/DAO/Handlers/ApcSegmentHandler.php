@@ -9,43 +9,48 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @see http://pecl.php.net/package/APC
-	 * 
-	 * @ingroup DAOs
-	**/
-	final class ApcSegmentHandler extends OptimizerSegmentHandler
+namespace OnPHP\Main\DAO\Handlers;
+
+use OnPHP\Core\Cache\SemaphorePool;
+use OnPHP\Core\Cache\Cache;
+
+/**
+ * @see http://pecl.php.net/package/APC
+ * 
+ * @ingroup DAO
+**/
+final class ApcSegmentHandler extends OptimizerSegmentHandler
+{
+	public function __construct($segmentId)
 	{
-		public function __construct($segmentId)
-		{
-			parent::__construct($segmentId);
-			
-			$this->locker = SemaphorePool::me();
-		}
-		
-		public function drop()
-		{
-			return apc_delete($this->id);
-		}
-		
-		protected function getMap()
-		{
-			$this->locker->get($this->id);
-			
-			if (!$map = apc_fetch($this->id)) {
-				$map = array();
-			}
-			
-			return $map;
-		}
-		
-		protected function storeMap(array $map)
-		{
-			$result = apc_store($this->id, $map, Cache::EXPIRES_FOREVER);
-			
-			$this->locker->free($this->id);
-			
-			return $result;
-		}
+		parent::__construct($segmentId);
+
+		$this->locker = SemaphorePool::me();
 	}
+
+	public function drop()
+	{
+		return apc_delete($this->id);
+	}
+
+	protected function getMap()
+	{
+		$this->locker->get($this->id);
+
+		if (!$map = apc_fetch($this->id)) {
+			$map = array();
+		}
+
+		return $map;
+	}
+
+	protected function storeMap(array $map)
+	{
+		$result = apc_store($this->id, $map, Cache::EXPIRES_FOREVER);
+
+		$this->locker->free($this->id);
+
+		return $result;
+	}
+}
 ?>

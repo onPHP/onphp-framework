@@ -9,76 +9,78 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleGridedLineChart extends GoogleNormalizedLineChart
+{
+	private $grid = null;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleGridedLineChart
 	**/
-	final class GoogleGridedLineChart extends GoogleNormalizedLineChart
+	public static function create()
 	{
-		private $grid = null;
-		
-		/**
-		 * @return GoogleGridedLineChart
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return GoogleGridedLineChart
-		**/
-		public function setGrid(GoogleChartGrid $grid)
-		{
-			$this->grid = $grid;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return GoogleChartGrid
-		**/
-		public function getGrid()
-		{
-			return $this->grid;
-		}
-		
-		public function toString()
-		{
-			if (!$this->grid)
-				$this->createDefault();
-			
-			$string = parent::toString();
-			
-			$string .= '&'.$this->grid->toString();
-			
-			return $string;
-		}
-		
-		/**
-		 * @return GoogleGridedLineChart
-		**/
-		private function createDefault()
-		{
-			$this->grid = GoogleChartGrid::create();
-			
-			$maxSteps = $this->getData()->getMaxSteps();
-			
-			if ($maxSteps > 0)
-				$this->grid->setVerticalStepSize(round(100 / $maxSteps, 1));
-			
-			if (
-				(
-					$axis = $this->axesCollection->getAxisByTypeId(
-						GoogleChartAxisType::X
-					)
-				) && ($label = $axis->getLabel())
-				&& ($label->getCount() > 1)
-			)
-				$this->grid->setHorizontalStepSize(
-					round(100 / ($label->getCount() - 1), 2)
-				);
-			
-			return $this;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return GoogleGridedLineChart
+	**/
+	public function setGrid(GoogleChartGrid $grid)
+	{
+		$this->grid = $grid;
+
+		return $this;
+	}
+
+	/**
+	 * @return GoogleChartGrid
+	**/
+	public function getGrid()
+	{
+		return $this->grid;
+	}
+
+	public function toString()
+	{
+		if (!$this->grid)
+			$this->createDefault();
+
+		$string = parent::toString();
+
+		$string .= '&'.$this->grid->toString();
+
+		return $string;
+	}
+
+	/**
+	 * @return GoogleGridedLineChart
+	**/
+	private function createDefault()
+	{
+		$this->grid = GoogleChartGrid::create();
+
+		$maxSteps = $this->getData()->getMaxSteps();
+
+		if ($maxSteps > 0)
+			$this->grid->setVerticalStepSize(round(100 / $maxSteps, 1));
+
+		if (
+			(
+				$axis = $this->axesCollection->getAxisByTypeId(
+					GoogleChartAxisType::X
+				)
+			) && ($label = $axis->getLabel())
+			&& ($label->getCount() > 1)
+		)
+			$this->grid->setHorizontalStepSize(
+				round(100 / ($label->getCount() - 1), 2)
+			);
+
+		return $this;
+	}
+}
 ?>

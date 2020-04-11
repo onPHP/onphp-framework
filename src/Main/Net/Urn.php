@@ -9,46 +9,48 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Net;
+
+/**
+ * URN is an absolute URI without authority part.
+ * 
+ * @ingroup Net
+**/
+final class Urn extends GenericUri
+{
+	protected $schemeSpecificPart	= null;
+
+	protected static $knownSubSchemes	= array(
+		'urn'		=> Urn::class,
+		'mailto'		=> Urn::class,
+		'news'		=> Urn::class,
+		'isbn'		=> Urn::class,
+		'tel'		=> Urn::class,
+		'fax'		=> Urn::class,
+	);
+
 	/**
-	 * URN is an absolute URI without authority part.
-	 * 
-	 * @ingroup Net
+	 * @return Urn
 	**/
-	final class Urn extends GenericUri
+	public static function create()
 	{
-		protected $schemeSpecificPart	= null;
-		
-		protected static $knownSubSchemes	= array(
-			'urn'		=> 'Urn',
-			'mailto'	=> 'Urn',
-			'news'		=> 'Urn',
-			'isbn'		=> 'Urn',
-			'tel'		=> 'Urn',
-			'fax'		=> 'Urn',
-		);
-		
-		/**
-		 * @return Urn
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		public static function getKnownSubSchemes()
-		{
-			return static::$knownSubSchemes;
-		}
-		
-		public function isValid()
-		{
-			if (
-				$this->scheme === null
-				|| $this->getAuthority() !== null
-			)
-				return false;
-			
-			return parent::isValid();
-		}
+		return new self;
 	}
+
+	public static function getKnownSubSchemes()
+	{
+		return static::$knownSubSchemes;
+	}
+
+	public function isValid()
+	{
+		if (
+			$this->scheme === null
+			|| $this->getAuthority() !== null
+		)
+			return false;
+
+		return parent::isValid();
+	}
+}
 ?>

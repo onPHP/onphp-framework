@@ -9,5 +9,10 @@
  *                                                                         *
  ***************************************************************************/
 
-	class AMQPServerException extends BaseException {/**/}
+namespace OnPHP\Main\Util\AMQP\Exception;
+
+use OnPHP\Core\Exception\BaseException;
+
+
+class AMQPServerException extends BaseException {/**/}
 ?>

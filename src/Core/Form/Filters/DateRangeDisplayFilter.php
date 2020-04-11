@@ -9,36 +9,41 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+use OnPHP\Main\Base\DateRange;
+
+/**
+ * @ingroup Filters
+**/
+final class DateRangeDisplayFilter extends BaseFilter
+{
 	/**
-	 * @ingroup Filters
+	 * @return DateRangeDisplayFilter
 	**/
-	final class DateRangeDisplayFilter extends BaseFilter
+	public static function me()
 	{
-		/**
-		 * @return DateRangeDisplayFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance('DateRangeDisplayFilter');
-		}
-		
-		public function apply($value)
-		{
-			$result = null;
-			
-			if ($value instanceof DateRange) {
-				if ($value->getStart())
-					$result = $value->getStart()->toDate('.');
-				
-				$result .= ' - ';
-				
-				if ($value->getEnd())
-					$result .= $value->getEnd()->toDate('.');
-				
-				return $result;
-			} else {
-				return $value;
-			}
+		return Singleton::getInstance(DateRangeDisplayFilter::class);
+	}
+
+	public function apply($value)
+	{
+		$result = null;
+
+		if ($value instanceof DateRange) {
+			if ($value->getStart())
+				$result = $value->getStart()->toDate('.');
+
+			$result .= ' - ';
+
+			if ($value->getEnd())
+				$result .= $value->getEnd()->toDate('.');
+
+			return $result;
+		} else {
+			return $value;
 		}
 	}
+}
 ?>

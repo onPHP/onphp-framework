@@ -9,34 +9,38 @@
  *                                                                         *
  ***************************************************************************/
 
-	// TODO: support for currency
-	
+namespace OnPHP\Main\Charts\Google;
+
+use OnPHP\Core\Base\Enumeration;
+
+// TODO: support for currency
+
+/**
+ * @ingroup GoogleChart
+**/
+final class LabelStyleType extends Enumeration
+{
+	const FLOAT				= 0x1;
+	const PERCENT			= 0x2;
+	const SCIENTIFIC		= 0x3;
+
+	protected $names = array(
+		self::FLOAT			=> 'f',
+		self::PERCENT		=> 'p',
+		self::SCIENTIFIC	=> 'e'
+	);
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return LabelStyleType
 	**/
-	final class LabelStyleType extends Enumeration
+	public static function create($id)
 	{
-		const FLOAT				= 0x1;
-		const PERCENT			= 0x2;
-		const SCIENTIFIC		= 0x3;
-		
-		protected $names = array(
-			self::FLOAT			=> 'f',
-			self::PERCENT		=> 'p',
-			self::SCIENTIFIC	=> 'e'
-		);
-		
-		/**
-		 * @return LabelStyleType
-		**/
-		public static function create($id)
-		{
-			return new self($id);
-		}
-		
-		public function toString()
-		{
-			return $this->name;
-		}
+		return new self($id);
 	}
+
+	public function toString()
+	{
+		return $this->name;
+	}
+}
 ?>

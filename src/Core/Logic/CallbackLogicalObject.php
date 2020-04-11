@@ -9,53 +9,60 @@
  *                                                                          *
  ****************************************************************************/
 
+namespace OnPHP\Core\Logic;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Form\Form;
+use OnPHP\Core\DB\Dialect;
+use OnPHP\Core\Exception\UnimplementedFeatureException;
+
+/**
+ * Wrapper around given childs of LogicalObject with custom logic-glue's.
+ *
+ * @ingroup Logic
+**/
+class CallbackLogicalObject implements LogicalObject
+{
 	/**
-	 * Wrapper around given childs of LogicalObject with custom logic-glue's.
-	 *
-	 * @ingroup Logic
-	**/
-	class CallbackLogicalObject implements LogicalObject
+	 * @var callable
+	 */
+	private $callback = null;
+
+	/**
+	 * @static
+	 * @param callable $callback
+	 * @return CallbackLogicalObject
+	 */
+	static public function create($callback)
 	{
-		/**
-		 * @var Closure
-		 */
-		private $callback = null;
-
-		/**
-		 * @static
-		 * @param Closure $callback
-		 * @return CallbackLogicalObject
-		 */
-		static public function create($callback)
-		{
-			return new static($callback);
-		}
-
-		/**
-		 * @param Closure $callback
-		 */
-		public function __construct($callback)
-		{
-			Assert::isTrue(is_callable($callback, true), 'callback must be callable');
-			$this->callback = $callback;
-		}
-
-		/**
-		 * @param Form $form
-		 * @return bool
-		 */
-		public function toBoolean(Form $form)
-		{
-			return call_user_func($this->callback, $form);
-		}
-
-		/**
-		 * @param Dialect $dialect
-		 * @throws UnimplementedFeatureException
-		 */
-		public function toDialectString(Dialect $dialect)
-		{
-			throw new UnimplementedFeatureException("toDialectString is not needed here");
-		}
+		return new static($callback);
 	}
+
+	/**
+	 * @param callable $callback
+	 */
+	public function __construct($callback)
+	{
+		Assert::isTrue(is_callable($callback, true), 'callback must be callable');
+		$this->callback = $callback;
+	}
+
+	/**
+	 * @param Form $form
+	 * @return bool
+	 */
+	public function toBoolean(Form $form)
+	{
+		return call_user_func($this->callback, $form);
+	}
+
+	/**
+	 * @param Dialect $dialect
+	 * @throws UnimplementedFeatureException
+	 */
+	public function toDialectString(Dialect $dialect)
+	{
+		throw new UnimplementedFeatureException("toDialectString is not needed here");
+	}
+}
 ?>

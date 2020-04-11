@@ -9,29 +9,34 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class TempFile
+namespace OnPHP\Main\Base;
+
+use OnPHP\Main\Util\FileUtils;
+use OnPHP\Core\Exception\BaseException;
+
+final class TempFile
+{
+	private $path = null;
+
+	public function __construct(
+		$directory = 'temp-garbage/', $prefix = 'TmpFile'
+	)
 	{
-		private $path = null;
-		
-		public function __construct(
-			$directory = 'temp-garbage/', $prefix = 'TmpFile'
-		)
-		{
-			$this->path = FileUtils::makeTempFile($directory, $prefix);
-		}
-		
-		public function __destruct()
-		{
-			try {
-				unlink($this->path);
-			} catch (BaseException $e) {
-				// boo! deal with garbage yourself.
-			}
-		}
-		
-		public function getPath()
-		{
-			return $this->path;
+		$this->path = FileUtils::makeTempFile($directory, $prefix);
+	}
+
+	public function __destruct()
+	{
+		try {
+			unlink($this->path);
+		} catch (BaseException $e) {
+			// boo! deal with garbage yourself.
 		}
 	}
+
+	public function getPath()
+	{
+		return $this->path;
+	}
+}
 ?>

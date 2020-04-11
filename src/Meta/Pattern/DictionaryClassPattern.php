@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	final class DictionaryClassPattern extends BasePattern
+namespace OnPHP\Meta\Pattern;
+
+/**
+ * @ingroup Patterns
+**/
+final class DictionaryClassPattern extends BasePattern
+{
+	public function daoExists()
 	{
-		public function daoExists()
-		{
-			return true;
-		}
+		return true;
 	}
+}
 ?>

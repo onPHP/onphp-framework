@@ -9,22 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * @ingroup Filters
+**/
+final class UrlDecodeFilter extends BaseFilter
+{
 	/**
-	 * @ingroup Filters
+	 * @return UrlDecodeFilter
 	**/
-	final class UrlDecodeFilter extends BaseFilter
+	public static function me()
 	{
-		/**
-		 * @return UrlDecodeFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return urldecode($value);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function apply($value)
+	{
+		return urldecode($value);
+	}
+}
 ?>

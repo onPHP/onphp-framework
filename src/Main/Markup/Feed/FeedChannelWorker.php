@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Feed
-	**/
-	interface FeedChannelWorker
-	{
-		public function makeChannel(SimpleXMLElement $xmlFeed);
-		public function toXml(FeedChannel $channel, $itemsXml);
-	}
+namespace OnPHP\Main\Markup\Feed;
+
+/**
+ * @ingroup Feed
+**/
+interface FeedChannelWorker
+{
+	public function makeChannel(\SimpleXMLElement $xmlFeed);
+	public function toXml(FeedChannel $channel, $itemsXml);
+}
 ?>

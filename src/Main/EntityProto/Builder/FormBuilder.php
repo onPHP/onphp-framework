@@ -9,46 +9,53 @@
  *                                                                         *
  ***************************************************************************/
 
-	abstract class FormBuilder extends PrototypedBuilder
+namespace OnPHP\Main\EntityProto\Builder;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Form\Form;
+use OnPHP\Core\Form\Primitives\PrimitiveForm;
+use OnPHP\Main\EntityProto\PrototypedBuilder;
+
+abstract class FormBuilder extends PrototypedBuilder
+{
+	/**
+	 * @return Form
+	**/
+	protected function createEmpty()
 	{
-		/**
-		 * @return Form
-		**/
-		protected function createEmpty()
-		{
-			return Form::create();
-		}
-		
-		/**
-		 * @return Form
-		**/
-		public function fillOwn($object, &$result)
-		{
-			Assert::isInstance($result, 'Form');
-			
-			foreach ($this->getFormMapping() as $primitive) {
-				if (
-					$primitive instanceof PrimitiveForm
-					&& $result->exists($primitive->getName())
-					&& $primitive->isComposite()
-				) {
-					
-					Assert::isEqual(
-						$primitive->getProto(),
-						$result->get($primitive->getName())->getProto()
-					);
-					
-					continue;
-				}
-				
-				$result->add($primitive);
-			}
-				
-			$result = parent::fillOwn($object, $result);
-			
-			$result->setProto($this->proto);
-			
-			return $result;
-		}
+		return Form::create();
 	}
+
+	/**
+	 * @return Form
+	**/
+	public function fillOwn($object, &$result)
+	{
+		Assert::isInstance($result, Form::class);
+
+		foreach ($this->getFormMapping() as $primitive) {
+			if (
+				$primitive instanceof PrimitiveForm
+				&& $result->exists($primitive->getName())
+				&& $primitive->isComposite()
+			) {
+
+				Assert::isEqual(
+					$primitive->getProto(),
+					$result->get($primitive->getName())->getProto()
+				);
+
+				continue;
+			}
+
+			$result->add($primitive);
+		}
+
+		$result = parent::fillOwn($object, $result);
+
+		$result->setProto($this->proto);
+
+		return $result;
+	}
+}
 ?>

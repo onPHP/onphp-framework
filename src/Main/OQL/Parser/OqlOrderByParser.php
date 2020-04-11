@@ -9,55 +9,60 @@
  *                                                                          *
  ****************************************************************************/
 
-	final class OqlOrderByParser extends OqlParser
+namespace OnPHP\Main\OQL\Parser;
+
+use OnPHP\Main\OQL\Statement\OqlOrderByClause;
+use OnPHP\Main\OQL\Expression\OqlOrderByExpression;
+
+final class OqlOrderByParser extends OqlParser
+{
+	/**
+	 * @return OqlOrderByParser
+	**/
+	public static function create()
 	{
-		/**
-		 * @return OqlOrderByParser
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return OqlOrderByClause
-		**/
-		protected function makeOqlObject()
-		{
-			return OqlOrderByClause::create();
-		}
-		
-		protected function handleState()
-		{
-			if ($this->state == self::INITIAL_STATE) {
-				$list = $this->getCommaSeparatedList(
-					array($this, 'getArgumentExpression'),
-					"expecting expression in 'order by'"
-				);
-				
-				foreach ($list as $argument)
-					$this->oqlObject->add($argument);
-			}
-			
-			return self::FINAL_STATE;
-		}
-		
-		/**
-		 * @return OqlOrderByExpression
-		**/
-		protected function getArgumentExpression()
-		{
-			$expression = $this->getLogicExpression();
-			
-			$token = $this->tokenizer->peek();
-			if ($this->checkKeyword($token, array('asc', 'desc'))) {
-				$direction = ($token->getValue() == 'asc');
-				$this->tokenizer->next();
-			
-			} else
-				$direction = null;
-			
-			return new OqlOrderByExpression($expression, $direction);
-		}
+		return new self;
 	}
+
+	/**
+	 * @return OqlOrderByClause
+	**/
+	protected function makeOqlObject()
+	{
+		return OqlOrderByClause::create();
+	}
+
+	protected function handleState()
+	{
+		if ($this->state == self::INITIAL_STATE) {
+			$list = $this->getCommaSeparatedList(
+				array($this, 'getArgumentExpression'),
+				"expecting expression in 'order by'"
+			);
+
+			foreach ($list as $argument)
+				$this->oqlObject->add($argument);
+		}
+
+		return self::FINAL_STATE;
+	}
+
+	/**
+	 * @return OqlOrderByExpression
+	**/
+	protected function getArgumentExpression()
+	{
+		$expression = $this->getLogicExpression();
+
+		$token = $this->tokenizer->peek();
+		if ($this->checkKeyword($token, array('asc', 'desc'))) {
+			$direction = ($token->getValue() == 'asc');
+			$this->tokenizer->next();
+
+		} else
+			$direction = null;
+
+		return new OqlOrderByExpression($expression, $direction);
+	}
+}
 ?>

@@ -9,53 +9,55 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Markup\Feed;
+
+/**
+ * @ingroup Feed
+**/
+final class FeedItemContent
+{
+	private $type = null;
+	private $body = null;
+
 	/**
-	 * @ingroup Feed
+	 * @return FeedItemContent
 	**/
-	final class FeedItemContent
+	public static function create()
 	{
-		private $type = null;
-		private $body = null;
-		
-		/**
-		 * @return FeedItemContent
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return FeedItemContentType
-		**/
-		public function getType()
-		{
-			return $this->type;
-		}
-		
-		/**
-		 * @return FeedItemContent
-		**/
-		public function setType(FeedItemContentType $type)
-		{
-			$this->type = $type;
-			
-			return $this;
-		}
-		
-		public function getBody()
-		{
-			return $this->body;
-		}
-		
-		/**
-		 * @return FeedItemContent
-		**/
-		public function setBody($body)
-		{
-			$this->body = $body;
-			
-			return $this;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return FeedItemContentType
+	**/
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	/**
+	 * @return FeedItemContent
+	**/
+	public function setType(FeedItemContentType $type)
+	{
+		$this->type = $type;
+
+		return $this;
+	}
+
+	public function getBody()
+	{
+		return $this->body;
+	}
+
+	/**
+	 * @return FeedItemContent
+	**/
+	public function setBody($body)
+	{
+		$this->body = $body;
+
+		return $this;
+	}
+}
 ?>

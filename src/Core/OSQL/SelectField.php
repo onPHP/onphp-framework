@@ -9,52 +9,57 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\OSQL;
+
+use OnPHP\Core\Base\Aliased;
+use OnPHP\Core\DB\Dialect;
+
+/**
+ * Connected to concrete table DBField.
+ * 
+ * @ingroup OSQL
+ * @ingroup Module
+**/
+final class SelectField extends FieldTable implements Aliased
+{
+	private $alias = null;
+
 	/**
-	 * Connected to concrete table DBField.
-	 * 
-	 * @ingroup OSQL
-	 * @ingroup Module
+	 * @return SelectField
 	**/
-	final class SelectField extends FieldTable implements Aliased
+	public static function create(DialectString $field, $alias)
 	{
-		private $alias = null;
-		
-		/**
-		 * @return SelectField
-		**/
-		public static function create(DialectString $field, $alias)
-		{
-			return new self($field, $alias);
-		}
-		
-		public function __construct(DialectString $field, $alias)
-		{
-			parent::__construct($field);
-			$this->alias = $alias;
-		}
-		
-		public function getAlias()
-		{
-			return $this->alias;
-		}
-		
-		public function getName()
-		{
-			if ($this->field instanceof DBField)
-				return $this->field->getField();
-			
-			return $this->alias;
-		}
-		
-		public function toDialectString(Dialect $dialect)
-		{
-			return
-				parent::toDialectString($dialect)
-				.(
-					$this->alias
-						? ' AS '.$dialect->quoteField($this->alias)
-						: null
-				);
-		}
+		return new self($field, $alias);
 	}
+
+	public function __construct(DialectString $field, $alias)
+	{
+		parent::__construct($field);
+		$this->alias = $alias;
+	}
+
+	public function getAlias()
+	{
+		return $this->alias;
+	}
+
+	public function getName()
+	{
+		if ($this->field instanceof DBField)
+			return $this->field->getField();
+
+		return $this->alias;
+	}
+
+	public function toDialectString(Dialect $dialect)
+	{
+		return
+			parent::toDialectString($dialect)
+			.(
+				$this->alias
+					? ' AS '.$dialect->quoteField($this->alias)
+					: null
+			);
+	}
+}
 ?>

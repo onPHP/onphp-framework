@@ -9,8 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OpenId
-	**/
-	class OpenIdException extends BaseException {}
+namespace OnPHP\Main\OpenId;
+
+use OnPHP\Core\Exception\BaseException;
+
+/**
+ * @ingroup OpenId
+**/
+class OpenIdException extends BaseException {}
 ?>

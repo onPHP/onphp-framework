@@ -9,30 +9,34 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Integer's set.
-	 * 
-	 * @ingroup Helpers
-	**/
-	final class IntegerSet extends Range
+namespace OnPHP\Main\Base;
+
+use OnPHP\Core\Form\Primitives\PrimitiveInteger;
+
+/**
+ * Integer's set.
+ * 
+ * @ingroup Helpers
+**/
+final class IntegerSet extends Range
+{
+	public static function create(
+		$min = PrimitiveInteger::SIGNED_MIN,
+		$max = PrimitiveInteger::SIGNED_MAX
+	)
 	{
-		public static function create(
-			$min = PrimitiveInteger::SIGNED_MIN,
-			$max = PrimitiveInteger::SIGNED_MAX
-		)
-		{
-			return new IntegerSet($min, $max);
-		}
-		
-		public function contains($value)
-		{
-			if (
-				$this->getMin() <= $value
-				&& $value <= $this->getMax()
-			)
-				return true;
-			else
-				return false;
-		}
+		return new IntegerSet($min, $max);
 	}
+
+	public function contains($value)
+	{
+		if (
+			$this->getMin() <= $value
+			&& $value <= $this->getMax()
+		)
+			return true;
+		else
+			return false;
+	}
+}
 ?>

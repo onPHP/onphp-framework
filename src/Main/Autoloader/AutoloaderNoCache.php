@@ -10,81 +10,86 @@
  *                                                                         *
  ***************************************************************************/
 	
-	class AutoloaderNoCache implements AutoloaderWithNamespace
+namespace OnPHP\Main\Autoloader;
+
+use OnPHP\Core\Exception\ClassNotFoundException;
+use OnPHP\Core\Exception\BaseException;
+
+class AutoloaderNoCache implements AutoloaderWithNamespace
+{
+	/**
+	 * @var NamespaceResolver
+	 */
+	private $namespaceResolver = null;
+
+	/**
+	 * @param NamespaceResolver $namespaceResolver
+	 * @return AutoloaderClassPathCache
+	 */
+	public function setNamespaceResolver(NamespaceResolver $namespaceResolver)
 	{
-		/**
-		 * @var NamespaceResolver
-		 */
-		private $namespaceResolver = null;
-		
-		/**
-		 * @param NamespaceResolver $namespaceResolver
-		 * @return AutoloaderClassPathCache
-		 */
-		public function setNamespaceResolver(NamespaceResolver $namespaceResolver)
-		{
-			$this->namespaceResolver = $namespaceResolver;
-			return $this;
+		$this->namespaceResolver = $namespaceResolver;
+		return $this;
+	}
+
+	/**
+	 * @return NamespaceResolver
+	 */
+	public function getNamespaceResolver()
+	{
+		return $this->namespaceResolver;
+	}
+
+	/**
+	 * @param string $path
+	 * @return AutoloaderNoCache
+	 */
+	public function addPath($path, $namespace = null)
+	{
+		$this->namespaceResolver->addPath($path, $namespace);
+
+		return $this;
+	}
+
+	/**
+	 * @param array $pathes
+	 * @return AutoloaderNoCache
+	 */
+	public function addPaths(array $paths, $namespace = null)
+	{
+		$this->namespaceResolver->addPaths($paths, $namespace);
+
+		return $this;
+	}
+
+	public function autoload($className)
+	{
+		if (strpos($className, "\0") !== false) {
+			/* are you sane? */
+			return;
 		}
-		
-		/**
-		 * @return NamespaceResolver
-		 */
-		public function getNamespaceResolver()
-		{
-			return $this->namespaceResolver;
-		}
-		
-		/**
-		 * @param string $path
-		 * @return AutoloaderNoCache
-		 */
-		public function addPath($path, $namespace = null)
-		{
-			$this->namespaceResolver->addPath($path, $namespace);
-			
-			return $this;
-		}
-		
-		/**
-		 * @param array $pathes
-		 * @return AutoloaderWholeClassCache
-		 */
-		public function addPaths(array $paths, $namespace = null)
-		{
-			$this->namespaceResolver->addPaths($paths, $namespace);
-			
-			return $this;
-		}
-		
-		public function autoload($className)
-		{
-			if (strpos($className, "\0") !== false) {
-				/* are you sane? */
-				return;
+
+		if ($path = $this->namespaceResolver->getClassPath($className)) {
+			try {
+				include $path;
+			} catch (ClassNotFoundException $e) {
+				throw $e;
+			} catch (BaseException $e) {
+				/* try another auto loader */
 			}
-			
-			if ($path = $this->namespaceResolver->getClassPath($className)) {
-				try {
-					include $path;
-				} catch (ClassNotFoundException $e) {
-					throw $e;
-				} catch (BaseException $e) {
-					/* try another auto loader */
-				}
-			}
-		}
-		
-		public function register()
-		{
-			$this->unregister();
-			spl_autoload_register(array($this, 'autoload'));
-			AutoloaderClassNotFound::me()->register();
-		}
-		
-		public function unregister()
-		{
-			spl_autoload_unregister(array($this, 'autoload'));
 		}
 	}
+
+	public function register()
+	{
+		$this->unregister();
+		spl_autoload_register(array($this, 'autoload'));
+		AutoloaderClassNotFound::me()->register();
+	}
+
+	public function unregister()
+	{
+		spl_autoload_unregister(array($this, 'autoload'));
+	}
+}
 ?>

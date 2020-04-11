@@ -9,43 +9,47 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class AMQPExchangeType extends Enumeration
+namespace OnPHP\Main\Util\AMQP;
+
+use OnPHP\Core\Base\Enumeration;
+
+final class AMQPExchangeType extends Enumeration
+{
+	const DIRECT = 1;
+	const FANOUT = 2;
+	const TOPIC = 3;
+	const HEADER = 4;
+
+	protected $names = array(
+		self::DIRECT => "direct",
+		self::FANOUT => "fanout",
+		self::TOPIC => "topic",
+		self::HEADER => "header"
+	);
+
+	public function getDefault()
 	{
-		const DIRECT = 1;
-		const FANOUT = 2;
-		const TOPIC = 3;
-		const HEADER = 4;
-
-		protected $names = array(
-			self::DIRECT => "direct",
-			self::FANOUT => "fanout",
-			self::TOPIC => "topic",
-			self::HEADER => "header"
-		);
-
-		public function getDefault()
-		{
-			return self::DIRECT;
-		}
-
-		public function isDirect()
-		{
-			return $this->id == self::DIRECT;
-		}
-
-		public function isFanout()
-		{
-			return $this->id == self::FANOUT;
-		}
-
-		public function isTopic()
-		{
-			return $this->id == self::TOPIC;
-		}
-
-		public function isHeader()
-		{
-			return $this->id == self::HEADER;
-		}
+		return self::DIRECT;
 	}
+
+	public function isDirect()
+	{
+		return $this->id == self::DIRECT;
+	}
+
+	public function isFanout()
+	{
+		return $this->id == self::FANOUT;
+	}
+
+	public function isTopic()
+	{
+		return $this->id == self::TOPIC;
+	}
+
+	public function isHeader()
+	{
+		return $this->id == self::HEADER;
+	}
+}
 ?>

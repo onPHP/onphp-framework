@@ -9,11 +9,15 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveIpAddress extends BaseObjectPrimitive
-	{
-		protected $className = 'IpAddress';
-	}
+namespace OnPHP\Core\Form\Primitives;
+
+use OnPHP\Main\Net\Ip\IpAddress;
+
+/**
+ * @ingroup Primitives
+**/
+final class PrimitiveIpAddress extends BaseObjectPrimitive
+{
+	protected $className = IpAddress::class;
+}
 ?>

@@ -9,29 +9,33 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OpenId
-	**/
-	final class OpenIdConsumerSetupRequired implements OpenIdConsumerResult
+namespace OnPHP\Main\OpenId;
+
+use OnPHP\Main\Net\HttpUrl;
+
+/**
+ * @ingroup OpenId
+**/
+final class OpenIdConsumerSetupRequired implements OpenIdConsumerResult
+{
+	private $url = null;
+
+	public function __construct(HttpUrl $url)
 	{
-		private $url = null;
-		
-		public function __construct(HttpUrl $url)
-		{
-			$this->url = $url;
-		}
-		
-		/**
-		 * @return HttpUrl
-		**/
-		public function getUrl()
-		{
-			return $this->url;
-		}
-		
-		public function isOk()
-		{
-			return false;
-		}
+		$this->url = $url;
 	}
+
+	/**
+	 * @return HttpUrl
+	**/
+	public function getUrl()
+	{
+		return $this->url;
+	}
+
+	public function isOk()
+	{
+		return false;
+	}
+}
 ?>

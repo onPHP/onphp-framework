@@ -9,56 +9,65 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\UnifiedContainer;
+
+use OnPHP\Core\DB\DBPool;
+use OnPHP\Core\OSQL\SelectQuery;
+
+/**
+ * @ingroup Containers
+**/
+final class ManyToManyLinkedFull extends ManyToManyLinkedWorker
+{
 	/**
-	 * @ingroup Containers
+	 * @return ManyToManyLinkedFull
 	**/
-	final class ManyToManyLinkedFull extends ManyToManyLinkedWorker
+	public function sync($insert, $update = array(), $delete)
 	{
-		/**
-		 * @return ManyToManyLinkedFull
-		**/
-		public function sync($insert, $update = array(), $delete)
-		{
-			$dao = $this->container->getDao();
-			
-			$db = DBPool::getByDao($dao);
-			
-			if ($insert)
-				for ($i = 0, $size = count($insert); $i < $size; ++$i) {
-					$db->queryNull(
-						$this->makeInsertQuery(
-							$dao->take($insert[$i])->getId()
-						)
-					);
-				}
-			
-			if ($update)
-				for ($i = 0, $size = count($update); $i < $size; ++$i)
-					$dao->save($update[$i]);
-			
-			if ($delete) {
-				$ids = array();
-				
-				foreach ($delete as $object)
-					$ids[] = $object->getId();
-				
-				$db->queryNull($this->makeDeleteQuery($ids));
-				
-				$dao->uncacheByIds($ids);
+		$dao = $this->container->getDao();
+
+		$db = DBPool::getByDao($dao);
+
+		if ($insert) {
+			for ($i = 0, $size = count($insert); $i < $size; ++$i) {
+				$db->queryNull(
+					$this->makeInsertQuery(
+						$dao->take($insert[$i])->getId()
+					)
+				);
 			}
-			
-			return $this;
 		}
 		
-		/**
-		 * @return SelectQuery
-		**/
-		public function makeFetchQuery()
-		{
-			return
-				$this->joinHelperTable(
-					$this->makeSelectQuery()
-				);
+		if ($update) {
+			for ($i = 0, $size = count($update); $i < $size; ++$i) {
+				$dao->save($update[$i]);
+			}
 		}
+
+		if ($delete) {
+			$ids = array();
+
+			foreach ($delete as $object) {
+				$ids[] = $object->getId();
+			}
+
+			$db->queryNull($this->makeDeleteQuery($ids));
+
+			$dao->uncacheByIds($ids);
+		}
+
+		return $this;
 	}
+
+	/**
+	 * @return SelectQuery
+	**/
+	public function makeFetchQuery()
+	{
+		return
+			$this->joinHelperTable(
+				$this->makeSelectQuery()
+			);
+	}
+}
 ?>

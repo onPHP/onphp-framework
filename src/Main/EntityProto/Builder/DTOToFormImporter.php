@@ -9,30 +9,36 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class DTOToFormImporter extends FormBuilder
+namespace OnPHP\Main\EntityProto\Builder;
+
+use OnPHP\Main\EntityProto\EntityProto;
+use OnPHP\Main\EntityProto\Accessor\DTOGetter;
+use OnPHP\Main\EntityProto\Accessor\FormImporter;
+
+final class DTOToFormImporter extends FormBuilder
+{
+	/**
+	 * @return DTOToFormImporter
+	**/
+	public static function create(EntityProto $proto)
 	{
-		/**
-		 * @return DTOToFormImporter
-		**/
-		public static function create(EntityProto $proto)
-		{
-			return new self($proto);
-		}
-		
-		/**
-		 * @return FormImporter
-		**/
-		protected function getGetter($object)
-		{
-			return new DTOGetter($this->proto, $object);
-		}
-		
-		/**
-		 * @return FormImporter
-		**/
-		protected function getSetter(&$object)
-		{
-			return new FormImporter($this->proto, $object);
-		}
+		return new self($proto);
 	}
+
+	/**
+	 * @return FormImporter
+	**/
+	protected function getGetter($object)
+	{
+		return new DTOGetter($this->proto, $object);
+	}
+
+	/**
+	 * @return FormImporter
+	**/
+	protected function getSetter(&$object)
+	{
+		return new FormImporter($this->proto, $object);
+	}
+}
 ?>

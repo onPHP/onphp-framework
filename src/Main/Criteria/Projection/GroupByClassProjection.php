@@ -9,24 +9,29 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Criteria\Projection;
+
+use OnPHP\Core\OSQL\JoinCapableQuery;
+use OnPHP\Core\OSQL\DBField;
+
+/**
+ * @ingroup Projection
+**/
+final class GroupByClassProjection extends ClassProjection
+{
 	/**
-	 * @ingroup Projections
+	 * @return GroupByClassProjection
 	**/
-	final class GroupByClassProjection extends ClassProjection
+	public static function create($class)
 	{
-		/**
-		 * @return GroupByClassProjection
-		**/
-		public static function create($class)
-		{
-			return new self($class);
-		}
-		
-		/* void */ protected function subProcess(
-			JoinCapableQuery $query, DBField $field
-		)
-		{
-			$query->groupBy($field);
-		}
+		return new self($class);
 	}
+
+	/* void */ protected function subProcess(
+		JoinCapableQuery $query, DBField $field
+	)
+	{
+		$query->groupBy($field);
+	}
+}
 ?>

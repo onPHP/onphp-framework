@@ -9,40 +9,47 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Criteria\Projection;
+
+use OnPHP\Main\Criteria\Criteria;
+use OnPHP\Core\OSQL\JoinCapableQuery;
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\OSQL\SQLFunction;
+
+/**
+ * @ingroup Projection
+**/
+abstract class CountProjection extends BaseProjection
+{
 	/**
-	 * @ingroup Projections
+	 * @return JoinCapableQuery
 	**/
-	abstract class CountProjection extends BaseProjection
+	public function process(Criteria $criteria, JoinCapableQuery $query)
 	{
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query)
-		{
-			return
-				$query->get(
-					$this->getFunction($criteria, $query),
-					$this->alias
-				);
-		}
-		
-		/**
-		 * @return SQLFunction
-		**/
-		protected function getFunction(
-			Criteria $criteria,
-			JoinCapableQuery $query
-		)
-		{
-			Assert::isNotNull($this->property);
-			
-			return
-				SQLFunction::create(
-					'count',
-					$this->property
-						? $criteria->getDao()->guessAtom($this->property, $query)
-						: $criteria->getDao()->getIdName()
-				);
-		}
+		return
+			$query->get(
+				$this->getFunction($criteria, $query),
+				$this->alias
+			);
 	}
+
+	/**
+	 * @return SQLFunction
+	**/
+	protected function getFunction(
+		Criteria $criteria,
+		JoinCapableQuery $query
+	)
+	{
+		Assert::isNotNull($this->property);
+
+		return
+			SQLFunction::create(
+				'count',
+				$this->property
+					? $criteria->getDao()->guessAtom($this->property, $query)
+					: $criteria->getDao()->getIdName()
+			);
+	}
+}
 ?>

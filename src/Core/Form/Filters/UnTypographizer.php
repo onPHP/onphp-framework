@@ -9,43 +9,47 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * @ingroup Filters
+**/
+final class UnTypographizer extends BaseFilter
+{
+	private static $symbols =
+		array(
+			'&nbsp;'	=> ' ',
+			' &lt; '	=> ' < ',
+			' &gt; '	=> ' > ',
+			'&#133;'	=> '…',
+			'&trade;'	=> '™',
+			'&copy;'	=> '©',
+			'&#8470;'	=> '№',
+			'&#151;'	=> '—',
+			'&mdash;'	=> '—',
+			'&laquo;'	=> '«',
+			'&raquo;'	=> '»',
+			'&bull;'	=> '•',
+			'&reg;'		=> '®',
+			'&frac14;'	=> '¼',
+			'&frac12;'	=> '½',
+			'&frac34;'	=> '¾',
+			'&plusmn;'	=> '±'
+		);
+
 	/**
-	 * @ingroup Filters
+	 * @return UnTypographizer
 	**/
-	final class UnTypographizer extends BaseFilter
+	public static function me()
 	{
-		private static $symbols =
-			array(
-				'&nbsp;'	=> ' ',
-				' &lt; '	=> ' < ',
-				' &gt; '	=> ' > ',
-				'&#133;'	=> '…',
-				'&trade;'	=> '™',
-				'&copy;'	=> '©',
-				'&#8470;'	=> '№',
-				'&#151;'	=> '—',
-				'&mdash;'	=> '—',
-				'&laquo;'	=> '«',
-				'&raquo;'	=> '»',
-				'&bull;'	=> '•',
-				'&reg;'		=> '®',
-				'&frac14;'	=> '¼',
-				'&frac12;'	=> '½',
-				'&frac34;'	=> '¾',
-				'&plusmn;'	=> '±'
-			);
-		
-		/**
-		 * @return UnTypographizer
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return strtr($value, self::$symbols);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function apply($value)
+	{
+		return strtr($value, self::$symbols);
+	}
+}
 ?>

@@ -9,13 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class ObjectGetter extends PrototypedGetter
+namespace OnPHP\Main\EntityProto\Accessor;
+
+use OnPHP\Main\EntityProto\PrototypedGetter;
+
+final class ObjectGetter extends PrototypedGetter
+{
+	public function get($name)
 	{
-		public function get($name)
-		{
-			$method = 'get'.ucfirst($name);
-			
-			return $this->object->$method();
-		}
+		$method = 'get'.ucfirst($name);
+
+		return $this->object->$method();
 	}
+}
 ?>

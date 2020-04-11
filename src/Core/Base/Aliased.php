@@ -9,12 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Base
-	 * @ingroup Module
-	**/
-	interface Aliased
-	{
-		public function getAlias();
-	}
+namespace OnPHP\Core\Base;
+
+/**
+ * @ingroup Base
+ * @ingroup Module
+**/
+interface Aliased
+{
+	public function getAlias();
+}
 ?>

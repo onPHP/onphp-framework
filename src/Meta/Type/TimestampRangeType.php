@@ -9,14 +9,22 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class TimestampRangeType extends DateRangeType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Main\Base\TimestampRange;
+
+/**
+ * @ingroup Types
+**/
+class TimestampRangeType extends DateRangeType
+{
+	public function toPrimitive()
 	{
-		public function toPrimitive()
-		{
-			return 'Primitive::timestampRange';
-		}
+		return 'Primitive::timestampRange';
 	}
+	
+	public function getFullClass() {
+		return TimestampRange::class;
+	}
+}
 ?>

@@ -9,19 +9,23 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveFloat extends PrimitiveNumber
+namespace OnPHP\Core\Form\Primitives;
+
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup Primitives
+**/
+final class PrimitiveFloat extends PrimitiveNumber
+{
+	protected function checkNumber($number)
 	{
-		protected function checkNumber($number)
-		{
-			Assert::isFloat($number);
-		}
-		
-		protected function castNumber($number)
-		{
-			return (float) $number;
-		}
+		Assert::isFloat($number);
 	}
+
+	protected function castNumber($number)
+	{
+		return (float) $number;
+	}
+}
 ?>

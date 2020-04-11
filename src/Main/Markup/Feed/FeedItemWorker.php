@@ -9,12 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Feed
-	**/
-	interface FeedItemWorker extends Instantiatable
-	{
-		public function makeItems(SimpleXMLElement $xmlFeed);
-		public function toXml(FeedItem $item);
-	}
+namespace OnPHP\Main\Markup\Feed;
+
+use OnPHP\Core\Base\Instantiatable;
+
+/**
+ * @ingroup Feed
+**/
+interface FeedItemWorker extends Instantiatable
+{
+	public function makeItems(\SimpleXMLElement $xmlFeed);
+	public function toXml(FeedItem $item);
+}
 ?>

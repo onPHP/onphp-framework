@@ -9,16 +9,20 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveScalarIdentifier extends PrimitiveIdentifier
+namespace OnPHP\Core\Form\Primitives;
+
+use OnPHP\Core\Exception\WrongStateException;
+
+/**
+ * @ingroup Primitives
+**/
+final class PrimitiveScalarIdentifier extends PrimitiveIdentifier
+{
+	protected $scalar = true;
+
+	public function setScalar($orly = false)
 	{
-		protected $scalar = true;
-		
-		public function setScalar($orly = false)
-		{
-			throw new WrongStateException();
-		}
+		throw new WrongStateException();
 	}
+}
 ?>

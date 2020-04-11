@@ -1,4 +1,13 @@
 <?php
+
+namespace OnPHP\Main\Util;
+
+use OnPHP\Core\Base\StaticFactory;
+use OnPHP\Core\Exception\WrongArgumentException;
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Exception\BaseException;
+use OnPHP\Core\Exception\WrongStateException;
+
 /***************************************************************************
  *   Copyright (C) 2004-2008 by Sveta A. Smirnova                          *
  *                                                                         *
@@ -153,7 +162,7 @@
 					);
 				}
 
-				$directoryIterator = new DirectoryIterator($directory);
+				$directoryIterator = new \DirectoryIterator($directory);
 				
 				foreach ($directoryIterator as $file) {
 					if ($file->isDot())

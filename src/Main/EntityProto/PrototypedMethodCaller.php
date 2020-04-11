@@ -9,19 +9,21 @@
  *                                                                         *
  ***************************************************************************/
 
-	abstract class PrototypedMethodCaller
+namespace OnPHP\Main\EntityProto;
+
+abstract class PrototypedMethodCaller
+{
+	protected $proto = null;
+	protected $object = null;
+
+	protected $mapping = array();
+
+	public function __construct(EntityProto $proto, &$object)
 	{
-		protected $proto = null;
-		protected $object = null;
-		
-		protected $mapping = array();
-		
-		public function __construct(EntityProto $proto, &$object)
-		{
-			$this->proto = $proto;
-			$this->object = &$object;
-			
-			$this->mapping = $proto->getFormMapping();
-		}
+		$this->proto = $proto;
+		$this->object = &$object;
+
+		$this->mapping = $proto->getFormMapping();
 	}
+}
 ?>

@@ -9,13 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Filter's template.
-	 * 
-	 * @ingroup Filters
-	 * @ingroup Module
-	**/
-	abstract class BaseFilter
-		extends Singleton
-		implements Filtrator, Instantiatable {/*_*/}
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+use OnPHP\Core\Base\Instantiatable;
+
+/**
+ * Filter's template.
+ * 
+ * @ingroup Filters
+ * @ingroup Module
+**/
+abstract class BaseFilter
+	extends Singleton
+	implements Filtrator, Instantiatable {/*_*/}
 ?>

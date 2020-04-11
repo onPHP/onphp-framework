@@ -9,26 +9,34 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class DateObjectComparator extends Singleton
-		implements Comparator, Instantiatable
+namespace OnPHP\Main\Base;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Base\Date;
+use OnPHP\Core\Base\Instantiatable;
+use OnPHP\Core\Base\Singleton;
+use OnPHP\Main\Base\Comparator;
+
+final class DateObjectComparator extends Singleton
+	implements Comparator, Instantiatable
+{
+	public static function me()
 	{
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-
-		public function compare(/*Date*/ $one,/*Date*/ $two)
-		{
-			Assert::isInstance($one, 'Date');
-			Assert::isInstance($two, 'Date');
-
-			$stamp1 = $one->toStamp();
-			$stamp2 = $two->toStamp();
-
-			if ($stamp1 == $stamp2)
-				return 0;
-
-			return ($stamp1 < $stamp2) ? -1 : 1;
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function compare(/*Date*/ $one,/*Date*/ $two)
+	{
+		Assert::isInstance($one, Date::class);
+		Assert::isInstance($two, Date::class);
+
+		$stamp1 = $one->toStamp();
+		$stamp2 = $two->toStamp();
+
+		if ($stamp1 == $stamp2)
+			return 0;
+
+		return ($stamp1 < $stamp2) ? -1 : 1;
+	}
+}
 ?>

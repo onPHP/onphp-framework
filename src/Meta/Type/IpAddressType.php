@@ -9,29 +9,38 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class IpAddressType extends ObjectType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\OSQL\DataType;
+use OnPHP\Main\Net\Ip\IpAddress;
+
+/**
+ * @ingroup Types
+**/
+class IpAddressType extends ObjectType
+{
+	public function getPrimitiveName()
 	{
-		public function getPrimitiveName()
-		{
-			return 'ipAddress';
-		}
-		
-		public function isGeneric()
-		{
-			return true;
-		}
-		
-		public function isMeasurable()
-		{
-			return true;
-		}
-		
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::IP)';
-		}
+		return 'ipAddress';
 	}
+	
+	public function isGeneric()
+	{
+		return true;
+	}
+	
+	public function getFullClass() {
+		return IpAddress::class;
+	}
+	
+	public function isMeasurable()
+	{
+		return true;
+	}
+	
+	public function toColumnType()
+	{
+		return DataType::class.'::create('.DataType::class.'::IP)';
+	}
+}
 ?>

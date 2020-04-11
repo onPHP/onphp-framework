@@ -9,8 +9,12 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Utils
-	**/
-	class ArchiverException extends BaseException {/*_*/}
+namespace OnPHP\Main\Util\Archiver;
+
+use OnPHP\Core\Exception\BaseException;
+
+/**
+ * @ingroup Utils
+**/
+class ArchiverException extends BaseException {/*_*/}
 ?>

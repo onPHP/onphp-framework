@@ -9,32 +9,36 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup OQL
-	**/
-	final class OqlPrefixMinusExpression extends OqlQueryExpression
+namespace OnPHP\Main\OQL\Expression;
+
+use OnPHP\Core\Logic\PrefixUnaryExpression;
+
+/**
+ * @ingroup OQL
+**/
+final class OqlPrefixMinusExpression extends OqlQueryExpression
+{
+	const CLASS_NAME = PrefixUnaryExpression::class;
+
+	public function __construct(OqlQueryParameter $subject)
 	{
-		const CLASS_NAME = 'PrefixUnaryExpression';
-		
-		public function __construct(OqlQueryParameter $subject)
-		{
-			$this->
-				setClassName(self::CLASS_NAME)->
-				addParameter(
-					OqlQueryParameter::create()->
-						setValue(PrefixUnaryExpression::MINUS)
-				)->
-				addParameter($subject);
-		}
-		
-		public function evaluate($values)
-		{
-			$value = $this->getParameter(1)->evaluate($values);
-			
-			if (is_numeric($value))
-				return -$value;
-			else
-				return parent::evaluate($values);
-		}
+		$this->
+			setClassName(self::CLASS_NAME)->
+			addParameter(
+				OqlQueryParameter::create()->
+					setValue(PrefixUnaryExpression::MINUS)
+			)->
+			addParameter($subject);
 	}
+
+	public function evaluate($values)
+	{
+		$value = $this->getParameter(1)->evaluate($values);
+
+		if (is_numeric($value))
+			return -$value;
+		else
+			return parent::evaluate($values);
+	}
+}
 ?>

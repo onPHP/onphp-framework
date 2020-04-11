@@ -9,22 +9,24 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Flow;
+
+/**
+ * @ingroup Flow
+**/
+class AddCommand extends MakeCommand
+{
 	/**
-	 * @ingroup Flow
+	 * @return AddCommand
 	**/
-	class AddCommand extends MakeCommand
+	public static function create()
 	{
-		/**
-		 * @return AddCommand
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		protected function daoMethod()
-		{
-			return 'add';
-		}
+		return new self;
 	}
+
+	protected function daoMethod()
+	{
+		return 'add';
+	}
+}
 ?>

@@ -9,64 +9,66 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartLine extends GoogleChartPiece
+{
+	private $style 		= null;
+	private $labelStyle = null;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartLine
 	**/
-	final class GoogleChartLine extends GoogleChartPiece
+	public static function create()
 	{
-		private $style 		= null;
-		private $labelStyle = null;
-		
-		/**
-		 * @return GoogleChartLine
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return GoogleChartLine
-		**/
-		public function setValue(/* GoogleChartDataSet */ $value)
-		{
-			return parent::setValue($value);
-		}
-		
-		/**
-		 * @return GoogleChartLine
-		**/
-		public function setStyle(ChartLineStyle $style)
-		{
-			$this->style = $style;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return ChartLineStyle
-		**/
-		public function getStyle()
-		{
-			return $this->style;
-		}
-		
-		/**
-		 * @return GoogleChartLine
-		**/
-		public function setLabelStyle(ChartLabelStyle $style)
-		{
-			$this->labelStyle = $style;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return GoogleChartLabelStyle
-		**/
-		public function getLabelStyle()
-		{
-			return $this->labelStyle;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return GoogleChartLine
+	**/
+	public function setValue(/* GoogleChartDataSet */ $value)
+	{
+		return parent::setValue($value);
+	}
+
+	/**
+	 * @return GoogleChartLine
+	**/
+	public function setStyle(ChartLineStyle $style)
+	{
+		$this->style = $style;
+
+		return $this;
+	}
+
+	/**
+	 * @return ChartLineStyle
+	**/
+	public function getStyle()
+	{
+		return $this->style;
+	}
+
+	/**
+	 * @return GoogleChartLine
+	**/
+	public function setLabelStyle(ChartLabelStyle $style)
+	{
+		$this->labelStyle = $style;
+
+		return $this;
+	}
+
+	/**
+	 * @return GoogleChartLabelStyle
+	**/
+	public function getLabelStyle()
+	{
+		return $this->labelStyle;
+	}
+}
 ?>

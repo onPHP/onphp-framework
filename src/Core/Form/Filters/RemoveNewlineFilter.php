@@ -9,24 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * Replaces \n and \r by whitespace
+ * 
+ * @ingroup Filters
+**/
+final class RemoveNewlineFilter extends BaseFilter
+{
 	/**
-	 * Replaces \n and \r by whitespace
-	 * 
-	 * @ingroup Filters
+	 * @return RemoveNewLineFilter
 	**/
-	final class RemoveNewlineFilter extends BaseFilter
+	public static function me()
 	{
-		/**
-		 * @return RemoveNewLineFilter
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return preg_replace('/[\n\r]+/', ' ', $value);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function apply($value)
+	{
+		return preg_replace('/[\n\r]+/', ' ', $value);
+	}
+}
 ?>

@@ -9,38 +9,43 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Markup\Feed;
+
+use OnPHP\Core\Base\Singleton;
+use OnPHP\Core\Exception\UnimplementedFeatureException;
+
+/**
+ * @ingroup Feed
+**/
+final class AtomChannelWorker extends Singleton implements FeedChannelWorker
+{
 	/**
-	 * @ingroup Feed
+	 * @return AtomChannelWorker
 	**/
-	final class AtomChannelWorker extends Singleton implements FeedChannelWorker
+	public static function me()
 	{
-		/**
-		 * @return AtomChannelWorker
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		/**
-		 * @return FeedChannel
-		**/
-		public function makeChannel(SimpleXMLElement $xmlFeed)
-		{
-			$feedChannel = FeedChannel::create((string) $xmlFeed->title);
-			
-			if (isset($xmlFeed->link))
-				if (is_array($xmlFeed->link))
-					$feedChannel->setLink((string) $xmlFeed->link[0]);
-				else
-					$feedChannel->setLink((string) $xmlFeed->link);
-			
-			return $feedChannel;
-		}
-		
-		public function toXml(FeedChannel $channel, $itemsXml)
-		{
-			throw new UnimplementedFeatureException('implement me!');
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	/**
+	 * @return FeedChannel
+	**/
+	public function makeChannel(\SimpleXMLElement $xmlFeed)
+	{
+		$feedChannel = FeedChannel::create((string) $xmlFeed->title);
+
+		if (isset($xmlFeed->link))
+			if (is_array($xmlFeed->link))
+				$feedChannel->setLink((string) $xmlFeed->link[0]);
+			else
+				$feedChannel->setLink((string) $xmlFeed->link);
+
+		return $feedChannel;
+	}
+
+	public function toXml(FeedChannel $channel, $itemsXml)
+	{
+		throw new UnimplementedFeatureException('implement me!');
+	}
+}
 ?>

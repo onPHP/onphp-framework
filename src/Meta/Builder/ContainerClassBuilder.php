@@ -9,6 +9,14 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Builder;
+
+use OnPHP\Meta\Entity\MetaClass;
+use OnPHP\Core\Exception\UnsupportedMethodException;
+use OnPHP\Meta\Entity\MetaClassProperty;
+use OnPHP\Meta\Entity\MetaRelation;
+use OnPHP\Meta\Entity\MetaClassNameBuilder;
+
 	/**
 	 * @ingroup Builders
 	**/
@@ -25,7 +33,22 @@
 		{
 			$out = self::getHead();
 			
-			$containerName = $class->getName().ucfirst($holder->getName()).'DAO';
+			$out .= "\nnamespace {$class->getDaoNamespace()};\n\n";
+			
+			$containerName = $class->getName() . ucfirst($holder->getName()) . 'DAO';
+			$containerType = $holder->getRelation()->toString() . 'Linked';
+			
+			$uses = [
+					'OnPHP\Main\UnifiedContainer\\'.$containerType,
+					MetaClassNameBuilder::getClassOfMetaClass($class),
+					MetaClassNameBuilder::getClassOfMetaProperty($holder),
+			];
+			
+			foreach ($uses as $use) {
+				$out .= "use $use;\n";
+			}
+			
+			$out .= "\n";
 			
 			$out .=
 				'final class '

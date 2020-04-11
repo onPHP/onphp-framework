@@ -9,24 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+/**
+ * @ingroup GoogleChart
+**/
+abstract class BaseGoogleChartDataEncoding
+	extends BaseGoogleChartParameter
+	implements GoogleChartDataEncoding
+{
+	protected $maxValue = null;
+	protected $delimiter = null;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return BaseGoogleChartDataEncoding
 	**/
-	abstract class BaseGoogleChartDataEncoding
-		extends BaseGoogleChartParameter
-		implements GoogleChartDataEncoding
+	public function setMaxValue($maxValue)
 	{
-		protected $maxValue = null;
-		protected $delimiter = null;
-		
-		/**
-		 * @return BaseGoogleChartDataEncoding
-		**/
-		public function setMaxValue($maxValue)
-		{
-			$this->maxValue = $maxValue;
-			
-			return $this;
-		}
+		$this->maxValue = $maxValue;
+
+		return $this;
 	}
+}
 ?>

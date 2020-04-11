@@ -9,22 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class UnsignedIntegerType extends IntegerType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Main\Base\LightMetaProperty;
+
+/**
+ * @ingroup Types
+**/
+final class UnsignedIntegerType extends IntegerType
+{
+	public function getSize()
 	{
-		public function getSize()
-		{
-			return 4 & LightMetaProperty::UNSIGNED_FLAG;
-		}
-		
-		public function toColumnType()
-		{
-			return
-				parent::toColumnType()
-				."->\n"
-				.'setUnsigned(true)';
-		}
+		return 4 & LightMetaProperty::UNSIGNED_FLAG;
 	}
+	
+	public function toColumnType()
+	{
+		return
+			parent::toColumnType()
+			."->\n"
+			.'setUnsigned(true)';
+	}
+}
 ?>

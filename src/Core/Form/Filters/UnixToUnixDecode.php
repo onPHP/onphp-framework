@@ -9,24 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Singleton;
+
+/**
+ * Decode a uuencoded string.
+ * 
+ * @ingroup Filters
+**/
+final class UnixToUnixDecode extends BaseFilter
+{
 	/**
-	 * Decode a uuencoded string.
-	 * 
-	 * @ingroup Filters
+	 * @return UnixToUnixDecode
 	**/
-	final class UnixToUnixDecode extends BaseFilter
+	public static function me()
 	{
-		/**
-		 * @return UnixToUnixDecode
-		**/
-		public static function me()
-		{
-			return Singleton::getInstance(__CLASS__);
-		}
-		
-		public function apply($value)
-		{
-			return convert_uudecode($value);
-		}
+		return Singleton::getInstance(__CLASS__);
 	}
+
+	public function apply($value)
+	{
+		return convert_uudecode($value);
+	}
+}
 ?>

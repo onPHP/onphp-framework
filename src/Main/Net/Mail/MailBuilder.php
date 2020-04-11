@@ -9,15 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Mail
-	**/
-	interface MailBuilder
-	{
-		/// returns encoded body as string
-		public function getEncodedBody();
-		
-		/// returns all related headers as string
-		public function getHeaders();
-	}
+namespace OnPHP\Main\Net\Mail;
+
+/**
+ * @ingroup Mail
+**/
+interface MailBuilder
+{
+	/// returns encoded body as string
+	public function getEncodedBody();
+
+	/// returns all related headers as string
+	public function getHeaders();
+}
 ?>

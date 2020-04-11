@@ -9,24 +9,33 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class DateType extends ObjectType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\Base\Date;
+use OnPHP\Core\OSQL\DataType;
+
+/**
+ * @ingroup Types
+**/
+class DateType extends ObjectType
+{
+	public function getPrimitiveName()
 	{
-		public function getPrimitiveName()
-		{
-			return 'date';
-		}
-		
-		public function isGeneric()
-		{
-			return true;
-		}
-		
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::DATE)';
-		}
+		return 'date';
 	}
+	
+	public function isGeneric()
+	{
+		return true;
+	}
+	
+	public function toColumnType()
+	{
+		return DataType::class.'::create('.DataType::class.'::DATE)';
+	}
+	
+	public function getFullClass() {
+		return Date::class;
+	}
+}
 ?>

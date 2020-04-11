@@ -9,6 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Meta\Builder;
+
+use OnPHP\Core\Base\Prototyped;
+use OnPHP\Core\Base\Singleton;
+use OnPHP\Main\DAO\DAOConnected;
+use OnPHP\Meta\Entity\MetaClass;
+use OnPHP\Meta\Pattern\AbstractClassPattern;
+use OnPHP\Meta\Entity\MetaClassType;
+use OnPHP\Meta\Pattern\InternalClassPattern;
+use OnPHP\Meta\Util\NamespaceUtils;
+
 	/**
 	 * @ingroup Builders
 	**/
@@ -18,18 +29,25 @@
 		{
 			$out = self::getHead();
 			
-			if ($type = $class->getType())
-				$typeName = $type->toString().' ';
-			else
+			$uses = [Singleton::class, $class->getAutoBusinessClass()];
+			
+			if ($type = $class->getType()) {
+				$typeName = $type->toString() . ' ';
+			} else {
 				$typeName = null;
+			}
 			
 			$interfaces = ' implements Prototyped';
+			$uses[] = Prototyped::class;
+			$uses[] = $class->getProtoClass();
 			
 			if (
 				$class->getPattern()->daoExists()
 				&& (!$class->getPattern() instanceof AbstractClassPattern)
 			) {
 				$interfaces .= ', DAOConnected';
+				$uses[] = DAOConnected::class;
+				$uses[] = $class->getDaoClass();
 				
 				$daoName = $class->getName().'DAO';
 				$dao = <<<EOT
@@ -38,12 +56,22 @@
 	**/
 	public static function dao()
 	{
-		return Singleton::getInstance('{$daoName}');
+		return Singleton::getInstance({$daoName}::class);
 	}
 
 EOT;
-			} else
+			} else {
 				$dao = null;
+			}
+			
+			$namespace = NamespaceUtils::getBusinessNS($class);
+			$out .= "namespace {$namespace};\n\n";
+			
+			foreach($uses as $import) {
+				$out .= "use $import;\n";
+			}
+			
+			$out .= "\n";
 			
 			$out .= <<<EOT
 {$typeName}class {$class->getName()} extends Auto{$class->getName()}{$interfaces}
@@ -60,7 +88,7 @@ EOT;
 					$parent = $class;
 					
 					while ($parent = $parent->getParent()) {
-						$info = new ReflectionClass($parent->getName());
+						$info = new \ReflectionClass($parent->getNameWithNS());
 						
 						if (
 							$info->hasMethod('create')
@@ -126,7 +154,7 @@ EOT;
 	**/
 	public static function proto()
 	{
-		return Singleton::getInstance('{$protoName}');
+		return Singleton::getInstance({$protoName}::class);
 	}
 
 EOT;

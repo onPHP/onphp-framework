@@ -9,12 +9,17 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OpenId
-	**/
-	interface OpenIdExtension
-	{
-		public function addParamsToModel(Model $model);
-		public function parseResponce(HttpRequest $request, array $params);
-	}
+namespace OnPHP\Main\OpenId;
+
+use OnPHP\Main\Flow\Model;
+use OnPHP\Main\Flow\HttpRequest;
+
+/**
+ * @ingroup OpenId
+**/
+interface OpenIdExtension
+{
+	public function addParamsToModel(Model $model);
+	public function parseResponce(HttpRequest $request, array $params);
+}
 ?>

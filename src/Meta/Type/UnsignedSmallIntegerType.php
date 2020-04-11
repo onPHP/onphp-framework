@@ -9,22 +9,26 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class UnsignedSmallIntegerType extends SmallIntegerType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Main\Base\LightMetaProperty;
+
+/**
+ * @ingroup Types
+**/
+final class UnsignedSmallIntegerType extends SmallIntegerType
+{
+	public function getSize()
 	{
-		public function getSize()
-		{
-			return 2 & LightMetaProperty::UNSIGNED_FLAG;
-		}
-		
-		public function toColumnType()
-		{
-			return
-				parent::toColumnType()
-				."->\n"
-				.'setUnsigned(true)';
-		}
+		return 2 & LightMetaProperty::UNSIGNED_FLAG;
 	}
+	
+	public function toColumnType()
+	{
+		return
+			parent::toColumnType()
+			."->\n"
+			.'setUnsigned(true)';
+	}
+}
 ?>

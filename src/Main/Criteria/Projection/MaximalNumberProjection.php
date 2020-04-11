@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Projections
-	**/
-	final class MaximalNumberProjection extends AggregateProjection
+namespace OnPHP\Main\Criteria\Projection;
+
+/**
+ * @ingroup Projection
+**/
+final class MaximalNumberProjection extends AggregateProjection
+{
+	public function getFunctionName()
 	{
-		public function getFunctionName()
-		{
-			return 'max';
-		}
+		return 'max';
 	}
+}
 ?>

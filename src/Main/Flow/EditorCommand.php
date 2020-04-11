@@ -9,14 +9,19 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Flow;
+
+use OnPHP\Core\Base\Prototyped;
+use OnPHP\Core\Form\Form;
+
+/**
+ * @ingroup Flow
+**/
+interface EditorCommand
+{
 	/**
-	 * @ingroup Flow
+	 * @return ModelAndView
 	**/
-	interface EditorCommand
-	{
-		/**
-		 * @return ModelAndView
-		**/
-		public function run(Prototyped $subject, Form $form, HttpRequest $request);
-	}
+	public function run(Prototyped $subject, Form $form, HttpRequest $request);
+}
 ?>

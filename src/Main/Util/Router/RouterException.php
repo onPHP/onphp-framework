@@ -9,5 +9,9 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class RouterException extends BaseException {/*_*/}
+namespace OnPHP\Main\Util\Router;
+
+use OnPHP\Core\Exception\BaseException;
+
+final class RouterException extends BaseException {/*_*/}
 ?>

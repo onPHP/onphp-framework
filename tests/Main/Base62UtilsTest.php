@@ -8,95 +8,81 @@
  *   License, or (at your option) any later version.                       *
  *                                                                         *
  ***************************************************************************/
+namespace OnPHP\Tests\Main;
 
-	final class Base62UtilsTest extends TestCase
+use OnPHP\Core\Exception\WrongArgumentException;
+use OnPHP\Main\Crypto\Base62Utils;
+use OnPHP\Tests\TestEnvironment\TestCase;
+
+final class Base62UtilsTest extends TestCase
+{
+	public function testSetCharsLengthFailed()
 	{
-		public function testSetChars()
-		{
-			try {
-				Base62Utils::setChars('qwerty');
-				$this->fail('Length test failed');
-			} catch (WrongArgumentException $e) {
-				//ok
-			}
+		$this->expectException(WrongArgumentException::class);
+		Base62Utils::setChars('qwerty');	
+	}
 
-			try {
-				Base62Utils::setChars(
-					'0123456789abcdefghijklmn'
-					.'ЭЮЯ'
-					.'rstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-				);
-				$this->fail('Pattern matching failed');
-			} catch (WrongArgumentException $e) {
-				//is ok
-			}
-		}
+	public function testSetCharsPatternMatching()
+	{
+		$this->expectException(WrongArgumentException::class);
+		Base62Utils::setChars(
+			'0123456789abcdefghijklmn'
+			.'ЭЮЯ'
+			.'rstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+		);
+	}
+	
+	public function testOutOfRangeFailed()
+	{
+		$this->expectException(WrongArgumentException::class);
+		Base62Utils::encode(PHP_INT_MAX + 1);
+	}
 
-		public function testOutOfRange()
-		{
-			try {
-				Base62Utils::encode(PHP_INT_MAX + 1);
-				$this->fail('Out of range failed');
-			} catch (WrongArgumentException $e) {
-				//is ok
-			}
+	public function testMaxLengthOfCode()
+	{
+		$this->expectException(WrongArgumentException::class);
+		switch(PHP_INT_SIZE) {
+			case 4:
+				Base62Utils::decode('q1w2e3r'); // 7 symbols
+				$this->fail('Wrong: int4 max length of code');
+				break;
 
-			try {
-				switch(PHP_INT_SIZE) {
-					case 4:
-						Base62Utils::decode('q1w2e3r'); // 7 symbols
-						$this->fail('Wrong: int4 max length of code');
-						break;
+			case 8:
+				Base62Utils::decode('q1w2e3r4t5y6'); // 12 symbols
+				$this->fail('Wrong: int8 max length of code');
+				break;
 
-					case 8:
-						Base62Utils::decode('q1w2e3r4t5y6'); // 12 symbols
-						$this->fail('Wrong: int8 max length of code');
-						break;
-
-					default:
-						$this->fail('Wrong: PHP is rock');
-						break;
-				}
-
-			} catch (WrongArgumentException $e) {
-				//is ok
-			}
-
-			try {
-				Base62Utils::decode('');
-				$this->fail('Wrong: min length of code');
-			} catch (WrongArgumentException $e) {
-				//is ok
-			}
-		}
-
-		public function testPositiveInteger()
-		{
-			try {
-				Base62Utils::encode(-1);
-				$this->fail('Positive integer failed');
-			} catch (WrongArgumentException $e) {
-				//is ok
-			}
-		}
-
-		public function testWrongDecode()
-		{
-			try {
-				Base62Utils::decode('abc]');
-				$this->fail('Wrong code');
-			} catch (WrongArgumentException $e) {
-				//is ok
-			}
-		}
-
-		public function testEncodeDecode()
-		{
-			$int = Base62Utils::decode('onPHP');
-			$this->assertSame($int, 360312369);
-
-			$str = Base62Utils::encode(360312369);
-			$this->assertSame('onPHP', $str);
+			default:
+				$this->fail('Wrong: PHP is rock');
+				break;
 		}
 	}
+
+	public function testMinLengthOfCode()
+	{
+		$this->expectException(WrongArgumentException::class);
+		Base62Utils::decode('');
+	}
+	
+	public function testPositiveInteger()
+	{
+		$this->expectException(WrongArgumentException::class);
+		Base62Utils::encode(-1);
+	}
+
+	public function testWrongDecode()
+	{
+		$this->expectException(WrongArgumentException::class);
+		Base62Utils::decode('abc]');
+	}
+
+	public function testEncodeDecode()
+	{
+		$int = Base62Utils::decode('onPHP');
+		$this->assertSame($int, 360312369);
+
+		$str = Base62Utils::encode(360312369);
+		$this->assertSame('onPHP', $str);
+	}
+}
 ?>

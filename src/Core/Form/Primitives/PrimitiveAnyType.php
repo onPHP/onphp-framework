@@ -9,8 +9,10 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Primitives
-	**/
-	final class PrimitiveAnyType extends BasePrimitive {/* nop */}
+namespace OnPHP\Core\Form\Primitives;
+
+/**
+ * @ingroup Primitives
+**/
+final class PrimitiveAnyType extends BasePrimitive {/* nop */}
 ?>

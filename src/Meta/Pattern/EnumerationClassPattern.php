@@ -9,38 +9,45 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Patterns
-	**/
-	class EnumerationClassPattern extends BasePattern
+namespace OnPHP\Meta\Pattern;
+
+use OnPHP\Meta\Entity\MetaClass;
+use OnPHP\Meta\Entity\MetaConfiguration;
+use OnPHP\Meta\Console\Format;
+use OnPHP\Meta\Builder\EnumerationClassBuilder;
+
+/**
+ * @ingroup Patterns
+**/
+class EnumerationClassPattern extends BasePattern
+{
+	public function daoExists()
 	{
-		public function daoExists()
-		{
-			return false;
-		}
-		
-		public function tableExists()
-		{
-			return false;
-		}
-		
-		/**
-		 * @return EnumerationClassPattern
-		**/
-		public function build(MetaClass $class)
-		{
-			$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
-			
-			if (
-				MetaConfiguration::me()->isForcedGeneration()
-				|| !file_exists($userFile)
-			)
-				$this->dumpFile(
-					$userFile,
-					Format::indentize(EnumerationClassBuilder::build($class))
-				);
-			
-			return $this;
-		}
+		return false;
 	}
+
+	public function tableExists()
+	{
+		return false;
+	}
+
+	/**
+	 * @return EnumerationClassPattern
+	**/
+	public function build(MetaClass $class)
+	{
+		$userFile = ONPHP_META_BUSINESS_DIR.$class->getName().EXT_CLASS;
+
+		if (
+			MetaConfiguration::me()->isForcedGeneration()
+			|| !file_exists($userFile)
+		)
+			$this->dumpFile(
+				$userFile,
+				Format::indentize(EnumerationClassBuilder::build($class))
+			);
+
+		return $this;
+	}
+}
 ?>

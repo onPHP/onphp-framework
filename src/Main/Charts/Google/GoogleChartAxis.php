@@ -9,96 +9,102 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Charts\Google;
+
+use OnPHP\Main\Base\BaseRange;
+use OnPHP\Main\Base\IntegerSet;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @ingroup GoogleChart
+**/
+final class GoogleChartAxis
+{
+	private $type = null;
+
+	private $range = null;
+
+	private $label = null;
+
+	private $interval = null;
+
 	/**
-	 * @ingroup GoogleChart
+	 * @return GoogleChartAxis
 	**/
-	final class GoogleChartAxis
+	public static function create(GoogleChartAxisType $type)
 	{
-		private $type = null;
-		
-		private $range = null;
-		
-		private $label = null;
-		
-		private $interval = null;
-		
-		/**
-		 * @return GoogleChartAxis
-		**/
-		public static function create(GoogleChartAxisType $type)
-		{
-			return new self($type);
-		}
-		
-		public function __construct(GoogleChartAxisType $type)
-		{
-			$this->type = $type;
-		}
-		
-		/**
-		 * @return GoogleChartAxisType
-		**/
-		public function getType()
-		{
-			return $this->type;
-		}
-		
-		/**
-		 * @return GoogleChartAxis
-		**/
-		public function setRange(BaseRange $range)
-		{
-			$this->range = $range;
-			
-			return $this;
-		}
-		
-		public function hasRange()
-		{
-			return ($this->range !== null);
-		}
-		
-		/**
-		 * @return IntegerSet
-		**/
-		public function getRange()
-		{
-			return $this->range;
-		}
-		
-		/**
-		 * @return GoogleChartAxis
-		**/
-		public function setLabel(GoogleChartAxisLabel $label)
-		{
-			$this->label = $label;
-			
-			return $this;
-		}
-		
-		/**
-		 * @return GoogleChartAxisLabel
-		**/
-		public function getLabel()
-		{
-			return $this->label;
-		}
-		
-		/**
-		 * @return GoogleChartAxis
-		**/
-		public function setInterval($interval)
-		{
-			Assert::isTrue(is_numeric($interval));
-			
-			$this->interval = $interval;
-			
-			return $this;
-		}
-		
-		public function getInterval()
-		{
-			return $this->interval;
-		}
+		return new self($type);
 	}
+
+	public function __construct(GoogleChartAxisType $type)
+	{
+		$this->type = $type;
+	}
+
+	/**
+	 * @return GoogleChartAxisType
+	**/
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	/**
+	 * @return GoogleChartAxis
+	**/
+	public function setRange(BaseRange $range)
+	{
+		$this->range = $range;
+
+		return $this;
+	}
+
+	public function hasRange()
+	{
+		return ($this->range !== null);
+	}
+
+	/**
+	 * @return IntegerSet
+	**/
+	public function getRange()
+	{
+		return $this->range;
+	}
+
+	/**
+	 * @return GoogleChartAxis
+	**/
+	public function setLabel(GoogleChartAxisLabel $label)
+	{
+		$this->label = $label;
+
+		return $this;
+	}
+
+	/**
+	 * @return GoogleChartAxisLabel
+	**/
+	public function getLabel()
+	{
+		return $this->label;
+	}
+
+	/**
+	 * @return GoogleChartAxis
+	**/
+	public function setInterval($interval)
+	{
+		Assert::isTrue(is_numeric($interval));
+
+		$this->interval = $interval;
+
+		return $this;
+	}
+
+	public function getInterval()
+	{
+		return $this->interval;
+	}
+}
 ?>

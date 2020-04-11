@@ -9,31 +9,35 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Main\Net\HttpUrl;
+
+/**
+ * @see RegulatedPrimitive::addImportFilter()
+ * 
+ * @ingroup Filters
+**/
+final class NormalizeUrlFilter implements Filtrator
+{
 	/**
-	 * @see RegulatedPrimitive::addImportFilter()
-	 * 
-	 * @ingroup Filters
+	 * @return NormalizeUrlFilter
 	**/
-	final class NormalizeUrlFilter implements Filtrator
+	public static function create()
 	{
-		/**
-		 * @return NormalizeUrlFilter
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		
-		public function apply($value)
-		{
-			$url =
-				HttpUrl::create()->
-				parse($value)->
-				ensureAbsolute()->
-				normalize();
-			
-			return $url->toString();
-		}
+		return new self;
 	}
+
+
+	public function apply($value)
+	{
+		$url =
+			HttpUrl::create()->
+			parse($value)->
+			ensureAbsolute()->
+			normalize();
+
+		return $url->toString();
+	}
+}
 ?>

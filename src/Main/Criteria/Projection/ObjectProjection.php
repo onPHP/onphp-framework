@@ -9,14 +9,19 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Criteria\Projection;
+
+use OnPHP\Main\Criteria\Criteria;
+use OnPHP\Core\OSQL\JoinCapableQuery;
+
+/**
+ * @ingroup Projection
+**/
+interface ObjectProjection
+{
 	/**
-	 * @ingroup Projections
+	 * @return JoinCapableQuery
 	**/
-	interface ObjectProjection
-	{
-		/**
-		 * @return JoinCapableQuery
-		**/
-		public function process(Criteria $criteria, JoinCapableQuery $query);
-	}
+	public function process(Criteria $criteria, JoinCapableQuery $query);
+}
 ?>

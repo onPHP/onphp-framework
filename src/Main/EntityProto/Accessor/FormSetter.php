@@ -9,23 +9,27 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class FormSetter extends FormMutator
+namespace OnPHP\Main\EntityProto\Accessor;
+
+use OnPHP\Core\Exception\WrongArgumentException;
+
+final class FormSetter extends FormMutator
+{
+	public function set($name, $value)
 	{
-		public function set($name, $value)
-		{
-			if (!isset($this->mapping[$name]))
-				throw new WrongArgumentException(
-					"knows nothing about property '{$name}'"
-				);
-			
-			$primitive = $this->mapping[$name];
-			
-			$this->object->importValue(
-				$primitive->getName(),
-				$value
+		if (!isset($this->mapping[$name]))
+			throw new WrongArgumentException(
+				"knows nothing about property '{$name}'"
 			);
-			
-			return $this;
-		}
+
+		$primitive = $this->mapping[$name];
+
+		$this->object->importValue(
+			$primitive->getName(),
+			$value
+		);
+
+		return $this;
 	}
+}
 ?>

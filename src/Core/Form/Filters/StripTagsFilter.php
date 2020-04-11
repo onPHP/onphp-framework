@@ -9,39 +9,43 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Core\Form\Filters;
+
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @see RegulatedPrimitive::addImportFilter()
+ * 
+ * @ingroup Filters
+**/
+final class StripTagsFilter implements Filtrator
+{
+	private $exclude = null;
+
 	/**
-	 * @see RegulatedPrimitive::addImportFilter()
-	 * 
-	 * @ingroup Filters
+	 * @return StripTagsFilter
 	**/
-	final class StripTagsFilter implements Filtrator
+	public static function create()
 	{
-		private $exclude = null;
-		
-		/**
-		 * @return StripTagsFilter
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return StripTagsFilter
-		**/
-		public function setAllowableTags($exclude)
-		{
-			if (null !== $exclude)
-				Assert::isString($exclude);
-			
-			$this->exclude = $exclude;
-			
-			return $this;
-		}
-		
-		public function apply($value)
-		{
-			return strip_tags($value, $this->exclude);
-		}
+		return new self;
 	}
+
+	/**
+	 * @return StripTagsFilter
+	**/
+	public function setAllowableTags($exclude)
+	{
+		if (null !== $exclude)
+			Assert::isString($exclude);
+
+		$this->exclude = $exclude;
+
+		return $this;
+	}
+
+	public function apply($value)
+	{
+		return strip_tags($value, $this->exclude);
+	}
+}
 ?>

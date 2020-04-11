@@ -9,8 +9,10 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	**/
-	class CachedObjectNotFoundException extends ObjectNotFoundException {/*_*/}
+namespace OnPHP\Core\Exception;
+
+/**
+ * @ingroup Exceptions
+**/
+class CachedObjectNotFoundException extends ObjectNotFoundException {/*_*/}
 ?>

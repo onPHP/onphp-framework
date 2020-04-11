@@ -9,11 +9,15 @@
  *                                                                         *
  ***************************************************************************/
 
-	interface Message
-	{
-		/**
-		 * @return Timestamp
-		**/
-		public function getTimestamp();
-	}
+namespace OnPHP\Main\Message\Specification;
+
+use OnPHP\Core\Base\Timestamp;
+
+interface Message
+{
+	/**
+	 * @return Timestamp
+	**/
+	public function getTimestamp();
+}
 ?>

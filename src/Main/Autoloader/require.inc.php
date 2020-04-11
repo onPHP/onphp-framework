@@ -9,6 +9,8 @@
  *                                                                         *
  ***************************************************************************/
 
+namespace OnPHP\Main\Autoloader;
+
 //interfaces:
 require 'Autoloader.class.php';
 require 'AutoloaderWithNamespace.class.php';

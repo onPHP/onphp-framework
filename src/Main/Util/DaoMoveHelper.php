@@ -9,94 +9,104 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Utils
-	**/
-	final class DaoMoveHelper extends StaticFactory
+namespace OnPHP\Main\Util;
+
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Base\StaticFactory;
+use OnPHP\Core\Logic\Expression;
+use OnPHP\Core\Logic\LogicalObject;
+use OnPHP\Core\OSQL\OrderBy;
+use OnPHP\Main\Criteria\Criteria;
+use OnPHP\Main\DAO\DAOConnected;
+
+/**
+ * @ingroup Utils
+**/
+final class DaoMoveHelper extends StaticFactory
+{
+	private static $nullValue	= 0;
+	private static $property	= 'position';
+
+	/* void */ public static function setNullValue($nullValue)
 	{
-		private static $nullValue	= 0;
-		private static $property	= 'position';
-		
-		/* void */ public static function setNullValue($nullValue)
-		{
-			self::$nullValue = $nullValue;
+		self::$nullValue = $nullValue;
+	}
+
+	/* void */ public static function setProperty($property)
+	{
+		self::$property = $property;
+	}
+
+	/* void */ public static function up(
+		DAOConnected $object,
+		LogicalObject $exp = null
+	)
+	{
+		$getMethod = 'get'.ucfirst(self::$property);
+
+		Assert::isTrue(
+			method_exists($object, $getMethod)
+		);
+
+		$criteria =
+			Criteria::create($object->dao())->
+			addOrder(
+				OrderBy::create(self::$property)->
+				desc()
+			)->
+			setLimit(1);
+
+		if ($exp)
+			$criteria->add($exp);
+
+		$oldPosition = $object->$getMethod();
+
+		$criteria->add(
+			Expression::lt(
+				self::$property,
+				$oldPosition
+			)
+		);
+
+		if ($upperObject = $criteria->get()) {
+			DaoUtils::setNullValue(self::$nullValue);
+			DaoUtils::swap($upperObject, $object, self::$property);
 		}
-		
-		/* void */ public static function setProperty($property)
-		{
-			self::$property = $property;
-		}
-		
-		/* void */ public static function up(
-			DAOConnected $object,
-			LogicalObject $exp = null
-		)
-		{
-			$getMethod = 'get'.ucfirst(self::$property);
-			
-			Assert::isTrue(
-				method_exists($object, $getMethod)
-			);
-			
-			$criteria =
-				Criteria::create($object->dao())->
-				addOrder(
-					OrderBy::create(self::$property)->
-					desc()
-				)->
-				setLimit(1);
-			
-			if ($exp)
-				$criteria->add($exp);
-			
-			$oldPosition = $object->$getMethod();
-			
-			$criteria->add(
-				Expression::lt(
+	}
+
+	/* void */ public static function down(
+		DAOConnected $object,
+		LogicalObject $exp = null
+	)
+	{
+		$getMethod = 'get'.ucfirst(self::$property);
+
+		Assert::isTrue(
+			method_exists($object, $getMethod)
+		);
+
+		$oldPosition = $object->$getMethod();
+
+		$criteria =
+			Criteria::create($object->dao())->
+			add(
+				Expression::gt(
 					self::$property,
 					$oldPosition
 				)
-			);
-			
-			if ($upperObject = $criteria->get()) {
-				DaoUtils::setNullValue(self::$nullValue);
-				DaoUtils::swap($upperObject, $object, self::$property);
-			}
-		}
-		
-		/* void */ public static function down(
-			DAOConnected $object,
-			LogicalObject $exp = null
-		)
-		{
-			$getMethod = 'get'.ucfirst(self::$property);
-			
-			Assert::isTrue(
-				method_exists($object, $getMethod)
-			);
-			
-			$oldPosition = $object->$getMethod();
-			
-			$criteria =
-				Criteria::create($object->dao())->
-				add(
-					Expression::gt(
-						self::$property,
-						$oldPosition
-					)
-				)->
-				addOrder(
-					OrderBy::create(self::$property)->asc()
-				)->
-				setLimit(1);
-			
-			if ($exp)
-				$criteria->add($exp);
-			
-			if ($lowerObject = $criteria->get()) {
-				DaoUtils::setNullValue(self::$nullValue);
-				DaoUtils::swap($lowerObject, $object, self::$property);
-			}
+			)->
+			addOrder(
+				OrderBy::create(self::$property)->asc()
+			)->
+			setLimit(1);
+
+		if ($exp)
+			$criteria->add($exp);
+
+		if ($lowerObject = $criteria->get()) {
+			DaoUtils::setNullValue(self::$nullValue);
+			DaoUtils::swap($lowerObject, $object, self::$property);
 		}
 	}
+}
 ?>

@@ -9,14 +9,16 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup OpenId
-	**/
-	final class OpenIdConsumerFail implements OpenIdConsumerResult
+namespace OnPHP\Main\OpenId;
+
+/**
+ * @ingroup OpenId
+**/
+final class OpenIdConsumerFail implements OpenIdConsumerResult
+{
+	public function isOk()
 	{
-		public function isOk()
-		{
-			return false;
-		}
+		return false;
 	}
+}
 ?>

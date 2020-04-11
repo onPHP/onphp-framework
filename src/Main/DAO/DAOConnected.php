@@ -9,14 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Helper for identifying object's DAO.
-	 * 
-	 * @ingroup DAOs
-	 * @ingroup Module
-	**/
-	interface DAOConnected extends Identifiable
-	{
-		public static function dao();
-	}
+namespace OnPHP\Main\DAO;
+
+use OnPHP\Core\Base\Identifiable;
+
+/**
+ * Helper for identifying object's DAO.
+ * 
+ * @ingroup DAO
+ * @ingroup Module
+**/
+interface DAOConnected extends Identifiable
+{
+	public static function dao();
+}
 ?>

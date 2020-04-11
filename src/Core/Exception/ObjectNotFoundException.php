@@ -9,9 +9,11 @@
  *                                                                          *
  ****************************************************************************/
 
-	/**
-	 * @ingroup Exceptions
-	 * @ingroup Module
-	**/
-	class ObjectNotFoundException extends DatabaseException {/*_*/}
+namespace OnPHP\Core\Exception;
+
+/**
+ * @ingroup Exceptions
+ * @ingroup Module
+**/
+class ObjectNotFoundException extends DatabaseException {/*_*/}
 ?>

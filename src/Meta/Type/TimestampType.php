@@ -9,19 +9,28 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	final class TimestampType extends DateType
+namespace OnPHP\Meta\Type;
+
+use OnPHP\Core\Base\Timestamp;
+use OnPHP\Core\OSQL\DataType;
+
+/**
+ * @ingroup Types
+**/
+final class TimestampType extends DateType
+{
+	public function getPrimitiveName()
 	{
-		public function getPrimitiveName()
-		{
-			return 'timestamp';
-		}
-		
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::TIMESTAMP)';
-		}
+		return 'timestamp';
 	}
+	
+	public function getFullClass() {
+		return Timestamp::class;
+	}
+	
+	public function toColumnType()
+	{
+		return DataType::class.'::create('.DataType::class.'::TIMESTAMP)';
+	}
+}
 ?>

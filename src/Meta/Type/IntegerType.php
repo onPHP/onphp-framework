@@ -9,53 +9,59 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @ingroup Types
-	**/
-	class IntegerType extends BasePropertyType
-	{
-		public function getSize()
-		{
-			return 4;
-		}
-		
-		public function getPrimitiveName()
-		{
-			return 'integer';
-		}
-		
-		/**
-		 * @throws WrongArgumentException
-		 * @return IntegerType
-		**/
-		public function setDefault($default)
-		{
-			Assert::isInteger(
-				$default,
-				"strange default value given - '{$default}'"
-			);
+namespace OnPHP\Meta\Type;
 
-			$this->default = $default;
-			
-			return $this;
-		}
-		
-		public function getDeclaration()
-		{
-			if ($this->hasDefault())
-				return $this->default;
-			
-			return 'null';
-		}
-		
-		public function isMeasurable()
-		{
-			return false;
-		}
-		
-		public function toColumnType()
-		{
-			return 'DataType::create(DataType::INTEGER)';
-		}
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Exception\WrongArgumentException;
+use OnPHP\Core\OSQL\DataType;
+
+/**
+ * @ingroup Types
+**/
+class IntegerType extends BasePropertyType
+{
+	public function getSize()
+	{
+		return 4;
 	}
+	
+	public function getPrimitiveName()
+	{
+		return 'integer';
+	}
+	
+	/**
+	 * @throws WrongArgumentException
+	 * @return IntegerType
+	**/
+	public function setDefault($default)
+	{
+		Assert::isInteger(
+			$default,
+			"strange default value given - '{$default}'"
+		);
+	
+		$this->default = $default;
+		
+		return $this;
+	}
+	
+	public function getDeclaration()
+	{
+		if ($this->hasDefault())
+			return $this->default;
+		
+		return 'null';
+	}
+	
+	public function isMeasurable()
+	{
+		return false;
+	}
+	
+	public function toColumnType()
+	{
+		return DataType::class.'::create('.DataType::class.'::INTEGER)';
+	}
+}
 ?>

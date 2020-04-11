@@ -9,13 +9,18 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * Support interface for Form's logic rules.
-	 * 
-	 * @ingroup Logic
-	**/
-	interface LogicalObject extends DialectString
-	{
-		public function toBoolean(Form $form);
-	}
+namespace OnPHP\Core\Logic;
+
+use OnPHP\Core\OSQL\DialectString;
+use OnPHP\Core\Form\Form;
+
+/**
+ * Support interface for Form's logic rules.
+ * 
+ * @ingroup Logic
+**/
+interface LogicalObject extends DialectString
+{
+	public function toBoolean(Form $form);
+}
 ?>

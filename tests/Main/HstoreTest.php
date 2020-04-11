@@ -9,22 +9,27 @@
  *                                                                         *
  ***************************************************************************/
 
-	final class HstoreTest extends TestCase
+namespace OnPHP\Tests\Main;
+
+use OnPHP\Main\Base\Hstore;
+use OnPHP\Tests\TestEnvironment\TestCase;
+
+final class HstoreTest extends TestCase
+{
+	public function testRun()
 	{
-		public function testRun()
-		{
-			$array = array(
-				'1' => 'qqer',
-				'f' => 'qs34$9&)_@+#qer',
-				'null' => null
-			);
+		$array = array(
+			'1' => 'qqer',
+			'f' => 'qs34$9&)_@+#qer',
+			'null' => null
+		);
 
-			$test = Hstore::make($array);
-			$test2= Hstore::create($test->toString());
+		$test = Hstore::make($array);
+		$test2= Hstore::create($test->toString());
 
-			$this->assertEquals($test->toString(), $test2->toString());
+		$this->assertEquals($test->toString(), $test2->toString());
 
-			$this->assertTrue($test->isExists('null'));
-			$this->assertFalse($test->isExists('notExist'));
-		}
+		$this->assertTrue($test->isExists('null'));
+		$this->assertFalse($test->isExists('notExist'));
 	}
+}

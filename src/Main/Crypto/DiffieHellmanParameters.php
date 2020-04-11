@@ -9,46 +9,51 @@
  *                                                                         *
  ***************************************************************************/
 
-	/**
-	 * @see http://tools.ietf.org/html/rfc2631
-	 * 
-	 * @ingroup Crypto
-	**/
-	final class DiffieHellmanParameters
+namespace OnPHP\Main\Crypto;
+
+use OnPHP\Main\Math\BigInteger;
+use OnPHP\Core\Base\Assert;
+
+/**
+ * @see http://tools.ietf.org/html/rfc2631
+ * 
+ * @ingroup Crypto
+**/
+final class DiffieHellmanParameters
+{
+	private $gen		= null;
+	private $modulus	= null;
+
+	public function __construct(BigInteger $gen, BigInteger $modulus)
 	{
-		private $gen		= null;
-		private $modulus	= null;
-		
-		public function __construct(BigInteger $gen, BigInteger $modulus)
-		{
-			Assert::brothers($gen, $modulus);
-			
-			$this->gen = $gen;
-			$this->modulus = $modulus;
-		}
-		
-		/**
-		 * @return DiffieHellmanParameters
-		**/
-		public static function create(BigInteger $gen, BigInteger $modulus)
-		{
-			return new self($gen, $modulus);
-		}
-		
-		/**
-		 * @return BigInteger
-		**/
-		public function getGen()
-		{
-			return $this->gen;
-		}
-		
-		/**
-		 * @return BigInteger
-		**/
-		public function getModulus()
-		{
-			return $this->modulus;
-		}
+		Assert::brothers($gen, $modulus);
+
+		$this->gen = $gen;
+		$this->modulus = $modulus;
 	}
+
+	/**
+	 * @return DiffieHellmanParameters
+	**/
+	public static function create(BigInteger $gen, BigInteger $modulus)
+	{
+		return new self($gen, $modulus);
+	}
+
+	/**
+	 * @return BigInteger
+	**/
+	public function getGen()
+	{
+		return $this->gen;
+	}
+
+	/**
+	 * @return BigInteger
+	**/
+	public function getModulus()
+	{
+		return $this->modulus;
+	}
+}
 ?>

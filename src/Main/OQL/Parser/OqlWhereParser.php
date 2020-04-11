@@ -9,35 +9,40 @@
  *                                                                          *
  ****************************************************************************/
 
-	final class OqlWhereParser extends OqlParser
+namespace OnPHP\Main\OQL\Parser;
+
+use OnPHP\Main\OQL\Statement\OqlWhereClause;
+use OnPHP\Main\OQL\Expression\OqlQueryExpression;
+
+final class OqlWhereParser extends OqlParser
+{
+	/**
+	 * @return OqlWhereParser
+	**/
+	public static function create()
 	{
-		/**
-		 * @return OqlWhereParser
-		**/
-		public static function create()
-		{
-			return new self;
-		}
-		
-		/**
-		 * @return OqlWhereClause
-		**/
-		protected function makeOqlObject()
-		{
-			return OqlWhereClause::create();
-		}
-		
-		protected function handleState()
-		{
-			if ($this->state == self::INITIAL_STATE) {
-				$argument = $this->getLogicExpression();
-				if ($argument instanceof OqlQueryExpression)
-					$this->oqlObject->setExpression($argument);
-				else
-					$this->error("expecting 'where' expression");
-			}
-			
-			return self::FINAL_STATE;
-		}
+		return new self;
 	}
+
+	/**
+	 * @return OqlWhereClause
+	**/
+	protected function makeOqlObject()
+	{
+		return OqlWhereClause::create();
+	}
+
+	protected function handleState()
+	{
+		if ($this->state == self::INITIAL_STATE) {
+			$argument = $this->getLogicExpression();
+			if ($argument instanceof OqlQueryExpression)
+				$this->oqlObject->setExpression($argument);
+			else
+				$this->error("expecting 'where' expression");
+		}
+
+		return self::FINAL_STATE;
+	}
+}
 ?>
