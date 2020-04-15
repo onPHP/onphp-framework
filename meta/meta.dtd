@@ -1,0 +1,93 @@
+<!-- $Id$ -->
+
+<!ELEMENT metaconfiguration (include*, namespaces*, uses*, classes*, sources*)>
+
+<!ELEMENT namespaces (namespace+)>
+
+<!ELEMENT namespace EMPTY>
+<!ATTLIST namespace
+		name		CDATA #REQUIRED
+		path		CDATA #REQUIRED
+		build		(true|false) "true"
+>
+
+<!ELEMENT uses (use+)>
+
+<!ELEMENT use EMPTY>
+<!ATTLIST use
+		name		CDATA #REQUIRED
+		import		CDATA #REQUIRED
+>
+
+<!ELEMENT classes (class*)>
+<!ATTLIST classes
+		namespace	CDATA #REQUIRED
+>
+
+<!ELEMENT class (implement*, properties*, pattern)>
+<!ATTLIST class
+		name		ID #REQUIRED
+		type		(final|abstract) #IMPLIED
+		extends		CDATA #IMPLIED
+		source		CDATA #IMPLIED
+		table		CDATA #IMPLIED
+>
+
+<!ELEMENT implement EMPTY>
+<!ATTLIST implement
+		interface	CDATA #REQUIRED
+>
+
+<!ELEMENT properties (identifier?, property*)>
+
+<!ELEMENT identifier EMPTY>
+<!ATTLIST identifier
+		name	CDATA #IMPLIED
+		type	CDATA #IMPLIED
+		size	CDATA #IMPLIED
+		column	CDATA #IMPLIED
+>
+
+<!ELEMENT property EMPTY>
+<!ATTLIST property
+		name		CDATA #REQUIRED
+		type		CDATA #REQUIRED
+		size		CDATA #IMPLIED
+		column		CDATA #IMPLIED
+		default		CDATA #IMPLIED
+		required	(true|false) "false"
+		relation	(OneToOne|OneToMany|ManyToMany) #IMPLIED
+		fetch		(lazy|cascade) #IMPLIED
+>
+
+<!ELEMENT pattern EMPTY>
+<!ATTLIST pattern
+		name		(
+			DictionaryClass
+			|AbstractClass
+			|StraightMapping
+			|EnumerationClass
+			|EnumClass
+			|SpookedClass
+			|SpookedEnumeration
+			|SpookedEnum
+			|ValueObject
+			|InternalClass
+		) #REQUIRED
+		fetch		(lazy|cascade) #IMPLIED
+>
+
+<!ELEMENT sources (source+)>
+
+<!ELEMENT source EMPTY>
+<!ATTLIST source
+		name	CDATA #REQUIRED
+		default	(true|false) "false"
+>
+
+<!-- file path is relative to current meta's directory -->
+<!ELEMENT include EMPTY>
+<!ATTLIST include
+		file		CDATA #REQUIRED
+		generate	(true|false) "true"
+>

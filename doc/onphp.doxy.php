@@ -132,7 +132,7 @@
 	 * @ingroup Main
 	 *
 	 * @defgroup Containers IdentifiableObject collections handlers
-	 * @ingroup DAOs
+	 * @ingroup DAO
 	 * 
 	 * @defgroup Criteria Object queries API
 	 * @ingroup Main

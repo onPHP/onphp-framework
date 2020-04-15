@@ -1,3 +1,12 @@
+2020-11-11  Dmitriy V. Snezhinskiy
+	Main changes: 
+	- support of namespaces added.
+	- migrated from internat autoload to composer
+	- renamed all class.php -> .php
+	- some cosmetic changes: leading \tab form all files was removed
+	
+	Special thank's to Alex Gorbylev!
+
 2013-12-06 Evgeny V. Kokovikhin
 	
 	* core/Form/FormUtils.class.php core/OSQL/QuerySkeleton.class.php

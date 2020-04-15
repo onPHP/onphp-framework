@@ -1,0 +1,44 @@
+<?php
+
+namespace OnPHP\Tests\Main;
+
+use OnPHP\Core\Base\Timestamp;
+use OnPHP\Main\Util\DateUtils;
+use OnPHP\Tests\TestEnvironment\TestCase;
+
+final class DateUtilsTest extends TestCase
+{
+	/**
+	 * @dataProvider alignToSecondsDataProvider
+	**/
+	public function testAlignToSeconds(Timestamp $stamp, $expected)
+	{
+		$this->assertEquals(
+			DateUtils::alignToSeconds($stamp, 42)->toString(),
+			$expected
+		);
+	}
+
+	public static function alignToSecondsDataProvider()
+	{
+		return array(
+			array(
+				Timestamp::create('2009-01-01 10:00:42'),
+				'2009-01-01 10:00:42'
+			),
+			array(
+				Timestamp::create('2009-01-01 10:00:41'),
+				'2009-01-01 10:00:00'
+			),
+			array(
+				Timestamp::create('2009-01-01 10:01:34'),
+				'2009-01-01 10:01:24'
+			),
+			array(
+				Timestamp::create('2009-01-01 10:10:01'),
+				'2009-01-01 10:09:48'
+			)
+		);
+	}
+}
+?>
