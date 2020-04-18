@@ -3,6 +3,7 @@
 namespace OnPHP\Tests\Core;
 
 use OnPHP\Core\Base\Date;
+use OnPHP\Core\Form\Filter;
 use OnPHP\Core\Form\Form;
 use OnPHP\Core\Form\FormCollection;
 use OnPHP\Core\Form\FormField;
@@ -128,6 +129,25 @@ final class FormTest extends TestCase
 
 		//checking
 		$this->assertEquals(array(), $form->getErrors());
+	}
+
+	public function testDisableImportFiltering()
+	{
+		$form = Form::create()->
+			add(
+				Primitive::string("name")->
+					addImportFilter(Filter::trim())
+			);
+
+		$form->import(array("name" => "test "));
+
+		$this->assertEquals("test", $form->getValue("name"));
+
+		$form->clean()->disableImportFiltering();
+
+		$form->import(array("name" => "test "));
+
+		$this->assertEquals("test ", $form->getValue("name"));
 	}
 
 	public function testFormCollection()

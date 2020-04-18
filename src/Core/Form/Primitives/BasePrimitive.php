@@ -204,7 +204,7 @@ abstract class BasePrimitive
 		return $this->customError;
 	}
 
-	protected function import($scope)
+	public function import($scope)
 	{
 		if (
 			!empty($scope[$this->name])
