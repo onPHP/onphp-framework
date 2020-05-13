@@ -33,7 +33,7 @@ final class RuntimeMemory extends CachePeer
 		return true;
 	}
 
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
 		if (isset($this->cache[$key]))
 			return $this->cache[$key] += $value;
@@ -41,7 +41,7 @@ final class RuntimeMemory extends CachePeer
 		return null;
 	}
 
-	public function decrement($key, $value)
+	public function decrement($key, int $value = 1)
 	{
 		if (isset($this->cache[$key]))
 			return $this->cache[$key] -= $value;
@@ -90,7 +90,7 @@ final class RuntimeMemory extends CachePeer
 	protected function store($action, $key, $value, $expires = 0)
 	{
 		if ($action == 'add' && isset($this->cache[$key]))
-			return true;
+			return false;
 		elseif ($action == 'replace' && !isset($this->cache[$key]))
 			return false;
 

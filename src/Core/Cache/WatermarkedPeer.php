@@ -96,7 +96,7 @@ final class WatermarkedPeer extends SelectivePeer
 		return $this;
 	}
 
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
 		return $this->peer->increment(
 			$this->getActualWatermark().$key,
@@ -104,7 +104,7 @@ final class WatermarkedPeer extends SelectivePeer
 		);
 	}
 
-	public function decrement($key, $value)
+	public function decrement($key, int $value = 1)
 	{
 		return $this->peer->decrement(
 			$this->getActualWatermark().$key,

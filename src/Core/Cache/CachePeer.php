@@ -127,8 +127,8 @@ abstract class CachePeer
 	abstract public function get($key);
 	abstract public function delete($key);
 
-	abstract public function increment($key, $value);
-	abstract public function decrement($key, $value);
+	abstract public function increment($key, int $value = 1);
+	abstract public function decrement($key, int $value = 1);
 
 	abstract protected function store(
 		$action, $key, $value, $expires = Cache::EXPIRES_MEDIUM

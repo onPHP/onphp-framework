@@ -69,7 +69,7 @@ final class RedisNoSQLList implements Listable
 
 	public function count()
 	{
-		return $this->redis->lsize($this->key);
+		return $this->redis->lLen($this->key);
 	}
 
 	public function pop()
@@ -88,7 +88,7 @@ final class RedisNoSQLList implements Listable
 
 	public function get($index)
 	{
-		return $this->redis->lget($this->key, $index);
+		return $this->redis->lIndex($this->key, $index);
 	}
 
 	public function set($index, $value)

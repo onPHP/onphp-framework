@@ -63,12 +63,12 @@ final class ReadOnlyPeer extends CachePeer
 		throw new UnsupportedMethodException();
 	}
 
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
 		throw new UnsupportedMethodException();
 	}
 
-	public function decrement($key, $value)
+	public function decrement($key, int $value = 1)
 	{
 		throw new UnsupportedMethodException();
 	}

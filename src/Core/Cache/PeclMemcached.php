@@ -72,7 +72,7 @@ class PeclMemcached extends CachePeer
 		if ($this->compress == false) {
 			$this->instance->setOption(\Memcached::OPT_COMPRESSION, false);
 		}
-		
+
 		$this->instance->addServer($host, $port, $weight);
 		
 		$this->alive = $this->instance->set(self::class, time());
@@ -117,9 +117,9 @@ class PeclMemcached extends CachePeer
 	 * {@inheritDoc}
 	 * @see \OnPHP\Core\Cache\CachePeer::increment()
 	 */
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
-		$result = $this->instance->increment($key, $value = 1);
+		$result = $this->instance->increment($key, $value);
 		
 		$this->processResultCode();
 		
@@ -130,7 +130,7 @@ class PeclMemcached extends CachePeer
 	 * {@inheritDoc}
 	 * @see \OnPHP\Core\Cache\CachePeer::decrement()
 	 */
-	public function decrement($key, $value = 1)
+	public function decrement($key, int $value = 1)
 	{
 		$result = $this->instance->decrement($key, $value);
 		
@@ -149,7 +149,7 @@ class PeclMemcached extends CachePeer
 		
 		$this->processResultCode();
 		
-		return ($list !== false) ? $list : array();
+		return ($list !== false && count($list) > 0) ? $list : null;
 	}
 
 	/**
@@ -159,7 +159,7 @@ class PeclMemcached extends CachePeer
 	public function get($index)
 	{
 		$result = $this->instance->get($index);
-		
+
 		$this->processResultCode();
 
 		if ($result === false 

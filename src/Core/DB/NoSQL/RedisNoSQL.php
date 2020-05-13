@@ -102,7 +102,7 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 		}
 	}
 
-	public function decrement($key, $value)
+	public function decrement($key, int $value = 1)
 	{
 		$this->ensureTriedToConnect();
 
@@ -118,7 +118,7 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 		$this->ensureTriedToConnect();
 
 		try {
-			return $this->redis->delete($key);
+			return $this->redis->del($key);
 		} catch (\RedisException $e) {
 			return $this->alive = false;
 		}
@@ -137,7 +137,7 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 		}
 	}
 
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
 		$this->ensureTriedToConnect();
 

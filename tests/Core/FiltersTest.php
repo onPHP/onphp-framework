@@ -218,9 +218,9 @@ final class FiltersTest extends TestCase
 
 	public function testUtf16ConverterFilter()
 	{
-		$utf8 = file_get_contents(dirname(__FILE__).'/../main/data/unicode/utf8.txt');
-		$utf16 = file_get_contents(dirname(__FILE__).'/../main/data/unicode/utf16.txt');
-		$utf16be = file_get_contents(dirname(__FILE__).'/../main/data/unicode/utf16be.txt');
+		$utf8 = file_get_contents(dirname(__FILE__).'/../Main/data/unicode/utf8.txt');
+		$utf16 = file_get_contents(dirname(__FILE__).'/../Main/data/unicode/utf16.txt');
+		$utf16be = file_get_contents(dirname(__FILE__).'/../Main/data/unicode/utf16be.txt');
 
 		$this->assertEquals(
 			Utf16ConverterFilter::me()->apply($utf8),

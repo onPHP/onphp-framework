@@ -63,7 +63,7 @@ final class AllTests
 
 			// build stuff from meta
 
-			$metaDir = ONPHP_TEST_PATH.'meta'.DIRECTORY_SEPARATOR;
+			$metaDir = ONPHP_TEST_PATH.'Meta'.DIRECTORY_SEPARATOR;
 			$path = ONPHP_META_PATH.'build.php';
 
 			$_SERVER['argv'] = array();
