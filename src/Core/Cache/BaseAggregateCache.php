@@ -84,7 +84,7 @@ abstract class BaseAggregateCache extends SelectivePeer
 	 * low-level cache access
 	**/
 
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
 		$label = $this->guessLabel($key);
 
@@ -97,7 +97,7 @@ abstract class BaseAggregateCache extends SelectivePeer
 		return null;
 	}
 
-	public function decrement($key, $value)
+	public function decrement($key, int $value = 1)
 	{
 		$label = $this->guessLabel($key);
 

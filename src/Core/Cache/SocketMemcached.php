@@ -132,12 +132,12 @@ class SocketMemcached extends CachePeer
 		return unserialize($this->parseGetRequest(false));
 	}
 
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
 		return $this->changeInteger('incr', $key, $value);
 	}
 
-	public function decrement($key, $value)
+	public function decrement($key, int $value = 1)
 	{
 		return $this->changeInteger('decr', $key, $value);
 	}

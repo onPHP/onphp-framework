@@ -117,9 +117,9 @@ class PeclMemcached extends CachePeer
 	 * {@inheritDoc}
 	 * @see \OnPHP\Core\Cache\CachePeer::increment()
 	 */
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
-		$result = $this->instance->increment($key, $value = 1);
+		$result = $this->instance->increment($key, $value);
 		
 		$this->processResultCode();
 		
@@ -130,7 +130,7 @@ class PeclMemcached extends CachePeer
 	 * {@inheritDoc}
 	 * @see \OnPHP\Core\Cache\CachePeer::decrement()
 	 */
-	public function decrement($key, $value = 1)
+	public function decrement($key, int $value = 1)
 	{
 		$result = $this->instance->decrement($key, $value);
 		
