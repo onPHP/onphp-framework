@@ -90,7 +90,7 @@ final class RuntimeMemory extends CachePeer
 	protected function store($action, $key, $value, $expires = 0)
 	{
 		if ($action == 'add' && isset($this->cache[$key]))
-			return true;
+			return false;
 		elseif ($action == 'replace' && !isset($this->cache[$key]))
 			return false;
 

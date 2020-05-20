@@ -183,7 +183,7 @@ final class BaseCachesTest extends TestCase
 
 		// do not set if exist and not expired (RubberFileSystem logic)
 		$cache->set('a', $value, Cache::EXPIRES_MAXIMUM);
-		$this->assertTrue($cache->set('a', '!!!', 1));
+		$this->assertFalse($cache->set('a', '!!!', 1));
 		$this->assertEquals($cache->get('a'), $value);
 		$this->assertTrue($cache->replace('a', '!!!', Cache::EXPIRES_MINIMUM));
 		$this->assertEquals($cache->get('a'), '!!!');
