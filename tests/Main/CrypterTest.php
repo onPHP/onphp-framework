@@ -12,11 +12,11 @@ final class CrypterTest extends TestCase
 	**/
 	public function testDecrypt($key, $data)
 	{
-		$ecryptedData = self::getCrypter()->encrypt($key, $data);
+		$ecryptedData = Crypter::encrypt($key, $data);
 
 		$this->assertEquals(
 			$data,
-			self::getCrypter()->decrypt($key, $ecryptedData)
+			Crypter::decrypt($key, $ecryptedData)
 		);
 	}
 
@@ -33,18 +33,8 @@ final class CrypterTest extends TestCase
 
 	protected function setUp(): void
 	{
-		if (!function_exists('mcrypt_module_open'))
-			$this->markTestSkipped('You have no mcrypt ext. to test Crypter');
-	}
-
-	private static function getCrypter()
-	{
-		static $crypter;
-
-		if (!$crypter)
-			$crypter = Crypter::create(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
-
-		return $crypter;
+		if (!function_exists('openssl_encrypt'))
+			$this->markTestSkipped('You have no OpenSSL library to test Crypter');
 	}
 }
 ?>

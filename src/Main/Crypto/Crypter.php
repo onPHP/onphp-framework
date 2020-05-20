@@ -18,66 +18,40 @@ use OnPHP\Core\Exception\WrongStateException;
 **/
 final class Crypter
 {
-	private $crResource = null;
-	private $keySize	= null;
-	private $iv			= null;
+	const OUTPUT_FORMAT_RAW = 1;
+	const OUTPUT_FORMAT_B64 = 2;
 
-	public static function create($algorithm, $mode)
+	public static function encrypt($secret, $data, $algorithm = 'aes-256-ctr', $format = Crypter::OUTPUT_FORMAT_B64)
 	{
-		return new self($algorithm, $mode);
+		$ivlen = openssl_cipher_iv_length($algorithm);
+		$iv = openssl_random_pseudo_bytes($ivlen);
+		$raw = openssl_encrypt($data, $algorithm, $secret, OPENSSL_RAW_DATA, $iv);
+		$hmac = hash_hmac('sha256', $raw, $secret, true);
+		$output = $iv.$hmac.$raw;
+
+		return
+			$format == self::OUTPUT_FORMAT_RAW
+				? $output
+				: base64_encode($output);
 	}
 
-	public function  __construct($algorithm, $mode)
+	public static function decrypt($secret, $encryptedData, $algorithm = 'aes-256-ctr', $format = Crypter::OUTPUT_FORMAT_B64)
 	{
-		if (
-			!$this->crResource
-			= mcrypt_module_open($algorithm, null, $mode, null)
-		)
-			throw new WrongStateException('Mcrypt Module did not open.');
+		if ($format == self::OUTPUT_FORMAT_B64) {
+			$encryptedData = base64_decode($encryptedData);
+		}
 
-		$this->iv = mcrypt_create_iv(
-			mcrypt_enc_get_iv_size($this->crResource),
-			MCRYPT_DEV_URANDOM
-		);
-
-		$this->keySize = mcrypt_enc_get_key_size($this->crResource);
-	}
-
-	public function  __destruct()
-	{
-		mcrypt_generic_deinit($this->crResource);
-		mcrypt_module_close($this->crResource);
-	}
-
-	public function encrypt($secret, $data)
-	{
-		mcrypt_generic_init(
-			$this->crResource,
-			$this->createKey($secret),
-			$this->iv
-		);
-
-		return mcrypt_generic($this->crResource, $data);
-	}
-
-	public function decrypt($secret, $encryptedData)
-	{
-		mcrypt_generic_init(
-			$this->crResource,
-			$this->createKey($secret),
-			$this->iv
-		);
-
-		// crop padding garbage
-		return rtrim(
-			mdecrypt_generic($this->crResource, $encryptedData),
-			"\0"
-		);
-	}
-
-	private function createKey($secret)
-	{
-		return substr(md5($secret), 0, $this->keySize);
+		$ivlen = openssl_cipher_iv_length($algorithm);
+		$iv = substr($encryptedData, 0, $ivlen);
+		$hmac = substr($encryptedData, $ivlen, $sha2len=32);
+		$encryptedData = substr($encryptedData, $ivlen+$sha2len);
+		$decryptedData = openssl_decrypt($encryptedData, $algorithm, $secret, OPENSSL_RAW_DATA, $iv);
+		$calcmac = hash_hmac('sha256', $encryptedData, $secret, true);
+		if (hash_equals($hmac, $calcmac)) {
+			return $decryptedData;
+		} else {
+			throw new WrongStateException("Error decrypting");
+                }
 	}
 }
 ?>
