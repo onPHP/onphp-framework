@@ -118,7 +118,7 @@ final class RedisNoSQL extends CachePeer implements ListGenerator
 		$this->ensureTriedToConnect();
 
 		try {
-			return $this->redis->delete($key);
+			return $this->redis->del($key);
 		} catch (\RedisException $e) {
 			return $this->alive = false;
 		}
