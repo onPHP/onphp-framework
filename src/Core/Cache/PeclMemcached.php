@@ -68,11 +68,11 @@ class PeclMemcached extends CachePeer
 		if ($connectTimeout != self::DEFAULT_CONNECT_TIMEOUT) {
 			$this->instance->setOption(\Memcached::OPT_CONNECT_TIMEOUT, $connectTimeout);
 		}
-		
+
 		if ($this->compress == false) {
 			$this->instance->setOption(\Memcached::OPT_COMPRESSION, false);
 		}
-		
+
 		$this->instance->addServer($host, $port, $weight);
 		
 		$this->alive = $this->instance->set(self::class, time());
@@ -149,7 +149,7 @@ class PeclMemcached extends CachePeer
 		
 		$this->processResultCode();
 		
-		return ($list !== false) ? $list : array();
+		return ($list !== false && count($list) > 0) ? $list : null;
 	}
 
 	/**

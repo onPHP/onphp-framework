@@ -4,6 +4,9 @@ namespace OnPHP\Tests\Core;
 
 use OnPHP\Core\Cache\Cache;
 use OnPHP\Core\Cache\CachePeer;
+use OnPHP\Core\Cache\SharedMemory;
+use OnPHP\Core\Cache\PeclMemcache;
+use OnPHP\Core\Cache\PeclMemcached;
 use OnPHP\Core\Cache\RuntimeMemory;
 use OnPHP\Core\Cache\SocketMemcached;
 use OnPHP\Core\Cache\WatermarkedPeer;
@@ -16,7 +19,8 @@ final class BaseCachesTest extends TestCase
 		return array(
 //				array(SocketMemcached::create()),
 //				array(SharedMemory::create()),
-//				array(PeclMemcached::create()),
+				array(PeclMemcached::create()),
+				array(PeclMemcache::create()),
 				array(RuntimeMemory::create()),
 //				array(RubberFileSystem::create())
 		);
@@ -184,14 +188,14 @@ final class BaseCachesTest extends TestCase
 
 		// do not set if exist and not expired (RubberFileSystem logic)
 		$cache->set('a', $value, Cache::EXPIRES_MAXIMUM);
-		$this->assertFalse($cache->set('a', '!!!', 1));
+		$this->assertFalse($cache->add('a', '!!!', 1));
 		$this->assertEquals($cache->get('a'), $value);
 		$this->assertTrue($cache->replace('a', '!!!', Cache::EXPIRES_MINIMUM));
 		$this->assertEquals($cache->get('a'), '!!!');
 
 		$cache->replace('a', $value, 1);
 		sleep(2);
-		$this->assertFalse($cache->get('a'));
+		$this->assertNull($cache->get('a'));
 
 		$cache->clean();
 	}

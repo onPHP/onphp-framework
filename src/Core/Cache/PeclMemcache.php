@@ -108,13 +108,18 @@ class PeclMemcache extends CachePeer
 		return
 			($return = $this->get($indexes))
 				? $return
-				: array();
+				: null;
 	}
 
 	public function get($index)
 	{
+		$flag = null;
 		try {
-			return $this->instance->get($index);
+			$result = $this->instance->get($index, $flag);
+			return
+				$result === false && is_null($flag)
+					? null
+					: $result;
 		} catch (BaseException $e) {
 			if(strpos($e->getMessage(), 'Invalid key') !== false)
 				return null;
