@@ -4,6 +4,9 @@ namespace OnPHP\Tests\Core;
 
 use OnPHP\Core\Cache\Cache;
 use OnPHP\Core\Cache\CachePeer;
+use OnPHP\Core\Cache\SharedMemory;
+use OnPHP\Core\Cache\PeclMemcache;
+use OnPHP\Core\Cache\PeclMemcached;
 use OnPHP\Core\Cache\RuntimeMemory;
 use OnPHP\Core\Cache\SocketMemcached;
 use OnPHP\Core\Cache\WatermarkedPeer;
@@ -16,7 +19,8 @@ final class BaseCachesTest extends TestCase
 		return array(
 //				array(SocketMemcached::create()),
 //				array(SharedMemory::create()),
-//				array(PeclMemcached::create()),
+				array(PeclMemcached::create()),
+				array(PeclMemcache::create()),
 				array(RuntimeMemory::create()),
 //				array(RubberFileSystem::create())
 		);
@@ -45,9 +49,10 @@ final class BaseCachesTest extends TestCase
 	**/
 	public function testWatermarked(CachePeer $cache)
 	{
+		$woExpires = $cache instanceof RuntimeMemory;
 		$cache = WatermarkedPeer::create($cache);
-		$this->clientTest($cache);
-		$this->clientTest($cache->enableCompression());
+		$this->clientTest($cache, $woExpires);
+		$this->clientTest($cache->enableCompression(), $woExpires);
 		$this->doTestWrongKeys($cache);
 	}
 
@@ -80,7 +85,7 @@ final class BaseCachesTest extends TestCase
 		$cache->clean();
 	}
 	
-	protected function clientTest(CachePeer $cache)
+	protected function clientTest(CachePeer $cache, $woExpires = false)
 	{
 		if (!$cache->isAlive()) {
 			return $this->markTestSkipped('cache not available');
@@ -88,7 +93,7 @@ final class BaseCachesTest extends TestCase
 
 		$this->clientTestSingleGet($cache);
 		$this->clientTestMultiGet($cache);
-		$this->doExpires($cache);
+		$this->doExpires($cache, $woExpires);
 	}
 	
 	protected function clientTestSingleGet(CachePeer $cache)
@@ -171,9 +176,9 @@ final class BaseCachesTest extends TestCase
 		$cache->clean();
 	}
 
-	private function doExpires(CachePeer $cache)
+	private function doExpires(CachePeer $cache, $woExpires = false)
 	{
-		if ($cache instanceof RuntimeMemory) {
+		if ($cache instanceof RuntimeMemory || $woExpires) {
 			return $this->markTestSkipped('RuntimeMemory cache expire not implemented');
 		}
 
@@ -183,14 +188,14 @@ final class BaseCachesTest extends TestCase
 
 		// do not set if exist and not expired (RubberFileSystem logic)
 		$cache->set('a', $value, Cache::EXPIRES_MAXIMUM);
-		$this->assertTrue($cache->set('a', '!!!', 1));
+		$this->assertFalse($cache->add('a', '!!!', 1));
 		$this->assertEquals($cache->get('a'), $value);
 		$this->assertTrue($cache->replace('a', '!!!', Cache::EXPIRES_MINIMUM));
 		$this->assertEquals($cache->get('a'), '!!!');
 
 		$cache->replace('a', $value, 1);
 		sleep(2);
-		$this->assertFalse($cache->get('a'));
+		$this->assertNull($cache->get('a'));
 
 		$cache->clean();
 	}
@@ -207,9 +212,11 @@ final class BaseCachesTest extends TestCase
 		$this->assertTrue($cache->isAlive());
 		$this->assertFalse($cache->append('b', $value));
 		$this->assertTrue($cache->isAlive());
-		$this->assertNull($cache->increment('b', $value));
+		$this->expectException("TypeError");
+		$cache->increment('b', $value);
 		$this->assertTrue($cache->isAlive());
-		$this->assertNull($cache->decrement('b', $value));
+		$this->expectException("TypeError");
+		$cache->decrement('b', $value);
 		$this->assertTrue($cache->isAlive());
 		$this->assertFalse($cache->delete('b'));
 		$this->assertTrue($cache->isAlive());

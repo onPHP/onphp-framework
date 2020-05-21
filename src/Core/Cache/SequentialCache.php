@@ -102,7 +102,7 @@ final class SequentialCache extends CachePeer
 		return $this->foreachItem(__METHOD__, func_get_args());
 	}
 
-	public function decrement($key, $value)
+	public function decrement($key, int $value = 1)
 	{
 		throw new UnsupportedMethodException('decrement is not supported');
 	}
@@ -112,7 +112,7 @@ final class SequentialCache extends CachePeer
 		return $this->foreachItem(__METHOD__, func_get_args());
 	}
 
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
 		throw new UnsupportedMethodException('increment is not supported');
 	}

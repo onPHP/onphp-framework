@@ -85,7 +85,7 @@ class PeclMemcache extends CachePeer
 		return parent::clean();
 	}
 
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
 		try {
 			return $this->instance->increment($key, $value);
@@ -94,7 +94,7 @@ class PeclMemcache extends CachePeer
 		}
 	}
 
-	public function decrement($key, $value)
+	public function decrement($key, int $value = 1)
 	{
 		try {
 			return $this->instance->decrement($key, $value);
@@ -108,13 +108,18 @@ class PeclMemcache extends CachePeer
 		return
 			($return = $this->get($indexes))
 				? $return
-				: array();
+				: null;
 	}
 
 	public function get($index)
 	{
+		$flag = null;
 		try {
-			return $this->instance->get($index);
+			$result = $this->instance->get($index, $flag);
+			return
+				$result === false && is_null($flag)
+					? null
+					: $result;
 		} catch (BaseException $e) {
 			if(strpos($e->getMessage(), 'Invalid key') !== false)
 				return null;

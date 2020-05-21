@@ -86,7 +86,7 @@ final class SharedMemory extends SelectivePeer
 		} catch (BaseException $e) {/*_*/}
 	}
 
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
 		if (null !== ($current = $this->get($key))) {
 			$this->set($key, $current += $value);
@@ -96,7 +96,7 @@ final class SharedMemory extends SelectivePeer
 		return null;
 	}
 
-	public function decrement($key, $value)
+	public function decrement($key, int $value = 1)
 	{
 		if (null !== ($current = $this->get($key))) {
 			$this->set($key, $current -= $value);

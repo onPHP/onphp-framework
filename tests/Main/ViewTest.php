@@ -21,7 +21,7 @@ final class ViewTest extends TestCase
 
 	public static function setUpBeforeClass() : void
 	{
-		self::$resolver = new PhpViewResolver(ONPHP_TEST_PATH.'main/data/views/', EXT_TPL);
+		self::$resolver = new PhpViewResolver(ONPHP_TEST_PATH.'Main/data/views/', EXT_TPL);
 	}
 
 	public static function tearDownAfterClass() : void

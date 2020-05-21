@@ -70,7 +70,7 @@ final class RubberFileSystem extends CachePeer
 		return parent::clean();
 	}
 
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
 		$path = $this->makePath($key);
 
@@ -83,7 +83,7 @@ final class RubberFileSystem extends CachePeer
 		return null;
 	}
 
-	public function decrement($key, $value)
+	public function decrement($key, int $value = 1)
 	{
 		$path = $this->makePath($key);
 

@@ -101,7 +101,7 @@ final class DebugCachePeer extends SelectivePeer
 		return $this;
 	}
 
-	public function increment($key, $value)
+	public function increment($key, int $value = 1)
 	{
 		$beginTime 	= microtime(true);
 		$value 		= $this->peer->increment($key, $value);
@@ -112,7 +112,7 @@ final class DebugCachePeer extends SelectivePeer
 		return $value;
 	}
 
-	public function decrement($key, $value)
+	public function decrement($key, int $value = 1)
 	{
 		$beginTime 	= microtime(true);
 		$value 		= $this->peer->decrement($key, $value);
