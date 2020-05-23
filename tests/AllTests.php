@@ -50,7 +50,7 @@ final class AllTests
 		$suite = new TestSuite('onPHP-'.ONPHP_VERSION);
 
 		// meta, DB and DAOs ordered tests portion
-		if (self::$dbs) {
+		if (self::$dbs && self::checkRun()) {
 			try {
 				/**
 				 * @todo fail - constructor with argument, but static method 'me' - without
@@ -114,6 +114,30 @@ final class AllTests
 		}
 		
 		return $suite;
+	}
+
+	protected static function checkRun()
+	{
+		return
+			!isset($_SERVER['argv'])
+			|| count($_SERVER['argv']) == 0
+			|| count(
+				array_intersect(
+					array(
+						'-h',
+						'--help',
+						'--version',
+						'--atleast-version',
+						'--check-version',
+						'--generate-configuration',
+						'--list-groups',
+						'--list-suites',
+						'--list-tests',
+						'--list-tests-xml'
+					),
+					$_SERVER['argv']
+				)
+			) == 0;
 	}
 }
 
