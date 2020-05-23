@@ -5,6 +5,10 @@ namespace OnPHP\Tests\Core;
 use OnPHP\Core\Cache\FileLocker;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group fs
+ */
 final class LockerTest extends TestCase
 {
 	public function testFileLocker()

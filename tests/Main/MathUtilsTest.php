@@ -15,6 +15,10 @@ use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Main\Math\MathUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group math
+ */
 final class MathUtilsTest extends TestCase
 {
 	public function testCompareFloat()

@@ -5,7 +5,10 @@ namespace OnPHP\Tests\Main\Ip;
 use OnPHP\Main\Net\Ip\IpUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
-/* $Id$ */	
+/**
+ * @group main
+ * @group ip
+ */
 final class IpUtilsTest extends TestCase
 {
 	/**

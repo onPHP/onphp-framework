@@ -17,6 +17,11 @@ use OnPHP\Main\Net\Mail\MailAddress;
 use OnPHP\Main\Net\Mail\MailNotSentException;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group http
+ * @group mail
+ */
 final class MailTest extends TestCase
 {
 	public function testMailAddressWithoutPerson()

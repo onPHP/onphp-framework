@@ -8,6 +8,10 @@ use OnPHP\Core\Form\Primitives\PrimitiveTimestamp;
 use OnPHP\Core\Form\Primitives\PrimitiveTimestampTZ;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveTimestampTZTest extends TestCase
 {
 

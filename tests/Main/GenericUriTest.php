@@ -14,6 +14,10 @@ use OnPHP\Main\Net\Urn;
 use OnPHP\Main\Util\ClassUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group http
+ */
 final class GenericUriTest extends TestCase
 {
 	private $urls = array(

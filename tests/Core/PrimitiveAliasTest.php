@@ -25,6 +25,10 @@ final class PrimitiveCustomError extends PrimitiveString
 	}
 }
 
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveAliasTest extends TestCase
 {
 	public function testImport()

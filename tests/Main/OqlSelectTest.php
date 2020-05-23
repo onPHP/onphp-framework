@@ -16,6 +16,12 @@ use OnPHP\Tests\Meta\Business\TestCity;
 use OnPHP\Tests\Meta\Business\TestUser;
 use OnPHP\Tests\TestEnvironment\TestCaseDB;
 
+/**
+ * @group core
+ * @group db
+ * @group oql
+ * @group criteria
+ */
 final class OqlSelectTest extends TestCaseDB
 {
 	public function testProperty()

@@ -21,6 +21,11 @@ use OnPHP\Tests\Meta\Business\TestUserWithContactExtended;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
 
+/**
+ * @group core
+ * @group db
+ * @group criteria
+ */
 final class CriteriaTest extends TestCase
 {
 	public function testClassProjection()

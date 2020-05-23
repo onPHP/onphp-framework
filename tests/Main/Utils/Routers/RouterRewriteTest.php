@@ -15,6 +15,10 @@ use OnPHP\Main\Util\Router\RouterTransparentRule;
 use OnPHP\Tests\TestEnvironment\ServerVarUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group router
+ */
 class RouterRewriteTest extends TestCase
 {
 	/**

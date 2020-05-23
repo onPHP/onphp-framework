@@ -9,6 +9,10 @@ use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Core\Form\Primitive;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveClassTest extends TestCase
 {
 	public function test()

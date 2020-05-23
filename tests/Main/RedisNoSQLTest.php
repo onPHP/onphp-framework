@@ -14,6 +14,11 @@ namespace OnPHP\Tests\Main;
 use OnPHP\Core\DB\NoSQL\RedisNoSQL;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group cache
+ * @group redis
+ */
 final class RedisNoSQLTest extends TestCase
 {
 	public function setUp() :void

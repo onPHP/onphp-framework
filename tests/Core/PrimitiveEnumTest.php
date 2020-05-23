@@ -16,6 +16,10 @@ use OnPHP\Core\Form\Primitive;
 use OnPHP\Main\Base\MimeType;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveEnumTest extends TestCase
 {
 	public function testIntegerValues()

@@ -11,6 +11,11 @@ use OnPHP\Tests\Meta\Business\TestUser;
 use OnPHP\Tests\TestEnvironment\DBTestPool;
 use OnPHP\Tests\TestEnvironment\TestCaseDAO;
 
+/**
+ * @group core
+ * @group db
+ * @group dao
+ */
 class IdDBTest extends TestCaseDAO
 {
 	public function testGetByEmptyId()

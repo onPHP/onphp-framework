@@ -16,6 +16,10 @@ use OnPHP\Core\Form\Filters\Utf16ConverterFilter;
 use OnPHP\Main\Base\CallChain;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group filter
+ */
 final class FiltersTest extends TestCase
 {
 	public function testTrim()

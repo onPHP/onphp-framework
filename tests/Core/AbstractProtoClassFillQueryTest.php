@@ -18,6 +18,11 @@ use OnPHP\Tests\Meta\Business\TestUser;
 use OnPHP\Tests\Meta\Business\TestUserWithContactExtended;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group osql
+ * @group db
+ */
 final class AbstractProtoClassFillQueryTest extends TestCase
 {
 	public function testFullInsertQueryByCity()

@@ -7,6 +7,9 @@ use OnPHP\Core\Exception\MissingElementException;
 use OnPHP\Main\Util\ClassUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 	
+/**
+ * @group main
+ */
 final class EnumerationTest extends TestCase
 {
 	/**

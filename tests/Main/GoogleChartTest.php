@@ -20,7 +20,10 @@ use OnPHP\Main\Charts\Google\GoogleNormalizedLineChart;
 use OnPHP\Main\Charts\Google\GooglePieChart;
 use OnPHP\Main\Util\TuringTest\Color;
 use OnPHP\Tests\TestEnvironment\TestCase;
-	
+
+/**
+ * @group utils
+ */
 final class GoogleChartTest extends TestCase
 {
 	public function testPieChart()

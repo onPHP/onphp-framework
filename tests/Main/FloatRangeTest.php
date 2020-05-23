@@ -6,6 +6,9 @@ use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Main\Base\FloatRange;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ */
 final class FloatRangeTest extends TestCase
 {
 	/**

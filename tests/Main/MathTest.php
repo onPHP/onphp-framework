@@ -19,6 +19,10 @@ use OnPHP\Main\Math\MtRandomSource;
 use OnPHP\Main\Math\RandomSource;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group math
+ */
 final class MathTest extends TestCase
 {
 	public function runMathTest(BigNumberFactory $factory)

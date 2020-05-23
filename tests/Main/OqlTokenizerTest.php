@@ -6,6 +6,11 @@ use OnPHP\Main\OQL\Parser\OqlToken;
 use OnPHP\Main\OQL\Parser\OqlTokenizer;
 use OnPHP\Tests\TestEnvironment\TestCase;
 	
+/**
+ * @group core
+ * @group db
+ * @group oql
+ */
 final class OqlTokenizerTest extends TestCase
 {
 	public function testEmpty()

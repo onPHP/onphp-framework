@@ -6,6 +6,10 @@ use OnPHP\Core\Form\Primitive;
 use OnPHP\Main\Net\Ip\IpAddress;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveIpTest extends TestCase
 {
 	public function testBase()

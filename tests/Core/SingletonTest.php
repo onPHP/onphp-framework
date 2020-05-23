@@ -21,6 +21,9 @@ final class SingletonMultiArgumentTestInstance extends Singleton
 	protected function __construct($arg1, $arg2, $arg3 = null) { /*_*/ }
 }
 
+/**
+ * @group core
+ */
 final class SingletonTest extends TestCase
 {
 	const CLASS_NAME		= SingletonTestInstance::class;

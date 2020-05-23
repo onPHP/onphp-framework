@@ -11,6 +11,11 @@ use OnPHP\Core\Exception\UnimplementedFeatureException;
 use OnPHP\Core\Exception\WrongStateException;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group db
+ * @group postgresql
+ */
 class InnerTransactionTest extends TestCase
 {
 	public function testCommitExt()

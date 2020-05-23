@@ -5,6 +5,9 @@ namespace OnPHP\Tests\Main\Utils;
 use OnPHP\Main\Util\TypesUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ */
 final class TypesUtilsTest extends TestCase
 {
 	/**

@@ -10,7 +10,8 @@ use OnPHP\Main\Net\Ip\IpRange;
 use OnPHP\Tests\TestEnvironment\TestCaseDB;
 
 /**
- * @group ibr
+ * @group main
+ * @group ip
  */
 final class IpBaseRangeTest extends TestCaseDB
 {

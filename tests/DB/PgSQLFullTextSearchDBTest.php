@@ -8,7 +8,9 @@ use OnPHP\Tests\TestEnvironment\DBTestPool;
 use OnPHP\Tests\TestEnvironment\TestCaseDB;
 
 /**
- * @group pgsf
+ * @group core
+ * @group db
+ * @group postgresql
  */
 class PgSQLFullTextSearchDBTest extends TestCaseDB
 {

@@ -7,6 +7,10 @@ use OnPHP\Core\Form\Primitive;
 use OnPHP\Core\OSQL\DataType;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveEnumerationTest extends TestCase
 {
 	public function testIntegerValues()

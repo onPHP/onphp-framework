@@ -28,6 +28,10 @@ class RouterBaseRuleStub extends RouterBaseRule
 	public function assembly(array $data = array(), $reset = false, $encode = false) {/**/}
 }
 
+/**
+ * @group utils
+ * @group router
+ */
 class RouterBaseRuleTest extends TestCase
 {
 	/**

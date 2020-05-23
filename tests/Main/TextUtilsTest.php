@@ -5,6 +5,9 @@ namespace OnPHP\Tests\Main;
 use OnPHP\Main\Util\TextUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 	
+/**
+ * @group utils
+ */
 final class TextUtilsTest extends TestCase
 {
 	public function testFriendlyFileSize()

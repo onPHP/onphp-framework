@@ -9,6 +9,14 @@ use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Core\OSQL\OSQL;
 use OnPHP\Tests\TestEnvironment\TestCaseDB;
 
+/**
+ * @group core
+ * @group db
+ * @group osql
+ * @group mysql
+ * @group postgresql
+ * @group sqlite
+ */
 final class TruncateQueryTest extends TestCaseDB
 {
 	public function testQuery()

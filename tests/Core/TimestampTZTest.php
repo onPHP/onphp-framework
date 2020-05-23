@@ -5,11 +5,12 @@ use OnPHP\Core\Base\TimestampTZ;
 use OnPHP\Core\DB\ImaginaryDialect;
 use OnPHP\Tests\TestEnvironment\TestCase;
 	
+/**
+ * @group core
+ * @group date
+ */
 final class TimestampTZTest extends TestCase
 {
-	/**
-	 * @group ff
-	 */
 	public function testDifferentZones()
 	{
 		$someDate = TimestampTZ::create('2011-01-01 12:10:10 Europe/Moscow');
@@ -40,9 +41,6 @@ final class TimestampTZTest extends TestCase
 		);
 	}
 
-	/**
-	 * @group ff
-	 */
 	public function testDialect()
 	{
 		//setup
@@ -57,9 +55,6 @@ final class TimestampTZTest extends TestCase
 		);
 	}
 
-	/**
-	 * @group ff
-	 */
 	public function testSleeping() {
 		$time = TimestampTZ::create('2011-03-08 12:12:12 PST');
 		$sleepedTime = unserialize(serialize($time));

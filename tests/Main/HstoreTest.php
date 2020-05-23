@@ -14,6 +14,9 @@ namespace OnPHP\Tests\Main;
 use OnPHP\Main\Base\Hstore;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ */
 final class HstoreTest extends TestCase
 {
 	public function testRun()

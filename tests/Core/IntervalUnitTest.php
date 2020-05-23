@@ -7,6 +7,10 @@ use OnPHP\Core\Base\Timestamp;
 use OnPHP\Main\Base\TimestampRange;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group date
+ */
 final class IntervalUnitTest extends TestCase
 {
 	public function testMicrosecond()

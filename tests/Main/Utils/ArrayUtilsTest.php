@@ -9,6 +9,9 @@ use OnPHP\Main\Util\ArrayUtils;
 use OnPHP\Tests\Meta\Business\TestCity;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ */
 final class ArrayUtilsTest extends TestCase
 {
 	/**

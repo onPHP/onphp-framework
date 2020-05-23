@@ -5,6 +5,10 @@ namespace OnPHP\Tests\Main\Ip;
 use OnPHP\Main\Net\Ip\IpAddress;
 use OnPHP\Tests\TestEnvironment\TestCase;
 	
+/**
+ * @group main
+ * @group ip
+ */
 final class IpAddressTest extends TestCase
 {
 	private $ips = 

@@ -9,6 +9,10 @@ use OnPHP\Core\Form\Primitives\PrimitiveHstore;
 use OnPHP\Tests\TestEnvironment\TestCase;
 use OnPHP\Main\Base\Hstore;
 
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveHstoreTest extends TestCase
 {
 	protected static $scope =

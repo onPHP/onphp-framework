@@ -20,7 +20,13 @@ use OnPHP\Tests\TestEnvironment\DBTestPool;
 use OnPHP\Tests\TestEnvironment\TestCaseDAO;
 
 /**
- * @group ipdb
+ * @group core
+ * @group main
+ * @group db
+ * @group osql
+ * @group criteria
+ * @group postgresql
+ * @group ip
  */
 class IpDBTest extends TestCaseDAO
 {

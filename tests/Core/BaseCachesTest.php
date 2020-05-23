@@ -12,6 +12,10 @@ use OnPHP\Core\Cache\SocketMemcached;
 use OnPHP\Core\Cache\WatermarkedPeer;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group cache
+ */
 final class BaseCachesTest extends TestCase
 {
 	public static function cacheProvider()

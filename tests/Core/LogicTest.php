@@ -15,6 +15,12 @@ use OnPHP\Core\OSQL\DBField;
 use OnPHP\Core\OSQL\DBValue;
 use OnPHP\Tests\TestEnvironment\TestCaseDB;
 
+/**
+ * @group core
+ * @group db
+ * @group postgresql
+ * @group form
+ */
 final class LogicTest extends TestCaseDB
 {
 	public function testBaseSqlGeneration()

@@ -8,6 +8,12 @@ use OnPHP\Core\OSQL\DBValue;
 use OnPHP\Core\OSQL\OSQL;
 use OnPHP\Tests\TestEnvironment\TestCaseDB;
 
+/**
+ * @group core
+ * @group db
+ * @group osql
+ * @group postgresql
+ */
 final class OsqlInsertTest extends TestCaseDB
 {
 	public function testInsertFromSelect()

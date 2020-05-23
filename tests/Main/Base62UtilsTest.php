@@ -14,6 +14,9 @@ use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Main\Crypto\Base62Utils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ */
 final class Base62UtilsTest extends TestCase
 {
 	public function testSetCharsLengthFailed()

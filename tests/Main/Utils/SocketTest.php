@@ -5,6 +5,10 @@ namespace OnPHP\Tests\Main\Utils;
 use OnPHP\Main\Util\IO\Socket;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group socket
+ */
 final class SocketTest extends TestCase
 {
 	public function testShutdown()

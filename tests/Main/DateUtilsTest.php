@@ -6,6 +6,10 @@ use OnPHP\Core\Base\Timestamp;
 use OnPHP\Main\Util\DateUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group date
+ */
 final class DateUtilsTest extends TestCase
 {
 	/**

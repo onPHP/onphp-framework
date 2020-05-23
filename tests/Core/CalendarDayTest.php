@@ -5,6 +5,10 @@ namespace OnPHP\Tests\Core;
 use OnPHP\Main\Base\CalendarDay;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group date
+ */
 final class CalendarDayTest extends TestCase
 {
 	public function testSleeping()

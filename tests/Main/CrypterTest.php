@@ -5,6 +5,10 @@ namespace OnPHP\Tests\Main;
 use OnPHP\Main\Crypto\Crypter;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group crypto
+ */
 final class CrypterTest extends TestCase
 {
 	/**

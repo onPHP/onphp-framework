@@ -14,6 +14,10 @@ namespace OnPHP\Tests\Main;
 use OnPHP\Main\Markup\Csv;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group csv
+ */
 final class CsvTest extends TestCase
 {
 	public function testRender()

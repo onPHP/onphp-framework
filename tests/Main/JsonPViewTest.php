@@ -18,6 +18,10 @@ use OnPHP\Main\Flow\Model;
 use OnPHP\Main\UI\View\JsonPView;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group view
+ */
 final class JsonPViewTest extends TestCase
 {
 	protected $array = array('<foo>',"'bar'",'"baz"','&blong&');

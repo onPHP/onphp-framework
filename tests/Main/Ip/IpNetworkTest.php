@@ -6,6 +6,10 @@ use OnPHP\Main\Net\Ip\IpAddress;
 use OnPHP\Main\Net\Ip\IpNetwork;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group ip
+ */
 final class IpNetworkTest extends TestCase
 {
 	public function testContains()

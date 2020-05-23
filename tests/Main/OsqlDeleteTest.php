@@ -8,6 +8,12 @@ use OnPHP\Core\Logic\Expression;
 use OnPHP\Core\OSQL\OSQL;
 use OnPHP\Tests\TestEnvironment\TestCaseDB;
 
+/**
+ * @group core
+ * @group db
+ * @group osql
+ * @group postgresql
+ */
 final class OsqlDeleteTest extends TestCaseDB
 {
 	public function testQuery()

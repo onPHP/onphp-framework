@@ -19,6 +19,12 @@ use OnPHP\Main\Net\Http\HttpStatus;
 use OnPHP\Main\Net\HttpUrl;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group utils
+ * @group http
+ * @group curl
+ */
 final class HttpUtilsTest extends TestCase
 {
 	public function testCurlGet()

@@ -10,6 +10,11 @@ use OnPHP\Tests\Meta\Business\TestCity;
 use OnPHP\Tests\TestEnvironment\DBTestPool;
 use OnPHP\Tests\TestEnvironment\TestCaseDAO;
 
+/**
+ * @group core
+ * @group db
+ * @group criteria
+ */
 class CriteriaDBTest extends TestCaseDAO
 {
 	public function testCriteria()

@@ -7,6 +7,9 @@ use OnPHP\Main\Markup\Feed\FeedReader;
 use OnPHP\Main\Markup\Feed\YandexRssFeedItem;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ */
 final class FeedReaderTest extends TestCase
 {
 	public function testFeedReaderRss()
