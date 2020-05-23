@@ -15,6 +15,10 @@ use OnPHP\Core\Exception\MissingElementException;
 use OnPHP\Main\Net\Http\HttpHeaderCollection;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group http
+ */
 class HttpHeaderCollectionTest extends TestCase
 {
 	/**

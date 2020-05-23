@@ -15,6 +15,10 @@ use OnPHP\Main\Flow\Model;
 use OnPHP\Main\UI\View\JsonXssView;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group view
+ */
 final class JsonXssViewTest extends TestCase
 {
 	protected $array = array('<foo>',"'bar'",'"baz"','&blong&');

@@ -18,6 +18,10 @@ use OnPHP\Tests\TestEnvironment\DirectoryItem;
 use OnPHP\Tests\TestEnvironment\EntityProtoDirectoryItem;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group proto
+ */
 final class EntityProtoConvertersTest extends TestCase
 {
 	public function testDirectoryBinder()

@@ -11,6 +11,12 @@ use OnPHP\Core\OSQL\OSQL;
 use OnPHP\Core\OSQL\SQLFunction;
 use OnPHP\Tests\TestEnvironment\TestCaseDB;
 	
+/**
+ * @group core
+ * @group db
+ * @group osql
+ * @group postgresql
+ */
 final class OsqlSelectTest extends TestCaseDB
 {
 	public function testSelectGet()

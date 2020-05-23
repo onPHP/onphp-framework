@@ -14,6 +14,12 @@ use OnPHP\Tests\Meta\Business\TestSubItem;
 use OnPHP\Tests\TestEnvironment\DBTestPool;
 use OnPHP\Tests\TestEnvironment\TestCaseDAO;
 
+/**
+ * @group core
+ * @group db
+ * @group dao
+ * @group criteria
+ */
 class CacheAndLazyDBTest extends TestCaseDAO
 {
 	public function testWorkingWithCache()

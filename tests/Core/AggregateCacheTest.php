@@ -11,6 +11,10 @@ use OnPHP\Core\Cache\SimpleAggregateCache;
 use OnPHP\Core\Cache\SocketMemcached;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group cache
+ */
 final class AggregateCacheTest extends TestCase
 {
 	const QUERIES = 100;

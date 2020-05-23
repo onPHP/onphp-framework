@@ -6,6 +6,9 @@ use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Main\Base\Range;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ */
 final class RangeTest extends TestCase
 {
 	/**

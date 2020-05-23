@@ -11,6 +11,11 @@ use OnPHP\Tests\Meta\Business\TestCity;
 use OnPHP\Tests\TestEnvironment\DBTestPool;
 use OnPHP\Tests\TestEnvironment\TestCaseDAO;
 
+/**
+ * @group core
+ * @group db
+ * @group dao
+ */
 class InnerTransactionDBTest extends TestCaseDAO
 {
 	public function setUp() : void

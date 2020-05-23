@@ -5,7 +5,11 @@ namespace OnPHP\Tests\Core;
 use OnPHP\Core\Base\Date;
 use OnPHP\Main\Base\DateRange;
 use OnPHP\Tests\TestEnvironment\TestCase;
-	
+
+/**
+ * @group core
+ * @group date
+ */
 final class DateRangeTest extends TestCase
 {
 	public function testSplit()

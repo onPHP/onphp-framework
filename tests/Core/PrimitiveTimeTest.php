@@ -6,6 +6,10 @@ use OnPHP\Core\Base\Time;
 use OnPHP\Core\Form\Primitive;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveTimeTest extends TestCase
 {
 	public function testImport()

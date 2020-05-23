@@ -6,6 +6,9 @@ use OnPHP\Tests\TestEnvironment\TestCase;
 use OnPHP\Core\Base\Assert;
 use OnPHP\Core\Exception\WrongArgumentException;
 
+/**
+ * @group core
+ */
 final class AssertTest extends TestCase
 {
 	protected $backupGlobals = false;

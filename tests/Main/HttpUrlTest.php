@@ -14,6 +14,10 @@ namespace OnPHP\Tests\Main;
 use OnPHP\Main\Net\HttpUrl;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group http
+ */
 final class HttpUrlTest extends TestCase
 {
 	private $urlWithPrivilegedPort = "https://path.to.some.com:444/hey.html";

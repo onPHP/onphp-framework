@@ -15,6 +15,9 @@ use OnPHP\Tests\TestEnvironment\ClassUtilsTestClassChild;
 use OnPHP\Tests\TestEnvironment\ClassUtilsTestInterface;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ */
 final class ClassUtilsTest extends TestCase
 {
 	

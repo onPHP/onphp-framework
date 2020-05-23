@@ -7,6 +7,10 @@ use OnPHP\Core\Form\Primitive;
 use OnPHP\Core\Form\Primitives\PrimitiveDate;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group form
+ */
 final class FormPrimitivesDateTest extends TestCase
 {
 	const VALID_DAY		= '22';

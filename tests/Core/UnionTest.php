@@ -7,6 +7,12 @@ use OnPHP\Core\OSQL\CombineQuery;
 use OnPHP\Core\OSQL\OSQL;
 use OnPHP\Tests\TestEnvironment\TestCaseDB;
 
+/**
+ * @group core
+ * @group db
+ * @group osql
+ * @group postgresql
+ */
 final class UnionTest extends TestCaseDB
 {
 	private $singleUnion 		= null;

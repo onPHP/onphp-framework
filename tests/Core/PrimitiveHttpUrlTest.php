@@ -15,6 +15,10 @@ use OnPHP\Core\Form\Form;
 use OnPHP\Core\Form\Primitive;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveHttpUrlTest extends TestCase
 {
 	private $urlWithPrivilegedPort = "https://path.to.some.com:444/hey.html";

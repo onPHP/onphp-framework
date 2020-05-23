@@ -21,6 +21,10 @@ use OnPHP\Main\OpenId\OpenIdCredentials;
 use OnPHP\Main\OpenId\OpenIdException;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group http
+ */
 final class OpenIdTest extends TestCase
 {
 	public function testCredentials()

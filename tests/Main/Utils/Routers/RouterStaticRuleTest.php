@@ -7,6 +7,10 @@ use OnPHP\Main\Util\Router\RouterStaticRule;
 use OnPHP\Tests\TestEnvironment\ServerVarUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group router
+ */
 class RouterStaticRuleTest extends TestCase
 {
 	public function setUp(): void

@@ -5,6 +5,10 @@ namespace OnPHP\Tests\Core;
 use OnPHP\Core\Form\Primitive;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveNumberTest extends TestCase
 {
 	public function testInteger()

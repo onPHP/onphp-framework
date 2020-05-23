@@ -6,6 +6,9 @@ use OnPHP\Core\Exception\BaseException;
 use OnPHP\Main\Util\UrlParamsUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ */
 final class UrlParamsUtilsTest extends TestCase
 {
 	public function testAnyDeepLvl()

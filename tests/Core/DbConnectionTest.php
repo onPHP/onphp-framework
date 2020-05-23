@@ -8,6 +8,11 @@ use OnPHP\Core\Exception\DatabaseException;
 use OnPHP\Main\Monitoring\PinbedPgSQL;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group db
+ * @group monitoring
+ */
 final class DbConnectionTest extends TestCase
 {
 	public function setUp(): void

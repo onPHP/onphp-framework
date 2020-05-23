@@ -6,6 +6,10 @@ use OnPHP\Core\Form\Primitive;
 use OnPHP\Core\Form\Primitives\PrimitiveString;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveStringTest extends TestCase
 {
 	public function testImport()

@@ -14,6 +14,10 @@ namespace OnPHP\Tests\Main;
 use OnPHP\Main\Net\Http\HeaderParser;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group http
+ */
 class HeaderParserTest extends TestCase
 {
 	public function testSimple()

@@ -23,6 +23,10 @@ use OnPHP\Main\Math\RandomSource;
 use OnPHP\Main\Util\TextUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group crypto
+ */
 final class CryptoTest extends TestCase
 {
 	public function runDiffieHellmanExchange(

@@ -11,6 +11,12 @@ use OnPHP\Tests\Meta\Business\TestCity;
 use OnPHP\Tests\TestEnvironment\DBTestPool;
 use OnPHP\Tests\TestEnvironment\TestCaseDAO;
 
+/**
+ * @group core
+ * @group form
+ * @group db
+ * @group dao
+ */
 final class PrimitiveIdentifierTest extends TestCaseDAO
 {
 	public function testEmpty()
@@ -31,9 +37,6 @@ final class PrimitiveIdentifierTest extends TestCaseDAO
 		}
 	}
 
-	/**
-	 * @group pi
-	 */
 	public function testCustomImportExport()
 	{
 		$dbs = DBTestPool::me()->getPool();

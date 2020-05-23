@@ -7,6 +7,10 @@ use OnPHP\Core\Form\Primitives\PrimitiveDate;
 use OnPHP\Core\Form\Primitives\PrimitiveTimestamp;
 use OnPHP\Tests\TestEnvironment\TestCase;
 	
+/**
+ * @group core
+ * @group form
+ */
 final class PrimitiveTimestampTest extends TestCase
 {
 	public function testMarried()

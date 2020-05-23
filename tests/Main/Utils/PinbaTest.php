@@ -5,6 +5,11 @@ namespace OnPHP\Tests\Main\Utils;
 use OnPHP\Main\Monitoring\PinbaClient;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group monitoring
+ * @group pinba
+ */
 final class PinbaTest extends TestCase
 {
 	protected static $skipMessage	= 'unknown error';

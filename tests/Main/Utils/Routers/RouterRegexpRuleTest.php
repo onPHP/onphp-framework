@@ -8,6 +8,10 @@ use OnPHP\Main\Util\Router\RouterRegexpRule;
 use OnPHP\Tests\TestEnvironment\ServerVarUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group router
+ */
 class RouterRegexpRuleTest extends TestCase
 {
 	public function setUp(): void

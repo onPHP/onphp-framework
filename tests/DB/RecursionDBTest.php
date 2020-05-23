@@ -14,7 +14,9 @@ use OnPHP\Tests\TestEnvironment\DBTestPool;
 use OnPHP\Tests\TestEnvironment\TestCaseDAO;
 
 /**
- * @group rdb
+ * @group core
+ * @group db
+ * @group dao
  */
 class RecursionDBTest extends TestCaseDAO
 {

@@ -7,6 +7,11 @@ use OnPHP\Main\Net\Mail\MimeMail;
 use OnPHP\Main\Net\Mail\MimePart;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group http
+ * @group mail
+ */
 final class MimeMailTest extends TestCase
 {
 	public function testMimeMail()

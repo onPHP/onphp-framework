@@ -9,6 +9,9 @@ use OnPHP\Main\Base\ImmutableObjectComparator;
 use OnPHP\Main\Base\SerializedObjectComparator;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ */
 final class ComparatorTest extends TestCase
 {
 	/**

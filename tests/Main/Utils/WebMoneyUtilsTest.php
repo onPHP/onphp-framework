@@ -4,6 +4,10 @@ namespace OnPHP\Tests\Main\Utils;
 use OnPHP\Main\Util\WebMoneyUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group webmoney
+ */
 final class WebMoneyUtilsTest extends TestCase
 {
 	/**

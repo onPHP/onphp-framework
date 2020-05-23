@@ -13,6 +13,12 @@ use OnPHP\Core\OSQL\OSQL;
 use OnPHP\Core\OSQL\SQLFunction;
 use OnPHP\Tests\TestEnvironment\TestCaseDB;
 
+/**
+ * @group core
+ * @group db
+ * @group osql
+ * @group postgresql
+ */
 final class OsqlReturningTest extends TestCaseDB
 {
 	public function testUpdate()

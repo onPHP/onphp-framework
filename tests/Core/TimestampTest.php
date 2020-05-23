@@ -7,6 +7,10 @@ use OnPHP\Core\Base\Timestamp;
 use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group date
+ */
 final class TimestampTest extends TestCase
 {	
 	public function testNonEpoch()

@@ -13,7 +13,11 @@ use OnPHP\Core\Logic\Expression;
 use OnPHP\Main\Net\HttpUrl;
 use OnPHP\Tests\TestEnvironment\TestCase;
 use OnPHP\Tests\Meta\Business\TestCity;
-	
+
+/**
+ * @group core
+ * @group form
+ */
 final class FormTest extends TestCase
 {
 	public function testRange()

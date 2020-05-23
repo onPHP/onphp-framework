@@ -15,6 +15,12 @@ use OnPHP\Main\OQL\Statement\OqlQuery;
 use OnPHP\Tests\Meta\Business\TestUser;
 use OnPHP\Tests\TestEnvironment\TestCaseDB;
 
+/**
+ * @group core
+ * @group db
+ * @group oql
+ * @group criteria
+ */
 final class OqlSelectClauseTest extends TestCaseDB
 {	
 	public function testEmpty()

@@ -18,6 +18,11 @@ use OnPHP\Core\Cache\SequentialCache;
 use OnPHP\Core\Cache\SocketMemcached;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group cache
+ * @group memcached
+ */
 final class SequentialCacheTest extends TestCase
 {
 	public function testMultiCacheAliveLast()

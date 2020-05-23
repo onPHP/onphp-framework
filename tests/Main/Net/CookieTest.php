@@ -7,6 +7,11 @@ use OnPHP\Main\Net\Http\Cookie;
 use OnPHP\Main\Net\Http\CookieCollection;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group http
+ * @group cookie
+ */
 final class CookieTest extends TestCase
 {
 	public function testCookie()

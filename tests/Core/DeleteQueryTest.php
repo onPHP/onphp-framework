@@ -9,7 +9,11 @@ use OnPHP\Core\Logic\Expression;
 use OnPHP\Core\OSQL\OSQL;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
-
+/**
+ * @group core
+ * @group db
+ * @group osql
+ */
 final class DeleteQueryTest extends TestCase
 {
 	public function testQuery()

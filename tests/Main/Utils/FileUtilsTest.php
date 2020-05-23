@@ -5,6 +5,10 @@ namespace OnPHP\Tests\Main\Utils;
 use OnPHP\Main\Util\FileUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group utils
+ * @group fs
+ */
 final class FileUtilsTest extends TestCase
 {
 	public function testUniqueNames()

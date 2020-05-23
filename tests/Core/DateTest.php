@@ -6,6 +6,10 @@ use OnPHP\Core\Base\Date;
 use OnPHP\Core\Base\Timestamp;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group date
+ */
 final class DateTest extends TestCase
 {
 	public function testDayDifference()

@@ -15,6 +15,10 @@ use OnPHP\Main\Flow\Model;
 use OnPHP\Main\UI\View\JsonView;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group view
+ */
 final class JsonViewTest extends TestCase
 {
 	protected $array = array('<foo>',"'bar'",'"baz"','&blong&');

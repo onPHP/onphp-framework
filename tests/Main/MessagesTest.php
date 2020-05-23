@@ -8,6 +8,10 @@ use OnPHP\Main\Message\TextFileSender;
 use OnPHP\Main\Message\TextMessage;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group text
+ */
 final class MessagesTest extends TestCase
 {
 	public function testFileQueue()

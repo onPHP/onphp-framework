@@ -6,6 +6,11 @@ use OnPHP\Core\Base\Date;
 use OnPHP\Core\Form\Primitives\PrimitiveDateRange;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group core
+ * @group form
+ * @group date
+ */
 final class PrimitiveDateRangeTest extends TestCase
 {
 	public function testImport()

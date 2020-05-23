@@ -102,6 +102,10 @@ class AMQPTestCaseAutoAckQueueConsumer extends AMQPPeclQueueConsumer
 	}
 }
 
+/**
+ * @group utils
+ * @group amqp
+ */
 class AMQPPeclTest extends TestCase
 {
 	const COUNT_OF_PUBLISH = 5;

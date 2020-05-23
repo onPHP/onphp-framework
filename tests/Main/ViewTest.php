@@ -15,6 +15,10 @@ use OnPHP\Main\Flow\Model;
 use OnPHP\Main\UI\View\PhpViewResolver;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group view
+ */
 final class ViewTest extends TestCase
 {
 	protected static $resolver;

@@ -11,6 +11,11 @@ use OnPHP\Main\Net\Http\HttpMethod;
 use OnPHP\Main\Util\UrlParamsUtils;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
+/**
+ * @group main
+ * @group http
+ * @group curl
+ */
 final class CurlHttpClientTest extends TestCase
 {
 	private static $failTestMsg = null;
