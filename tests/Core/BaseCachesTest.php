@@ -78,6 +78,7 @@ final class BaseCachesTest extends TestCase
 	**/
 	public function testWithTimeout()
 	{
+		$this->markTestSkipped('Source SocketMemcached is not tested');
 		$cache =
 			SocketMemcached::create('localhost')->
 			setTimeout(200);
