@@ -1,0 +1,44 @@
+language: php
+services:
+    - mysql
+    - postgresql
+    - redis-server
+    - memcached
+php:
+    - 7.4.6
+before_install:
+    - yes | pecl install memcache
+    - no | pecl install memcached
+    - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - mysql -e 'CREATE DATABASE onphp;'
+    - psql -c 'create database onphp;' -U postgres
+    - cp ./tests/travis.inc.php.tpl ./tests/config.inc.php
+    
+install:
+    - composer update -n
+
+before_script:
+    - wget https://repo.mysql.com//mysql-apt-config_0.8.15-1_all.deb
+    - sudo dpkg -i mysql-apt-config_0.8.15-1_all.deb
+    - sudo apt-get update -q
+    - sudo apt-get install -q -y --allow-unauthenticated -o Dpkg::Options::=--force-confnew mysql-server
+    - sudo systemctl restart mysql
+    - sudo mysql_upgrade
+    - mysql --version
+    
+    
+    - sudo apt-get install -q -y apache2 libapache2-mod-fastcgi
+    - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+    - sudo a2enmod rewrite actions fastcgi alias
+    - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
+    - sudo chown -R travis:travis /var/lib/apache2/fastcgi
+    - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+    # configure apache virtual hosts
+    - sudo cp -f travis/travis-ci-apache /etc/apache2/sites-available/000-default.conf
+    - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
+    - sudo service apache2 restart
+    #- curl -vsf 'http://localhost/curlTest.php' &> /dev/stdout
+    
+script:
+    - ./vendor/bin/phpunit --exclude-group amqp,cookie,mail,pinba --verbose --dont-report-useless-tests ./tests/AllTests.php
