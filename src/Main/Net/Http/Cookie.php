@@ -29,6 +29,7 @@ final class Cookie extends CollectionItem
 	private $domain		= null;
 	private $secure		= false;
 	private $httpOnly	= false;
+	private $sameSite	= 'Lax';
 
 	/**
 	 * @return Cookie
@@ -43,11 +44,18 @@ final class Cookie extends CollectionItem
 		$this->id = $this->name = $name;
 	}
 
+	/**
+	 * @return string|null
+	 */
 	public function getName()
 	{
 		return $this->name;
 	}
 
+	/**
+	 * @param   mixed   $value
+	 * @return  Cookie
+	 */
 	public function setValue($value)
 	{
 		$this->value = $value;
@@ -55,93 +63,174 @@ final class Cookie extends CollectionItem
 		return $this;
 	}
 
+	/**
+	 * @return mixed|null
+	 */
 	public function getValue()
 	{
 		return $this->value;
 	}
 
-	public function setMaxAge($expire)
+	/**
+	 * @param   int	    $expire
+	 * @return  Cookie
+	 */
+	public function setMaxAge(int $expire)
 	{
-		Assert::isInteger($expire);
-
 		$this->expire = $expire;
 
 		return $this;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getMaxAge()
 	{
 		return $this->expire;
 	}
 
-	public function setPath($path)
+	/**
+	 * @param   string  $path
+	 * @return  Cookie
+	 */
+	public function setPath(string $path = null)
 	{
-		Assert::isString($path);
-
 		$this->path = $path;
 
 		return $this;
 	}
 
+	/**
+	 * @return string|null
+	 */
 	public function getPath()
 	{
 		return $this->path;
 	}
 
-	public function setDomain($domain)
+	/**
+	 * @param   string  $domain
+	 * @return  Cookie
+	 */
+	public function setDomain(string $domain = null)
 	{
-		Assert::isString($domain);
-
 		$this->domain = $domain;
 
 		return $this;
 	}
 
+	/**
+	 * @return string|null
+	 */
 	public function getDomain()
 	{
 		return $this->domain;
 	}
 
-	public function setSecure($secure = true)
+	/**
+	 * @param   bool    $secure
+	 * @return  Cookie
+	 */
+	public function setSecure(bool $secure = true)
 	{
-		$this->secure = (boolean) $secure;
+		$this->secure = $secure;
 
 		return $this;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function getSecure()
 	{
 		return $this->secure;
 	}
 
-	public function setHttpOnly($httpOnly = true)
+	/**
+	 * @param   bool    $httpOnly
+	 * @return  Cookie
+	 */
+	public function setHttpOnly(bool $httpOnly = true)
 	{
-		$this->httpOnly = (boolean) $httpOnly;
+		$this->httpOnly = $httpOnly;
 
 		return $this;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function getHttpOnly()
 	{
 		return $this->httpOnly;
 	}
 
+	/**
+	 * @return Cookie
+	 */
+	public function setSameSiteStrict()
+	{
+		$this->sameSite = 'Strict';
+
+		return $this;
+	}
+
+	/**
+	 * @return Cookie
+	 */
+	public function setSameSiteLax()
+	{
+		$this->sameSite = 'Lax';
+
+		return $this;
+	}
+
+	/**
+	 * @return Cookie
+	 */
+	public function setSameSiteNone()
+	{
+		$this->sameSite = 'None';
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSameSite()
+	{
+		return $this->sameSite;
+	}
+
+	/**
+	 * @return bool
+	 * @throws WrongStateException
+	 */
 	public function httpSet()
 	{
 		if (headers_sent())
 			throw new WrongStateException('headers already send');
 
+		$options = array(
+			'expires'   => $this->getMaxAge() === 0 ? 0 : $this->getMaxAge() + time(),
+			'secure'    => $this->getSecure(),
+			'httponly'  => $this->getHttpOnly(),
+			'samesite'  => $this->getSameSite()
+		);
+		if ($this->getPath()) {
+			$options['path'] = $this->getPath();
+		}
+		if ($this->getDomain()) {
+			$options['domain'] = $this->getDomain();
+		}
+
 		return
 			setcookie(
 				$this->getName(),
 				$this->getValue(),
-				($this->getMaxAge() === 0)
-					? 0
-					: $this->getMaxAge() + time(),
-				$this->getPath(),
-				$this->getDomain(),
-				$this->getSecure(),
-				$this->getHttpOnly()
+				$options
 			);
 	}
 }
