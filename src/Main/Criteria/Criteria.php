@@ -664,16 +664,5 @@ final class Criteria extends QueryIdentification
 			}
 		}
 	}
-
-	/**
-	 * @return AbstractProtoClass
-	**/
-	private function getProto()
-	{
-		return
-			call_user_func(
-				array($this->checkAndGetDao()->getObjectName(), 'proto')
-			);
-	}
 }
 ?>

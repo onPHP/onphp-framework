@@ -49,8 +49,6 @@ final class SmartDaoWorker extends TransparentDaoWorker
 		$expires = Cache::EXPIRES_FOREVER
 	)
 	{
-		$queryId = $query->getId();
-
 		$semKey = $this->keyToInt($this->indexKey);
 
 		$key = $this->makeQueryKey($query, self::SUFFIX_QUERY);

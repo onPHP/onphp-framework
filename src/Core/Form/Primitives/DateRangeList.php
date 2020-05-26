@@ -123,13 +123,9 @@ final class DateRangeList extends BasePrimitive implements Stringable
 
 			if ($start || $finish) {
 
-				$range = new DateRange();
-
-				$range =
+				return
 					DateRange::create()->
-					lazySet($start, $finish);
-
-				return $range;
+						lazySet($start, $finish);
 
 			} elseif (trim($string) == '-')
 				return DateRange::create();

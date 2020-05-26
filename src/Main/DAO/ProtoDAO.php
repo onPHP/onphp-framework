@@ -77,7 +77,6 @@ abstract class ProtoDAO extends GenericDAO
 			$propertyPath = $info['propertyPath'];
 
 			$property	= $propertyPath->getFinalProperty();
-			$proto		= $propertyPath->getFinalProto();
 			$dao		= $propertyPath->getFinalDao();
 
 			$selfName = $this->getObjectName();

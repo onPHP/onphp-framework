@@ -430,7 +430,6 @@ final class MetaConfiguration extends Singleton implements Instantiatable
 					&& ($property->getRelationId() != MetaRelation::ONE_TO_ONE)
 				) {
 					$relation = $class->getName() . ucfirst($property->getName()) . 'DAO';
-					$userFile1 = NamespaceUtils::getDAODir($class) . DIRECTORY_SEPARATOR . $relation . EXT_CLASS;
 					$userFile =
 						ONPHP_META_DAO_DIR
 						.$class->getName().ucfirst($property->getName())

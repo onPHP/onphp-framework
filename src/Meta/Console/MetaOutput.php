@@ -94,7 +94,7 @@ final class MetaOutput
 	**/
 	public function error($text, $bold = false)
 	{
-		return $this->errorText($text, ConsoleMode::FG_RED, $bold);
+		return $this->errorText($text);
 	}
 
 	/**
@@ -102,7 +102,7 @@ final class MetaOutput
 	**/
 	public function errorLine($text, $bold = false)
 	{
-		return $this->errorTextLine($text, ConsoleMode::FG_RED, $bold);
+		return $this->errorTextLine($text);
 	}
 
 	/**
@@ -162,7 +162,7 @@ final class MetaOutput
 	/**
 	 * @return MetaOutput
 	**/
-	private function errorText($text, $color, $bold)
+	private function errorText($text)
 	{
 		if ($this->out instanceof ColoredTextOutput)
 			$text = $this->out->wrapString($text);
@@ -175,7 +175,7 @@ final class MetaOutput
 	/**
 	 * @return MetaOutput
 	**/
-	private function errorTextLine($text, $color, $bold)
+	private function errorTextLine($text)
 	{
 		if ($this->out instanceof ColoredTextOutput)
 			$text = $this->out->wrapString($text);

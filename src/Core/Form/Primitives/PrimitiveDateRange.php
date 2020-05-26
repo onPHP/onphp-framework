@@ -82,7 +82,6 @@ class PrimitiveDateRange extends FiltrablePrimitive
 	public function import($scope)
 	{
 		if (parent::import($scope)) {
-			$listName = $this->getObjectName().'List';
 			try {
 				$range = $this->makeRange($scope[$this->name]);
 			} catch (WrongArgumentException $e) {

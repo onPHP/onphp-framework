@@ -546,10 +546,5 @@ class MetaClassProperty
 			
 		return $column;
 	}
-		
-	private function toVarName($name)
-	{
-		return strtolower($name[0]).substr($name, 1);
-	}
 }
 ?>
