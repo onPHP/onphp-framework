@@ -73,7 +73,7 @@ class AggregateCache extends BaseAggregateCache
 		}
 
 		// init by $key, randomness will be restored later
-		mt_srand(hexdec(substr(md5($key), 3, 7)));
+		mt_srand(intval(hexdec(substr(md5($key), 3, 7))));
 
 		$zeroDistances = array();
 		$weights = array();
