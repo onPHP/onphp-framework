@@ -15,6 +15,7 @@ use OnPHP\Core\Base\Identifier;
 use OnPHP\Core\OSQL\Query;
 use OnPHP\Core\OSQL\InsertQuery;
 use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Exception\DatabaseException;
 
 /**
  * Workaround for sequenceless DB's.
@@ -51,9 +52,26 @@ abstract class Sequenceless extends DB
 
 	final public function query(Query $query)
 	{
-		$result = $this->queryRaw(
-			$query->toDialectString($this->getDialect())
-		);
+		try {
+			$result = $this->queryRaw(
+				$query->toDialectString($this->getDialect())
+			);
+		} catch(DatabaseException $e) {
+			if (
+				($query instanceof InsertQuery)
+				&& !empty($this->sequencePool[$name = $query->getTable().'_id'])
+			) {
+				unset(
+					$this->sequencePool[
+						$name
+					][
+						key($this->sequencePool[$name])
+					]
+				);
+			}
+
+			throw $e;
+		}
 
 		if (
 			($query instanceof InsertQuery)
