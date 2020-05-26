@@ -160,7 +160,7 @@ class GoogleChart implements Stringable
 		$url = self::BASE_URL;
 
 		Assert::isNotNull($this->type);
-		$parameters[] = $this->type->toString();
+		$parameters = array($this->type->toString());
 
 		Assert::isNotNull($this->size);
 		$parameters[] = $this->size->toString();
