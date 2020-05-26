@@ -144,7 +144,7 @@ final class MappedForm
 	**/
 	private function checkExistence($name)
 	{
-		if (!$this->form->primitiveExists($name))
+		if (!$this->form->exists($name))
 			throw new MissingElementException(
 				"there is no '{$name}' primitive"
 			);
