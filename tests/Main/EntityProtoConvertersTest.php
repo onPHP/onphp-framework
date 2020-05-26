@@ -24,6 +24,30 @@ use OnPHP\Tests\TestEnvironment\TestCase;
  */
 final class EntityProtoConvertersTest extends TestCase
 {
+	public static function setUpBeforeClass(): void
+	{
+		parent::setUpBeforeClass();
+		mkdir(\ONPHP_TEST_PATH.'Main/data/directory', 0755);
+		mkdir(\ONPHP_TEST_PATH.'Main/data/directory/inner', 0755);
+		file_put_contents(\ONPHP_TEST_PATH.'Main/data/directory/inner/textField', "wow, it's working!");
+	}
+
+	public static function tearDownAfterClass(): void
+	{
+		parent::tearDownAfterClass();
+		$callback = function($path) use (&$callback) {
+			if (is_dir($path)) {
+				array_map($callback, glob("$path*", GLOB_MARK));
+				rmdir($path);
+			} else {
+				unlink($path);
+			}
+		};
+
+		array_map($callback, glob(\ONPHP_TEST_PATH.'Main/data/directory/*', GLOB_MARK));
+		rmdir(\ONPHP_TEST_PATH.'Main/data/directory/');
+	}
+
 	public function testDirectoryBinder()
 	{
 		$converter = DirectoryToObjectBinder::create(
@@ -43,7 +67,7 @@ final class EntityProtoConvertersTest extends TestCase
 
 		$result->setTextField($rand);
 
-		$newDirectoryContext = \ONPHP_TEST_PATH.'tests/Main/data/directory';
+		$newDirectoryContext = \ONPHP_TEST_PATH.'Main/data/directory';
 
 		$unconverter = ObjectToDirectoryBinder::create(
 			Singleton::getInstance(EntityProtoDirectoryItem::class)
@@ -62,7 +86,7 @@ final class EntityProtoConvertersTest extends TestCase
 	{
 		$this->createContainers();
 
-		$ringDir = \ONPHP_TEST_PATH.'tests/Main/data/ring';
+		$ringDir = \ONPHP_TEST_PATH.'Main/data/ring';
 
 		$actual = glob($ringDir.'/*');
 
@@ -103,7 +127,7 @@ final class EntityProtoConvertersTest extends TestCase
 	{
 		$this->createContainers();
 
-		$ringDir = \ONPHP_TEST_PATH.'tests/Main/data/ring';
+		$ringDir = \ONPHP_TEST_PATH.'Main/data/ring';
 
 		$converter = DirectoryToObjectBinder::create(
 			Singleton::getInstance(EntityProtoDirectoryItem::class)
@@ -123,7 +147,7 @@ final class EntityProtoConvertersTest extends TestCase
 		$newHead = DirectoryItem::create()->setId('newHead')->
 			setInner($result->getInner());
 
-		$newItemTmpDir = \ONPHP_TEST_PATH.'tests/Main/data/ring.tmp';
+		$newItemTmpDir = \ONPHP_TEST_PATH.'Main/data/ring.tmp';
 		$saver = $converter->makeReverseBuilder()->
 			setDirectory($newItemTmpDir);
 
@@ -142,7 +166,7 @@ final class EntityProtoConvertersTest extends TestCase
 
 	private function createContainers()
 	{
-		$ringDir = \ONPHP_TEST_PATH.'tests/Main/data/ring';
+		$ringDir = \ONPHP_TEST_PATH.'Main/data/ring';
 
 		$converter = ObjectToDirectoryBinder::create(
 			Singleton::getInstance(EntityProtoDirectoryItem::class)
