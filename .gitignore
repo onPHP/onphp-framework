@@ -11,6 +11,9 @@ tests/Meta/Business/
 tests/Meta/DAO/
 tests/Meta/Proto/
 tests/Main/data/urls/parser.dump.new
+tests/Main/data/directory/
+tests/Main/data/ring/
+tests/Main/data/ring.tmp/
 .idea
 tests/onphp
 /nbproject/

@@ -28,6 +28,16 @@ final class CurlHttpClientTest extends TestCase
 			self::$failTestMsg = 'not defined test constant ONPHP_CURL_TEST_URL';
 
 		self::$emptyMsg = file_get_contents(ONPHP_CURL_TEST_URL);
+
+		mkdir(\ONPHP_TEST_PATH.'Main/data/directory', 0755);
+		file_put_contents(\ONPHP_TEST_PATH.'Main/data/directory/contents', "--\nTruly thours,\nQueen of Britan");
+	}
+
+	public static function tearDownAfterClass(): void
+	{
+		parent::tearDownAfterClass();
+		unlink(\ONPHP_TEST_PATH.'Main/data/directory/contents');
+		rmdir(\ONPHP_TEST_PATH.'Main/data/directory/');
 	}
 
 	public function setUp() : void
