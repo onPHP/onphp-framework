@@ -52,31 +52,15 @@ abstract class Sequenceless extends DB
 
 	final public function query(Query $query)
 	{
-		try {
-			$result = $this->queryRaw(
-				$query->toDialectString($this->getDialect())
-			);
-		} catch(DatabaseException $e) {
-			if (
-				($query instanceof InsertQuery)
-				&& !empty($this->sequencePool[$name = $query->getTable().'_id'])
-			) {
-				unset(
-					$this->sequencePool[
-						$name
-					][
-						key($this->sequencePool[$name])
-					]
-				);
-			}
-
-			throw $e;
-		}
+		$result = $this->queryRaw(
+			$query->toDialectString($this->getDialect())
+		);
 
 		if (
 			($query instanceof InsertQuery)
 			&& !empty($this->sequencePool[$name = $query->getTable().'_id'])
 		) {
+			end($this->sequencePool[$name]);
 			$id = current($this->sequencePool[$name]);
 
 			Assert::isTrue(

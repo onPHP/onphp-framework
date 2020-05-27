@@ -7,6 +7,7 @@ use OnPHP\Core\DB\DBPool;
 use OnPHP\Core\DB\MySQLim;
 use OnPHP\Core\DB\PgSQL;
 use OnPHP\Core\DB\SQLitePDO;
+use OnPHP\Core\Logic\Expression;
 use OnPHP\Core\Exception\DatabaseException;
 use OnPHP\Tests\TestEnvironment\DBTestPool;
 use OnPHP\Tests\TestEnvironment\TestCaseDAO;
@@ -33,16 +34,31 @@ class DuplicateObjectExceptionTest extends TestCaseDAO
 		
 		$moscow	= TestCity::create()->setName('Moscow');
 		$perm	= TestCity::create()->setName('Moscow'); 
+		$kaluga	= TestCity::create()->setName('Kaluga');
 		
 		$moscow = $moscow->dao()->add($moscow);
-		
+
 		try {
 		    $perm = $perm->dao()->add($perm);
 		} catch (DatabaseException $e) {
-		    $perm = $perm->dao()->add($perm->setName('Perm'));
+		    /** **/
 		}
-		
+
+		$kaluga = $kaluga->dao()->add($kaluga);
+
+		$perm = $perm->dao()->add($perm->setName('Perm'));
+
+		$this->assertIsNumeric($moscow->getId());
 		$this->assertIsNumeric($perm->getId());
+		$this->assertIsNumeric($kaluga->getId());
+
+		$moscowFromDb	= TestCity::dao()->getByLogic(Expression::eq('name', 'Moscow'));
+		$permFromDb	= TestCity::dao()->getByLogic(Expression::eq('name', 'Perm'));
+		$kalugaFromDb	= TestCity::dao()->getByLogic(Expression::eq('name', 'Kaluga'));
+
+		$this->assertEquals($moscow->getId(), $moscowFromDb->getId());
+		$this->assertEquals($perm->getId(), $permFromDb->getId());
+		$this->assertEquals($kaluga->getId(), $kalugaFromDb->getId());
 	}
 	
 	public function dbConnections()
