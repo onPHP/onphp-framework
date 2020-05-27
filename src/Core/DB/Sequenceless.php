@@ -59,7 +59,7 @@ abstract class Sequenceless extends DB
 			($query instanceof InsertQuery)
 			&& !empty($this->sequencePool[$name = $query->getTable().'_id'])
 		) {
-			$id = current($this->sequencePool[$name]);
+			$id = end($this->sequencePool[$name]);
 
 			Assert::isTrue(
 				$id instanceof Identifier,
