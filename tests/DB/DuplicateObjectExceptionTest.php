@@ -9,9 +9,16 @@ use OnPHP\Core\DB\PgSQL;
 use OnPHP\Core\DB\SQLitePDO;
 use OnPHP\Core\Logic\Expression;
 use OnPHP\Core\Exception\DatabaseException;
+use OnPHP\Core\Exception\DuplicateObjectException;
+use OnPHP\Main\Criteria\Criteria;
+use OnPHP\Main\Criteria\Projection;
+use OnPHP\Main\Util\ArrayUtils;
 use OnPHP\Tests\TestEnvironment\DBTestPool;
 use OnPHP\Tests\TestEnvironment\TestCaseDAO;
 use OnPHP\Tests\Meta\Business\TestCity;
+use OnPHP\Tests\Meta\Business\TestEncapsulant;
+use OnPHP\Tests\Meta\Business\TestItem;
+use OnPHP\Tests\Meta\Business\TestSubItem;
 
 /**
  * @group core
@@ -69,13 +76,108 @@ class DuplicateObjectExceptionTest extends TestCaseDAO
 		$this->assertEquals($kaluga->getId(), $kalugaFromDb->getId());
 	}
 	
+	/**
+	 * @dataProvider dbConnections
+	 */
+	public function testInsertOneToMany($db)
+	{
+		DBPool::me()->setDefault($db);
+		DBPool::me()->getLink()->queryRaw("CREATE UNIQUE INDEX uq_name ON test_sub_item (name)");
+
+		$encapsulant = TestEncapsulant::create()->setName('Encapsulant');
+		$encapsulant = $encapsulant->dao()->add($encapsulant);
+
+		$testItem = TestItem::dao()->add(TestItem::create()->setName('TestItem'));
+
+		$listDuplicate = array(
+			TestSubItem::create()->setEncapsulant($encapsulant)->setName('One')->setItem($testItem),
+			TestSubItem::create()->setEncapsulant($encapsulant)->setName('Two')->setItem($testItem),
+			TestSubItem::create()->setEncapsulant($encapsulant)->setName('Three')->setItem($testItem),
+			TestSubItem::create()->setEncapsulant($encapsulant)->setName('Three')->setItem($testItem)
+		);
+
+		try {
+			$testItem->getSubItems()->fetch()->setList($listDuplicate)->save();
+		} catch(\Exception $e) {
+			/**
+			 * Becase SQLite throw DatabaseException not DuplicateObjectException
+			 */
+			$this->assertTrue(is_a($e, 'OnPHP\Core\Exception\DatabaseException', true));
+		}
+
+		$list = $testItem->getSubItems()->getList();
+		$list = array_slice($list, 0, 3);
+		$list[] = TestSubItem::create()->setEncapsulant($encapsulant)->setName('Four')->setItem($testItem);
+		$testItem->getSubItems()->setList($list)->save();
+
+		/**
+		 * Need array_values, because UnifiedContainer return key as value
+		 */
+		$idsUnifiedContainer = array_values($testItem->getSubItems(true)->fetch()->getList());
+		$idsCriteria =
+			ArrayUtils::convertToPlainList(
+				Criteria::create(TestSubItem::dao())->
+					addProjection(Projection::property('id'))->
+					add(Expression::eq('item', $testItem->getId()))->
+					getCustomList(),
+				'id'
+			);
+		$this->assertEquals($idsUnifiedContainer, $idsCriteria);
+		$this->assertEquals($idsUnifiedContainer, $idsCriteria);
+
+		$list = $testItem->getSubItems()->fetch()->getList();
+		/**
+		 * Drop first elemet - wee need check drop from list
+		 */
+		$list = array_slice($list, 1);
+		/**
+		 * Add new element to list
+		 */
+		$list[] = TestSubItem::create()->setEncapsulant($encapsulant)->setName('Five')->setItem($testItem);
+		/**
+		 * Add new element with duplicate Name
+		 */
+		$list[] = TestSubItem::create()->setEncapsulant($encapsulant)->setName('Three')->setItem($testItem);
+
+		try {
+			$testItem->getSubItems()->setList($list)->save();
+		} catch (\Exception $e) {
+			/**
+			 * Becase SQLite throw DatabaseException not DuplicateObjectException
+			 */
+			$this->assertTrue(is_a($e, 'OnPHP\Core\Exception\DatabaseException', true));
+		}
+
+		$list = $testItem->getSubItems()->getList();
+		/**
+		 * Delete first and last (duplicated) object from list
+		 */
+		$list = array_slice($list, 0, count($list) - 1);
+
+		$testItem->getSubItems()->setList($list)->save();
+
+		$idsUnifiedContainer = array_values($testItem->getSubItems(true)->fetch()->getList());
+		$idsCriteria =
+			ArrayUtils::convertToPlainList(
+				Criteria::create(TestSubItem::dao())->
+					addProjection(Projection::property('id'))->
+					add(Expression::eq('item', $testItem->getId()))->
+					getCustomList(),
+				'id'
+			);
+		/**
+		 * Check that one item was deleted and one added
+		 */
+		$this->assertEquals($idsUnifiedContainer, $idsCriteria);
+	}
+
 	public function dbConnections()
 	{
-		return array(
-			array($this->getDbByType(MySQLim::class)),
-			array($this->getDbByType(PgSQL::class)),
-			array($this->getDbByType(SQLitePDO::class))
-		);
+		$result = array();
+		foreach(DBTestPool::me()->getPool() as $db) {
+		    $result[] = array($db);
+		}
+		return $result;
 	}
 }
 ?>
