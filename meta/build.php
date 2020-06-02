@@ -180,7 +180,7 @@ if ($args) {
 				$extension = pathinfo($arg, PATHINFO_EXTENSION);
 
 				// respecting paths order described in help()
-				if (!$pathConfig) {
+				if (!$pathConfig && $extension != 'xml') {
 					$pathConfig = $arg;
 				} elseif (!$pathMeta) {
 					$pathMeta = $arg;
@@ -193,10 +193,13 @@ if ($args) {
 		}
 	}
 }
-//	var_dump($pathConfig);
-if(!$pathConfig) {
-	stop("Path to config.php is not defined!");
-}
+
+// manual includes due to unincluded yet project's config
+$realPath = realpath(__DIR__.'/../src/Meta/Console');
+require_once $realPath . '/ConsoleMode.php';
+require_once $realPath . '/TextOutput.php';
+require_once $realPath . '/MetaOutput.php';
+require_once $realPath . '/ColoredTextOutput.php';
 
 if (
 	isset($_SERVER['TERM'])
@@ -243,7 +246,9 @@ if (!$pathMeta) {
 	foreach (
 		array(
 			'config.xml',
-			'meta/config.xml'
+			'src/config.xml',
+			'Meta/config.xml',
+            'src/Meta/config.xml'
 		)
 		as $path
 	) {
@@ -261,8 +266,12 @@ if (!$pathMeta) {
 	}
 }
 
+if(!$pathConfig) {
+	stop("Path to config.php is not defined!");
+}
+
 if ($pathMeta && $pathConfig) {
-	require $pathConfig;
+	require_once $pathConfig;
 
 	init();
 
