@@ -761,40 +761,42 @@ final class MetaConfiguration extends Singleton implements Instantiatable
 	 * @return MetaConfiguration
 	**/
 	private function checkDirectory(
-		$directory, $preStrip, $postStrip, $drop = false
+		array $directories, $preStrip, $postStrip, $drop = false
 	)
 	{
 		$out = $this->getOutput();
-		
-		foreach (
-			glob($directory.'*.class.php', GLOB_NOSORT)
-			as $filename
-		) {
-			$name =
-				substr(
-					basename($filename, $postStrip.EXT_CLASS),
-					strlen($preStrip)
-				);
-			
-			if (MetaClassPull::me()->hasClass($name)) {
-				$out->warning(
-					"\t"
-					.str_replace(
-						getcwd().DIRECTORY_SEPARATOR,
-						null,
-						$filename
-					)
-				);
-				
-				if ($drop) {
-					try {
-						unlink($filename);
-						$out->infoLine(' removed.');
-					} catch (BaseException $e) {
-						$out->errorLine(' failed to remove.');
+
+		foreach($directories as $directory) {
+			foreach (
+				glob($directory . '*.php', GLOB_NOSORT)
+				as $filename
+			) {
+				$name =
+					substr(
+						basename($filename, $postStrip . EXT_CLASS),
+						strlen($preStrip)
+					);
+
+				if (MetaClassPull::me()->hasClass($name)) {
+					$out->warning(
+						"\t"
+						. str_replace(
+							getcwd() . DIRECTORY_SEPARATOR,
+							null,
+							$filename
+						)
+					);
+
+					if ($drop) {
+						try {
+							unlink($filename);
+							$out->infoLine(' removed.');
+						} catch (BaseException $e) {
+							$out->errorLine(' failed to remove.');
+						}
+					} else {
+						$out->newLine();
 					}
-				} else {
-					$out->newLine();
 				}
 			}
 		}
