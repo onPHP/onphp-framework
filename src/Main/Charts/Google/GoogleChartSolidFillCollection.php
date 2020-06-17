@@ -46,6 +46,7 @@ final class GoogleChartSolidFillCollection extends BaseGoogleChartParameter
 	{
 		$fillerString = GoogleChartSolidFill::getParamName().'=';
 
+		$filters = array();
 		foreach ($this->fillers as $filler)
 			$fillers[] = $filler->toString();
 

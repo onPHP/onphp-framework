@@ -87,7 +87,7 @@ final class TimeList extends BasePrimitive
 	{
 		$list = array();
 
-		$times = split("([,; \n]+)", $string);
+		$times = preg_split("([,; \n]+)", $string);
 
 		for ($i = 0, $size = count($times); $i < $size; ++$i) {
 			$time = mb_ereg_replace('[^0-9:]', ':', $times[$i]);

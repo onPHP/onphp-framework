@@ -64,19 +64,6 @@ class Timestamp extends Date
 
 	}
 
-	private function getDefaultTimeZone()
-	{
-		try {
-			$defaultTimeZoneName = date_default_timezone_get();
-			return new \DateTimeZone($defaultTimeZoneName);
-		} catch(\Exception $e) {
-			throw new WrongStateException(
-				"strange default time zone given - '{$defaultTimeZoneName}'!".
-				'Use date_default_timezone_set() for set valid default time zone.'
-			);
-		}
-	}
-
 	public function toTime($timeDelimiter = ':', $secondDelimiter = '.')
 	{
 		return

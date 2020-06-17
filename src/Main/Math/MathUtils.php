@@ -49,6 +49,7 @@ final class MathUtils extends StaticFactory
 			$size *= sizeof($array);
 
 		$keys = array_keys($arrays);
+		$tmpArrays = array();
 
 		foreach ($keys as $key)
 			$tmpArrays[] = $arrays[$key];
@@ -86,6 +87,7 @@ final class MathUtils extends StaticFactory
 			$size *= sizeof($array);
 
 		$keys = array_keys($arrays);
+		$tmpArrays = array();
 
 		foreach ($keys as $key)
 			$tmpArrays[] = $arrays[$key];

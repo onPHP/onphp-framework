@@ -49,8 +49,6 @@ final class GoogleChartLabelStyle extends BaseGoogleChartStyle
 
 		Assert::isNotEmptyArray($this->styles);
 
-		$i = 0;
-
 		foreach ($this->styles as $style)
 			$queryString .= $style->toString().'|';
 

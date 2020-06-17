@@ -284,28 +284,6 @@ final class HtmlTokenizer
 		return $this;
 	}
 
-	/**
-	 * @return HtmlTokenizer
-	**/
-	private function skip($count)
-	{
-		for ($i = 0; $i < $count; ++$i)
-			$this->getNextChar();
-
-		return $this;
-	}
-
-	private function lookAhead($count)
-	{
-		$this->stream->mark();
-
-		$result = $this->stream->read($count);
-
-		$this->stream->reset();
-
-		return $result;
-	}
-
 	private function skipString($string, $skipSpaces = false)
 	{
 		$this->mark();

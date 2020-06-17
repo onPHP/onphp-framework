@@ -118,8 +118,6 @@ class EntityProto extends Singleton
 					? $previousGetter->get($id)
 					: null;
 
-				$childResult = true;
-
 				if (
 					$child
 					&& !$proto->validate(

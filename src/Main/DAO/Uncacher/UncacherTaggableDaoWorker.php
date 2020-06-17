@@ -62,7 +62,7 @@ class UncacherTaggableDaoWorker implements UncacherBase
 			$worker->expireTags($tags);
 
 			foreach ($idKeys as $key)
-				Cache::me()->mark($className)->delete($idKey);
+				Cache::me()->mark($className)->delete($key);
 
 			ClassUtils::callStaticMethod("$className::dao")->uncacheLists();
 		}

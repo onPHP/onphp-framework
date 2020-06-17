@@ -137,23 +137,7 @@ final class ClassUtils extends StaticFactory
 	/// to avoid dependency on SPL's class_implements
 	public static function isClassImplements($what)
 	{
-		static $classImplements = null;
-
-		if (!$classImplements) {
-			if (!function_exists('class_implements')) {
-				$classImplements = create_function(
-					'$what',
-					'
-						$info = new \ReflectionClass($what);
-						return $info->getInterfaceNames();
-					'
-				);
-			} else {
-				$classImplements = 'class_implements';
-			}
-		}
-
-		return $classImplements($what, true);
+		return class_implements($what, true);
 	}
 
 	public static function isInstanceOf($object, $class)
