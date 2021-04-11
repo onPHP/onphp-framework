@@ -11,7 +11,7 @@
 
 // sample system-wide configuration file
 
-function error2Exception($code, $string, $file, $line, $context)
+function error2Exception($code, $string, $file, $line)
 {
     throw new \OnPHP\Core\Exception\BaseException($string, $code);
 }
