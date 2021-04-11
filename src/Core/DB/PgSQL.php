@@ -105,7 +105,6 @@ class PgSQL extends DB
 	/**
 	 * query methods
 	**/
-
 	public function queryRaw($queryString)
 	{
 		try {
@@ -113,7 +112,7 @@ class PgSQL extends DB
 		} catch (BaseException $e) {
 			// manual parsing, since pg_send_query() and
 			// pg_get_result() is too slow in our case
-			list($error, ) = explode("\n", pg_errormessage($this->link));
+			list($error, ) = explode("\n", pg_last_error($this->link));
 			$code = substr($error, 8, 5);
 
 			if ($code == PostgresError::UNIQUE_VIOLATION) {
