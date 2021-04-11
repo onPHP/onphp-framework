@@ -59,15 +59,9 @@ final class SingletonTest extends TestCase
 		$this->assertTrue(
 			$child->getMethod('__sleep')->isFinal()
 		);
-		$this->assertTrue(
-			$child->getMethod('__sleep')->isPrivate()
-		);
 		
 		$this->assertTrue(
 			$child->getMethod('__clone')->isFinal()
-		);
-		$this->assertTrue(
-			$child->getMethod('__clone')->isPrivate()
 		);
 	}
 	
