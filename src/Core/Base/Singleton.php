@@ -82,7 +82,6 @@ abstract class Singleton
 		unset(self::$instances[$class]);
 	}
 
-	final private function __clone() {/* do not clone me */}
-	final private function __sleep() {/* restless class */}
+	final public function __clone() {/* do not clone me */}
+	final public function __sleep() {/* restless class */}
 }
-?>
