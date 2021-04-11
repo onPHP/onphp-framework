@@ -41,7 +41,7 @@ final class OneToManyLinkedLazy extends OneToManyLinkedWorker
 	 * @throws WrongArgumentException
 	 * @return OneToManyLinkedLazy
 	**/
-	public function sync($insert, $update = array(), $delete)
+	public function sync($insert, $update = [], $delete = [])
 	{
 		Assert::isTrue($update === array());
 

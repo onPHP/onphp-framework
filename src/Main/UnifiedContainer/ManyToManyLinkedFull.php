@@ -22,7 +22,7 @@ final class ManyToManyLinkedFull extends ManyToManyLinkedWorker
 	/**
 	 * @return ManyToManyLinkedFull
 	**/
-	public function sync($insert, $update = array(), $delete)
+	public function sync($insert, $update = [], $delete = [])
 	{
 		$dao = $this->container->getDao();
 
