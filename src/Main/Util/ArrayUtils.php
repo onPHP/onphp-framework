@@ -38,6 +38,9 @@ final class ArrayUtils extends StaticFactory
 		return $result;
 	}
 
+	/**
+	 * @todo - добавить третий аргумент для аналогии с array_column
+	 */
 	public static function convertObjectList($list = null, $getter = 'getId')
 	{
 		$out = array();
@@ -51,35 +54,35 @@ final class ArrayUtils extends StaticFactory
 		return $out;
 	}
 
-	public static function getIdsArray($objectsList)
+	public static function getIdsArray(array $objectsList): array
 	{
-		$out = array();
+		if (empty($objectsList)) {
+			return [];
+		}
 
-		if (!$objectsList)
-			return $out;
-
-		Assert::isInstance(
-			current($objectsList), Identifiable::class,
-			'only identifiable lists accepted'
-		);
-
-		foreach ($objectsList as $object)
-			$out[] = $object->getId();
-
-		return $out;
+		return array_map(function ($objectItem) {
+			Assert::isInstance($objectItem, Identifiable::class,'only identifiable lists accepted');
+			return $objectItem->getId();
+		}, $objectsList);
 	}
 
-	public static function &convertToPlainList($list, $key)
+	/**
+	 * @param array $list
+	 * @param mixed $key
+	 * @return array
+	 * @deprecated
+	 */
+	public static function convertToPlainList(array $list, mixed $key): array
 	{
-		$out = array();
-
-		foreach ($list as $obj)
-			$out[] = $obj[$key];
-
-		return $out;
+		return array_column($list, $key);
 	}
 
-	public static function getArrayVar(&$array, $var)
+	/**
+	 * @param $array
+	 * @param $var
+	 * @return mixed|null
+	 */
+	public static function getArrayVar(&$array, $var): mixed
 	{
 		if (isset($array[$var]) && !empty($array[$var])) {
 			$out = &$array[$var];
@@ -89,16 +92,11 @@ final class ArrayUtils extends StaticFactory
 		return null;
 	}
 
-	public static function columnFromSet($column, $array)
+	public static function columnFromSet($column, array $array)
 	{
-		Assert::isArray($array);
-		$result = array();
-
-		foreach ($array as $row)
-			if (isset($row[$column]))
-				$result[] = $row[$column];
-
-		return $result;
+		return array_filter(
+			array_column($array, $column)
+		);
 	}
 
 	public static function mergeUnique(/* ... */)

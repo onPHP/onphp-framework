@@ -1,10 +1,10 @@
 <?php
 
-namespace OnPHP\Tests\TestEnvironment;
+namespace OnPHP\Tests\TestEnvironment\ClassUtils;
 
-use OnPHP\Tests\TestEnvironment\ClassUtilsTestInterface;
+use OnPHP\Tests\TestEnvironment\ClassUtils\TestInterface;
 
-class ClassUtilsTestClass implements ClassUtilsTestInterface
+class TestClass implements TestInterface
 {
 	private $object	= null;
 	private $text 	= null;
@@ -19,7 +19,7 @@ class ClassUtilsTestClass implements ClassUtilsTestInterface
 		return $this->object;
 	}
 
-	public function setObject(ClassUtilsTestClass $object)
+	public function setObject(TestClass $object)
 	{
 		$this->object = $object;
 
