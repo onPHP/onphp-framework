@@ -11,6 +11,7 @@
 
 namespace OnPHP\Main\Markup\OGP;
 
+use OnPHP\Core\Base\Assert;
 use OnPHP\Core\Exception\WrongArgumentException;
 
 /**
@@ -53,12 +54,28 @@ abstract class OpenGraphSongObject extends OpenGraphObject
                 $this->items['song:track'][] = null;
             }
         }
+
+	    if ($name == 'song:disc') {
+		    Assert::isLesser(
+			    count($this->items['song:disc']),
+			    count($this->items['song']),
+			    'add song before adding song:disc'
+		    );
+	    }
+
+	    if ($name == 'song:track') {
+		    Assert::isLesser(
+			    count($this->items['song:track']),
+			    count($this->items['song']),
+			    'add song before adding song:track'
+		    );
+	    }
+
         return parent::set($name, $value);
     }
 
     /**
      * @return array
-     * @throws WrongArgumentException
      */
     public function getList(): array
     {

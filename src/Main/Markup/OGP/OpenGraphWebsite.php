@@ -23,6 +23,10 @@ namespace OnPHP\Main\Markup\OGP;
  */
 class OpenGraphWebsite extends OpenGraphObject
 {
+	/**
+	 * @var string
+	 */
+	protected string $namespace = 'website';
     /**
      * OpenGraphWebsite constructor.
      */

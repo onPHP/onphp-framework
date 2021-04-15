@@ -46,7 +46,6 @@ abstract class OpenGraphObject
 
     /**
      * @return array
-     * @throws WrongArgumentException
      */
     public function getList(): array
     {

@@ -37,7 +37,7 @@ class OpenGraphArticle extends OpenGraphObject
         $this->items = [
             'published_time' => null,
             'modified_time' => null,
-            'expiration_time ' => null,
+            'expiration_time' => null,
             'author' => [],
             'section' => null,
             'tag' => [],

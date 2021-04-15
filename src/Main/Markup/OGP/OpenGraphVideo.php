@@ -22,7 +22,7 @@ class OpenGraphVideo extends OpenGraphStructure
     /**
      * @var string
      */
-    protected string $video = 'video';
+    protected string $name = 'video';
     /**
      * @var int
      */

@@ -56,21 +56,43 @@ class OpenGraphMovie extends OpenGraphObject
         $this->type = new OpenGraphType(OpenGraphType::MOVIE_ID);
     }
 
+	/**
+	 * @param string $name
+	 * @param mixed $value
+	 * @return static
+	 * @throws WrongArgumentException
+	 */
+	public function set(string $name, mixed $value): static
+	{
+		if ($name == 'actor') {
+			$count = count($this->items['actor']);
+			for($i = $count - count($this->items['actor:role']); $i > 0; $i--) {
+				$this->items['actor:role'][] = null;
+			}
+		}
+
+		if ($name == 'actor:role') {
+			Assert::isLesser(
+				count($this->items['actor:role']),
+				count($this->items['actor']),
+				'add actor before adding actor:role'
+			);
+		}
+
+		return parent::set($name, $value);
+	}
+
     /**
      * @return array
-     * @throws WrongArgumentException
      */
     public function getList(): array
     {
-        Assert::isTrue(
-            count($this->items['actor']) == count($this->items['actor:role']),
-            'actor items not equal actor:role items'
-        );
-
         $list = [];
         foreach($this->items['actor'] as $key => $actor) {
             $list[] = [$this->namespace . ':' . 'actor', $actor];
-            $list[] = [$this->namespace . ':' . 'actor:role', $this->items['actor:role'][$key]];
+	        if (!empty($this->items['actor:role'][$key])) {
+		        $list[] = [$this->namespace . ':' . 'actor:role', $this->items['actor:role'][$key]];
+	        }
         }
 
         foreach($this->items as $key => $value) {

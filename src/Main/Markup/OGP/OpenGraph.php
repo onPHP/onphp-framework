@@ -32,8 +32,8 @@ use OnPHP\Main\Markup\Html\SgmlOpenTag;
  */
 class OpenGraph
 {
-    const OGP_NAMESPACE = ['og', 'http://ogp.me/ns#'] ;
-    const FB_NAMESPACE = ['fb', 'http://ogp.me/ns/fb#'];
+    const OGP_NAMESPACE = ['og', 'https://ogp.me/ns#'] ;
+    const FB_NAMESPACE = ['fb', 'https://ogp.me/ns/fb#'];
 
     /**
      * The title of your object as it should appear within the graph, e.g., "The Rock".
@@ -76,9 +76,9 @@ class OpenGraph
     protected ?OpenGraphObject $type = null;
     /**
      * An image which should represent your object within the graph.
-     * @var ?OpenGraphImage
+     * @var OpenGraphImage[]
      */
-    protected ?OpenGraphImage $image = null;
+    protected array $image = [];
     /**
      * @var ?OpenGraphVideo
      */
@@ -94,6 +94,10 @@ class OpenGraph
      * @var ?string
      */
     protected ?string $url = null;
+	/**
+	 * @var ?string
+	 */
+	protected ?string $vkImage = null;
     /**
      * @var ?string
      */
@@ -156,10 +160,10 @@ class OpenGraph
      */
     public function setLocale(string $locale): static
     {
-        Assert::isTrue(
-            preg_match('/^[a-z]{2}_[A-Z]{2}$/iu', $locale),
-            'wrong locale format'
-        );
+	    Assert::isTrue(
+		    preg_match('/^[a-z]{2}_[A-Z]{2}$/iu', $locale) == 1,
+		    'wrong locale format'
+	    );
         $this->locale = $locale;
 
         return $this;
@@ -172,10 +176,10 @@ class OpenGraph
      */
     public function setLocaleAlternates(string $locale): static
     {
-        Assert::isTrue(
-            preg_match('/^[a-z]{2}_[A-Z]{2}$/iu', $locale),
-            'wrong locale format'
-        );
+	    Assert::isTrue(
+		    preg_match('/^[a-z]{2}_[A-Z]{2}$/iu', $locale) == 1,
+		    'wrong locale format'
+	    );
         $this->localeAlternates[] = $locale;
 
         return $this;
@@ -209,7 +213,7 @@ class OpenGraph
      */
     public function setImage(OpenGraphImage $image): static
     {
-        $this->image = $image;
+        $this->image[] = $image;
 
         return $this;
     }
@@ -269,13 +273,32 @@ class OpenGraph
         return $this;
     }
 
-    /**
-     * @param bool $full
-     * @return string
-     */
+	/**
+	 * Minimal image size - 160 x 160 px. Recommend greater than 510 x 228 px.
+	 * @see https://vk.com/dev/publications
+	 * @param string $vkImage
+	 * @return static
+	 */
+	public function setVkImage(string $vkImage): static
+	{
+		$this->vkImage = $vkImage;
+
+		return $this;
+	}
+
+	/**
+	 * @param bool $full
+	 * @return string
+	 * @throws WrongArgumentException
+	 */
     public function getPrefix(bool $full = true): string
     {
-        $prefix = [self::OGP_NAMESPACE[0] . ': ' . self::OGP_NAMESPACE[1]];
+	    Assert::isNotEmpty($this->type, 'type is required');
+
+	    $prefix = [
+		    self::OGP_NAMESPACE[0] . ': ' . self::OGP_NAMESPACE[1],
+		    $this->type->getNamespace() . ': ' . $this->type->getType()->getNamespace(),
+	    ];
         if (!empty($this->appId)) {
             $prefix[] = self::FB_NAMESPACE[0] . ': ' . self::FB_NAMESPACE[1];
         }
@@ -307,11 +330,6 @@ class OpenGraph
                     ->setAttribute('property', 'og:url')
                     ->setAttribute('content', $this->url),
                 (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-                    ->setAttribute(
-                        'prefix',
-                        $this->type->getNamespace() . ': ' . $this->type->getType()->getNamespace()
-                    ),
-                (new SgmlOpenTag())->setId('meta')->setEmpty(true)
                     ->setAttribute('property', 'og:type')
                     ->setAttribute('content', $this->type->getType()->getName()),
                 (new SgmlOpenTag())->setId('meta')->setEmpty(true)
@@ -332,7 +350,12 @@ class OpenGraph
 	                    ->setAttribute('property', $item[0])
 	                    ->setAttribute('content', $item[1]);
                 },
-	            $this->image->getList()
+	            array_reduce(
+					$this->image,
+		            function ($result, OpenGraphImage $image) {
+			            return array_merge($result, $image->getList());
+	                }, []
+	            )
             ),
             array_map(
             	function ($item) {
@@ -378,6 +401,13 @@ class OpenGraph
                         ->setAttribute('property', 'fb:app_id')
                         ->setAttribute('content', $this->appId),
                 ],
+	        empty($this->vkImage)
+		        ? []
+		        : [
+		            (new SgmlOpenTag())->setId('meta')->setEmpty(true)
+			            ->setAttribute('property', 'vk:image')
+			            ->setAttribute('content', $this->vkImage),
+	            ],
             array_map(
             	function ($item) {
 	                return (new SgmlOpenTag())->setId('meta')->setEmpty(true)
