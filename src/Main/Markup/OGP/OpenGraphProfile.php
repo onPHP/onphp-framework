@@ -11,6 +11,9 @@
 
 namespace OnPHP\Main\Markup\OGP;
 
+use OnPHP\Core\Base\Assert;
+use OnPHP\Core\Exception\WrongArgumentException;
+
 /**
  * Class OpenGraphProfile
  * @see https://ogp.me/#type_profile
@@ -25,6 +28,8 @@ namespace OnPHP\Main\Markup\OGP;
  */
 class OpenGraphProfile extends OpenGraphObject
 {
+	const ALLOWED_GENDER = ['male', 'female'];
+
     /**
      * OpenGraphProfile constructor.
      */
@@ -38,5 +43,23 @@ class OpenGraphProfile extends OpenGraphObject
             'username' => null,
             'gender' => null,
         ];
+    }
+
+	/**
+	 * @param string $name
+	 * @param mixed $value
+	 * @return static
+	 * @throws WrongArgumentException
+	 */
+    public function set(string $name, mixed $value): static
+    {
+		if ($name == 'gender') {
+			Assert::isTrue(
+				in_array($value, self::ALLOWED_GENDER),
+				'Only `male` or `female` are allowed'
+			);
+	    }
+
+	    return parent::set($name, $value);
     }
 }

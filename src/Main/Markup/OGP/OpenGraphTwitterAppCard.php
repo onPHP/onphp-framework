@@ -32,7 +32,6 @@ namespace OnPHP\Main\Markup\OGP;
  * app:name:googleplay - string - Name of your Android app
  * app:id:googleplay - string - String value, and should be the numeric
  *      representation of your app ID in Google Play (.i.e. “com.android.app”)
- * app:url:ipad - string - Your app’s custom URL scheme
  * app:url:googleplay - string - Your app’s custom URL scheme
  * app:country - string - If your application is not available in the US App Store, you must set
  *      this value to the two-letter country code for the App Store that contains your application.

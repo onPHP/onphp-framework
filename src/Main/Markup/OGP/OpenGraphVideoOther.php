@@ -16,7 +16,6 @@ namespace OnPHP\Main\Markup\OGP;
  * A video that doesn't belong in any other category.
  * @see https://ogp.me/#type_video.other
  *
- * A multi-episode TV show.
  * actor - string[] - Actors in the movie.
  * actor:role - string[] - The role they played.
  * director - string[] - Directors of the movie.

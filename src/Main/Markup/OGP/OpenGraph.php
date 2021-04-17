@@ -35,6 +35,8 @@ class OpenGraph
     const OGP_NAMESPACE = ['og', 'https://ogp.me/ns#'] ;
     const FB_NAMESPACE = ['fb', 'https://ogp.me/ns/fb#'];
 
+    const ALLOWED_DATERMINE = ['a', 'an', 'the', 'auto'];
+
     /**
      * The title of your object as it should appear within the graph, e.g., "The Rock".
      * @var ?string
@@ -145,7 +147,7 @@ class OpenGraph
     public function setDaterminer(string $daterminer): static
     {
         Assert::isTrue(
-			empty($daterminer) || in_array($daterminer, ['a', 'an', 'the', 'auto']),
+			empty($daterminer) || in_array($daterminer, self::ALLOWED_DATERMINE),
 			'Only empty value or `a`, `an`, `the`, `auto` allowed'
         );
         $this->determiner = $daterminer;
@@ -321,113 +323,51 @@ class OpenGraph
         Assert::isNotEmpty($this->image, 'image is required');
         Assert::isNotEmpty($this->description, 'description is required');
 
-        $tags = array_merge(
-        	[
-                (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-                    ->setAttribute('property', 'og:title')
-                    ->setAttribute('content', $this->title),
-                (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-                    ->setAttribute('property', 'og:url')
-                    ->setAttribute('content', $this->url),
-                (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-                    ->setAttribute('property', 'og:type')
-                    ->setAttribute('content', $this->type->getType()->getName()),
-                (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-                    ->setAttribute('property', 'og:locale')
-                    ->setAttribute('content', $this->locale)
-            ],
-            array_map(
-            	function ($item) {
-	                return (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-	                    ->setAttribute('property', 'og:locale:alternate')
-	                    ->setAttribute('content', $item);
-	            },
-	            $this->localeAlternates
-            ),
-            array_map(
-            	function ($item) {
-	                return (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-	                    ->setAttribute('property', $item[0])
-	                    ->setAttribute('content', $item[1]);
-                },
-	            array_reduce(
-					$this->image,
-		            function ($result, OpenGraphImage $image) {
-			            return array_merge($result, $image->getList());
-	                }, []
-	            )
-            ),
-            array_map(
-            	function ($item) {
-	                return (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-	                    ->setAttribute('property', $item[0])
-	                    ->setAttribute('content', $item[1]);
-                },
-	            $this->audio?->getList() ?? []
-            ),
-            array_map(
-            	function ($item) {
-	                return (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-	                    ->setAttribute('property', $item[0])
-	                    ->setAttribute('content', $item[1]);
-                },
-	            $this->video?->getList() ?? []
-            ),
-            empty($this->description)
-	            ? []
-	            : [
-	                (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-	                    ->setAttribute('property', 'og:description')
-	                    ->setAttribute('content', $this->description),
-                ],
-            empty($this->determiner)
-	            ? []
-	            : [
-                    (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-                        ->setAttribute('property', 'og:determiner')
-                        ->setAttribute('content', $this->description),
-                ],
-            empty($this->siteName)
-	            ? []
-	            : [
-                    (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-                        ->setAttribute('property', 'og:site_name')
-                        ->setAttribute('content', $this->description),
-                ],
-            empty($this->appId)
-	            ? []
-	            : [
-                    (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-                        ->setAttribute('property', 'fb:app_id')
-                        ->setAttribute('content', $this->appId),
-                ],
-	        empty($this->vkImage)
-		        ? []
-		        : [
-		            (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-			            ->setAttribute('property', 'vk:image')
-			            ->setAttribute('content', $this->vkImage),
-	            ],
-            array_map(
-            	function ($item) {
-	                return (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-	                    ->setAttribute('property', $item[0])
-	                    ->setAttribute('content', $item[1]);
-                },
-	            $this->type->getList()
-            ),
-            empty($this->twitterCard)
-	            ? []
-	            : array_map(
-	            	function ($item) {
-		                return (new SgmlOpenTag())->setId('meta')->setEmpty(true)
-		                    ->setAttribute('property', $item[0])
-		                    ->setAttribute('content', $item[1]);
-                    },
-		            $this->twitterCard->getList()
-                )
-        );
+        return
+	        (new HtmlAssembler(
+		            array_map(
+		                function ($item) {
+				            return (new SgmlOpenTag())->setId('meta')->setEmpty(true)
+					            ->setAttribute('property', $item[0])
+					            ->setAttribute('content', $item[1]);
+		                },
+			            $this->getList()
+		            )
+		        )
+            )->getHtml();
+    }
 
-        return (new HtmlAssembler($tags))->getHtml();
+	/**
+	 * @return array
+	 * @throws WrongArgumentException
+	 */
+    protected function getList(): array
+    {
+	    return array_merge([
+				['og:title', $this->title],
+				['og:url', $this->url],
+				['og:type', $this->type->getType()->getName()],
+				['og:locale', $this->locale]
+		    ],
+		    array_map(
+			    function ($item) { return ['og:locale:alternate', $item]; },
+			    $this->localeAlternates
+		    ),
+		    array_reduce(
+			    $this->image,
+			    function ($result, OpenGraphImage $image) {
+				    return array_merge($result, $image->getList());
+			    }, []
+		    ),
+		    $this->audio?->getList() ?? [],
+		    $this->video?->getList() ?? [],
+		    empty($this->description) ? [] : [ ['og:description', $this->description] ],
+		    empty($this->determiner) ? [] : [ ['og:determiner', $this->description] ],
+		    empty($this->siteName) ? [] : [ ['og:site_name', $this->description] ],
+		    empty($this->appId) ? [] : [ ['fb:app_id', $this->appId] ],
+		    empty($this->vkImage) ? [] : [ ['vk:image', $this->vkImage] ],
+		    $this->type->getList(),
+		    empty($this->twitterCard) ? [] : $this->twitterCard->getList()
+	    );
     }
 }
