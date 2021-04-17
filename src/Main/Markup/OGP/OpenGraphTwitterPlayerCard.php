@@ -12,7 +12,7 @@
 namespace OnPHP\Main\Markup\OGP;
 
 /**
- * App Card
+ * Player Card
  * @see https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/player-card
  *
  * card - string - Must be set to a value of “player”
