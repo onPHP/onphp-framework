@@ -56,7 +56,7 @@ final class AllTests
 				/**
 				 * @todo fail - constructor with argument, but static method 'me' - without
 				 */
-				Singleton::getInstance(DBTestPool::class, self::$dbs, [1 => 2])->connect();
+				Singleton::getInstance(DBTestPool::class, self::$dbs)->connect();
 			} catch (\Exception $e) {
 				Singleton::dropInstance(DBTestPool::class);
 				Singleton::getInstance(DBTestPool::class);

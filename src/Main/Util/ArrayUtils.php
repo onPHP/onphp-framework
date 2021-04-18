@@ -14,6 +14,7 @@ namespace OnPHP\Main\Util;
 use OnPHP\Core\Base\Assert;
 use OnPHP\Core\Base\Identifiable;
 use OnPHP\Core\Base\StaticFactory;
+use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Main\Base\Comparator;
 
 /**
@@ -54,6 +55,11 @@ final class ArrayUtils extends StaticFactory
 		return $out;
 	}
 
+	/**
+	 * @param array $objectsList
+	 * @return Identifiable[]
+	 * @throws WrongArgumentException
+	 */
 	public static function getIdsArray(array $objectsList): array
 	{
 		if (empty($objectsList)) {
@@ -70,11 +76,12 @@ final class ArrayUtils extends StaticFactory
 	 * @param array $list
 	 * @param mixed $key
 	 * @return array
-	 * @deprecated
 	 */
-	public static function convertToPlainList(array $list, mixed $key): array
+	public static function convertToPlainList(array $list, $key): array
 	{
-		return array_column($list, $key);
+		return array_filter(
+			array_column($list, $key)
+		);
 	}
 
 	/**
@@ -82,7 +89,7 @@ final class ArrayUtils extends StaticFactory
 	 * @param $var
 	 * @return mixed|null
 	 */
-	public static function getArrayVar(&$array, $var): mixed
+	public static function getArrayVar(&$array, $var)
 	{
 		if (isset($array[$var]) && !empty($array[$var])) {
 			$out = &$array[$var];
@@ -92,24 +99,32 @@ final class ArrayUtils extends StaticFactory
 		return null;
 	}
 
-	public static function columnFromSet($column, array $array)
+	/**
+	 * @param $column
+	 * @param array $array
+	 * @return array
+	 * @deprecated by [[self::convertToPlainList]]
+	 */
+	public static function columnFromSet($column, array $array): array
 	{
 		return array_filter(
 			array_column($array, $column)
 		);
 	}
 
-	public static function mergeUnique(/* ... */)
+	/**
+	 * @param array ...$arguments
+	 * @return array
+	 * @throws WrongArgumentException
+	 */
+	public static function mergeUnique(...$arguments): array
 	{
-		$arguments = func_get_args();
-
-		Assert::isArray(reset($arguments));
+		array_map(function ($array) {
+			Assert::isArray($array);
+		}, $arguments);
 
 		return array_unique(
-			call_user_func_array(
-				'array_merge',
-				$arguments
-			)
+			array_merge(...$arguments)
 		);
 	}
 

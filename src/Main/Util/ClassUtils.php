@@ -92,10 +92,10 @@ final class ClassUtils extends StaticFactory
 			$setter = 'set'.$name;
 
 			if (
-				$class->hasMethod($getter)
-				&& $class->getMethod($getter)->isPublic()
-				&& $class->hasMethod($setter)
-				&& $class->getMethod($setter)->isPublic()
+				method_exists($source, $getter)
+				&& is_callable([$source, $getter])
+				&& method_exists($destination, $setter)
+				&& is_callable([$destination, $setter])
 				&& ($value = $source->$getter()) !== null
 			) {
 				$destination->$setter($value);
@@ -120,10 +120,10 @@ final class ClassUtils extends StaticFactory
 			$setter = 'set'.$name;
 
 			if (
-				$class->hasMethod($getter)
-				&& $class->getMethod($getter)->isPublic()
-				&& $class->hasMethod($setter)
-				&& $class->getMethod($setter)->isPublic()
+				method_exists($source, $getter)
+				&& is_callable([$source, $getter])
+				&& method_exists($destination, $setter)
+				&& is_callable([$destination, $setter])
 				&& null === $destination->$getter()
 				&& (
 					null !== ($sourceValue = $source->$getter())
@@ -199,7 +199,7 @@ final class ClassUtils extends StaticFactory
 
 		try {
 			$implements = $classImplements($what, $autoload);
-		} catch(ReflectionException $exception) {
+		} catch(\Throwable $exception) {
 			throw new ClassNotFoundException($what);
 		}
 
