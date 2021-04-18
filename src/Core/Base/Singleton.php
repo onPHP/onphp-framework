@@ -36,7 +36,7 @@ abstract class Singleton
 	{
 		if (!isset(self::$instances[$class])) {
 			// for Singleton::getInstance('class_name', $arg1, ...) calling
-			if (2 < func_num_args()) {
+			if (1 < count($args)) {
 				// emulation of ReflectionClass->newInstanceWithoutConstructor
 				$object =
 					unserialize(
@@ -51,7 +51,7 @@ abstract class Singleton
 				try {
 					$object =
 						$args
-							? new $class($args)
+							? new $class(...$args)
 							: new $class();
 				} catch (\ArgumentCountError $exception) {
 					throw new MissingElementException('Too few arguments to __constructor');
