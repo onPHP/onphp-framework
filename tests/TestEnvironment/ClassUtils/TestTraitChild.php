@@ -2,4 +2,7 @@
 
 namespace OnPHP\Tests\TestEnvironment\ClassUtils;
 
-class TestClassChild extends TestClass { };
+trait TestTraitChild
+{
+	use TestTrait;
+}

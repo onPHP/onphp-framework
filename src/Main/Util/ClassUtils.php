@@ -26,13 +26,17 @@ final class ClassUtils extends StaticFactory
 	const CLASS_NAME_PATTERN = '(\\\\?[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)+';
 
 	/**
+	 * Copy only public and protected object properties fetch
+	 * allowed by get... methods and set by set... methods.
+	 * Be careful, private properties from parent class not copied!
 	 * @param object $source
 	 * @param object $destination
 	 * @throws WrongArgumentException
+	 * @throws ReflectionException
 	 */
 	public static function copyProperties(object $source, object $destination): void
 	{
-		Assert::isEqual(get_class($source), get_class($destination));
+		Assert::isSameClasses(get_class($source), get_class($destination));
 
 		$class = new ReflectionClass($source);
 
@@ -42,21 +46,31 @@ final class ClassUtils extends StaticFactory
 			$setter = 'set'.$name;
 
 			if (
-				!$class->hasMethod($getter)
-				|| !$class->getMethod($getter)->isPublic()
-				|| !$class->hasMethod($setter)
-				|| !$class->getMethod($setter)->isPublic()
+				!method_exists($source, $getter)
+				|| !is_callable([$source, $getter])
+				|| !method_exists($destination, $setter)
+				|| !is_callable([$destination, $setter])
 			) {
 				continue;
 			}
 
 			$sourceValue = $source->$getter();
-
-			if (
-				$sourceValue !== null
-				|| ($class->getMethod($setter)->getParameters()[0] ?? null)?->allowsNull() === true
-			) {
+			if ($sourceValue !== null) {
 				$destination->$setter($sourceValue);
+			} else {
+				$dropper = 'drop'.$name;
+
+				if (
+					($firstArg = $class->getMethod($setter)->getParameters()[0] ?? null) !== null
+					&& $firstArg->allowsNull() === true
+				) {
+					$destination->$setter($sourceValue);
+				} elseif (
+					method_exists($destination, $dropper)
+					&& is_callable([$destination, $dropper])
+				) {
+					$destination->$dropper();
+				}
 			}
 		}
 	}
@@ -124,13 +138,13 @@ final class ClassUtils extends StaticFactory
 	 * @param mixed $className
 	 * @return bool
 	 */
-	public static function isClassName(mixed $className): bool
+	public static function isClassName($className): bool
 	{
 		if (!is_string($className)) {
 			return false;
 		}
 
-		return preg_match('/^'.self::CLASS_NAME_PATTERN.'$/', $className) > 0;
+		return preg_match('/^'.self::CLASS_NAME_PATTERN.'$/', $className) === 1;
 	}
 
 	/**
@@ -139,7 +153,7 @@ final class ClassUtils extends StaticFactory
 	 * @return bool
 	 * @throws WrongArgumentException
 	 */
-	public static function isSameClassNames(mixed $left, mixed $right): bool
+	public static function isSameClassNames($left, $right): bool
 	{
 		if (
 			(
@@ -165,8 +179,9 @@ final class ClassUtils extends StaticFactory
 	 * @param bool $autoload
 	 * @return array
 	 * @throws ClassNotFoundException
+	 * @todo remove use function class_implemets in future, it`s removed in PHP 8
 	 */
-	public static function isClassImplements(mixed $what, bool $autoload = true): array
+	public static function isClassImplements($what, bool $autoload = true): array
 	{
 		static $classImplements = null;
 
@@ -174,18 +189,19 @@ final class ClassUtils extends StaticFactory
 			if (function_exists('class_implements')) {
 				$classImplements = 'class_implements';
 			} else {
-				$classImplements = function(mixed $what, bool $autoload) {
-					try {
-						$info = new ReflectionClass($what);
-					} catch (ReflectionException) {
-						throw new ClassNotFoundException($what);
-					}
-					return $info->getInterfaceNames();
+				$classImplements = function ($what, bool $autoload) {
+					$interfacesList = (new ReflectionClass($what))
+						->getInterfaceNames();
+					return array_combine($interfacesList, $interfacesList);
 				};
 			}
 		}
 
-		$implements = $classImplements($what, $autoload);
+		try {
+			$implements = $classImplements($what, $autoload);
+		} catch(ReflectionException $exception) {
+			throw new ClassNotFoundException($what);
+		}
 
 		return is_array($implements) ? $implements : [];
 	}
@@ -196,32 +212,22 @@ final class ClassUtils extends StaticFactory
 	 * @return bool
 	 * @throws WrongArgumentException
 	 */
-	public static function isInstanceOf(mixed $object, mixed $class): bool
+	public static function isInstanceOf($object, $class): bool
 	{
 		if (is_object($class)) {
-			$className = get_class($class);
-		} elseif (is_string($class)) {
-			$className = $class;
-		} else {
-			Assert::isUnreachable('strange class given ' . Assert::dumpArgument($object));
-		}
-		
-		$className = '\\'.ltrim($className, '\\');
-
-		if (is_string($object)) {
-			$object = '\\'.ltrim($object, '\\');
-			
-			if (self::isClassName($object)) {
-				return
-					$object == $className
-					|| is_subclass_of($object, $className)
-					|| in_array($class, self::isClassImplements($object));
+			if (is_object($object)) {
+				return $object instanceof $class;
+			} elseif (is_string($object)) {
+				return is_a($object, get_class($class), true);
 			}
-		} elseif (is_object($object)) {
-			return $object instanceof $className;
+		} elseif (
+			is_string($class)
+			&& (is_object($object) || is_string($object))
+		) {
+			return is_a($object, $class, true);
 		}
-			
-		throw new WrongArgumentException('strange object given');
+
+		Assert::isUnreachable('strange object or class given ' . Assert::dumpOppositeArguments($object, $class));
 	}
 
 	/**
@@ -231,7 +237,7 @@ final class ClassUtils extends StaticFactory
 	 * @throws ClassNotFoundException
 	 * @throws WrongArgumentException
 	 */
-	public static function callStaticMethod(mixed $methodSignature, ...$arguments): mixed
+	public static function callStaticMethod($methodSignature, ...$arguments)
 	{
 		return
 			call_user_func_array(
@@ -246,7 +252,7 @@ final class ClassUtils extends StaticFactory
 	 * @throws ClassNotFoundException
 	 * @throws WrongArgumentException
 	 */
-	public static function checkStaticMethod(mixed $methodSignature): array
+	public static function checkStaticMethod($methodSignature): array
 	{
 		if (is_array($methodSignature)) {
 			$nameParts = $methodSignature;
@@ -266,7 +272,7 @@ final class ClassUtils extends StaticFactory
 
 		try {
 			$class = new ReflectionClass($className);
-		} catch (ReflectionException) {
+		} catch (ReflectionException $exception) {
 			throw new ClassNotFoundException($className);
 		}
 
@@ -276,7 +282,6 @@ final class ClassUtils extends StaticFactory
 		);
 
 		$method = $class->getMethod($methodName);
-
 		Assert::isTrue(
 			$method->isStatic(),
 			"method is not static '{$className}::{$methodName}'"
@@ -288,31 +293,5 @@ final class ClassUtils extends StaticFactory
 		);
 
 		return $nameParts;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public static function preloadAllClasses(): void
-	{
-		foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
-			foreach (
-				glob(
-					$directory.DIRECTORY_SEPARATOR.'/*'.EXT_CLASS,
-					GLOB_NOSORT
-				)
-				as $file
-			) {
-				$className = basename($file, EXT_CLASS);
-
-				if (
-					!class_exists($className, false)
-					&& !interface_exists($className, false)
-					&& !trait_exists($className, false)
-				) {
-					include $file;
-				}
-			}
-		}
 	}
 }

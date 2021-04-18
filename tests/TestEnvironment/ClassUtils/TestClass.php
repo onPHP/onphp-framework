@@ -2,16 +2,16 @@
 
 namespace OnPHP\Tests\TestEnvironment\ClassUtils;
 
-use OnPHP\Tests\TestEnvironment\ClassUtils\TestInterface;
-
 class TestClass implements TestInterface
 {
+	use TestTraitChild;
+
 	private $object	= null;
 	private $text 	= null;
 
 	public static function create()
 	{
-		return new self;
+		return new static;
 	}
 
 	public function getObject()
