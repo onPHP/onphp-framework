@@ -376,7 +376,7 @@ final class Assert extends StaticFactory
 	 * @param mixed $argument
 	 * @return string
 	 */
-	public static function dumpArgument(mixed $argument): string
+	public static function dumpArgument($argument): string
 	{
 		return 'argument: ['.print_r($argument, true).']';
 	}
@@ -387,7 +387,7 @@ final class Assert extends StaticFactory
 	 * @param mixed $second
 	 * @return string
 	 */
-	public static function dumpOppositeArguments(mixed $first, mixed $second): string
+	public static function dumpOppositeArguments($first, $second): string
 	{
 		return
 			'arguments: ['.print_r($first, true).'] '

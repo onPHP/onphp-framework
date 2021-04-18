@@ -53,7 +53,7 @@ abstract class Singleton
 						$args
 							? new $class($args)
 							: new $class();
-				} catch (\ArgumentCountError) {
+				} catch (\ArgumentCountError $exception) {
 					throw new MissingElementException('Too few arguments to __constructor');
 				}
 			}

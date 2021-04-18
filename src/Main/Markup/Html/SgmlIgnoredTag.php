@@ -70,12 +70,12 @@ final class SgmlIgnoredTag extends SgmlTag
 
 	public function isComment()
 	{
-		return $this->id == '!--';
+		return $this->getId() == '!--';
 	}
 
 	public function isExternal()
 	{
-		return ($this->id && $this->id[0] == '?');
+		return mb_substr($this->getId() ?? '', 0, 1) == '?';
 	}
 }
 ?>

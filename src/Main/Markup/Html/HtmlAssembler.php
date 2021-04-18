@@ -123,7 +123,7 @@ final class HtmlAssembler
 				$quotedValue = null;
 			else
 				// FIXME: is multibyte safe?
-				$quotedValue = '="'.str_replace('"', '&quot;', $value).'"';
+				$quotedValue = '="'.preg_replace('/\"/u', '&quot;', $value).'"';
 
 			$attributes[] = $name.$quotedValue;
 		}

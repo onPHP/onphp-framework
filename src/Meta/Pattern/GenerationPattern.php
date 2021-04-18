@@ -28,6 +28,6 @@ interface GenerationPattern
 	public function tableExists();
 
 	/// forcing patterns to be singletones
-	public static function getInstance($class /*, $args = null*/);
+	public static function getInstance(string $class, ...$args): object;
 }
 ?>

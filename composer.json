@@ -6,15 +6,11 @@
     "type": "library",
     "license": "GPL-3.0",
     "authors": [
-        {
-            "name": "Konstantin Arkhipov"
-        },
-        {
-            "name": "Anton Lebedevich"
-        }
+        { "name": "Konstantin Arkhipov" },
+        { "name": "Anton Lebedevich" }
     ],
     "require": {
-        "php": ">=7.3.0"
+        "php": ">=7.4"
     },
     "conflict": {
         "ext-http": "*"

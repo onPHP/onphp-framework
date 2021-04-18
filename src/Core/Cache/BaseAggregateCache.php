@@ -115,7 +115,8 @@ abstract class BaseAggregateCache extends SelectivePeer
 		$label = $this->guessLabel($key);
 
 		if (
-			($this->peers[$label]['object'] ?? null)?->isAlive()
+			($peer = ($this->peers[$label]['object'] ?? null)) !== null
+			&& $peer->isAlive()
 		) {
 			return $this->peers[$label]['object']->get($key);
 		} else {
