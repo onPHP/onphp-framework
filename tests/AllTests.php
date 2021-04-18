@@ -47,7 +47,8 @@ final class AllTests
 
 	public static function suite()
 	{
-		$suite = new TestSuite('onPHP-'.ONPHP_VERSION);
+		$testSuiteName = 'onPHP-'.ONPHP_VERSION;
+		$suite = new TestSuite($testSuiteName);
 
 		// meta, DB and DAOs ordered tests portion
 		if (self::$dbs && self::checkRun()) {
@@ -55,7 +56,7 @@ final class AllTests
 				/**
 				 * @todo fail - constructor with argument, but static method 'me' - without
 				 */
-				Singleton::getInstance(DBTestPool::class, self::$dbs)->connect();
+				Singleton::getInstance(DBTestPool::class, self::$dbs, [1 => 2])->connect();
 			} catch (\Exception $e) {
 				Singleton::dropInstance(DBTestPool::class);
 				Singleton::getInstance(DBTestPool::class);
@@ -108,12 +109,18 @@ final class AllTests
 		}
 
 		foreach (self::$paths as $testPath) {
-			foreach (glob($testPath.'*Test'.EXT_CLASS, GLOB_BRACE) as $file) {
-				$suite->addTestFile($file);
+			/** Попробовать убрать ключ GLOB_BRACE, тем более он доступен не на всех системах */
+			if (($files = glob($testPath.'*Test'.EXT_CLASS, GLOB_BRACE)) !== false) {
+				$suite->addTestFiles($files);
 			}
 		}
-		
-		return $suite;
+
+		$listSuites = new \PHPUnit\Framework\TestSuite($testSuiteName);
+		for($i = 0; $i < count(self::$workers); $i++) {
+			$listSuites->addTestSuite(clone $suite);
+		}
+
+		return $listSuites;
 	}
 
 	protected static function checkRun()
