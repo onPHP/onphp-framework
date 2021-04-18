@@ -11,6 +11,8 @@
 
 namespace OnPHP\Main\Util;
 
+use ReflectionClass;
+use ReflectionException;
 use OnPHP\Core\Base\Assert;
 use OnPHP\Core\Base\StaticFactory;
 use OnPHP\Core\Exception\ClassNotFoundException;
@@ -21,14 +23,68 @@ use OnPHP\Core\Exception\WrongArgumentException;
 **/
 final class ClassUtils extends StaticFactory
 {
-//	const CLASS_NAME_PATTERN = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*';
-	const CLASS_NAME_PATTERN = '(\\\\?[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)+'; // new one with namespaces
+	const CLASS_NAME_PATTERN = '(\\\\?[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)+';
 
-	/* void */ public static function copyProperties($source, $destination)
+	/**
+	 * Copy only public and protected object properties fetch
+	 * allowed by get... methods and set by set... methods.
+	 * Be careful, private properties from parent class not copied!
+	 * @param object $source
+	 * @param object $destination
+	 * @throws WrongArgumentException
+	 * @throws ReflectionException
+	 */
+	public static function copyProperties(object $source, object $destination): void
+	{
+		Assert::isSameClasses(get_class($source), get_class($destination));
+
+		$class = new ReflectionClass($source);
+
+		foreach ($class->getProperties() as $property) {
+			$name = ucfirst($property->getName());
+			$getter = 'get'.$name;
+			$setter = 'set'.$name;
+
+			if (
+				!method_exists($source, $getter)
+				|| !is_callable([$source, $getter])
+				|| !method_exists($destination, $setter)
+				|| !is_callable([$destination, $setter])
+			) {
+				continue;
+			}
+
+			$sourceValue = $source->$getter();
+			if ($sourceValue !== null) {
+				$destination->$setter($sourceValue);
+			} else {
+				$dropper = 'drop'.$name;
+
+				if (
+					($firstArg = $class->getMethod($setter)->getParameters()[0] ?? null) !== null
+					&& $firstArg->allowsNull() === true
+				) {
+					$destination->$setter($sourceValue);
+				} elseif (
+					method_exists($destination, $dropper)
+					&& is_callable([$destination, $dropper])
+				) {
+					$destination->$dropper();
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param object $source
+	 * @param object $destination
+	 * @throws WrongArgumentException
+	 */
+	public static function copyNotNullProperties(object $source, object $destination): void
 	{
 		Assert::isEqual(get_class($source), get_class($destination));
 
-		$class = new \ReflectionClass($source);
+		$class = new ReflectionClass($source);
 
 		foreach ($class->getProperties() as $property) {
 			$name = ucfirst($property->getName());
@@ -36,33 +92,27 @@ final class ClassUtils extends StaticFactory
 			$setter = 'set'.$name;
 
 			if (
-				($class->hasMethod($getter))
-				&& ($class->hasMethod($setter))
+				method_exists($source, $getter)
+				&& is_callable([$source, $getter])
+				&& method_exists($destination, $setter)
+				&& is_callable([$destination, $setter])
+				&& ($value = $source->$getter()) !== null
 			) {
-
-				$sourceValue = $source->$getter();
-
-				if ($sourceValue === null) {
-
-					$setMethood = $class->getMethod($setter);
-					$parameterList = $setMethood->getParameters();
-					$firstParameter = $parameterList[0];
-
-					if ($firstParameter->allowsNull())
-						$destination->$setter($sourceValue);
-
-				} else {
-					$destination->$setter($sourceValue);
-				}
+				$destination->$setter($value);
 			}
 		}
 	}
 
-	/* void */ public static function copyNotNullProperties($source, $destination)
+	/**
+	 * @param object $source
+	 * @param object $destination
+	 * @throws WrongArgumentException
+	 */
+	public static function fillNullProperties(object $source, object $destination): void
 	{
-		Assert::isTrue(get_class($source) == get_class($destination));
+		Assert::isEqual(get_class($source), get_class($destination));
 
-		$class = new \ReflectionClass($source);
+		$class = new ReflectionClass($source);
 
 		foreach ($class->getProperties() as $property) {
 			$name = ucfirst($property->getName());
@@ -70,53 +120,40 @@ final class ClassUtils extends StaticFactory
 			$setter = 'set'.$name;
 
 			if (
-				($class->hasMethod($getter))
-				&& ($class->hasMethod($setter))
+				method_exists($source, $getter)
+				&& is_callable([$source, $getter])
+				&& method_exists($destination, $setter)
+				&& is_callable([$destination, $setter])
+				&& null === $destination->$getter()
+				&& (
+					null !== ($sourceValue = $source->$getter())
+				)
 			) {
-				$value = $source->$getter();
-				if ($value !== null)
-					$destination->$setter($value);
+				$destination->$setter($sourceValue);
 			}
 		}
 	}
 
-	/* void */ public static function fillNullProperties($source, $destination)
+	/**
+	 * @param mixed $className
+	 * @return bool
+	 */
+	public static function isClassName($className): bool
 	{
-		Assert::isTrue(get_class($source) == get_class($destination));
-
-		$class = new \ReflectionClass($source);
-
-		foreach ($class->getProperties() as $property) {
-			$name = ucfirst($property->getName());
-			$getter = 'get'.$name;
-			$setter = 'set'.$name;
-
-			if (
-				($class->hasMethod($getter))
-				&& ($class->hasMethod($setter))
-			) {
-				$destinationValue = $destination->$getter();
-				$sourceValue = $source->$getter();
-
-				if (
-					($destinationValue === null)
-					&& ($sourceValue !== null)
-				) {
-					$destination->$setter($sourceValue);
-				}
-			}
-		}
-	}
-
-	public static function isClassName($className)
-	{
-		if (!is_string($className))
+		if (!is_string($className)) {
 			return false;
+		}
 
-		return preg_match('/^'.self::CLASS_NAME_PATTERN.'$/', $className) > 0;
+		return preg_match('/^'.self::CLASS_NAME_PATTERN.'$/', $className) === 1;
 	}
-	
-	public static function isSameClassNames($left, $right)
+
+	/**
+	 * @param mixed $left
+	 * @param mixed $right
+	 * @return bool
+	 * @throws WrongArgumentException
+	 */
+	public static function isSameClassNames($left, $right): bool
 	{
 		if (
 			(
@@ -131,92 +168,111 @@ final class ClassUtils extends StaticFactory
 			return '\\'.ltrim($left, '\\') == '\\'.ltrim($right, '\\');
 		}
 		
-		throw new WrongArgumentException('strange class given');
+		throw new WrongArgumentException(
+			'strange class given '
+			. Assert::dumpOppositeArguments($left, $right)
+		);
 	}
 
-	/// to avoid dependency on SPL's class_implements
-	public static function isClassImplements($what)
+	/**
+	 * @param mixed $what
+	 * @param bool $autoload
+	 * @return array
+	 * @throws ClassNotFoundException
+	 * @todo remove use function class_implemets in future, it`s removed in PHP 8
+	 */
+	public static function isClassImplements($what, bool $autoload = true): array
 	{
 		static $classImplements = null;
 
-		if (!$classImplements) {
-			if (!function_exists('class_implements')) {
-				$classImplements = create_function(
-					'$what',
-					'
-						$info = new \ReflectionClass($what);
-						return $info->getInterfaceNames();
-					'
-				);
-			} else {
+		if (null === $classImplements) {
+			if (function_exists('class_implements')) {
 				$classImplements = 'class_implements';
+			} else {
+				$classImplements = function ($what, bool $autoload) {
+					$interfacesList = (new ReflectionClass($what))
+						->getInterfaceNames();
+					return array_combine($interfacesList, $interfacesList);
+				};
 			}
 		}
 
-		return $classImplements($what, true);
+		try {
+			$implements = $classImplements($what, $autoload);
+		} catch(\Throwable $exception) {
+			throw new ClassNotFoundException($what);
+		}
+
+		return is_array($implements) ? $implements : [];
 	}
 
-	public static function isInstanceOf($object, $class)
+	/**
+	 * @param mixed $object
+	 * @param mixed $class
+	 * @return bool
+	 * @throws WrongArgumentException
+	 */
+	public static function isInstanceOf($object, $class): bool
 	{
 		if (is_object($class)) {
-			$className = get_class($class);
-		} elseif (is_string($class)) {
-			$className = $class;
-		} else {
-			throw new WrongArgumentException('strange class given');
-		}
-		
-		$className = '\\'.ltrim($className, '\\');
-
-		if (is_string($object)) {
-			$object = '\\'.ltrim($object, '\\');
-			
-			if (self::isClassName($object)) {
-				if ($object == $className) {
-					return true;
-				} elseif (is_subclass_of($object, $className)) {
-					return true;
-				} else {
-					return in_array(
-						$class,
-						self::isClassImplements($object)
-					);
-				}
+			if (is_object($object)) {
+				return $object instanceof $class;
+			} elseif (is_string($object)) {
+				return is_a($object, get_class($class), true);
 			}
-		} elseif (is_object($object)) {
-			return $object instanceof $className;
+		} elseif (
+			is_string($class)
+			&& (is_object($object) || is_string($object))
+		) {
+			return is_a($object, $class, true);
 		}
-			
-		throw new WrongArgumentException('strange object given');
+
+		Assert::isUnreachable('strange object or class given ' . Assert::dumpOppositeArguments($object, $class));
 	}
 
-	public static function callStaticMethod($methodSignature /* , ... */)
+	/**
+	 * @param mixed $methodSignature
+	 * @param ...$arguments
+	 * @return mixed
+	 * @throws ClassNotFoundException
+	 * @throws WrongArgumentException
+	 */
+	public static function callStaticMethod($methodSignature, ...$arguments)
 	{
-		$agruments = func_get_args();
-		array_shift($agruments);
-
 		return
 			call_user_func_array(
 				self::checkStaticMethod($methodSignature),
-				$agruments
+				$arguments
 			);
 	}
 
-	public static function checkStaticMethod($methodSignature)
+	/**
+	 * @param mixed $methodSignature
+	 * @return array
+	 * @throws ClassNotFoundException
+	 * @throws WrongArgumentException
+	 */
+	public static function checkStaticMethod($methodSignature): array
 	{
 		if (is_array($methodSignature)) {
 			$nameParts = $methodSignature;
-		} else {
+		} elseif (is_string($methodSignature)) {
 			$nameParts = explode('::', $methodSignature);
+		} else {
+			Assert::isUnreachable('Incorrect method signature ' . Assert::dumpArgument($methodSignature));
 		}
 		
-		Assert::isEqual(count($nameParts), 2, 'Incorrect method signature');
+		Assert::isEqual(
+			count($nameParts),
+			2,
+			'Incorrect method signature ' . Assert::dumpArgument($methodSignature)
+		);
 		
 		list($className, $methodName) = $nameParts;
 
 		try {
-			$class = new \ReflectionClass($className);
-		} catch (\ReflectionException $e) {
+			$class = new ReflectionClass($className);
+		} catch (ReflectionException $exception) {
 			throw new ClassNotFoundException($className);
 		}
 
@@ -226,7 +282,6 @@ final class ClassUtils extends StaticFactory
 		);
 
 		$method = $class->getMethod($methodName);
-
 		Assert::isTrue(
 			$method->isStatic(),
 			"method is not static '{$className}::{$methodName}'"
@@ -239,28 +294,4 @@ final class ClassUtils extends StaticFactory
 
 		return $nameParts;
 	}
-
-	/* void */ public static function preloadAllClasses()
-	{
-		foreach (explode(PATH_SEPARATOR, get_include_path()) as $directory) {
-			foreach (
-				glob(
-					$directory.DIRECTORY_SEPARATOR.'/*'.EXT_CLASS,
-					GLOB_NOSORT
-				)
-				as $file
-			) {
-				$className = basename($file, EXT_CLASS);
-
-				if (
-					!class_exists($className)
-					&& !interface_exists($className)
-					&& !(function_exists('trait_exists') && trait_exists($className))
-				) {
-					include $file;
-				}
-			}
-		}
-	}
 }
-?>

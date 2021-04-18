@@ -21,21 +21,22 @@ use OnPHP\Core\Exception\MissingElementException;
 **/
 abstract class Singleton
 {
-	private static $instances = array();
+	private static array $instances = [];
 
 	protected function __construct() {/* you can't create me */}
 
-	/// @example singleton.php
-	final public static function getInstance(
-		$class, $args = null /* , ... */
-	)
+	/**
+	 * @param string $class
+	 * @param ...$args
+	 * @return object
+	 * @throws MissingElementException
+	 * @throws \OnPHP\Core\Exception\WrongArgumentException
+	 */
+	final public static function getInstance(string $class, ...$args): object
 	{
 		if (!isset(self::$instances[$class])) {
 			// for Singleton::getInstance('class_name', $arg1, ...) calling
-			if (2 < func_num_args()) {
-				$args = func_get_args();
-				array_shift($args);
-
+			if (1 < count($args)) {
 				// emulation of ReflectionClass->newInstanceWithoutConstructor
 				$object =
 					unserialize(
@@ -50,12 +51,11 @@ abstract class Singleton
 				try {
 					$object =
 						$args
-							? new $class($args)
+							? new $class(...$args)
 							: new $class();
-				} catch (\ArgumentCountError $e) {
+				} catch (\ArgumentCountError $exception) {
 					throw new MissingElementException('Too few arguments to __constructor');
 				}
-				
 			}
 
 			Assert::isTrue(
@@ -69,12 +69,19 @@ abstract class Singleton
 		return self::$instances[$class];
 	}
 
-	final public static function getAllInstances()
+	/**
+	 * @return object[]
+	 */
+	final public static function getAllInstances(): array
 	{
 		return self::$instances;
 	}
 
-	/* void */ final public static function dropInstance($class)
+	/**
+	 * @param string $class
+	 * @throws MissingElementException
+	 */
+	final public static function dropInstance(string $class): void
 	{
 		if (!isset(self::$instances[$class]))
 			throw new MissingElementException('knows nothing about '.$class);
@@ -82,7 +89,6 @@ abstract class Singleton
 		unset(self::$instances[$class]);
 	}
 
-	final private function __clone() {/* do not clone me */}
-	final private function __sleep() {/* restless class */}
+	final public function __clone() {/* do not clone me */}
+	final public function __sleep() {/* restless class */}
 }
-?>

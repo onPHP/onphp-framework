@@ -34,7 +34,7 @@ final class OneToManyLinkedFull extends OneToManyLinkedWorker
 	/**
 	 * @return OneToManyLinkedFull
 	**/
-	public function sync($insert, $update = array(), $delete)
+	public function sync($insert, $update = [], $delete = [])
 	{
 		$uc = $this->container;
 		$dao = $uc->getDao();

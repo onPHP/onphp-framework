@@ -72,7 +72,7 @@ final class CyclicAggregateCache extends BaseAggregateCache
 			next($this->peers);
 		}
 
-		if ($point <= ($firstPeer['mountPoint'] + $this->summaryWeight)) {
+		if ($point <= (($firstPeer['mountPoint'] ?? 0) + $this->summaryWeight)) {
 			reset($this->peers);
 
 			return key($this->peers);

@@ -19,4 +19,3 @@ interface Aliased
 {
 	public function getAlias();
 }
-?>
