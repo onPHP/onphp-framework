@@ -259,13 +259,13 @@ final class ClassUtils extends StaticFactory
 		} elseif (is_string($methodSignature)) {
 			$nameParts = explode('::', $methodSignature);
 		} else {
-			Assert::isUnreachable('Incorrect method signature ' . Assert::dumpArgument($methodSignature));
+			Assert::isUnreachable('Incorrect method signature ' . gettype($methodSignature));
 		}
 		
 		Assert::isEqual(
 			count($nameParts),
 			2,
-			'Incorrect method signature ' . Assert::dumpArgument($methodSignature)
+			'Incorrect method signature ' . gettype($methodSignature)
 		);
 		
 		list($className, $methodName) = $nameParts;
