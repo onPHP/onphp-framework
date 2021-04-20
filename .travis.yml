@@ -7,7 +7,7 @@ services:
 php:
     - 7.4.6
 before_install:
-    - yes | pecl install memcache
+    - yes | pecl install memcache-4.0.5.2
     - no | pecl install memcached
     - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - mysql -e 'CREATE DATABASE onphp;'
