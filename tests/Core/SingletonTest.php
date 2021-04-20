@@ -67,6 +67,10 @@ final class SingletonTest extends TestCase
 	
 	public function testMissingCleanup()
 	{
+		if (isset(Singleton::getAllInstances()[self::SINGLE_CLASS_NAME])) {
+			Singleton::dropInstance(self::SINGLE_CLASS_NAME);
+		}
+
 		// cleaning up
 		$this->expectException(MissingElementException::class);
 		Singleton::dropInstance(self::SINGLE_CLASS_NAME);
