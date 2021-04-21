@@ -1,3 +1,4 @@
+dist: xenial
 language: php
 services:
     - mysql
@@ -6,8 +7,14 @@ services:
     - memcached
 php:
     - 7.4.6
+    - 8.0.2
 before_install:
-    - yes | pecl install memcache-4.0.5.2
+    - |
+        if (php --version | grep -i 7.4 > /dev/null); then
+          yes | pecl install memcache-4.0.5.2
+        else
+          yes | pecl install memcache
+        fi
     - no | pecl install memcached
     - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - mysql -e 'CREATE DATABASE onphp;'
