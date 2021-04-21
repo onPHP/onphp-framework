@@ -11,9 +11,9 @@
 
 namespace OnPHP\Main\Util\Router;
 
+use Throwable;
 use OnPHP\Core\Base\Assert;
 use OnPHP\Main\Flow\HttpRequest;
-use OnPHP\Core\Exception\BaseException;
 
 final class RouterRegexpRule extends RouterBaseRule
 {
@@ -132,7 +132,7 @@ final class RouterRegexpRule extends RouterBaseRule
 		
 		try {
 			$return = vsprintf($this->reverse, $mergedData);
-		} catch (BaseException $e) {
+		} catch (Throwable $e) {
 			throw new RouterException(
 				'Can not assembly. Too few arguments? Error was: '
 				.$e->getMessage()
