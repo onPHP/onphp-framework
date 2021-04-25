@@ -10,8 +10,14 @@
 
 namespace OnPHP\Core\Base;
 
+use DateTimeZone;
+use OnPHP\Core\Exception\WrongArgumentException;
+
 /**
  * Timestamp with time zone
+ *
+ * @see Timestamp, Date
+ * @ingroup Base
  */
 class TimestampTZ extends Timestamp
 {
@@ -19,23 +25,24 @@ class TimestampTZ extends Timestamp
 	 * @static
 	 * @return string
 	 */
-	protected static function getFormat()
+	protected static function getFormat(): string
 	{
 		return 'Y-m-d H:i:sO';
 	}
 
 	/**
-	 * @return Timestamp
-	**/
-	public function toTimestamp($zone=null)
+	 * @param null $zone
+	 * @return Timestamp|TimestampTZ
+	 * @throws WrongArgumentException
+	 */
+	public function toTimestamp($zone = null): Timestamp
 	{
-		if($zone) {
-
+		if (null === $zone) {
 			if(
-				!($zone instanceof \DateTimeZone)
+				!($zone instanceof DateTimeZone)
 				&& is_scalar($zone)
 			) {
-				$zone = new \DateTimeZone($zone);
+				$zone = new DateTimeZone($zone);
 			}
 
 			return new static($this->toStamp(), $zone);
@@ -44,7 +51,13 @@ class TimestampTZ extends Timestamp
 		return  parent::toTimestamp();
 	}
 
-	public static function compare(Date $left, Date $right)
+	/**
+	 * @param Date $left
+	 * @param Date $right
+	 * @return int
+	 * @throws WrongArgumentException
+	 */
+	public static function compare(Date $left, Date $right): int
 	{
 		Assert::isTrue(
 			(
@@ -56,4 +69,3 @@ class TimestampTZ extends Timestamp
 		return parent::compare($left, $right);
 	}
 }
-?>
