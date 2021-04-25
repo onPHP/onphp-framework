@@ -51,7 +51,7 @@ class OpenGraphProfile extends OpenGraphObject
 	 * @return static
 	 * @throws WrongArgumentException
 	 */
-    public function set(string $name, mixed $value): static
+    public function set(string $name, $value): OpenGraphProfile
     {
 		if ($name == 'gender') {
 			Assert::isTrue(

@@ -39,7 +39,7 @@ abstract class OpenGraphObject
 	/**
 	 * @return static
 	 */
-	public static function create(): static
+	public static function create(): OpenGraphObject
 	{
 		return new static;
 	}
@@ -69,7 +69,7 @@ abstract class OpenGraphObject
      * @return static
      * @throws WrongArgumentException
      */
-    public function set(string $name, mixed $value): static
+    public function set(string $name, $value): OpenGraphObject
     {
         Assert::isIndexExists($this->items, $name, "there is no property {$name} in " . get_class($this));
 

@@ -44,7 +44,7 @@ abstract class OpenGraphStructure
     /**
      * @return static
      */
-    public static function create(): static
+    public static function create(): OpenGraphStructure
     {
         return new static;
     }
@@ -54,7 +54,7 @@ abstract class OpenGraphStructure
      * @param bool $secureSame
      * @return static
      */
-    public function setUrl(string $url, bool $secureSame = true): static
+    public function setUrl(string $url, bool $secureSame = true): OpenGraphStructure
     {
         $this->url = $url;
         if ($secureSame) {
@@ -68,7 +68,7 @@ abstract class OpenGraphStructure
      * @param string $url
      * @return static
      */
-    public function setSecureUrl(string $url): static
+    public function setSecureUrl(string $url): OpenGraphStructure
     {
         $this->secureUrl = $url;
 
@@ -79,7 +79,7 @@ abstract class OpenGraphStructure
      * @param MimeType $type
      * @return static
      */
-    public function setType(MimeType $type): static
+    public function setType(MimeType $type): OpenGraphStructure
     {
         $this->type = $type;
 
