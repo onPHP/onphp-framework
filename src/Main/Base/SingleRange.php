@@ -16,9 +16,8 @@ namespace OnPHP\Main\Base;
 **/
 interface SingleRange
 {
-	public function getStart();
-	public function getEnd();
+	public function getStart(): ?object;
+	public function getEnd(): ?object;
 
-	public function contains($probe);
+	public function contains(object $probe): bool;
 }
-?>
