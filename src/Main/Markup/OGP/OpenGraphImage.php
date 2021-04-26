@@ -38,7 +38,7 @@ class OpenGraphImage extends OpenGraphVideo
      * @param string $alt
      * @return static
      */
-    public function setAlt(string $alt): static
+    public function setAlt(string $alt): OpenGraphImage
     {
         $this->alt = $alt;
 

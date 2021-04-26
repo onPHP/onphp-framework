@@ -43,7 +43,7 @@ abstract class OpenGraphSongObject extends OpenGraphObject
      * @return static
      * @throws WrongArgumentException
      */
-    public function set(string $name, mixed $value): static
+    public function set(string $name, $value): OpenGraphSongObject
     {
         if ($name == 'song') {
             $count = count($this->items['song']);
