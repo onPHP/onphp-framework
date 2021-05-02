@@ -27,7 +27,7 @@ final class Cdata extends SgmlToken
 	/**
 	 * @var bool
 	 */
-	private bool $strict	= false;
+	private bool $strict = false;
 
 	/**
 	 * @param string $data
