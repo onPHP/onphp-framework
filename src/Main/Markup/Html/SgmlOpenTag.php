@@ -11,7 +11,6 @@
 
 namespace OnPHP\Main\Markup\Html;
 
-use OnPHP\Core\Base\Assert;
 use OnPHP\Core\Exception\WrongArgumentException;
 
 /**
@@ -19,93 +18,115 @@ use OnPHP\Core\Exception\WrongArgumentException;
 **/
 final class SgmlOpenTag extends SgmlTag
 {
-	private $attributes	= array();
-	private $empty		= false;
+	/**
+	 * @var array
+	 */
+	private array $attributes = [];
+	/**
+	 * @var bool
+	 */
+	private bool $empty = false;
 
 	/**
-	 * @return SgmlOpenTag
-	**/
-	public static function create()
+	 * @param bool $isEmpty
+	 * @return static
+	 */
+	public function setEmpty(bool $isEmpty): SgmlOpenTag
 	{
-		return new self;
-	}
-
-	/**
-	 * @return SgmlOpenTag
-	**/
-	public function setEmpty($isEmpty)
-	{
-		Assert::isBoolean($isEmpty);
-
 		$this->empty = $isEmpty;
 
 		return $this;
 	}
 
-	public function isEmpty()
+	/**
+	 * @return bool
+	 */
+	public function isEmpty(): bool
 	{
 		return $this->empty;
 	}
 
 	/**
-	 * @return SgmlOpenTag
-	**/
-	public function setAttribute($name, $value)
+	 * @param string $name
+	 * @param mixed $value
+	 * @return static
+	 * @throws WrongArgumentException
+	 */
+	public function setAttribute(string $name, $value): SgmlOpenTag
 	{
+		if ($this->hasAttribute($name)) {
+			throw new WrongArgumentException("attribute '{$name}' already exist");
+		}
+
 		$this->attributes[$name] = $value;
 
 		return $this;
 	}
 
-	public function hasAttribute($name)
+	/**
+	 * @param string $name
+	 * @return bool
+	 */
+	public function hasAttribute(string $name): bool
 	{
-		$name = strtolower($name);
-
-		return isset($this->attributes[$name]);
-	}
-
-	public function getAttribute($name)
-	{
-		$name = strtolower($name);
-
-		if (!isset($this->attributes[$name]))
-			throw new WrongArgumentException(
-				"attribute '{$name}' does not exist"
-			);
-
-		return $this->attributes[$name];
+		return in_array(
+			mb_strtolower($name),
+			array_map('mb_strtolower', array_keys($this->attributes))
+		);
 	}
 
 	/**
-	 * @return SgmlOpenTag
-	**/
-	public function dropAttribute($name)
+	 * @param string $name
+	 * @return mixed
+	 * @throws WrongArgumentException
+	 */
+	public function getAttribute(string $name)
 	{
-		$name = strtolower($name);
+		$name = mb_strtolower($name);
 
-		if (!isset($this->attributes[$name]))
-			throw new WrongArgumentException(
-				"attribute '{$name}' does not exist"
-			);
+		foreach($this->attributes as $attributeName => $value) {
+			if (mb_strtolower($attributeName) == $name) {
+				return $value;
+			}
+		}
 
-		unset($this->attributes[$name]);
-
-		return $this;
+		throw new WrongArgumentException("attribute '{$name}' does not exist");
 	}
 
-	public function getAttributesList()
+	/**
+	 * @param string $name
+	 * @return static
+	 * @throws WrongArgumentException
+	 */
+	public function dropAttribute(string $name): SgmlOpenTag
+	{
+		$name = mb_strtolower($name);
+
+		foreach($this->attributes as $attributeName => $value) {
+			if (mb_strtolower($attributeName) == $name) {
+				unset($this->attributes[$attributeName]);
+				return $this;
+			}
+		}
+
+		throw new WrongArgumentException("attribute '{$name}' does not exist");
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAttributesList(): array
 	{
 		return $this->attributes;
 	}
 
 	/**
-	 * @return SgmlOpenTag
-	**/
-	public function dropAttributesList()
+	 * @return static
+	 */
+	public function dropAttributesList(): SgmlOpenTag
 	{
 		$this->attributes = array();
 
 		return $this;
 	}
 }
-?>

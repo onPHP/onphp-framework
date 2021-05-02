@@ -31,51 +31,70 @@ abstract class InputStream
 	 * 
 	 * It is abnormal state. Maybe you should use some kind of
 	 * non-blocking channels instead?
-	 * 
-	**/
-	abstract public function read($length);
-	abstract public function isEof();
+	 *
+	 * @param int $length
+	 * @return string|null
+	 */
+	abstract public function read(int $length): ?string;
 
 	/**
-	 * @return InputStream
-	**/
-	public function mark()
+	 * @return bool
+	 */
+	abstract public function isEof(): bool;
+
+	/**
+	 * @return static
+	 */
+	public function mark(): InputStream
 	{
 		/* nop */
 
 		return $this;
 	}
 
-	public function markSupported()
+	/**
+	 * @return bool
+	 */
+	public function markSupported(): bool
 	{
 		return false;
 	}
 
-	public function reset()
+	/**
+	 * @return static
+	 * @throws IOException
+	 */
+	public function reset(): InputStream
 	{
 		throw new IOException(
 			'mark has been invalidated'
 		);
 	}
 
-	public function skip($count)
+	/**
+	 * @param int $count
+	 * @return int
+	 */
+	public function skip(int $count): int
 	{
-		return strlen($this->read($count));
+		return mb_strlen($this->read($count));
 	}
 
-	public function available()
+	/**
+	 * @return int
+	 */
+	public function available(): int
 	{
 		return 0;
 	}
 
 	/**
-	 * @return InputStream
-	**/
-	public function close()
+	 * @return static
+	 */
+	public function close(): InputStream
 	{
 		/* nop */
 
 		return $this;
 	}
 }
-?>

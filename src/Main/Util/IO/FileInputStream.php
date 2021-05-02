@@ -19,18 +19,24 @@ use OnPHP\Core\Exception\BaseException;
 **/
 final class FileInputStream extends InputStream
 {
-	private $fd		= null;
+	/**
+	 * @var resource
+	 */
+	private $fd;
+	private $mark = null;
 
-	private $mark	= null;
-
+	/**
+	 * @param resource $nameOrFd
+	 * @throws IOException
+	 */
 	public function __construct($nameOrFd)
 	{
 		if (is_resource($nameOrFd)) {
-			if (get_resource_type($nameOrFd) !== 'stream')
+			if (get_resource_type($nameOrFd) !== 'stream') {
 				throw new IOException('not a file resource');
+			}
 
 			$this->fd = $nameOrFd;
-
 		} else {
 			try {
 				$this->fd = fopen($nameOrFd, 'rb');
@@ -50,81 +56,112 @@ final class FileInputStream extends InputStream
 	}
 
 	/**
-	 * @return FileInputStream
-	**/
-	public static function create($nameOrFd)
+	 * @param resource $nameOrFd
+	 * @return static
+	 * @throws IOException
+	 */
+	public static function create($nameOrFd): FileInputStream
 	{
 		return new self($nameOrFd);
 	}
 
-	public function isEof()
+	/**
+	 * @return bool
+	 */
+	public function isEof(): bool
 	{
 		return feof($this->fd);
 	}
 
 	/**
-	 * @return FileInputStream
-	**/
-	public function mark()
+	 * @return static
+	 */
+	public function mark(): FileInputStream
 	{
 		$this->mark = $this->getOffset();
 
 		return $this;
 	}
 
+	/**
+	 * @return false|int
+	 */
 	public function getOffset()
 	{
 		return ftell($this->fd);
 	}
 
-	public function markSupported()
+	/**
+	 * @return bool
+	 */
+	public function markSupported(): bool
 	{
 		return true;
 	}
 
 	/**
-	 * @return FileInputStream
-	**/
-	public function reset()
+	 * @return static
+	 * @throws IOException
+	 */
+	public function reset(): FileInputStream
 	{
 		return $this->seek($this->mark);
 	}
 
 	/**
-	 * @return FileInputStream
-	**/
-	public function seek($offset)
+	 * @param int $offset
+	 * @return static
+	 * @throws IOException
+	 */
+	public function seek(int $offset): FileInputStream
 	{
-		if (fseek($this->fd, $offset) < 0)
-			throw new IOException(
-				'mark has been invalidated'
-			);
+		if (fseek($this->fd, $offset) < 0) {
+			throw new IOException('mark has been invalidated');
+		}
 
 		return $this;
 	}
 
 	/**
-	 * @return FileInputStream
-	**/
-	public function close()
+	 * @return static
+	 * @throws IOException
+	 */
+	public function close(): FileInputStream
 	{
-		if (!fclose($this->fd))
+		if (!fclose($this->fd)) {
 			throw new IOException('failed to close the file');
+		}
 
 		return $this;
 	}
 
-	public function read($length)
+	/**
+	 * @param int $length
+	 * @return string|null
+	 * @throws IOException
+	 */
+	public function read(int $length): ?string
 	{
 		return $this->realRead($length);
 	}
 
-	public function readString($length = null)
+	/**
+	 * @param int|null $length
+	 * @return string|null
+	 * @throws IOException
+	 */
+	public function readString(int $length = null): ?string
 	{
 		return $this->realRead($length, true);
 	}
 
-	public function realRead($length, $string = false)
+	/**
+	 * @param int $length
+	 * @param bool $string
+	 * @return string|null
+	 * @throws IOException
+	 */
+	public function realRead(int $length, bool $string = false): ?string
 	{
 		$result = $string
 			? (
@@ -134,16 +171,18 @@ final class FileInputStream extends InputStream
 			)
 			: fread($this->fd, $length);
 
-		if ($string && $result === false && feof($this->fd))
+		if ($string && $result === false && feof($this->fd)) {
 			$result = null; // fgets returns false on eof
+		}
 
-		if ($result === false)
+		if ($result === false) {
 			throw new IOException('failed to read from file');
+		}
 
-		if ($result === '')
+		if ($result === '') {
 			$result = null; // eof
+		}
 
 		return $result;
 	}
 }
-?>

@@ -11,64 +11,71 @@
 
 namespace OnPHP\Main\Markup\Html;
 
-use OnPHP\Core\Base\Assert;
-
 /**
  * @ingroup Html
  * @ingroup Module
 **/
 final class Cdata extends SgmlToken
 {
-	private $data	= null;
-
-	private $strict	= false;
-
-	/**
-	 * @return Cdata
-	**/
-	public static function create()
-	{
-		return new self;
-	}
+	const CDATA_STRICT_START = '<![CDATA[';
+	const CDATA_STRICT_END = ']]>';
 
 	/**
-	 * @return Cdata
-	**/
-	public function setData($data)
+	 * @var string|null
+	 */
+	private ?string $data = null;
+	/**
+	 * @var bool
+	 */
+	private bool $strict	= false;
+
+	/**
+	 * @param string $data
+	 * @return static
+	 */
+	public function setData(string $data): Cdata
 	{
 		$this->data = $data;
 
 		return $this;
 	}
 
-	public function getData()
+	/**
+	 * @return string|null
+	 */
+	public function getData(): ?string
 	{
-		if ($this->strict)
-			return '<![CDATA['.$this->data.']]>';
-		else
+		if ($this->strict) {
+			return self::CDATA_STRICT_START . $this->data . self::CDATA_STRICT_END;
+		} else {
 			return $this->data;
+		}
 	}
 
-	public function getRawData()
+	/**
+	 * @return string|null
+	 */
+	public function getRawData(): ?string
 	{
 		return $this->data;
 	}
 
 	/**
-	 * @return Cdata
-	**/
-	public function setStrict($isStrict)
+	 * @param bool $isStrict
+	 * @return static
+	 */
+	public function setStrict(bool $isStrict): Cdata
 	{
-		Assert::isBoolean($isStrict);
-
 		$this->strict = $isStrict;
 
 		return $this;
 	}
 
-	public function isStrict()
+	/**
+	 * @return bool
+	 */
+	public function isStrict(): bool
 	{
 		return $this->strict;
 	}
 }
-?>
