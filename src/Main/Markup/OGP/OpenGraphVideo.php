@@ -36,7 +36,7 @@ class OpenGraphVideo extends OpenGraphStructure
      * @param int $width
      * @return static
      */
-    public function setWidth(int $width): static
+    public function setWidth(int $width): OpenGraphVideo
     {
         $this->width = $width;
 
@@ -47,7 +47,7 @@ class OpenGraphVideo extends OpenGraphStructure
      * @param int $height
      * @return static
      */
-    public function setHeight(int $height): static
+    public function setHeight(int $height): OpenGraphVideo
     {
         $this->height = $height;
 

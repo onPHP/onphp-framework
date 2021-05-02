@@ -112,7 +112,7 @@ class OpenGraph
 	/**
 	 * @return static
 	 */
-    public static function create(): static
+    public static function create(): OpenGraph
     {
     	return new static;
     }
@@ -121,7 +121,7 @@ class OpenGraph
      * @param string $title
      * @return static
      */
-    public function setTitle(string $title): static
+    public function setTitle(string $title): OpenGraph
     {
         $this->title = $title;
 
@@ -132,7 +132,7 @@ class OpenGraph
      * @param string $description
      * @return static
      */
-    public function setDescription(string $description): static
+    public function setDescription(string $description): OpenGraph
     {
         $this->description = $description;
 
@@ -144,7 +144,7 @@ class OpenGraph
      * @return static
      * @throws WrongArgumentException
      */
-    public function setDaterminer(string $daterminer): static
+    public function setDaterminer(string $daterminer): OpenGraph
     {
         Assert::isTrue(
 			empty($daterminer) || in_array($daterminer, self::ALLOWED_DATERMINE),
@@ -160,7 +160,7 @@ class OpenGraph
      * @return static
      * @throws WrongArgumentException
      */
-    public function setLocale(string $locale): static
+    public function setLocale(string $locale): OpenGraph
     {
 	    Assert::isTrue(
 		    preg_match('/^[a-z]{2}_[A-Z]{2}$/iu', $locale) == 1,
@@ -176,7 +176,7 @@ class OpenGraph
      * @return static
      * @throws WrongArgumentException
      */
-    public function setLocaleAlternates(string $locale): static
+    public function setLocaleAlternates(string $locale): OpenGraph
     {
 	    Assert::isTrue(
 		    preg_match('/^[a-z]{2}_[A-Z]{2}$/iu', $locale) == 1,
@@ -191,7 +191,7 @@ class OpenGraph
      * @param string $siteName
      * @return static
      */
-    public function setSiteName(string $siteName): static
+    public function setSiteName(string $siteName): OpenGraph
     {
         $this->siteName = $siteName;
 
@@ -202,7 +202,7 @@ class OpenGraph
      * @param OpenGraphObject $type
      * @return static
      */
-    public function setType(OpenGraphObject $type): static
+    public function setType(OpenGraphObject $type): OpenGraph
     {
         $this->type = $type;
 
@@ -213,7 +213,7 @@ class OpenGraph
      * @param OpenGraphImage $image
      * @return static
      */
-    public function setImage(OpenGraphImage $image): static
+    public function setImage(OpenGraphImage $image): OpenGraph
     {
         $this->image[] = $image;
 
@@ -224,7 +224,7 @@ class OpenGraph
      * @param mixed $appId
      * @return static
      */
-    public function setAppId(mixed $appId): static
+    public function setAppId($appId): OpenGraph
     {
         $this->appId = (string)$appId;
 
@@ -235,7 +235,7 @@ class OpenGraph
      * @param OpenGraphVideo $video
      * @return static
      */
-    public function setVideo(OpenGraphVideo $video): static
+    public function setVideo(OpenGraphVideo $video): OpenGraph
     {
         $this->video = $video;
 
@@ -246,7 +246,7 @@ class OpenGraph
      * @param OpenGraphTwitterCard $twitterCard
      * @return static
      */
-    public function setTwitterCart(OpenGraphTwitterCard $twitterCard): static
+    public function setTwitterCart(OpenGraphTwitterCard $twitterCard): OpenGraph
     {
         $this->twitterCard = $twitterCard;
 
@@ -257,7 +257,7 @@ class OpenGraph
      * @param OpenGraphAudio $audio
      * @return static
      */
-    public function setAudio(OpenGraphAudio $audio): static
+    public function setAudio(OpenGraphAudio $audio): OpenGraph
     {
         $this->audio = $audio;
 
@@ -268,7 +268,7 @@ class OpenGraph
      * @param string $url
      * @return static
      */
-    public function setUrl(string $url): static
+    public function setUrl(string $url): OpenGraph
     {
         $this->url = $url;
 
@@ -281,7 +281,7 @@ class OpenGraph
 	 * @param string $vkImage
 	 * @return static
 	 */
-	public function setVkImage(string $vkImage): static
+	public function setVkImage(string $vkImage): OpenGraph
 	{
 		$this->vkImage = $vkImage;
 
@@ -359,8 +359,8 @@ class OpenGraph
 				    return array_merge($result, $image->getList());
 			    }, []
 		    ),
-		    $this->audio?->getList() ?? [],
-		    $this->video?->getList() ?? [],
+		    $this->audio instanceof OpenGraphAudio ? $this->audio->getList() : [],
+		    $this->video instanceof OpenGraphVideo ? $this->video->getList() : [],
 		    empty($this->description) ? [] : [ ['og:description', $this->description] ],
 		    empty($this->determiner) ? [] : [ ['og:determiner', $this->description] ],
 		    empty($this->siteName) ? [] : [ ['og:site_name', $this->description] ],

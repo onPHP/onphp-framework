@@ -41,7 +41,7 @@ abstract class OpenGraphTwitterCard
 	/**
 	 * @return static
 	 */
-    public static function create(): static
+    public static function create(): OpenGraphTwitterCard
     {
     	return new static;
     }
@@ -67,7 +67,7 @@ abstract class OpenGraphTwitterCard
      * @return static
      * @throws WrongArgumentException
      */
-    final public function set(string $name, mixed $value): static
+    final public function set(string $name, $value): OpenGraphTwitterCard
     {
         Assert::isIndexExists($this->items, $name, "there is no property {$name} in " . get_class($this));
         $this->items[$name] = $value;

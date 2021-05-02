@@ -62,7 +62,7 @@ class OpenGraphMovie extends OpenGraphObject
 	 * @return static
 	 * @throws WrongArgumentException
 	 */
-	public function set(string $name, mixed $value): static
+	public function set(string $name, $value): OpenGraphMovie
 	{
 		if ($name == 'actor') {
 			$count = count($this->items['actor']);
