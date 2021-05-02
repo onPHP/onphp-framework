@@ -161,7 +161,7 @@ final class FileInputStream extends InputStream
 	 * @return string|null
 	 * @throws IOException
 	 */
-	public function realRead(int $length, bool $string = false): ?string
+	public function realRead(int $length = null, bool $string = false): ?string
 	{
 		$result = $string
 			? (
