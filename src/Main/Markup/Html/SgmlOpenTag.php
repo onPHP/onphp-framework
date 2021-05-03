@@ -52,7 +52,7 @@ final class SgmlOpenTag extends SgmlTag
 	 * @return static
 	 * @throws WrongArgumentException
 	 */
-	public function setAttribute(string $name, $value): SgmlOpenTag
+	public function setAttribute(string $name, $value = null): SgmlOpenTag
 	{
 		if ($this->hasAttribute($name)) {
 			throw new WrongArgumentException("attribute '{$name}' already exist");

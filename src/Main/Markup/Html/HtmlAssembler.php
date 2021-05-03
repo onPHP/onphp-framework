@@ -54,7 +54,7 @@ final class HtmlAssembler
 			Assert::isNotNull($tag->getId());
 
 			return '<'.$tag->getId()
-				.$tag->getCdata()->getData()
+				.($tag->getCdata() instanceof Cdata ? $tag->getCdata()->getData() : '')
 				.$tag->getEndMark().'>';
 		} elseif ($tag instanceof SgmlOpenTag) {
 			Assert::isNotNull($tag->getId());
@@ -62,9 +62,11 @@ final class HtmlAssembler
 			$attributes = self::getAttributes($tag);
 
 			return '<'.$tag->getId()
-				.($attributes ? ' '.$attributes : null)
-				.($tag->isEmpty() ? '/' : null).'>';
+				.($attributes ? ' '.$attributes : '')
+				.($tag->isEmpty() ? '/' : '').'>';
 		} elseif ($tag instanceof SgmlEndTag) {
+			Assert::isNotNull($tag->getId());
+
 			return '</'.$tag->getId().'>';
 		}
 
@@ -138,8 +140,7 @@ final class HtmlAssembler
 		$attributes = array();
 
 		foreach ($tag->getAttributesList() as $name => $value) {
-			$attributes[] =
-				$name
+			$attributes[] = $name
 				. ($value === null ? '' : '="' . preg_replace('/\"/u', '&quot;', $value) . '"');
 		}
 
