@@ -27,7 +27,7 @@ final class SequentialCacheTest extends TestCase
 {
 	public function testMultiCacheAliveLast()
 	{
-		$alifePeer = new PeclMemcached('memcached', "11211"); //some existing memcached
+		$alifePeer = new PeclMemcached("127.0.0.1", "11211"); //some existing memcached
 		$alifePeer->set('some_key', 'some_value');
 
 		$deadPeer = new SocketMemcached("165.42.42.42", "11211"); //some not existing memcache
@@ -48,7 +48,7 @@ final class SequentialCacheTest extends TestCase
 
 	public function testMultiCacheAliveFirst()
 	{
-		$alifePeer = new SocketMemcached("memcached", "11211"); //some existing memcached
+		$alifePeer = new SocketMemcached("127.0.0.1", "11211"); //some existing memcached
 		$alifePeer->set('some_key', 'some_value');
 
 		$slave1 = new PeclMemcached("35.143.65.241", "11211", 1, 1/*timeout=1ms*/); //some not existing memcache
@@ -67,8 +67,8 @@ final class SequentialCacheTest extends TestCase
 		$alifePeer =
 			CyclicAggregateCache::create()-> //some existing memcached
 			setSummaryWeight(42)->
-			addPeer('first', new PeclMemcached("memcached", "11211"), 0)->
-			addPeer('second', new SocketMemcached("memcached", "11211"), 21);
+			addPeer('first', new PeclMemcached("127.0.0.1", "11211"), 0)->
+			addPeer('second', new SocketMemcached("127.0.0.1", "11211"), 21);
 
 		$alifePeer->set('some_key', 'some_value');
 
