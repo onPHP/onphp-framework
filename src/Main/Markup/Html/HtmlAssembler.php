@@ -140,8 +140,13 @@ final class HtmlAssembler
 		$attributes = array();
 
 		foreach ($tag->getAttributesList() as $name => $value) {
-			$attributes[] = $name
-				. ($value === null ? '' : '="' . preg_replace('/\"/u', '&quot;', $value) . '"');
+			$attributes[] =
+				$name
+				. (
+					$value === null
+						? ''
+						: '="' . preg_replace('/\"/u', '&quot;', $value) . '"'
+				);
 		}
 
 		return implode(' ', $attributes);
@@ -153,16 +158,21 @@ final class HtmlAssembler
 	 */
 	private static function getDomAttributes(DOMNode $node): string
 	{
+		if ($node->attributes->length === 0) {
+			return '';
+		}
+
 		$attributes = array();
+		$i = 0;
 
-		if ($node->attributes) {
-			$i = 0;
-
-			while ($item = $node->attributes->item($i++)) {
-				$attributes[] =
-					$item->name
-					. ($item->value ? '="' . $item->value . '"' : '');
-			}
+		while ($item = $node->attributes->item($i++)) {
+			$attributes[] =
+				$item->name
+				. (
+					$item->value
+						? '="' . preg_replace('/\"/u', '&quot;', $item->value) . '"'
+						: ''
+				);
 		}
 
 		return implode(' ', $attributes);

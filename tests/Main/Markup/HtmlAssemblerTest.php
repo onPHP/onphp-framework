@@ -177,4 +177,48 @@ class HtmlAssemblerTest extends TestCase
 			)
 		);
 	}
+
+	public function testGetDomAttributes()
+	{
+		$doc = new \DOMDocument("1.0");
+		$node = $doc->appendChild($doc->createElement("div"));
+
+		$this->assertEmpty(
+			$this->callObjectMethod(
+				HtmlAssembler::class,
+				'getDomAttributes',
+				$node
+			)
+		);
+
+		$node->setAttribute("data-test", null);
+		$this->assertEquals(
+			'data-test',
+			$this->callObjectMethod(
+				HtmlAssembler::class,
+				'getDomAttributes',
+				$node
+			)
+		);
+
+		$node->setAttribute('class', 'test');
+		$this->assertEquals(
+			'data-test class="test"',
+			$this->callObjectMethod(
+				HtmlAssembler::class,
+				'getDomAttributes',
+				$node
+			)
+		);
+
+		$node->setAttribute('id', '"id');
+		$this->assertEquals(
+			'data-test class="test" id="&quot;id"',
+			$this->callObjectMethod(
+				HtmlAssembler::class,
+				'getDomAttributes',
+				$node
+			)
+		);
+	}
 }
