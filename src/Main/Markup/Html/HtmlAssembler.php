@@ -84,14 +84,14 @@ final class HtmlAssembler
 	public static function makeDomNode(DOMNode $node): ?string
 	{
 		if ($node instanceof DOMElement) {
-			$result = '<'.$node->nodeName;
+			$result = '<' . $node->nodeName;
 			$attributes = self::getDomAttributes($node);
 
 			if ($attributes) {
 				$result .= ' ' . $attributes;
 			}
 
-			if (!$node->firstChild) {
+			if (null === $node->firstChild) {
 				$result .= ' />';
 			} else {
 				$result .= '>';

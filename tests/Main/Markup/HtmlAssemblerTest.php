@@ -11,12 +11,15 @@
 
 namespace OnPHP\Tests\Main\Markup;
 
+use OnPHP\Core\Exception\UnimplementedFeatureException;
 use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Main\Markup\Html\Cdata;
 use OnPHP\Main\Markup\Html\HtmlAssembler;
+use OnPHP\Main\Markup\Html\HtmlTokenizer;
 use OnPHP\Main\Markup\Html\SgmlEndTag;
 use OnPHP\Main\Markup\Html\SgmlIgnoredTag;
 use OnPHP\Main\Markup\Html\SgmlOpenTag;
+use OnPHP\Main\Util\IO\StringInputStream;
 use OnPHP\Tests\TestEnvironment\SgmlTag;
 use OnPHP\Tests\TestEnvironment\TestCase;
 
@@ -126,6 +129,49 @@ class HtmlAssemblerTest extends TestCase
 		HtmlAssembler::makeTag(SgmlTag::create());
 	}
 
+	public function testMakeDomNode()
+	{
+		$doc = new \DOMDocument("1.0");
+
+		try {
+			HtmlAssembler::makeDomNode($doc);
+			$this->fail('expected UnimplementedFeatureException exception');
+		} catch(\Throwable $exception) {
+			$this->assertInstanceOf(UnimplementedFeatureException::class, $exception);
+		}
+
+		$node = $doc->appendChild($doc->createElement("div"));
+		$this->assertEquals('<div />', HtmlAssembler::makeDomNode($node));
+
+		$node->setAttribute("data-test", null);
+		$this->assertEquals('<div data-test />', HtmlAssembler::makeDomNode($node));
+		$node->setAttribute('class', 'test');
+		$this->assertEquals('<div data-test class="test" />', HtmlAssembler::makeDomNode($node));
+
+		$node->appendChild($doc->createTextNode("test content"));
+		$this->assertEquals(
+			'<div data-test class="test">test content</div>',
+			HtmlAssembler::makeDomNode($node)
+		);
+
+		$em = $doc->createElement("em");
+		$em->appendChild($doc->createTextNode('test em'));
+		$node->appendChild($em);
+		$node->appendChild($doc->createTextNode("appendix"));
+		$this->assertEquals(
+			'<div data-test class="test">test content'
+				. '<em>test em</em>appendix</div>',
+			HtmlAssembler::makeDomNode($node)
+		);
+
+		$node->appendChild($doc->createElement("img"));
+		$this->assertEquals(
+			'<div data-test class="test">test content'
+			. '<em>test em</em>appendix<img /></div>',
+			HtmlAssembler::makeDomNode($node)
+		);
+	}
+
 	public function testGetAttributes()
 	{
 		$this->assertEmpty(
@@ -220,5 +266,70 @@ class HtmlAssemblerTest extends TestCase
 				$node
 			)
 		);
+	}
+
+	public function testReadAndBuid()
+	{
+		$html = <<<HTML
+<!doctype html>
+<html dir="ltr" lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Новая вкладка</title>
+    <style>
+      body {
+        background: #FFFFFF;
+        margin: 0;
+      }
+
+      #oneGoogleBar {
+        height: 56px;
+      }
+
+      #backgroundImage {
+        border: none;
+        height: 100%;
+        pointer-events: none;
+        position: fixed;
+        top: 0;
+        visibility: hidden;
+        width: 100%;
+      }
+
+      [show-background-image] #backgroundImage {
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="oneGoogleBar"></div>
+    <iframe id="backgroundImage"
+        src="chrome-untrusted://new-tab-page/custom_background_image?url=">
+    </iframe>
+    <ntp-app></ntp-app>
+    <script type="module" src="new_tab_page.js"></script>
+    <link rel="stylesheet" href="chrome://resources/css/text_defaults_md.css">
+    <link rel="stylesheet" href="shared_vars.css">
+    <div id="oneGoogleBarEndOfBody"></div>
+  </body>
+</html>
+HTML;
+		$tags = [];
+		$reader = HtmlTokenizer::create(StringInputStream::create($html));
+		while(($tag = $reader->nextToken()) !== null) {
+			$tags[] = $tag;
+		}
+		$html = (new HtmlAssembler($tags))->getHtml();
+		/**
+		 * Need one iteration, because original rules of quotes and
+		 * writing tags may difference
+		 */
+		$tags = [];
+		$reader = HtmlTokenizer::create(StringInputStream::create($html));
+		while(($tag = $reader->nextToken()) !== null) {
+			$tags[] = $tag;
+		}
+
+		$this->assertEquals($html, (new HtmlAssembler($tags))->getHtml());
 	}
 }
