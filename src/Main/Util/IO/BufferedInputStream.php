@@ -16,10 +16,10 @@ namespace OnPHP\Main\Util\IO;
 **/
 final class BufferedInputStream extends InputStream
 {
-	private $runAheadBytes	= 0;
+	private int $runAheadBytes = 0;
 
-	private $in				= null;
-	private $closed			= false;
+	private InputStream $in;
+	private bool $closed = false;
 
 	private $buffer			= null;
 	private $bufferLength	= 0;
@@ -33,37 +33,44 @@ final class BufferedInputStream extends InputStream
 	}
 
 	/**
-	 * @return BufferedInputStream
-	**/
-	public static function create(InputStream $in)
+	 * @param InputStream $in
+	 * @return static
+	 */
+	public static function create(InputStream $in): BufferedInputStream
 	{
 		return new self($in);
 	}
 
 	/**
-	 * @return BufferedInputStream
-	**/
-	public function close()
+	 * @return static
+	 */
+	public function close(): BufferedInputStream
 	{
 		$this->closed = true;
 
 		return $this;
 	}
 
-	public function isEof()
+	/**
+	 * @return bool
+	 */
+	public function isEof(): bool
 	{
 		return $this->in->isEof();
 	}
 
-	public function markSupported()
+	/**
+	 * @return bool
+	 */
+	public function markSupported(): bool
 	{
 		return true;
 	}
 
 	/**
-	 * @return BufferedInputStream
-	**/
-	public function mark()
+	 * @return static
+	 */
+	public function mark(): BufferedInputStream
 	{
 		$this->markPosition = $this->position;
 
@@ -71,43 +78,52 @@ final class BufferedInputStream extends InputStream
 	}
 
 	/**
-	 * @return BufferedInputStream
-	**/
-	public function reset()
+	 * @return static
+	 */
+	public function reset(): BufferedInputStream
 	{
 		$this->position = $this->markPosition;
 
 		return $this;
 	}
 
-	public function available()
+	/**
+	 * @return int
+	 */
+	public function available(): int
 	{
-		if ($this->closed)
+		if ($this->closed) {
 			return 0;
+		}
 
 		return ($this->bufferLength - $this->position);
 	}
 
 	/**
-	 * @return BufferedInputStream
-	**/
-	public function setRunAheadBytes($runAheadBytes)
+	 * @param int $runAheadBytes
+	 * @return static
+	 */
+	public function setRunAheadBytes(int $runAheadBytes): BufferedInputStream
 	{
 		$this->runAheadBytes = $runAheadBytes;
 
 		return $this;
 	}
 
-	public function read($count)
+	/**
+	 * @param int $length
+	 * @return string|null
+	 */
+	public function read(int $length): ?string
 	{
 		if ($this->closed)
 			return null;
 
-		$remainingCount = $count;
+		$remainingCount = $length;
 		$availableCount = $this->available();
 
 		if ($remainingCount <= $availableCount)
-			$readFromBuffer = $count;
+			$readFromBuffer = $length;
 		else
 			$readFromBuffer = $availableCount;
 
@@ -148,4 +164,3 @@ final class BufferedInputStream extends InputStream
 		return $result;
 	}
 }
-?>

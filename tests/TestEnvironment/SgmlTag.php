@@ -1,6 +1,6 @@
 <?php
 /***************************************************************************
- *   Copyright (C) 2007 by Ivan Y. Khvostishkov                            *
+ *   Copyright (C) 2021 by Sergei V. Deriabin                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU Lesser General Public License as        *
@@ -9,43 +9,9 @@
  *                                                                         *
  ***************************************************************************/
 
-namespace OnPHP\Main\Markup\Html;
+namespace OnPHP\Tests\TestEnvironment;
 
-/**
- * @ingroup Html
- * @ingroup Module
-**/
-class SgmlToken
+class SgmlTag extends \OnPHP\Main\Markup\Html\SgmlTag
 {
-	/**
-	 * @var string|null
-	 */
-	private ?string $value	= null;
 
-	/**
-	 * @return static
-	 */
-	public static function create(): SgmlToken
-	{
-		return new static;
-	}
-
-	/**
-	 * @param string|null $value
-	 * @return static
-	 */
-	public function setValue(?string $value): SgmlToken
-	{
-		$this->value = $value;
-
-		return $this;
-	}
-
-	/**
-	 * @return string|null
-	 */
-	public function getValue(): ?string
-	{
-		return $this->value;
-	}
 }

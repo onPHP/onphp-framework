@@ -16,29 +16,28 @@ namespace OnPHP\Main\Markup\Html;
 **/
 final class SgmlIgnoredTag extends SgmlTag
 {
-	private $cdata		= null;
-	private $endMark	= null;
+	/**
+	 * @var Cdata|null
+	 */
+	private ?Cdata $cdata = null;
+	/**
+	 * @var string|null
+	 */
+	private ?string $endMark = null;
 
 	/**
-	 * @return SgmlIgnoredTag
-	**/
-	public static function create()
-	{
-		return new self;
-	}
-
-	/**
-	 * @return SgmlIgnoredTag
-	**/
-	public static function comment()
+	 * @return static
+	 */
+	public static function comment(): SgmlIgnoredTag
 	{
 		return self::create()->setId('!--')->setEndMark('--');
 	}
 
 	/**
-	 * @return SgmlIgnoredTag
-	**/
-	public function setCdata(Cdata $cdata)
+	 * @param Cdata $cdata
+	 * @return static
+	 */
+	public function setCdata(Cdata $cdata): SgmlIgnoredTag
 	{
 		$this->cdata = $cdata;
 
@@ -46,36 +45,45 @@ final class SgmlIgnoredTag extends SgmlTag
 	}
 
 	/**
-	 * @return Cdata
-	**/
-	public function getCdata()
+	 * @return Cdata|null
+	 */
+	public function getCdata(): ?Cdata
 	{
 		return $this->cdata;
 	}
 
 	/**
-	 * @return SgmlIgnoredTag
-	**/
-	public function setEndMark($endMark)
+	 * @param string $endMark
+	 * @return static
+	 */
+	public function setEndMark(string $endMark): SgmlIgnoredTag
 	{
 		$this->endMark = $endMark;
 
 		return $this;
 	}
 
-	public function getEndMark()
+	/**
+	 * @return string|null
+	 */
+	public function getEndMark(): ?string
 	{
 		return $this->endMark;
 	}
 
-	public function isComment()
+	/**
+	 * @return bool
+	 */
+	public function isComment(): bool
 	{
 		return $this->getId() == '!--';
 	}
 
-	public function isExternal()
+	/**
+	 * @return bool
+	 */
+	public function isExternal(): bool
 	{
 		return mb_substr($this->getId() ?? '', 0, 1) == '?';
 	}
 }
-?>

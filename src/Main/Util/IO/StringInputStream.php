@@ -18,52 +18,60 @@ use OnPHP\Core\Base\Assert;
 **/
 final class StringInputStream extends InputStream
 {
-	private $string		= null;
-	private $length		= null;
+	private string $string;
+	private ?int $length    = null;
 
-	private $position	= 0;
-	private $mark		= 0;
+	private int $position	= 0;
+	private int $mark		= 0;
 
-	public function __construct($string)
+	/**
+	 * @param string $string
+	 */
+	public function __construct(string $string)
 	{
-		Assert::isString($string);
-
 		$this->string = $string;
 		$this->length = strlen($string);
 	}
 
 	/**
-	 * @return StringInputStream
-	**/
-	public static function create($string)
+	 * @param string $string
+	 * @return self
+	 */
+	public static function create(string $string): StringInputStream
 	{
 		return new self($string);
 	}
 
-	public function isEof()
+	/**
+	 * @return bool
+	 */
+	public function isEof(): bool
 	{
 		return ($this->position >= $this->length);
 	}
 
 	/**
-	 * @return StringInputStream
-	**/
-	public function mark()
+	 * @return static
+	 */
+	public function mark(): StringInputStream
 	{
 		$this->mark = $this->position;
 
 		return $this;
 	}
 
-	public function markSupported()
+	/**
+	 * @return bool
+	 */
+	public function markSupported():bool
 	{
 		return true;
 	}
 
 	/**
-	 * @return StringInputStream
-	**/
-	public function reset()
+	 * @return static
+	 */
+	public function reset(): StringInputStream
 	{
 		$this->position = $this->mark;
 
@@ -71,16 +79,20 @@ final class StringInputStream extends InputStream
 	}
 
 	/**
-	 * @return StringInputStream
-	**/
-	public function close()
+	 * @return static
+	 */
+	public function close(): StringInputStream
 	{
 		$this->string = null;
 
 		return $this;
 	}
 
-	public function read($count)
+	/**
+	 * @param int $count
+	 * @return string|null
+	 */
+	public function read(int $count): ?string
 	{
 		if (!$this->string || $this->isEof())
 			return null;
@@ -88,7 +100,7 @@ final class StringInputStream extends InputStream
 		if ($count == 1) {
 			$result = $this->string[(int)$this->position];
 		} else {
-			$result = substr($this->string, $this->position, $count);
+			$result = mb_substr($this->string, $this->position, $count);
 		}
 
 		$this->position += $count;
@@ -96,4 +108,3 @@ final class StringInputStream extends InputStream
 		return $result;
 	}
 }
-?>

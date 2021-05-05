@@ -11,6 +11,9 @@
 
 namespace OnPHP\Main\Markup\Html;
 
+use DOMCharacterData;
+use DOMElement;
+use DOMNode;
 use OnPHP\Core\Base\Assert;
 use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Core\Exception\UnimplementedFeatureException;
@@ -20,90 +23,104 @@ use OnPHP\Core\Exception\UnimplementedFeatureException;
 **/
 final class HtmlAssembler
 {
-	private $tags	= null;
+	/**
+	 * @var SgmlToken[]
+	 */
+	private array $tags	= [];
 
-	public function __construct($tags)
+	/**
+	 * @param SgmlToken[] $tags
+	 * @throws WrongArgumentException
+	 */
+	public function __construct(array $tags)
 	{
-		Assert::isTrue(current($tags) instanceof SgmlToken);
+		array_map(function ($item) {
+			Assert::isInstance($item, SgmlToken::class);
+		}, $tags ?? []);
 
 		$this->tags = $tags;
 	}
 
+	/**
+	 * @param SgmlToken $tag
+	 * @return string|null
+	 * @throws WrongArgumentException
+	 */
 	public static function makeTag(SgmlToken $tag)
 	{
-		if ($tag instanceof Cdata)
-			$result = $tag->getData();
-		elseif ($tag instanceof SgmlIgnoredTag) {
+		if ($tag instanceof Cdata) {
+			return $tag->getData();
+		} elseif ($tag instanceof SgmlIgnoredTag) {
 			Assert::isNotNull($tag->getId());
 
-			$result = '<'.$tag->getId()
-				.$tag->getCdata()->getData()
+			return '<'.$tag->getId()
+				.($tag->getCdata() instanceof Cdata ? $tag->getCdata()->getData() : '')
 				.$tag->getEndMark().'>';
-
 		} elseif ($tag instanceof SgmlOpenTag) {
 			Assert::isNotNull($tag->getId());
 
 			$attributes = self::getAttributes($tag);
 
-			$result = '<'.$tag->getId()
-				.($attributes ? ' '.$attributes : null)
-				.($tag->isEmpty() ? '/' : null).'>';
-
+			return '<'.$tag->getId()
+				.($attributes ? ' '.$attributes : '')
+				.($tag->isEmpty() ? '/' : '').'>';
 		} elseif ($tag instanceof SgmlEndTag) {
-			$result = '</'.$tag->getId().'>';
+			Assert::isNotNull($tag->getId());
 
-		} else
-			throw new WrongArgumentException(
-				"don't know how to assemble tag class '"
-				.get_class($tag)."'"
-			);
+			return '</'.$tag->getId().'>';
+		}
 
-		return $result;
+		throw new WrongArgumentException(
+			"don't know how to assemble tag class '"
+			.get_class($tag)."'"
+		);
 	}
 
-	public static function makeDomNode(\DOMNode $node)
+	/**
+	 * @param DOMNode $node
+	 * @return string|null
+	 * @throws UnimplementedFeatureException
+	 */
+	public static function makeDomNode(DOMNode $node): ?string
 	{
-			$result = null;
+		if ($node instanceof DOMElement) {
+			$result = '<' . $node->nodeName;
+			$attributes = self::getDomAttributes($node);
 
-			if ($node instanceof \DOMElement) {
-
-					$result = '<'.$node->nodeName;
-
-					$attributes = self::getDomAttributes($node);
-
-					if ($attributes)
-							$result .= ' '.$attributes;
-
-					if (!$node->firstChild) {
-							$result .= ' />';
-					} else {
-							$result .= '>';
-					}
-
-					$childNode = $node->firstChild;
-
-					while ($childNode) {
-							$result .= self::makeDomNode($childNode);
-							$childNode = $childNode->nextSibling;
-					}
-
-					if ($node->firstChild)
-							$result .= '</'.$node->nodeName.'>';
-
-			} elseif ($node instanceof \DOMCharacterData) {
-
-					$result = $node->data;
-
-			} else {
-					throw new UnimplementedFeatureException(
-							'assembling of '.get_class($node).' is not implemented yet'
-					);
+			if ($attributes) {
+				$result .= ' ' . $attributes;
 			}
 
+			if (null === $node->firstChild) {
+				$result .= ' />';
+			} else {
+				$result .= '>';
+			}
+
+			$childNode = $node->firstChild;
+			while ($childNode) {
+				$result .= self::makeDomNode($childNode);
+				$childNode = $childNode->nextSibling;
+			}
+
+			if ($node->firstChild) {
+				$result .= '</' . $node->nodeName . '>';
+			}
 			return $result;
+		} elseif ($node instanceof DOMCharacterData) {
+			return $node->data;
+		}
+
+		throw new UnimplementedFeatureException(
+			'assembling of '.get_class($node).' is not implemented yet'
+		);
 	}
 
-	public function getHtml()
+	/**
+	 * @return string|null
+	 * @throws WrongArgumentException
+	 */
+	public function getHtml(): ?string
 	{
 		$result = null;
 
@@ -114,43 +131,50 @@ final class HtmlAssembler
 		return $result;
 	}
 
-	private static function getAttributes(SgmlOpenTag $tag)
+	/**
+	 * @param SgmlOpenTag $tag
+	 * @return string
+	 */
+	private static function getAttributes(SgmlOpenTag $tag): string
 	{
 		$attributes = array();
 
 		foreach ($tag->getAttributesList() as $name => $value) {
-			if ($value === null)
-				$quotedValue = null;
-			else
-				// FIXME: is multibyte safe?
-				$quotedValue = '="'.preg_replace('/\"/u', '&quot;', $value).'"';
-
-			$attributes[] = $name.$quotedValue;
+			$attributes[] =
+				$name
+				. (
+					$value === null
+						? ''
+						: '="' . preg_replace('/\"/u', '&quot;', $value) . '"'
+				);
 		}
 
 		return implode(' ', $attributes);
 	}
 
-	private static function getDomAttributes(\DOMNode $node)
+	/**
+	 * @param DOMNode $node
+	 * @return string
+	 */
+	private static function getDomAttributes(DOMNode $node): string
 	{
-		$result = null;
-
-		$attributes = array();
-
-		if ($node->attributes) {
-			$i = 0;
-
-			while ($item = $node->attributes->item($i)) {
-				$attributes[] = $item->name.'="'.$item->value.'"';
-
-				++$i;
-			}
+		if ($node->attributes->length === 0) {
+			return '';
 		}
 
-		if ($attributes)
-			$result = implode(' ', $attributes);
+		$attributes = array();
+		$i = 0;
 
-		return $result;
+		while ($item = $node->attributes->item($i++)) {
+			$attributes[] =
+				$item->name
+				. (
+					$item->value
+						? '="' . preg_replace('/\"/u', '&quot;', $item->value) . '"'
+						: ''
+				);
+		}
+
+		return implode(' ', $attributes);
 	}
 }
-?>

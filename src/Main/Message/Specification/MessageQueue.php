@@ -12,5 +12,3 @@
 namespace OnPHP\Main\Message\Specification;
 
 interface MessageQueue { /* nop */ }
-
-?>

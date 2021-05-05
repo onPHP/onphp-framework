@@ -30,20 +30,31 @@ final class SocketInputStream extends InputStream
 	**/
 	const READ_ATTEMPTS = 15; // should be enough for everyone (C)
 
-	private $socket	= null;
-	private $eof	= false;
+	private Socket $socket;
+	private bool $eof = false;
 
+	/**
+	 * @param Socket $socket
+	 */
 	public function __construct(Socket $socket)
 	{
 		$this->socket = $socket;
 	}
 
-	public function isEof()
+	/**
+	 * @return bool
+	 */
+	public function isEof(): bool
 	{
 		return $this->eof;
 	}
 
-	public function read($length)
+	/**
+	 * @param int $length
+	 * @return string|null
+	 * @throws IOException
+	 */
+	public function read(int $length): ?string
 	{
 		if ($length == 0 || $this->eof)
 			return null;
@@ -88,4 +99,3 @@ final class SocketInputStream extends InputStream
 		return $result;
 	}
 }
-?>
