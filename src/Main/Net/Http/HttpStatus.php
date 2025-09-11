@@ -54,6 +54,8 @@ final class HttpStatus extends Enumeration
 	const CODE_415	= 415;
 	const CODE_416	= 416;
 	const CODE_417	= 417;
+	const CODE_422  = 422;
+	const CODE_429  = 429;
 	const CODE_500	= 500;
 	const CODE_501	= 501;
 	const CODE_502	= 502;
@@ -97,6 +99,8 @@ final class HttpStatus extends Enumeration
 		self::CODE_415 => 'Unsupported Media Type',
 		self::CODE_416 => 'Requested range not satisfiable',
 		self::CODE_417 => 'Expectation Failed',
+		self::CODE_422 => 'Unprocessable Entity',
+		self::CODE_429 => 'Too Many Requests',
 		self::CODE_500 => 'Internal Server Error',
 		self::CODE_501 => 'Not Implemented',
 		self::CODE_502 => 'Bad Gateway',

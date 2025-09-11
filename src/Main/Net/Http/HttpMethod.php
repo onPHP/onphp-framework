@@ -34,8 +34,9 @@ final class HttpMethod extends Enumeration
 	const MOVE		= 13;
 	const LOCK		= 14;
 	const UNLOCK	= 15;
+	const PATCH		= 16;
 
-	protected $names = array(
+	protected $names = [
 		self::OPTIONS 	=> 'OPTIONS',
 		self::GET		=> 'GET',
 		self::HEAD		=> 'HEAD',
@@ -51,7 +52,8 @@ final class HttpMethod extends Enumeration
 		self::MOVE		=> 'MOVE',
 		self::LOCK		=> 'LOCK',
 		self::UNLOCK 	=> 'UNLOCK',
-	);
+		self::PATCH     => 'PATCH'
+	];
 
 	public static function get()
 	{
