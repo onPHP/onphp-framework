@@ -17,21 +17,35 @@ namespace OnPHP\Main\Markup\Html;
 **/
 class SgmlToken
 {
-	private $value	= null;
+	/**
+	 * @var string|null
+	 */
+	private ?string $value	= null;
 
 	/**
-	 * @return SgmlToken
-	**/
-	public function setValue($value)
+	 * @return static
+	 */
+	public static function create(): SgmlToken
+	{
+		return new static;
+	}
+
+	/**
+	 * @param string|null $value
+	 * @return static
+	 */
+	public function setValue(?string $value): SgmlToken
 	{
 		$this->value = $value;
 
 		return $this;
 	}
 
-	public function getValue()
+	/**
+	 * @return string|null
+	 */
+	public function getValue(): ?string
 	{
 		return $this->value;
 	}
 }
-?>

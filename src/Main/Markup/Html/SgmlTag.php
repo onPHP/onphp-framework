@@ -17,21 +17,27 @@ namespace OnPHP\Main\Markup\Html;
 **/
 abstract class SgmlTag extends SgmlToken
 {
-	private $id = null;
+	/**
+	 * @var string|null
+	 */
+	private ?string $id = null;
 
 	/**
-	 * @return SgmlTag
-	**/
-	public function setId($id)
+	 * @param string|null $id
+	 * @return static
+	 */
+	public function setId(?string $id): SgmlTag
 	{
 		$this->id = $id;
 
 		return $this;
 	}
 
-	public function getId()
+	/**
+	 * @return string|null
+	 */
+	public function getId(): ?string
 	{
 		return $this->id;
 	}
 }
-?>

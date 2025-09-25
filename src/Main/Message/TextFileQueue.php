@@ -15,36 +15,58 @@ use OnPHP\Main\Message\Specification\MessageQueue;
 
 class TextFileQueue implements MessageQueue
 {
-	private $fileName	= null;
-	private $offset		= null;
+	/**
+	 * @var string|null
+	 */
+	private ?string $fileName = null;
+	/**
+	 * @var int|null
+	 */
+	private ?int $offset = 0;
 
-	public static function create()
+	/**
+	 * @return static
+	 */
+	public static function create(): TextFileQueue
 	{
-		return new self;
+		return new static;
 	}
 
-	public function setFileName($fileName)
+	/**
+	 * @param string $fileName
+	 * @return static
+	 */
+	public function setFileName(?string $fileName): TextFileQueue
 	{
 		$this->fileName = $fileName;
 
 		return $this;
 	}
 
-	public function getFileName()
+	/**
+	 * @return string|null
+	 */
+	public function getFileName(): ?string
 	{
 		return $this->fileName;
 	}
 
-	public function setOffset($offset)
+	/**
+	 * @param int $offset
+	 * @return static
+	 */
+	public function setOffset(int $offset): TextFileQueue
 	{
 		$this->offset = $offset;
 
 		return $this;
 	}
 
-	public function getOffset()
+	/**
+	 * @return int
+	 */
+	public function getOffset(): int
 	{
 		return $this->offset;
 	}
 }
-?>

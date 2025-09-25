@@ -16,11 +16,10 @@ interface MessageQueueReceiver
 	/**
 	 * @return Message
 	**/
-	public function receive($uTimeout = null);
+	public function receive(int $uTimeout = null);
 
 	/**
 	 * @return MessageQueue
 	**/
 	public function getQueue();
 }
-?>

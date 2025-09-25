@@ -11,6 +11,8 @@
 
 namespace OnPHP\Main\Markup\Html;
 
+use OnPHP\Core\Exception\IOException;
+use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Main\Util\IO\InputStream;
 use OnPHP\Core\Base\Assert;
 use OnPHP\Core\Exception\WrongStateException;
@@ -40,16 +42,21 @@ final class HtmlTokenizer
 	const ID_FIRST_CHAR_MASK	= '[A-Za-z]';
 	const ID_CHAR_MASK			= '[-_:.A-Za-z0-9]';
 
-	private $inlineTags			= array('style', 'script', 'textarea');
+	/**
+	 * @var string[]
+	 */
+	private array $inlineTags       = array('style', 'script', 'textarea');
+	/**
+	 * @var InputStream|null
+	 */
+	private InputStream $stream;
 
-	private $stream		= null;
-
-	private $char		= null;
+	private ?string $char           = null;
 
 	// for logging
-	private $line			= 1;
-	private $linePosition	= 1;
-	private $previousChar	= null;
+	private int $line               = 1;
+	private int $linePosition       = 1;
+	private ?string $previousChar   = null;
 
 	private $mark		= null;
 
@@ -76,6 +83,9 @@ final class HtmlTokenizer
 	private $lowercaseAttributes	= false;
 	private $lowercaseTags			= false;
 
+	/**
+	 * @param InputStream $stream
+	 */
 	public function __construct(InputStream $stream)
 	{
 		$this->stream = $stream;
@@ -84,101 +94,126 @@ final class HtmlTokenizer
 	}
 
 	/**
-	 * @return HtmlTokenizer
-	**/
-	public static function create(InputStream $stream)
+	 * @param InputStream $stream
+	 * @return static
+	 */
+	public static function create(InputStream $stream): HtmlTokenizer
 	{
 		return new self($stream);
 	}
 
 	/**
-	 * @return HtmlTokenizer
-	**/
-	public function suppressWhitespaces($isSuppressWhitespaces)
+	 * @param bool $isSuppressWhitespaces
+	 * @return static
+	 */
+	public function suppressWhitespaces(bool $isSuppressWhitespaces): HtmlTokenizer
 	{
-		Assert::isBoolean($isSuppressWhitespaces);
-
 		$this->suppressWhitespaces = $isSuppressWhitespaces;
 
 		return $this;
 	}
 
 	/**
-	 * @return HtmlTokenizer
-	**/
-	public function lowercaseAttributes($isLowercaseAttributes)
+	 * @param bool $isLowercaseAttributes
+	 * @return static
+	 */
+	public function lowercaseAttributes(bool $isLowercaseAttributes): HtmlTokenizer
 	{
-		Assert::isBoolean($isLowercaseAttributes);
-
 		$this->lowercaseAttributes = $isLowercaseAttributes;
 
 		return $this;
 	}
 
 	/**
-	 * @return HtmlTokenizer
-	**/
-	public function lowercaseTags($isLowercaseTags)
+	 * @param bool $isLowercaseTags
+	 * @return static
+	 */
+	public function lowercaseTags(bool $isLowercaseTags): HtmlTokenizer
 	{
-		Assert::isBoolean($isLowercaseTags);
-
 		$this->lowercaseTags = $isLowercaseTags;
 
 		return $this;
 	}
 
 	/**
-	 * @return SgmlToken
-	**/
-	public function nextToken()
+	 * @return SgmlToken|null
+	 * @throws IOException
+	 * @throws WrongArgumentException
+	 * @throws WrongStateException
+	 */
+	public function nextToken(): ?SgmlToken
 	{
-		if ($this->state == self::FINAL_STATE)
+		if ($this->state == self::FINAL_STATE) {
 			return null;
+		}
 
 		$this->completeTag = null;
 
-		while ($this->state != self::FINAL_STATE && !$this->completeTag)
+		while ($this->state != self::FINAL_STATE && !$this->completeTag) {
 			$this->state = $this->handleState();
+		}
 
-		if ($this->state == self::FINAL_STATE && $this->char !== null)
+		if ($this->state == self::FINAL_STATE && $this->char !== null) {
 			throw new WrongStateException('state machine is broken');
-
+		}
 		$this->previousTag = $this->completeTag;
 
 		return $this->completeTag;
 	}
 
-	public function getErrors()
+	/**
+	 * @return array
+	 */
+	public function getErrors(): array
 	{
 		return $this->errors;
 	}
 
-	public static function isIdFirstChar($char)
+	/**
+	 * @param $char
+	 * @return bool
+	 */
+	public static function isIdFirstChar($char): bool
 	{
-		return (preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $char) > 0);
+		return preg_match('/'.self::ID_FIRST_CHAR_MASK.'/', $char) > 0;
 	}
 
-	public static function isIdChar($char)
+	/**
+	 * @param string $char
+	 * @return bool
+	 */
+	public static function isIdChar(string $char): bool
 	{
-		return (preg_match('/'.self::ID_CHAR_MASK.'/', $char) > 0);
+		return preg_match('/'.self::ID_CHAR_MASK.'/', $char) > 0;
 	}
 
-	public static function isValidId($id)
+	/**
+	 * @param string $id
+	 * @return bool
+	 */
+	public static function isValidId(string $id): bool
 	{
-		$matches = preg_match(
-			'/^'.self::ID_FIRST_CHAR_MASK.self::ID_CHAR_MASK.'*$/',
-			$id
-		);
-
-		return ($matches > 0);
+		return
+			preg_match(
+				'/^'.self::ID_FIRST_CHAR_MASK.self::ID_CHAR_MASK.'*$/',
+				$id
+			) > 0;
 	}
 
-	public static function isSpacerChar($char)
+	/**
+	 * @param string $char
+	 * @return bool
+	 */
+	public static function isSpacerChar(string $char): bool
 	{
-		return (preg_match('/'.self::SPACER_MASK.'/', $char) > 0);
+		return preg_match('/'.self::SPACER_MASK.'/', $char) > 0;
 	}
 
-	public static function removeWhitespaces(Cdata $cdata)
+	/**
+	 * @param Cdata $cdata
+	 * @return Cdata|null
+	 */
+	public static function removeWhitespaces(Cdata $cdata): ?Cdata
 	{
 		$string = $cdata->getData();
 
@@ -187,40 +222,50 @@ final class HtmlTokenizer
 			' ',
 			$string
 		);
-
 		$string = preg_replace(
 			'/'.self::SPACER_MASK.'+$/',
 			' ',
 			$string
 		);
 
-		if ($string === '' || $string === null)
-			return null;
-
-		$cdata->setData($string);
-
-		return $cdata;
+		return
+			empty($string)
+				? null
+				: $cdata->setData($string);
 	}
 
-	public function isInlineTag($id)
+	/**
+	 * @param string $id
+	 * @return bool
+	 */
+	public function isInlineTag(string $id): bool
 	{
 		return in_array($id, $this->inlineTags);
 	}
 
-	private static function optionalLowercase($string, $ignoreCase)
+	/**
+	 * @param string $string
+	 * @param bool $ignoreCase
+	 * @return string
+	 */
+	private static function optionalLowercase(string $string, bool $ignoreCase): string
 	{
-		if (!$ignoreCase)
-			return $string;
-		else
-			return strtolower($string);
+		return
+			$ignoreCase
+				? mb_strtolower($string)
+				: $string;
 	}
 
-	private function getNextChar()
+	/**
+	 * @return string|null
+	 */
+	private function getNextChar(): ?string
 	{
 		$this->char = $this->stream->read(1);
 
-		if ($this->char === null)
+		if ($this->char === null) {
 			return null;
+		}
 
 		if (
 			$this->char == "\n" && $this->previousChar != "\r"
@@ -231,13 +276,16 @@ final class HtmlTokenizer
 		} else {
 			++$this->linePosition;
 		}
-
 		$this->previousChar = $this->char;
 
 		return $this->char;
 	}
 
-	private function getChars($count)
+	/**
+	 * @param int $count
+	 * @return string|null
+	 */
+	private function getChars(int $count): ?string
 	{
 		$result = null;
 
@@ -253,30 +301,35 @@ final class HtmlTokenizer
 	}
 
 	/**
-	 * @return HtmlTokenizer
-	**/
-	private function mark()
+	 * @return static
+	 */
+	private function mark(): HtmlTokenizer
 	{
 		$this->mark = array(
-			$this->char, $this->previousChar,
-			$this->line, $this->linePosition
+			$this->char,
+			$this->previousChar,
+			$this->line,
+			$this->linePosition
 		);
-
 		$this->stream->mark();
 
 		return $this;
 	}
 
 	/**
-	 * @return HtmlTokenizer
-	**/
-	private function reset()
+	 * @return static
+	 * @throws IOException
+	 * @throws WrongArgumentException
+	 */
+	private function reset(): HtmlTokenizer
 	{
 		Assert::isNotNull($this->mark);
 
 		list (
-			$this->char, $this->previousChar,
-			$this->line, $this->linePosition
+			$this->char,
+			$this->previousChar,
+			$this->line,
+			$this->linePosition
 		) = $this->mark;
 
 		$this->stream->reset();
@@ -285,28 +338,40 @@ final class HtmlTokenizer
 	}
 
 	/**
-	 * @return HtmlTokenizer
-	**/
-	private function skip($count)
+	 * @param int $count
+	 * @return static
+	 */
+	private function skip(int $count): HtmlTokenizer
 	{
-		for ($i = 0; $i < $count; ++$i)
+		for ($i = 0; $i < $count; ++$i) {
 			$this->getNextChar();
+		}
 
 		return $this;
 	}
 
-	private function lookAhead($count)
+	/**
+	 * @param int $count
+	 * @return string
+	 * @throws IOException
+	 */
+	private function lookAhead(int $count): string
 	{
 		$this->stream->mark();
-
 		$result = $this->stream->read($count);
-
 		$this->stream->reset();
 
 		return $result;
 	}
 
-	private function skipString($string, $skipSpaces = false)
+	/**
+	 * @param string $string
+	 * @param bool $skipSpaces
+	 * @return bool
+	 * @throws IOException
+	 * @throws WrongArgumentException
+	 */
+	private function skipString(string $string, bool $skipSpaces = false): bool
 	{
 		$this->mark();
 
@@ -314,14 +379,16 @@ final class HtmlTokenizer
 			while (
 				$this->char !== null
 				&& self::isSpacerChar($this->char)
-			)
+			) {
 				$this->getNextChar();
+			}
 		}
 
-		$length = strlen($string);
+		$length = mb_strlen($string);
 
-		if ($this->getChars($length) === $string)
+		if ($this->getChars($length) === $string) {
 			return true;
+		}
 
 		$this->reset();
 
@@ -330,22 +397,22 @@ final class HtmlTokenizer
 
 	/**
 	 * @return HtmlTokenizer
-	**/
-	private function makeTag()
+	 * @throws WrongArgumentException
+	 */
+	private function makeTag(): HtmlTokenizer
 	{
 		Assert::isNotNull($this->tag);
-
 		Assert::isNull($this->attrName);
 		Assert::isNull($this->attrValue);
-
 		Assert::isNull($this->insideQuote);
 
 		if (
 			!$this->suppressWhitespaces
 			|| !$this->tag instanceof Cdata
 			|| (self::removeWhitespaces($this->tag) !== null)
-		)
+		) {
 			$this->tags[] = $this->completeTag = $this->tag;
+		}
 
 		$this->tagId = $this->tag = null;
 
@@ -353,21 +420,28 @@ final class HtmlTokenizer
 	}
 
 	/**
+	 * @param SgmlTag $tag
 	 * @return SgmlTag
-	**/
-	private function setupTag(SgmlTag $tag)
+	 * @throws WrongArgumentException
+	 */
+	private function setupTag(SgmlTag $tag): SgmlTag
 	{
 		Assert::isNull($this->tag);
 		Assert::isNotNull($this->tagId);
 
 		$this->tag = $tag->setId($this->tagId);
-
 		$this->tagId = null;
 
 		return $this->tag;
 	}
 
-	private function handleState()
+	/**
+	 * @return int
+	 * @throws IOException
+	 * @throws WrongArgumentException
+	 * @throws WrongStateException
+	 */
+	private function handleState(): int
 	{
 		switch ($this->state) {
 			case self::INITIAL_STATE:
@@ -375,10 +449,11 @@ final class HtmlTokenizer
 				if (
 					$this->previousTag instanceof SgmlOpenTag
 					&& $this->isInlineTag($this->previousTag->getId())
-				)
+				) {
 					return $this->inlineTagState();
-				else
-					return $this->outsideTagState();
+				}
+
+				return $this->outsideTagState();
 
 			case self::START_TAG_STATE:
 				return $this->startTagState();
@@ -415,25 +490,30 @@ final class HtmlTokenizer
 	}
 
 	/**
-	 * @return HtmlTokenizer
-	**/
-	private function dumpBuffer()
+	 * @return static
+	 * @throws WrongArgumentException
+	 */
+	private function dumpBuffer(): HtmlTokenizer
 	{
 		if ($this->buffer !== null) {
 			$this->tag = Cdata::create()->setData($this->buffer);
-
 			$this->buffer = null;
-
 			$this->makeTag();
 		}
 
 		return $this;
 	}
 
-	private function checkSpecialTagState()
+	/**
+	 * @return bool|null
+	 * @throws IOException
+	 * @throws WrongArgumentException
+	 */
+	private function checkSpecialTagState(): ?bool
 	{
-		if ($this->char != '!')
+		if ($this->char != '!') {
 			return null;
+		}
 
 		$specialStartTags = array(
 			'![CDATA['	=> self::CDATA_STATE,
@@ -441,34 +521,34 @@ final class HtmlTokenizer
 		);
 
 		foreach ($specialStartTags as $tag => $state) {
-
-			if ($this->skipString($tag))
+			if ($this->skipString($tag)) {
 				return $state;
+			}
 		}
 
 		return null;
 	}
 
-	// INITIAL_STATE
-	private function outsideTagState()
+	/**
+	 * INITIAL_STATE
+	 * @return int
+	 * @throws IOException
+	 * @throws WrongArgumentException
+	 */
+	private function outsideTagState(): int
 	{
 		Assert::isNull($this->tag);
 		Assert::isNull($this->tagId);
-
 		Assert::isNull($this->attrName);
 		Assert::isNull($this->attrValue);
-
 		Assert::isNull($this->insideQuote);
 
 		while ($this->char !== null) {
 
 			if ($this->char != '<') {
-
 				$this->buffer .= $this->char;
 				$this->getNextChar();
-
 			} else {
-
 				$this->getNextChar();
 
 				if (
@@ -486,29 +566,22 @@ final class HtmlTokenizer
 					}
 
 					$this->tagId = $this->char;
-
 					$this->getNextChar();
 
 					return self::START_TAG_STATE;
-
 				} elseif ($this->char == '/') {
 					// </
 
-					$this->dumpBuffer();
-
-					$this->getNextChar();
+					$this
+						->dumpBuffer()
+						->getNextChar();
 
 					return self::END_TAG_STATE;
-
 				} else {
 					// <2, <ф, <[space], <>, <[eof]
 
-					$this->warning(
-						'incorrect start-tag, treating it as cdata'
-					);
-
+					$this->warning('incorrect start-tag, treating it as cdata');
 					$this->buffer .= '<'.$this->char;
-
 					$this->getNextChar();
 
 					continue;
@@ -525,41 +598,42 @@ final class HtmlTokenizer
 
 	/**
 	 * @return SgmlOpenTag
-	**/
-	private function createOpenTag()
+	 * @throws WrongArgumentException
+	 */
+	private function createOpenTag(): SgmlOpenTag
 	{
-		if (!self::isValidId($this->tagId))
+		if (!self::isValidId($this->tagId)) {
 			$this->error("tag id '{$this->tagId}' is invalid");
-		elseif ($this->lowercaseTags)
+		} elseif ($this->lowercaseTags) {
 			$this->tagId = strtolower($this->tagId);
+		}
 
 		return $this->setupTag(SgmlOpenTag::create());
 	}
 
-	// START_TAG_STATE
-	private function startTagState()
+	/**
+	 * START_TAG_STATE
+	 * @return int
+	 * @throws WrongArgumentException
+	 */
+	private function startTagState(): int
 	{
 		Assert::isNull($this->tag);
-		Assert::isNotNull($this->tagId); // strlen(tagId) == 1
-
+		Assert::isNotNull($this->tagId); // mb_strlen(tagId) == 1
 		Assert::isNull($this->attrName);
 		Assert::isNull($this->attrValue);
-
 		Assert::isNull($this->insideQuote);
 
 		while ($this->char !== null) {
-
 			if ($this->char == '>') {
 				// <b>, <divмусор>
 
 				$this->createOpenTag();
-
-				$this->makeTag();
-
-				$this->getNextChar();
+				$this
+					->makeTag()
+					->getNextChar();
 
 				return self::INITIAL_STATE;
-
 			} elseif (self::isSpacerChar($this->char)) {
 				// <p[space], <divмусор[space], <?php[space],
 				// <?xml[space], <!DOCTYPE[space]
@@ -567,7 +641,6 @@ final class HtmlTokenizer
 				$externalTag =
 					($this->tagId[0] == '?')
 					&& ($this->tagId != '?xml');
-
 				$doctypeTag = (strtoupper($this->tagId) == '!DOCTYPE');
 
 				if ($externalTag) {
@@ -577,19 +650,20 @@ final class HtmlTokenizer
 					);
 				} elseif ($doctypeTag) {
 					$this->setupTag(SgmlIgnoredTag::create());
-				} else
+				} else {
 					$this->createOpenTag();
-
-				if ($externalTag)
-					return self::EXTERNAL_TAG_STATE;
-				elseif ($doctypeTag)
-					return self::DOCTYPE_TAG_STATE;
-				else {
-					// don't eating spacer for external and doctype tags
-					$this->getNextChar();
-
-					return self::INSIDE_TAG_STATE;
 				}
+
+				if ($externalTag) {
+					return self::EXTERNAL_TAG_STATE;
+				} elseif ($doctypeTag) {
+					return self::DOCTYPE_TAG_STATE;
+				}
+
+				// don't eating spacer for external and doctype tags
+				$this->getNextChar();
+
+				return self::INSIDE_TAG_STATE;
 			} else {
 				$char = $this->char;
 
@@ -599,10 +673,9 @@ final class HtmlTokenizer
 					// <br/>
 
 					$this->createOpenTag()->setEmpty(true);
-
-					$this->makeTag();
-
-					$this->getNextChar();
+					$this
+						->makeTag()
+						->getNextChar();
 
 					return self::INITIAL_STATE;
 				}
@@ -614,77 +687,70 @@ final class HtmlTokenizer
 		// ... <tag[end-of-file]
 
 		$this->error('unexpected end of file, tag id is incomplete');
-
 		$this->createOpenTag();
-
 		$this->makeTag();
 
 		return self::FINAL_STATE;
 	}
 
 	/**
-	 * @return HtmlTokenizer
-	**/
-	private function dumpEndTag()
+	 * @return static
+	 * @throws WrongArgumentException
+	 */
+	private function dumpEndTag(): HtmlTokenizer
 	{
 		if (!$this->tagId) {
 			// </>
 			$this->warning('empty end-tag, storing with empty id');
-
 		} elseif (!self::isValidId($this->tagId)) {
-
 			$this->error("end-tag id '{$this->tagId}' is invalid");
 		}
 
-		$this->tag = SgmlEndTag::create()->
-			setId(
-				self::optionalLowercase($this->tagId, $this->lowercaseTags)
-			);
-
+		$this->tag =
+			SgmlEndTag::create()->
+				setId(
+					self::optionalLowercase($this->tagId, $this->lowercaseTags)
+				);
 		$this->makeTag();
 
 		return $this;
 	}
 
-	// END_TAG_STATE
-	private function endTagState()
+	/**
+	 * END_TAG_STATE
+	 * @return int
+	 * @throws WrongArgumentException
+	 */
+	private function endTagState(): int
 	{
 		Assert::isNull($this->tag);
-
 		Assert::isTrue(
 			$this->tagId === null
 			|| $this->char == '>'
 			|| self::isSpacerChar($this->char)
 		);
-
 		Assert::isNull($this->attrName);
 		Assert::isNull($this->attrValue);
-
 		Assert::isNull($this->insideQuote);
 
 		$eatingGarbage = false;
 
 		while ($this->char !== null) {
-
 			if ($this->char == '>') {
 
-				$this->dumpEndTag();
-
-				$this->getNextChar();
+				$this
+					->dumpEndTag()
+					->getNextChar();
 
 				return self::INITIAL_STATE;
-
 			} elseif ($eatingGarbage) {
-
 				$this->getNextChar();
 
 				continue;
-
 			} elseif (self::isSpacerChar($this->char)) {
 				// most browsers parse end-tag until next '>' char
 
 				$eatingGarbage = true;
-
 				$this->getNextChar();
 
 				continue;
@@ -698,66 +764,59 @@ final class HtmlTokenizer
 		// ... </[end-of-file], </sometag[eof]
 
 		// NOTE: opera treats </[eof] as cdata, firefox as tag
-		$this->error("unexpected end of file, end-tag is incomplete");
-
-		$this->dumpEndTag();
+		$this
+			->error("unexpected end of file, end-tag is incomplete")
+			->dumpEndTag();
 
 		return self::FINAL_STATE;
 	}
 
-	// INSIDE_TAG_STATE
-	private function insideTagState()
+	/**
+	 * INSIDE_TAG_STATE
+	 * @return int
+	 * @throws WrongArgumentException
+	 */
+	private function insideTagState(): int
 	{
 		Assert::isNull($this->tagId);
-
 		Assert::isNull($this->attrName);
 		Assert::isNull($this->attrValue);
-
 		Assert::isNotNull($this->tag);
-		Assert::isTrue($this->tag instanceof SgmlOpenTag);
-
+		Assert::isInstance($this->tag, SgmlOpenTag::class);
 		Assert::isNull($this->insideQuote);
 
 		while ($this->char !== null) {
-
 			if (self::isSpacerChar($this->char)) {
-				$this->getNextChar();
 
+				$this->getNextChar();
 			} elseif ($this->char == '>') {
 				// <tag ... >
 
-				$this->makeTag();
-
-				$this->getNextChar();
+				$this
+					->makeTag()
+					->getNextChar();
 
 				return self::INITIAL_STATE;
-
 			} elseif ($this->char == '=') {
 
 				// most browsers' behaviour
-				$this->error(
-					'unexpected equal sign, attr name considered empty'
-				);
-
-				$this->getNextChar();
+				$this
+					->error('unexpected equal sign, attr name considered empty')
+					->getNextChar();
 
 				// call?
 				return self::ATTR_VALUE_STATE;
-
 			} else {
-
 				$char = $this->char;
-
 				$this->getNextChar();
 
 				if ($char == '/' && $this->char == '>') {
 					// <tag />, <tag id=value />
 
 					$this->tag->setEmpty(true);
-
-					$this->makeTag();
-
-					$this->getNextChar();
+					$this
+						->makeTag()
+						->getNextChar();
 
 					return self::INITIAL_STATE;
 				}
@@ -771,50 +830,49 @@ final class HtmlTokenizer
 
 		// <tag [eof], <tag id=val [eof]
 
-		$this->error('unexpected end of file, incomplete tag stored');
-
-		$this->makeTag();
+		$this
+			->error('unexpected end of file, incomplete tag stored')
+			->makeTag();
 
 		return self::FINAL_STATE;
 	}
 
 	/**
-	 * @return SgmlOpenTag
-	**/
-	private function dumpAttribute()
+	 * @return static
+	 */
+	private function dumpAttribute(): HtmlTokenizer
 	{
 		if ($this->attrName) {
-
 			if (!self::isValidId($this->attrName))
 				$this->error("attribute name '{$this->attrName}' is invalid");
 			else
 				$this->attrName = strtolower($this->attrName);
-
 		}
 
-		if ($this->attrValue === null || $this->attrValue === '')
+		if ($this->attrValue === null || $this->attrValue === '') {
 			$this->warning("empty value for attr == '{$this->attrName}'");
+		}
 
 		$this->tag->setAttribute($this->attrName, $this->attrValue);
-
 		$this->attrName = $this->attrValue = null;
 
 		return $this;
 	}
 
-	// ATTR_NAME_STATE
-	private function attrNameState()
+	/**
+	 * ATTR_NAME_STATE
+	 * @return int
+	 * @throws WrongArgumentException
+	 */
+	private function attrNameState(): int
 	{
 		Assert::isNotNull($this->tag);
-		Assert::isTrue($this->tag instanceof SgmlOpenTag);
-
+		Assert::isInstance($this->tag,SgmlOpenTag::class);
 		Assert::isNotNull($this->attrName); // length == 1
 		Assert::isNull($this->attrValue);
-
 		Assert::isNull($this->insideQuote);
 
 		while ($this->char !== null) {
-
 			if (self::isSpacerChar($this->char)) {
 				// <tag attr[space]
 
@@ -822,18 +880,15 @@ final class HtmlTokenizer
 
 				// call?
 				return self::WAITING_EQUAL_SIGN_STATE;
-
 			} elseif ($this->char == '>') {
 				// <tag attr>
 
-				$this->dumpAttribute();
-
-				$this->makeTag();
-
-				$this->getNextChar();
+				$this
+					->dumpAttribute()
+					->makeTag()
+					->getNextChar();
 
 				return self::INITIAL_STATE;
-
 			} elseif ($this->char == '=') {
 				// <tag id=
 
@@ -844,9 +899,7 @@ final class HtmlTokenizer
 
 				// call?
 				return self::ATTR_VALUE_STATE;
-
 			} else {
-
 				$char = $this->char;
 
 				$this->getNextChar();
@@ -855,12 +908,10 @@ final class HtmlTokenizer
 					// <option attr=value checked/>
 
 					$this->tag->setEmpty(true);
-
-					$this->dumpAttribute();
-
-					$this->makeTag();
-
-					$this->getNextChar();
+					$this
+						->dumpAttribute()
+						->makeTag()
+						->getNextChar();
 
 					return self::INITIAL_STATE;
 				}
@@ -870,37 +921,35 @@ final class HtmlTokenizer
 		}
 
 		// <tag i[eof]
-
 		// NOTE: opera treats it as cdata, firefox does not
-		$this->dumpAttribute();
-
-		$this->error('unexpected end of file, incomplete tag stored');
-
-		$this->makeTag();
+		$this
+			->dumpAttribute()
+			->error('unexpected end of file, incomplete tag stored')
+			->makeTag();
 
 		return self::FINAL_STATE;
 	}
 
-	// WAITING_EQUAL_SIGN_STATE
-	private function waitingEqualSignState()
+	/**
+	 * WAITING_EQUAL_SIGN_STATE
+	 * @return int
+	 * @throws WrongArgumentException
+	 */
+	private function waitingEqualSignState(): int
 	{
 		Assert::isNotNull($this->tag);
-		Assert::isTrue($this->tag instanceof SgmlOpenTag);
+		Assert::isInstance($this->tag, SgmlOpenTag::class);
 		Assert::isNull($this->tagId);
 		Assert::isNotNull($this->attrName);
 		Assert::isNull($this->attrValue);
-
 		Assert::isNull($this->insideQuote);
 
 		while ($this->char !== null) {
-
 			if (self::isSpacerChar($this->char)) {
 				// <tag attr[space*]
 
 				$this->getNextChar();
-
 			} elseif ($this->char == '=') {
-
 				$this->getNextChar();
 
 				// empty string, not null, to be sure that value needed
@@ -908,7 +957,6 @@ final class HtmlTokenizer
 
 				// call?
 				return self::ATTR_VALUE_STATE;
-
 			} else {
 				// <tag attr x, <tag attr >
 
@@ -920,22 +968,25 @@ final class HtmlTokenizer
 
 		// <tag id[space*][eof]
 
-		$this->dumpAttribute();
-
-		$this->error('unexpected end of file, incomplete tag stored');
-
-		$this->makeTag();
+		$this
+			->dumpAttribute()
+			->error('unexpected end of file, incomplete tag stored')
+			->makeTag();
 
 		return self::FINAL_STATE;
 	}
 
-	// ATTR_VALUE_STATE
-	private function attrValueState()
+	/**
+	 * ATTR_VALUE_STATE
+	 * @return int
+	 * @throws IOException
+	 * @throws WrongArgumentException
+	 */
+	private function attrValueState(): int
 	{
 		Assert::isNull($this->tagId);
-
 		Assert::isNotNull($this->tag);
-		Assert::isTrue($this->tag instanceof SgmlOpenTag);
+		Assert::isInstance($this->tag, SgmlOpenTag::class);
 
 		while ($this->char !== null) {
 
@@ -957,14 +1008,12 @@ final class HtmlTokenizer
 			} elseif (!$this->insideQuote && $this->char == '>') {
 				// <tag id=value>, <a href=catalog/>
 
-				$this->dumpAttribute();
-
-				$this->makeTag();
-
-				$this->getNextChar();
+				$this
+					->dumpAttribute()
+					->makeTag()
+					->getNextChar();
 
 				return self::INITIAL_STATE;
-
 			} else {
 				if (
 					$this->char == '"' || $this->char == "'"
@@ -975,27 +1024,22 @@ final class HtmlTokenizer
 						$this->insideQuote = $this->char;
 
 						$this->getNextChar();
-
-						// a place to rollback if second quote will not be
-						// found.
+						// a place to rollback if second quote will not be found.
 						$this->mark();
 
 						continue;
-
 					} elseif ($this->char == $this->insideQuote) {
 						// attr = "value", attr='value', attr='value>([^']*)
 
-						$this->dumpAttribute();
-
-						$this->getNextChar();
+						$this
+							->dumpAttribute()
+							->getNextChar();
 
 						if ($this->insideQuote == '>') {
 							$this->insideQuote = null;
-
 							$this->makeTag();
 
 							return self::INITIAL_STATE;
-
 						} else {
 							$this->insideQuote = null;
 
@@ -1017,16 +1061,14 @@ final class HtmlTokenizer
 			// <tag id="...[eof]
 			//
 			// NOTE: firefox rolls back to the first > after quote.
-			// Opera consideres incomplete tag as cdata.
+			// Opera considers incomplete tag as cdata.
 			// we act as ff does.
 
-			$this->reset();
-
-			$this->warning(
-				"unclosed quoted value for attr == '{$this->attrName}',"
-				." rolling back and searching '>'"
-			);
-
+			$this
+				->reset()
+				->warning(
+					"unclosed quoted value for attr == '{$this->attrName}', rolling back and searching '>'"
+				);
 			$this->attrValue = null;
 			$this->insideQuote = '>';
 
@@ -1037,22 +1079,24 @@ final class HtmlTokenizer
 
 		// <tag id=[space*][eof], <tag id=val[eof]
 
-		$this->dumpAttribute();
-
-		$this->error('unexpected end of file, incomplete tag stored');
-
-		$this->makeTag();
+		$this
+			->dumpAttribute()
+			->error('unexpected end of file, incomplete tag stored')
+			->makeTag();
 
 		return self::FINAL_STATE;
 	}
 
-	// INLINE_TAG_STATE:
-	private function inlineTagState()
+	/**
+	 * INLINE_TAG_STATE
+	 * @return int
+	 * @throws IOException
+	 * @throws WrongArgumentException
+	 */
+	private function inlineTagState(): int
 	{
 		// <script ...>X<-- we are here
-
 		Assert::isNull($this->buffer);
-
 		Assert::isNull($this->tag);
 		Assert::isNull($this->tagId);
 
@@ -1072,9 +1116,9 @@ final class HtmlTokenizer
 			 * TODO: browsers handles comments in more complex way,
 			 * figure it out
 			**/
-
-			if ($this->skipString('<!--', true))
-				$this->buffer = '<!--'.$this->getComment().'-->';
+			if ($this->skipString('<!--', true)) {
+				$this->buffer = '<!--' . $this->getComment() . '-->';
+			}
 		}
 
 		$endTag = '</'.$startTag;
@@ -1086,37 +1130,33 @@ final class HtmlTokenizer
 				// </script not found, or found </script[eof]
 
 				break;
-
-			} elseif (
-				$this->char === '>' || self::isSpacerChar($this->char)
-			) {
+			} elseif ($this->char === '>' || self::isSpacerChar($this->char)) {
 				// </script>, </script[space]
 
 				$this->dumpBuffer();
-
 				$this->tagId = $startTag;
 
 				return self::END_TAG_STATE;
 			}
 
 			// </script[any-other-char]
-
 			$this->buffer .= $endTag.$this->char;
 
 			$this->getNextChar();
 		}
 
 		$this->dumpBuffer();
-
-		$this->error(
-			"end-tag for inline tag == '{$startTag}' not found"
-		);
+		$this->error("end-tag for inline tag == '{$startTag}' not found");
 
 		return self::FINAL_STATE;
 	}
 
-	// CDATA_STATE
-	private function cdataState()
+	/**
+	 * CDATA_STATE
+	 * @return int
+	 * @throws WrongArgumentException
+	 */
+	private function cdataState(): int
 	{
 		Assert::isNull($this->tag);
 		Assert::isNull($this->tagId);
@@ -1131,7 +1171,6 @@ final class HtmlTokenizer
 		$this->makeTag();
 
 		if (!$this->substringFound) {
-
 			$this->error('unexpected end-of-file inside cdata tag');
 
 			return self::FINAL_STATE;
@@ -1140,7 +1179,12 @@ final class HtmlTokenizer
 		return self::INITIAL_STATE;
 	}
 
-	private function getComment()
+	/**
+	 * @return string
+	 * @throws IOException
+	 * @throws WrongArgumentException
+	 */
+	private function getComment(): string
 	{
 		$this->mark();
 
@@ -1149,86 +1193,82 @@ final class HtmlTokenizer
 		if (!$this->substringFound) {
 			$this->reset();
 
-			$this->error(
-				'unexpected end-of-file inside comment tag,'
-				." trying to find '>'"
-			);
+			$this->error("unexpected end-of-file inside comment tag, trying to find '>'");
 
 			$result = $this->getContentToSubstring('>');
 
-			if (!$this->substringFound)
-				$this->error(
-					"end-tag '>' not found,"
-					.' treating all remaining content as cdata'
-				);
+			if (!$this->substringFound) {
+				$this->error("end-tag '>' not found, treating all remaining content as cdata");
+			}
 		}
 
 		return $result;
 	}
 
-	// COMMENT_STATE
-	private function commentState()
+	/**
+	 * COMMENT_STATE
+	 * @return int
+	 * @throws IOException
+	 * @throws WrongArgumentException
+	 */
+	private function commentState(): int
 	{
 		Assert::isNull($this->tag);
 		Assert::isNull($this->tagId);
 
 		$content = $this->getComment();
-
-		$this->tag =
-			SgmlIgnoredTag::comment()->
-			setCdata(
-				Cdata::create()->setData($content)
-			);
-
+		$this->tag = SgmlIgnoredTag::comment()
+			->setCdata(Cdata::create()->setData($content));
 		$this->makeTag();
 
 		return self::INITIAL_STATE;
 	}
 
-	// EXTERNAL_TAG_STATE:
-	private function externalTagState()
+	/**
+	 * EXTERNAL_TAG_STATE:
+	 * @return int
+	 * @throws IOException
+	 * @throws WrongArgumentException
+	 */
+	private function externalTagState(): int
 	{
 		Assert::isTrue($this->tag instanceof SgmlIgnoredTag);
 
 		$this->mark();
-
 		$content = $this->getContentToSubstring('?>');
 
 		if (!$this->substringFound) {
 			$this->reset();
 
-			$this->error(
-				'unexpected end-of-file inside external tag,'
-				." trying to find '>'"
-			);
-
+			$this->error("unexpected end-of-file inside external tag, trying to find '>'");
 			$content = $this->getContentToSubstring('>');
 
-			if (!$this->substringFound)
-				$this->error(
-					"end-tag '>' not found,"
-					.' treating all remaining content as cdata'
-				);
+			if (!$this->substringFound) {
+				$this->error("end-tag '>' not found, treating all remaining content as cdata");
+			}
 		}
 
 		$this->tag->setCdata(Cdata::create()->setData($content));
-
 		$this->makeTag();
 
 		return self::INITIAL_STATE;
 	}
 
-	// DOCTYPE_TAG_STATE:
-	private function doctypeTagState()
+	/**
+	 * DOCTYPE_TAG_STATE:
+	 * @return int
+	 * @throws WrongArgumentException
+	 * @todo use DoctypeTag and parse it correctly as Opera does and Firefox does not.
+	 */
+	private function doctypeTagState(): int
 	{
-		// TODO: use DoctypeTag and parse it correctly as Opera does and
-		// Firefox does not.
 		Assert::isTrue($this->tag instanceof SgmlIgnoredTag);
 
 		$content = $this->getContentToSubstring('>');
 
-		if (!$this->substringFound)
+		if (!$this->substringFound) {
 			$this->error('unexpected end-of-file inside doctype tag');
+		}
 
 		$this->tag->setCdata(Cdata::create()->setData($content));
 
@@ -1239,14 +1279,16 @@ final class HtmlTokenizer
 
 	/**
 	 * using Knuth-Morris-Pratt algorithm.
-	 * 
 	 * If $substring not found, returns whole remaining content
-	**/
-	private function getContentToSubstring($substring, $ignoreCase = false)
+	 * @param string $substring
+	 * @param bool $ignoreCase
+	 * @return string
+	 */
+	private function getContentToSubstring(string $substring, bool $ignoreCase = false): string
 	{
 		$this->substringFound = false;
 
-		$substringLength = strlen($substring);
+		$substringLength = mb_strlen($substring);
 
 		$prefixTable = array(1 => 0);
 		$buffer = $substring."\x00";
@@ -1254,21 +1296,19 @@ final class HtmlTokenizer
 
 		while ($this->char !== null) {
 
-			if ($i < $substringLength)
+			if ($i < $substringLength) {
 				$char = $buffer[$i + 1];
-			else {
+			} else {
 				$char = $this->char;
 				$buffer .= $char;
 				$this->getNextChar();
 			}
 
 			$maxLength = $prefixTable[$i + 1];
-
 			$char = self::optionalLowercase($char, $ignoreCase);
 
 			while (
-				self::optionalLowercase($buffer[$maxLength], $ignoreCase)
-					!== $char
+				self::optionalLowercase($buffer[$maxLength], $ignoreCase) !== $char
 				&& $maxLength > 0
 			) {
 				$maxLength = $prefixTable[$maxLength];
@@ -1277,10 +1317,7 @@ final class HtmlTokenizer
 			++$i;
 
 			$prefixTable[$i + 1] =
-				(
-					self::optionalLowercase($buffer[$maxLength], $ignoreCase)
-						=== $char
-				)
+				self::optionalLowercase($buffer[$maxLength], $ignoreCase) === $char
 					? $maxLength + 1
 					: 0;
 
@@ -1294,17 +1331,17 @@ final class HtmlTokenizer
 			}
 		}
 
-		if (!$this->substringFound)
-			return substr(
-				$buffer, $substringLength + 1
-			);
-		else
-			return substr(
-				$buffer, $substringLength + 1, $i - 2 * $substringLength
-			);
+		if (!$this->substringFound) {
+			return mb_substr($buffer, $substringLength + 1);
+		} else {
+			return mb_substr($buffer, $substringLength + 1, $i - 2 * $substringLength);
+		}
 	}
 
-	private function getTextualPosition()
+	/**
+	 * @return string
+	 */
+	private function getTextualPosition(): string
 	{
 		return
 			"line {$this->line}, position {$this->linePosition}"
@@ -1316,20 +1353,22 @@ final class HtmlTokenizer
 	}
 
 	/**
+	 * @param string $message
 	 * @return HtmlTokenizer
-	**/
-	private function warning($message)
+	 */
+	private function warning(string $message): HtmlTokenizer
 	{
 		$this->errors[] =
-			"warning at {$this->getTextualPosition()}: $message";
+			"warning at {$this->getTextualPosition()}: {$message}";
 
 		return $this;
 	}
 
 	/**
+	 * @param string $message
 	 * @return HtmlTokenizer
-	**/
-	private function error($message)
+	 */
+	private function error(string $message): HtmlTokenizer
 	{
 		$this->errors[] =
 			"error at {$this->getTextualPosition()}: $message";
@@ -1337,4 +1376,3 @@ final class HtmlTokenizer
 		return $this;
 	}
 }
-?>
