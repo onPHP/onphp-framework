@@ -61,7 +61,7 @@ final class IpNetwork implements SingleRange
 	/**
 	 * @return IpAddress
 	**/
-	public function getStart()
+	public function getStart(): ?IpAddress
 	{
 		return $this->ip;
 	}
@@ -69,7 +69,7 @@ final class IpNetwork implements SingleRange
 	/**
 	 * @return IpAddress
 	**/
-	public function getEnd()
+	public function getEnd(): ?IpAddress
 	{
 		if (!$this->end) {
 			$this->end =
@@ -81,7 +81,12 @@ final class IpNetwork implements SingleRange
 		return $this->end;
 	}
 
-	public function contains(/* IpAddress */ $probe)
+	/**
+	 * @param IpAddress $probe
+	 * @return bool
+	 * @throws WrongArgumentException
+	 */
+	public function contains(object $probe): bool
 	{
 		Assert::isInstance($probe, IpAddress::class);
 

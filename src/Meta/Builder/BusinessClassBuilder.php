@@ -79,7 +79,7 @@ EOT;
 EOT;
 
 			if (!$type || $type->getId() !== MetaClassType::CLASS_ABSTRACT) {
-				$customCreate = null;
+				$buildCreate = true;
 				
 				if (
 					$class->getFinalParent()->getPattern()
@@ -90,55 +90,22 @@ EOT;
 					while ($parent = $parent->getParent()) {
 						$info = new \ReflectionClass($parent->getNameWithNS());
 						
-						if (
-							$info->hasMethod('create')
-							&& ($info->getMethod('create')->getParameters() > 0)
-						) {
-							$customCreate = true;
+						if ($info->hasMethod('create')) {
+							$buildCreate = false;
 							break;
 						}
 					}
 				}
 				
-				if ($customCreate) {
-					$creator = $info->getMethod('create');
-					
-					$declaration = array();
-					
-					foreach ($creator->getParameters() as $parameter) {
-						$declaration[] =
-							'$'.$parameter->getName()
-							// no one can live without default value @ ::create
-							.' = '
-							.(
-								$parameter->getDefaultValue()
-									? $parameter->getDefaultValue()
-									: 'null'
-							);
-					}
-					
-					$declaration = implode(', ', $declaration);
-					
+				if ($buildCreate) {
 					$out .= <<<EOT
 
 	/**
-	 * @return {$class->getName()}
+	 * @return static
 	**/
-	public static function create({$declaration})
+	public static function create(): {$class->getName()}
 	{
-		return new self({$declaration});
-	}
-		
-EOT;
-				} else {
-					$out .= <<<EOT
-
-	/**
-	 * @return {$class->getName()}
-	**/
-	public static function create()
-	{
-		return new self;
+		return new static;
 	}
 		
 EOT;

@@ -26,7 +26,7 @@ final class CalendarDay extends Date
 	/**
 	 * @return CalendarDay
 	**/
-	public static function create($timestamp)
+	public static function create($timestamp): CalendarDay
 	{
 		return new self($timestamp);
 	}

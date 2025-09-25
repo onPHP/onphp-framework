@@ -12,18 +12,15 @@
 
 namespace OnPHP\Core\Base;
 
+use DateTime;
 use OnPHP\Core\OSQL\DialectString;
 use OnPHP\Core\Exception\WrongArgumentException;
 use OnPHP\Core\DB\Dialect;
-use DateTime;
-
-/* $Id$ */
 
 /**
  * Date's container and utilities.
  * 
  * @see DateRange
- * 
  * @ingroup Base
 **/
 class Date implements Stringable, DialectString
@@ -37,40 +34,50 @@ class Date implements Stringable, DialectString
 	const WEEKDAY_SUNDAY	= 0; // because strftime('%w') is 0 on Sunday
 
 	/**
-	 * @var \DateTime
+	 * @var DateTime|null
 	 */
-	protected $dateTime = null;
+	protected ?DateTime $dateTime = null;
 
 	/**
-	 * @return Date
-	**/
-	public static function create($date)
+	 * @return static
+	 * @throws WrongArgumentException
+	 */
+	public static function create($date): Date
 	{
 		return new static($date);
 	}
 
-	public static function today($delimiter = '-')
+	/**
+	 * @param string $delimiter
+	 * @return string
+	 */
+	public static function today($delimiter = '-'): string
 	{
 		return date("Y{$delimiter}m{$delimiter}d");
 	}
 
 	/**
-	 * @return Date
-	**/
-	public static function makeToday()
+	 * @return static
+	 * @throws WrongArgumentException
+	 */
+	public static function makeToday(): Date
 	{
 		return new static(static::today());
 	}
 
 	/**
-	 * @return Date
 	 * @see http://www.faqs.org/rfcs/rfc3339.html
 	 * @see http://www.cl.cam.ac.uk/~mgk25/iso-time.html
-	**/
-	public static function makeFromWeek($weekNumber, $year = null)
+	 * @param $weekNumber
+	 * @param int|null $year
+	 * @return Date
+	 * @throws WrongArgumentException
+	 */
+	public static function makeFromWeek($weekNumber, int $year = null): Date
 	{
-		if (!$year)
+		if (null === $year) {
 			$year = date('Y');
+		}
 
 		Assert::isTrue(
 			($weekNumber > 0)
@@ -99,7 +106,12 @@ class Date implements Stringable, DialectString
 		return $date->modify("+{$days} day");
 	}
 
-	public static function dayDifference(Date $left, Date $right)
+	/**
+	 * @param Date $left
+	 * @param Date $right
+	 * @return int
+	 */
+	public static function dayDifference(Date $left, Date $right): int
 	{
 		return
 			gregoriantojd(
@@ -114,15 +126,25 @@ class Date implements Stringable, DialectString
 			);
 	}
 
-	public static function compare(Date $left, Date $right)
+	/**
+	 * @param Date $left
+	 * @param Date $right
+	 * @return int
+	 */
+	public static function compare(Date $left, Date $right): int
 	{
-		if ($left->toStamp() == $right->toStamp())
+		if ($left->toStamp() == $right->toStamp()) {
 			return 0;
-		else
+		} else {
 			return ($left->toStamp() > $right->toStamp() ? 1 : -1);
+		}
 	}
 
-	public static function getWeekCountInYear($year)
+	/**
+	 * @param $year
+	 * @return int
+	 */
+	public static function getWeekCountInYear($year): int
 	{
 		$weekCount = date('W', mktime(0, 0, 0, 12, 31, $year));
 
@@ -133,6 +155,10 @@ class Date implements Stringable, DialectString
 		}
 	}
 
+	/**
+	 * @param $date
+	 * @throws WrongArgumentException
+	 */
 	public function __construct($date)
 	{
 		$this->import($date);
@@ -148,12 +174,19 @@ class Date implements Stringable, DialectString
 		return array('dateTime');
 	}
 
-	public function toStamp()
+	/**
+	 * @return int
+	 */
+	public function toStamp(): int
 	{
 		return $this->getDateTime()->getTimestamp();
 	}
 
-	public function toDate($delimiter = '-')
+	/**
+	 * @param string $delimiter
+	 * @return string
+	 */
+	public function toDate($delimiter = '-'): string
 	{
 		return
 			$this->getYear()
@@ -163,62 +196,81 @@ class Date implements Stringable, DialectString
 			.$this->getDay();
 	}
 
-	public function getYear()
+	/**
+	 * @return string
+	 */
+	public function getYear(): string
 	{
 		return $this->dateTime->format('Y');
 	}
 
-	public function getMonth()
+	/**
+	 * @return string
+	 */
+	public function getMonth(): string
 	{
 		return $this->dateTime->format('m');
 	}
 
-	public function getDay()
+	/**
+	 * @return string
+	 */
+	public function getDay(): string
 	{
 		return $this->dateTime->format('d');
 	}
 
-	public function getWeek()
+	/**
+	 * @return string
+	 */
+	public function getWeek(): string
 	{
 		return date('W', $this->dateTime->getTimestamp());
 	}
 
-	public function getWeekDay()
+	/**
+	 * @return string
+	 */
+	public function getWeekDay(): string
 	{
 		return strftime('%w', $this->dateTime->getTimestamp());
 	}
 
 	/**
-	 * @return Date
-	**/
-	public function spawn($modification = null)
+	 * @param string|null $modification
+	 * @return static
+	 * @throws WrongArgumentException
+	 */
+	public function spawn(string $modification = null): Date
 	{
-
 		$child = new static($this->toString());
 
-		if ($modification)
+		if (null !== $modification) {
 			return $child->modify($modification);
+		}
 
 		return $child;
 	}
 
 	/**
+	 * @param string $string
+	 * @return static
 	 * @throws WrongArgumentException
-	 * @return Date
-	**/
-	public function modify($string)
+	 */
+	public function modify(string $string): Date
 	{
 		try {
 			$this->dateTime->modify($string);
-		} catch (\Exception $e) {
-			throw new WrongArgumentException(
-				"wrong time string '{$string}'"
-			);
+		} catch (\Throwable $e) {
+			throw new WrongArgumentException("wrong time string '{$string}'");
 		}
 
 		return $this;
 	}
 
+	/**
+	 * @return false|int
+	 */
 	public function getDayStartStamp()
 	{
 		return
@@ -230,6 +282,9 @@ class Date implements Stringable, DialectString
 			);
 	}
 
+	/**
+	 * @return false|int
+	 */
 	public function getDayEndStamp()
 	{
 		return
@@ -242,9 +297,11 @@ class Date implements Stringable, DialectString
 	}
 
 	/**
+	 * @param int $weekStart
 	 * @return Date
-	**/
-	public function getFirstDayOfWeek($weekStart = Date::WEEKDAY_MONDAY)
+	 * @throws WrongArgumentException
+	 */
+	public function getFirstDayOfWeek(int $weekStart = Date::WEEKDAY_MONDAY): Date
 	{
 		return $this->spawn(
 			'-'.((7 + $this->getWeekDay() - $weekStart) % 7).' days'
@@ -252,43 +309,57 @@ class Date implements Stringable, DialectString
 	}
 
 	/**
+	 * @param int $weekStart
 	 * @return Date
-	**/
-	public function getLastDayOfWeek($weekStart = Date::WEEKDAY_MONDAY)
+	 * @throws WrongArgumentException
+	 */
+	public function getLastDayOfWeek(int $weekStart = Date::WEEKDAY_MONDAY): Date
 	{
 		return $this->spawn(
 			'+'.((13 - $this->getWeekDay() + $weekStart) % 7).' days'
 		);
 	}
 
-	public function toString()
+	/**
+	 * @return string
+	 */
+	public function toString(): string
 	{
 		return $this->dateTime->format(static::getFormat());
 	}
 
-	public function toFormatString($format)
+	/**
+	 * @param string $format
+	 * @return string
+	 */
+	public function toFormatString(string $format): string
 	{
 		return $this->dateTime->format($format);
 	}
 
-	public function toDialectString(Dialect $dialect)
+	/**
+	 * @param Dialect $dialect
+	 * @return string
+	 */
+	public function toDialectString(Dialect $dialect): string
 	{
-		// there are no known differences yet
 		return $dialect->quoteValue($this->toString());
 	}
 
 	/**
 	 * ISO 8601 date string
-	**/
-	public function toIsoString()
+	 * @return string
+	 */
+	public function toIsoString(): string
 	{
 		return $this->toString();
 	}
 
 	/**
 	 * @return Timestamp
-	**/
-	public function toTimestamp()
+	 * @throws WrongArgumentException
+	 */
+	public function toTimestamp(): Timestamp
 	{
 		return Timestamp::create($this->toStamp());
 	}
@@ -296,25 +367,29 @@ class Date implements Stringable, DialectString
 	/**
 	 * @return DateTime|null
 	 */
-	public function getDateTime()
+	public function getDateTime(): ?DateTime
 	{
 		return $this->dateTime;
 	}
 
-	protected static function getFormat()
+	/**
+	 * @return string
+	 */
+	protected static function getFormat(): string
 	{
 		return 'Y-m-d';
 	}
 
-
+	/**
+	 * @param $date
+	 * @throws WrongArgumentException
+	 */
 	protected function import($date)
 	{
-		try{
+		try {
 			if (is_int($date) || is_numeric($date)) { // unix timestamp
-				$this->dateTime = new \DateTime(date(static::getFormat(), $date));
-
+				$this->dateTime = new DateTime(date(static::getFormat(), $date));
 			} elseif ($date && is_string($date)) {
-
 				if (
 					preg_match('/^(\d{1,4})[-\.](\d{1,2})[-\.](\d{1,2})/', $date, $matches)
 				) {
@@ -325,18 +400,14 @@ class Date implements Stringable, DialectString
 					preg_match('/^(\d{1,2})[-\.](\d{1,2})[-\.](\d{1,4})/', $date, $matches)
 				) {
 					Assert::isTrue(
-						checkdate($matches[2], $matches[2], $matches[3])
+						checkdate($matches[2], $matches[1], $matches[3])
 					);
 				}
 
-				$this->dateTime = new \DateTime($date);
+				$this->dateTime = new DateTime($date);
 			}
-
-		} catch(\Exception $e) {
-			throw new WrongArgumentException(
-				"strange input given - '{$date}'"
-			);
+		} catch(\Throwable $e) {
+			throw new WrongArgumentException("strange input given - '{$date}'");
 		}
 	}
 }
-?>
